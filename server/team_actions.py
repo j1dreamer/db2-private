@@ -246,5 +246,9 @@ def handle(store,account,route,args):
                 temp.update(refund(p,ledger));base=copy.deepcopy(p['privateRoleBases'][str(role['idx'])]);role.clear();role.update(base);ledger.clear()
             progression.learn_skills(role)
         progression.friendships(p)
-        store.save(p);store.audit(action,{'player':p['id'],'team':args.get('teamIndex')})
+        detail={'player':p['id'],'team':args.get('teamIndex')}
+        if action in ('upgradeRoleSkill','upgradeRoleAwakeSkill'):detail['skillUpgrades']=before['skillPoint']-p['skillPoint']
+        if action.startswith('upgrade')and 'Equipment'in action:
+            detail['equipmentUpgrades']=sum(item['level']-before['team']['roles'][str(role['idx'])]['equipments'][key]['level']for key,item in role['equipments'].items()if key.startswith('evlItem_'))
+        store.save(p);store.audit(action,detail)
         return delta(before,p,route,temp)

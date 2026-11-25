@@ -33,3 +33,27 @@ def patch_adventure_transport(text):
         if text.count(old)!=1:raise ValueError('Unexpected adventure transport implementation')
         text=text.replace(old,new,1)
     return text
+
+def patch_roster_removal(text):
+    changes={
+        'for (var i in e) {\nthis.roles[i] = e[i];\nthis.roles[i].idx = i;':'for (var i in e) {\nif (!e[i]) { delete this.roles[i]; delete this.md5Map[i]; continue; }\nthis.roles[i] = e[i];\nthis.roles[i].idx = i;',
+        'e.team && this.emit(u.EVENT.TEAM, t.values(e.team.roles), e.team.friendshipAttr);':'''if (e.team) {
+var privateRemovedRoleIds = [];
+for (var privateRoleId in e.team.roles) if (!e.team.roles[privateRoleId]) privateRemovedRoleIds.push(privateRoleId);
+if (privateRemovedRoleIds.length) {
+var privateRosterScene = require("sceneManager");
+var privateRosterCache = privateRosterScene.teamData || {};
+for (var privateRemovedIndex = 0; privateRemovedIndex < privateRemovedRoleIds.length; privateRemovedIndex++) {
+var privateRemovedRoleId = privateRemovedRoleIds[privateRemovedIndex];
+if (privateRosterCache.teamItemMap) delete privateRosterCache.teamItemMap[privateRemovedRoleId];
+if (privateRosterCache.roleSceneMap) delete privateRosterCache.roleSceneMap[privateRemovedRoleId];
+}
+this.emit(u.EVENT.TEAM, t.values(this.team.roles), e.team.friendshipAttr);
+privateRosterScene.popToHomeScene && privateRosterScene.popToHomeScene();
+} else this.emit(u.EVENT.TEAM, t.values(e.team.roles), e.team.friendshipAttr);
+}'''
+    }
+    for old,new in changes.items():
+        if text.count(old)!=1:raise ValueError('Unexpected roster removal implementation')
+        text=text.replace(old,new,1)
+    return text

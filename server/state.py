@@ -77,6 +77,12 @@ def refresh_time(player,now=None):
             player['shop']['refreshTimesMap']={str(kind):0 for kind in range(1,15)}
             player['friend']['pointReceiveTimes']=0
             player['smapTimesMap']={};player['point']['dailyNormalUseGemTimes']=0
+            player['task']['dailyActivePoint']=0;player['task']['receivedPointMap']['daily']={}
+    week=datetime.date.fromisoformat(today).isocalendar()[:2];week_key=str(week[0])+'-'+str(week[1])
+    if player.get('privateTaskWeek')!=week_key:
+        if player.get('privateTaskWeek'):
+            player['task']['weeklyActivePoint']=0;player['task']['receivedPointMap']['weekly']={}
+        player['privateTaskWeek']=week_key;changed=True
     for key in ('actionPoint','skillPoint'):
         maximum=player['timesMaxMap'][key];next_time=player['nextRecoverTimeMap'].get(key,0)
         if player[key]>=maximum:

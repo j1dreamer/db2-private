@@ -34,6 +34,15 @@ def drops(class_id,depth=0):
 def add_reward(player,reward):
     entity=int(reward['entityId']);count=int(reward['count'])
     if count<1:raise ValueError('Invalid reward count')
+    if entity==100:
+        from .adventure import add_experience
+        add_experience(player,count);return {str(entity):count}
+    if entity==99:player['actionPoint']+=count;return {str(entity):count}
+    if entity==98:
+        vip=player['vip'];vip['topUpGem']=vip.get('topUpGem',0)+count;levels={r['level']:r for r in rows('vip')}
+        while vip['level']<max(levels) and vip['topUpGem']>=levels[vip['level']]['nextLevelTopUpGem']:vip['level']+=1
+        player['timesMaxMap']['skillPoint']=5+levels[vip['level']]['increaseSkillPointMax']
+        return {str(entity):count}
     if entity==102:player['gem']+=count;return {str(entity):count}
     if entity==101:player['coin']+=count;return {str(entity):count}
     role=next((r for r in rows('role') if r['kindId']==entity),None)

@@ -1,9 +1,9 @@
-import argparse,asyncio,json,os,secrets,hmac,sqlite3,time,gzip,base64
+import argparse,asyncio,json,os,secrets,hmac,sqlite3,time,gzip,base64,datetime
 from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -85,6 +85,12 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                     row=store.db.execute('SELECT data FROM players WHERE id=?',(pid,)).fetchone()
                     if not row:raise ValueError('Không tìm thấy nhân vật')
                     p=json.loads(row[0]);p['gem']+=amount;store.save(p)
+                elif action=='set_gm':
+                    pid=body.get('player');enabled=body.get('enabled')
+                    if type(pid)is not int or type(enabled)is not bool:raise ValueError('Quyền GM không hợp lệ')
+                    row=store.db.execute('SELECT data FROM players WHERE id=?',(pid,)).fetchone()
+                    if not row:raise ValueError('Không tìm thấy nhân vật')
+                    p=json.loads(row[0]);p['privateGM']=enabled;store.save(p)
                 elif action=='gacha_reset':
                     pool=int(body['pool'])
                     if pool not in (102,202,203,204):raise ValueError('Pool không hợp lệ')
@@ -128,6 +134,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                         if route=='gate.gateHandler.queryEntry':result={'code':200,'host':public_host,'port':game_port}
                         elif route=='connector.entryHandler.entry':
                             if uid in live:live[uid].discard(ws)
+                            mail_seen.pop(ws,None);selected_players.pop(ws,None)
                             uid=store.account(args.get('token','')) if args.get('serverId')==1 else None;result={'code':200 if uid else 500,'msg':'' if uid else 'Phiên đăng nhập không hợp lệ'}
                             if uid:live.setdefault(uid,set()).add(ws)
                         elif not uid:result={'code':500,'msg':'Chưa đăng nhập'}
@@ -137,11 +144,19 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                             try:
                                 p=store.create_player(uid,args.get('name','')) if route.endswith('createPlayer') else store.player(uid)
                                 if not p or (route.endswith('.entry') and args.get('playerId')!=p['id']):raise ValueError('Không tìm thấy nhân vật')
-                                p['atime']=int(time.time()*1000);store.save(p);selected_players[ws]=p['id']
+                                p['atime']=int(time.time()*1000);p['privateOnlineClock']=p['atime'];p['extra']['serverTime']=p['atime'];p['extra']['serverTimeStr']=datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7))).strftime('%Y-%m-%d %H:%M:%S')
+                                store.save(p);selected_players[ws]=p['id']
                                 chat.load(store,p)
                                 packed=base64.b64encode(gzip.compress(json.dumps(p,ensure_ascii=False).encode())).decode()
                                 result={'code':200,'player':packed}
                                 mail_seen[ws]={m['_id'] for m in p['extra']['mails']}
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route.startswith(('logic.','chat.'))and ws not in selected_players:result={'code':500,'msg':'Chưa chọn nhân vật'}
+                        elif route in gm.ROUTES:
+                            try:result=gm.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in online.ROUTES:
+                            try:result=online.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route.startswith('logic.pointHandler.'):
                             from .gameplay import draw,select_pool
@@ -151,6 +166,12 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 if action in ('switchAdvancedPool','selectWishClassId'):result=select_pool(store,uid,action,args)
                                 elif action in mapping:result=draw(store,uid,*mapping[action]);result['_temp']['route']=route
                                 else:raise ValueError('Thao tác pool chưa triển khai')
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in tasks.ROUTES:
+                            try:result=tasks.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in item_actions.ROUTES:
+                            try:result=item_actions.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in team_actions.ROUTES:
                             try:result=team_actions.handle(store,uid,route,args)
@@ -196,6 +217,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                             result={'code':500,'msg':'Route đang được triển khai: '+route}
                             store.audit('unsupported_route',{'route':route,'account':uid})
                         if ident:
+                            if uid and ws in selected_players and result.get('code')==200 and route.startswith(('logic.','chat.')):
+                                current=store.player(uid)
+                                if current:result['task']=current['task']
                             annotate_online(result)
                             encoded=response(ident,result);recent[ident]=(body,encoded)
                             if len(recent)>256:del recent[next(iter(recent))]

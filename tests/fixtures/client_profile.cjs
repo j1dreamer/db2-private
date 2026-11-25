@@ -21,9 +21,10 @@ for(const name of callbackOnly)if(!(name in cache))cache[name]=function(){};
 const frames=[];
 const cc={_RF:{push(mod){frames.push(mod)},pop(){frames.pop()}},Class:def=>{const cls=function(){};Object.assign(cls.prototype,def);Object.assign(cls,def.statics||{});frames.at(-1).exports=cls;return cls;},Component:{},Node:{},Sprite:{},Label:{},SpriteFrame:{},ProgressBar:{},Layout:{},RichText:{}};
 const context={cc,window:{},console:{log(...args){process.stderr.write(args.join(' ')+'\n');},warn(...args){process.stderr.write(args.join(' ')+'\n');}},Date,Uint8Array,storage:{getItem(){return null;},setItem(){}},setInterval:()=>1,clearInterval(){}};
+context.require=name=>load(name);
 function load(name){
  if(name in cache)return cache[name];
- const source=fs.readFileSync(__dirname+'/client_'+name+'.js','utf8');
+ const source=input.moduleOverrides?.[name]||fs.readFileSync(__dirname+'/client_'+name+'.js','utf8');
  const begin=source.indexOf('function('),end=source.lastIndexOf('}, {');
  if(end<0)throw Error('Bad module '+name);
  const mod={exports:{}};cache[name]=mod.exports;
@@ -34,6 +35,8 @@ function load(name){
 cache.data={};for(const file of fs.readdirSync(__dirname+'/../../tables').filter(x=>x.endsWith('Data.json'))){cache.data[file.slice(0,-9)]=JSON.parse(fs.readFileSync(__dirname+'/../../tables/'+file,'utf8'));}
 delete cache.dataApi;load('dataApi').init();delete cache.serverConfig;cache.cryptoApi={};load('serverConfig');delete cache.clientConfig;load('clientConfig');
 const Player=load('player');const player=server.player=new Player(input.profile);
+let rosterNavigationCount=0;
+if(input.prepareRosterCache){cache.sceneManager.teamData={teamItemMap:Object.fromEntries(Object.keys(player.team.roles).map(key=>[key,{}])),roleSceneMap:Object.fromEntries(Object.keys(player.team.roles).map(key=>[key,{}]))};cache.sceneManager.popToHomeScene=()=>{rosterNavigationCount++;};}
 const snapshots=[];
 for(const delta of input.deltas||[]){player.update(delta);snapshots.push({gem:player.gem,bag:JSON.parse(JSON.stringify(player.bag.items)),team:JSON.parse(JSON.stringify(player.team.roles))});}
 let teamItems,friendship;
@@ -91,4 +94,4 @@ const daily=load('dailyTaskPanel').genData();
 let point;
 if(input.checkPoint)point=load('pointScene').genData();
 let roles;if(input.checkRoles){if(!cache.roleItem.genData){delete cache.roleItem;load('roleItem');}roles=Object.values(player.team.roles).map(r=>load('roleItem').genData(r));}
-player.destroy();process.stdout.write(JSON.stringify({snapshots,roleScenes,effects,topBar,quick,home,daily,point,roles,teamItems,friendship,gem:player.gem,bag:player.bag.items,team:player.team.roles}));
+player.destroy();process.stdout.write(JSON.stringify({snapshots,roleScenes,effects,topBar,quick,home,daily,point,roles,teamItems,friendship,rosterNavigationCount,rosterCachedIds:Object.keys(cache.sceneManager.teamData?.roleSceneMap||{}),gem:player.gem,bag:player.bag.items,team:player.team.roles}));

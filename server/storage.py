@@ -19,6 +19,8 @@ class Store:
         CREATE TABLE IF NOT EXISTS pool_entries(pool INTEGER NOT NULL,entity INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(pool,entity));
         CREATE TABLE IF NOT EXISTS notifications(id INTEGER PRIMARY KEY AUTOINCREMENT,account INTEGER REFERENCES accounts(id),event TEXT NOT NULL,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS chat_messages(id INTEGER PRIMARY KEY AUTOINCREMENT,player INTEGER REFERENCES players(id),kind INTEGER NOT NULL,scope INTEGER NOT NULL,created INTEGER NOT NULL,data TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS task_counters(player INTEGER REFERENCES players(id),name TEXT NOT NULL,period TEXT NOT NULL,value INTEGER NOT NULL,PRIMARY KEY(player,name,period));
+        CREATE TABLE IF NOT EXISTS task_claims(player INTEGER REFERENCES players(id),task INTEGER NOT NULL,period TEXT NOT NULL,PRIMARY KEY(player,task,period));
         CREATE INDEX IF NOT EXISTS chat_channel ON chat_messages(kind,scope,id);
         CREATE INDEX IF NOT EXISTS chat_sender ON chat_messages(player,id);
         CREATE TABLE IF NOT EXISTS friend_requests(source INTEGER REFERENCES players(id),target INTEGER REFERENCES players(id),created INTEGER NOT NULL,PRIMARY KEY(source,target));
@@ -63,7 +65,9 @@ class Store:
         from .social import refresh as refresh_friend
         changed=refresh_friend(self,data)or changed
         from .shops import refresh_due
-        if refresh_due(data)or changed:self.save(data)
+        changed=refresh_due(data)or changed
+        from .tasks import refresh as refresh_tasks
+        if refresh_tasks(self,data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile
@@ -76,6 +80,9 @@ class Store:
             profile=new_profile(cur.lastrowid,account,name,username);self.save(profile)
             self.audit('create_player',{'player':profile['id'],'account':account})
             self.audit('starter_tickets',{'player':profile['id'],'items':{'119':1,'120':1}})
+            from .state import refresh_time
+            from .tasks import refresh
+            refresh_time(profile);refresh(self,profile);self.save(profile)
             return profile
     def save(self,player):self.db.execute('UPDATE players SET data=? WHERE id=?',(json.dumps(player,ensure_ascii=False),player['id']))
     def redeem(self,player,code):
@@ -92,4 +99,7 @@ class Store:
             return data
     def notify(self,account,event,data):
         self.db.execute('INSERT INTO notifications(account,event,data) VALUES(?,?,?)',(account,event,json.dumps(data,ensure_ascii=False)))
-    def audit(self,action,detail):self.db.execute('INSERT INTO audit(created,action,detail) VALUES(?,?,?)',(int(time.time()),action,json.dumps(detail,ensure_ascii=False)))
+    def audit(self,action,detail):
+        self.db.execute('INSERT INTO audit(created,action,detail) VALUES(?,?,?)',(int(time.time()),action,json.dumps(detail,ensure_ascii=False)))
+        from .tasks import record
+        record(self,action,detail)

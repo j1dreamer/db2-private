@@ -35,4 +35,5 @@ def handle(store,account,route,args):
         for row in store.db.execute('SELECT account,data FROM players'):
             other=json.loads(row['data'])
             if kind==3 or (kind==1 and other['serverId']==scope) or (kind==2 and other['guildId']==scope):store.notify(row['account'],'onChat',message)
+        store.audit('chat',{'player':p['id']})
         return {'code':200,'_temp':{'route':route}}

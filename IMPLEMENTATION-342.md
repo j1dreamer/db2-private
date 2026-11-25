@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 113 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 229 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 113 luồng đã xác minh trên thiết bị.
-- Đã chạy 93 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Một chuỗi kiểm thử gọi thành công đủ 38 route đội hình; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc.
+- 124 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 218 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 124 luồng đã xác minh trên thiết bị.
+- Đã chạy 109 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Một chuỗi kiểm thử gọi thành công đủ 38 route đội hình; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách.
 
 ## Phần mới trong nhánh
 
@@ -28,12 +28,17 @@ Dữ liệu nền: hồi thể lực/điểm kỹ năng theo timestamp, ngày se
 
 38 route đội hình: trang bị/tháo từng món hoặc tự chọn, nâng/tiến hóa chiêu thức, màu/sao/đột phá, kinh nghiệm, kỹ năng thường/thức tỉnh, tu luyện/reset, chiến hồn, duyên phận, tiến hóa kỹ năng và reset chiến binh. Schema 10 đổi kỹ năng thành map theo ID đúng consumer `skillItem`, không mất cấp đã nâng. Chi phí/giới hạn lấy từ hàm gốc qua `tools/extract_progression.py`. Hoàn tài nguyên dùng sổ đầu tư đã lưu, chỉ hoàn một lần. Các instance trang bị giữ nguyên thuộc tính khi tháo/lắp.
 
+8 route vật phẩm/nhiệm vụ/online: rương ngẫu nhiên hoặc tự chọn, chia số lượng đổi rương, vật phẩm hồi phục/ngoại hình, thưởng danh vọng, nhận nhiệm vụ và mốc hoạt động, báo thời gian online có kiểm tra đồng hồ server. ID 98/99/100 tăng VIP exp/thể lực/exp đội thay vì vào túi. VIP exp trong game không xác nhận thanh toán hoặc tăng `topUpMoney`. Nhiệm vụ dùng các chuỗi/bảng thưởng gốc và counter hành động đã ghi; reset ngày/tuần UTC+7, chống nhận lặp bằng SQL. Schema 11 thêm dữ liệu VIP exp/danh vọng nền.
+
+3 route GM: cấp vật phẩm, thêm tướng, xóa tướng. Web quản trị có cấp/thu hồi quyền theo ID nhân vật; chỉ token quản trị được đổi quyền. Xóa hoàn trang bị riêng lẻ, hủy run đang chờ và phải giữ ít nhất một chiến binh. Client mới xử lý role tombstone, xóa hash/cache và quay về sảnh; APK cũ chưa có bản vá này.
+
 ## Những phần cần chốt hoặc xác minh tiếp
 
 - Người dùng đã chọn dùng bảng/công thức gốc khi có và định nghĩa, ghi rõ luật riêng cho phần thiếu. Số lượng rơi ải dùng `specifyDropValues`, phù hợp consumer `starSignSmapScene`; thời điểm/xác suất rơi của mọi loại ải chưa xác minh. Cửa hàng tính giá đơn vị nhân số lượng; refresh loại 14 dùng fallback gem do config gốc thiếu. Chu kỳ đồng hành tăng sao đặt lại cấp 1, giữ kỹ năng; chat giới hạn 200 UTF-16 unit/3 giây. Bốn tinh tú cùng thuộc tính mở bộ yếu ở rarity tối thiểu 3, mạnh ở rarity 5. Tự trang bị chọn ô trống/món yếu nhất và không hạ chất lượng; reset hoàn những chi phí có sổ kể từ lúc triển khai, không bịa tài nguyên huấn luyện trước đó. Ghép thuộc tính cơ bản/trang bị/thức tỉnh là luật riêng dùng các giá trị gốc; công thức chiến đấu và tính power lấy từ client. Không coi các lựa chọn này là mã server gốc đã phục hồi.
 - Quảng cáo, nạp tiền, lịch/mùa giải và event có phần cấu hình ở server gốc. Chưa có bằng chứng/chứng từ thì không giả vờ xác nhận thanh toán/quảng cáo thành công.
 - Combat giờ cần Node.js trên máy chạy server (Termux: `pkg install nodejs`, Windows: Node.js LTS). Thiếu runtime thì route kết thúc trận báo lỗi, không phát thưởng không được kiểm tra. Chưa đóng gói APK mới của nhánh này.
 - Chưa xác nhận luồng phiêu lưu mới trên BlueStacks; headless replay không chứng minh mọi preload/animation/scene đều hoạt động.
+- Thưởng rương có trọng số chọn một mục W và roll độc lập các mục R là luật riêng dùng tham số mô tả gốc. Tự mở tối đa 1.000 rương/lần, bỏ qua rương cần chọn hoặc chưa cấu hình. Nhiệm vụ giữ đồ/đá tính cả đồ đang trang bị; những counter cho chế độ chưa triển khai còn bằng 0. Online nhận tối đa 60 giây mỗi request, giới hạn bằng thời gian phiên đã chọn nhân vật và không được tăng nhanh bởi tốc độ game.
 
 ## Thứ tự các nhóm tiếp theo
 

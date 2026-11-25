@@ -52,6 +52,10 @@ def model(kind,extra=None):
         ship_attrs(result)
     elif typ=='capsule':result.update(skillInfo=capsule_skills(kind),cacheSkillInfo={})
     elif typ=='starSign':result.update(level=1,attrValue=star_growth(row))
+    if 'star'in extra:
+        if typ not in ('artifact','fruit','ship')or type(extra['star'])is not int or not 1<=extra['star']<=10:raise ValueError('Cấp sao vật phẩm không hợp lệ')
+        result['star']=extra['star']
+        if typ=='ship':ship_attrs(result)
     if 'expireTime'in extra:
         if type(extra['expireTime'])is not int or extra['expireTime']<=0:raise ValueError('Hạn dùng không hợp lệ')
         result['expireTime']=extra['expireTime']

@@ -167,5 +167,5 @@ def handle(store,account,route,args):
             for kind,count in rewards.items():
                 if count:granted.update(reward(p,kind,count))
         if granted:temp['entityCountMap']=granted
-        store.save(p);store.audit(action,{'player':p['id']})
+        store.save(p);store.audit(action,{'player':p['id'],'count':sum(granted.values())if action=='composeItem'else 1})
         return delta(before,p,route,temp)
