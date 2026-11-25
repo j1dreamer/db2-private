@@ -1,0 +1,20 @@
+{
+  "built_ipa_modules_used": 319,
+  "home_name": "iOS Private",
+  "normal_ticket_count": 1,
+  "advanced_ticket_count": 1,
+  "team_roles": 1,
+  "topbar": {
+    "coin": 0,
+    "gem": 50,
+    "actionPoint": 60,
+    "maxActionPoint": 61,
+    "nextRecoveryLabel": "\u884c\u52a8\u529b\u5df2\u6ee1",
+    "buyTimes": [
+      0,
+      1
+    ]
+  },
+  "native_ios_execution_tested": false,
+  "pass": true
+}

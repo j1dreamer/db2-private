@@ -30,7 +30,7 @@ Hook chạy sau khi tải bảng/cache và trước `dataApi.init()`, sau đó �
 
 APK Android phát triển đã tích hợp overlay cùng các thay đổi trước đó: bỏ hướng dẫn, Speed 1–10, client/server 342 route. Tệp thay đổi so với APK fixed vẫn chỉ là `assets/assets/main/index.jsc` ngoài chữ ký; native không đổi. Xem [manifest APK](../development-apk.json). Cập nhật server từ nhánh `route-342`, giữ `data/`, dùng `Client-Route342-Dev-Patch.zip` với APK fixed làm đầu vào.
 
-**iOS hiện mới có công cụ đồng bộ dữ liệu và JSC thử nghiệm dữ liệu. Chưa có IPA private đầy đủ đã ký hoặc chạy trên iPhone.** JSC dữ liệu chưa sửa endpoint/SDK login/transport; không dùng nó như bản chơi private hoàn chỉnh.
+**Đã bổ sung IPA private thử nghiệm chưa ký:** xem [build, ký trên Mac và kết nối Cloud](../../IOS-PRIVATE.md). JSC chỉ đồng bộ dữ liệu trong báo cáo cũ vẫn là artifact riêng; IPA private mới thêm endpoint/SDK login/transport. Chưa có IPA đã ký hoặc chạy native trên iPhone.
 
 ## Tái lập
 

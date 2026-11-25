@@ -1,0 +1,16 @@
+{
+  "focused_tests": {
+    "total": 34,
+    "passed": 34,
+    "failed": 0,
+    "seconds": 30.425
+  },
+  "unsigned_ipa_jsc_ast_syntax_pass": true,
+  "all_preserved_archive_entries_compared": 17261,
+  "full_510997150_byte_ipa_reconstruction_verified": true,
+  "private_logo_login_setup_pass": true,
+  "built_ipa_model_generators_pass": true,
+  "live_vm_rpc_routes_passed": 8,
+  "signed_installation_verified": false,
+  "iphone_to_cloud_connection_verified": false
+}

@@ -6,6 +6,15 @@ from .protocol import package,packages,request,response,push
 from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless,expedition,commerce,activities,tournaments,top_arena,resources,guild_wars,island,cooperative,time_peak
 ROOT=Path(__file__).resolve().parent.parent
 
+def advertised_endpoint(authority,public_host,game_port,forwarded_proto='http'):
+    """For private SSH/Tailscale relays, keep the address used by this client."""
+    if public_host!='auto':return public_host,game_port
+    from urllib.parse import urlsplit
+    parsed=urlsplit('//'+authority)
+    if not parsed.hostname or parsed.username or parsed.password or parsed.path or parsed.query or parsed.fragment:
+        raise ValueError('Invalid connection Host')
+    return parsed.hostname,parsed.port or (443 if forwarded_proto=='https'else game_port)
+
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
     data_dir=Path(data_dir);data_dir.mkdir(parents=True,exist_ok=True)
     store=Store(data_dir/'game.sqlite3');token=admin_token or secrets.token_urlsafe(32)
@@ -149,7 +158,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                             original,encoded=recent[ident]
                             if original!=body:raise ValueError('Request ID reused with different payload')
                             await ws.send_bytes(encoded);continue
-                        if route=='gate.gateHandler.queryEntry':result={'code':200,'host':public_host,'port':game_port}
+                        if route=='gate.gateHandler.queryEntry':
+                            host,port=advertised_endpoint(req.host,public_host,game_port,req.headers.get('X-Forwarded-Proto',req.scheme))
+                            result={'code':200,'host':host,'port':port}
                         elif route=='connector.entryHandler.entry':
                             if uid in live:live[uid].discard(ws)
                             mail_seen.pop(ws,None);selected_players.pop(ws,None)

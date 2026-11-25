@@ -24,19 +24,18 @@ def patch(text,old,new):
     if text.count(old)!=1:raise ValueError('Unexpected client build: '+old[:75])
     return text.replace(old,new,1)
 
-def build(source,bundle,out,server,keep_package=False):
+def patch_client(text,source,server):
     from urllib.parse import urlsplit
     url=urlsplit(server)
-    if url.scheme!='http' or not url.hostname or url.path not in ('','/') or url.username or url.password or url.query or url.fragment:raise ValueError('Use http://HOST:PORT with no path, userinfo or query')
-    server=server.rstrip('/');port=url.port or 80
-    text=Path(bundle).read_text()
+    if url.scheme not in ('http','https') or not url.hostname or url.path not in ('','/') or url.username or url.password or url.query or url.fragment:raise ValueError('Use http(s)://HOST:PORT with no path, userinfo or query')
+    server=server.rstrip('/');port=url.port or (443 if url.scheme=='https'else 80)
     from tools.client_data import overlay,patch_bundle
     data_script,data_report=overlay(source)
     text=patch_bundle(text,data_script)
     # Resolve endpoints from a saved setting on every launch, with the build argument as default.
     start='c.init = function() {\nif (!o.isDev) {'
-    text=patch(text,start,'c.init = function() {\nvar privateUrl = cc.sys.localStorage.getItem("db2.private.server") || '+json.dumps(server)+';\nvar privateMatch = /^(http):\\/\\/([^/:]+)(?::(\\d+))?$/.exec(privateUrl);\nif (!privateMatch) throw new Error("Invalid private server URL");\nc.isSkipUpdate = true; c.isHideNoticePanel = true; c.isSkipGuide = true;\nif (!o.isDev) {')
-    for old,new in [('o.url = "http://lz-fun.miaomuxian.cn:20003";','o.url = privateUrl;'),('o.staticUrl = "http://lz-fun.miaomuxian.cn:20001";','o.staticUrl = privateUrl;'),('o.gateHost = "lz-fun.miaomuxian.cn";','o.gateHost = privateMatch[2];'),('o.gatePort = "20100";','o.gatePort = privateMatch[3] || "80";')]:text=patch(text,old,new)
+    text=patch(text,start,'c.init = function() {\nvar privateUrl = cc.sys.localStorage.getItem("db2.private.server") || '+json.dumps(server)+';\nvar privateMatch = /^(https?):\\/\\/([^/:]+)(?::(\\d+))?$/.exec(privateUrl);\nif (!privateMatch) throw new Error("Invalid private server URL");\nc.isHttps = privateMatch[1] === "https";\nc.isSkipUpdate = true; c.isHideNoticePanel = true; c.isSkipGuide = true;\nif (!o.isDev) {')
+    for old,new in [('o.url = "http://lz-fun.miaomuxian.cn:20003";','o.url = privateUrl;'),('o.staticUrl = "http://lz-fun.miaomuxian.cn:20001";','o.staticUrl = privateUrl;'),('o.gateHost = "lz-fun.miaomuxian.cn";','o.gateHost = privateMatch[2];'),('o.gatePort = "20100";','o.gatePort = privateMatch[3] || (c.isHttps ? "443" : "80");')]:text=patch(text,old,new)
     text=patch(text,'init: function() {\nif (cc.sys.isNative) {\nif (cc.sys.os == cc.sys.OS_ANDROID) jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SDKAdapter", "initPackageInfo", "()V");','init: function() {\nthis.sdkName="mmx"; this.channel="private"; this.packageInfo="DB2-private-dev"; return;\nif (cc.sys.isNative) {\nif (cc.sys.os == cc.sys.OS_ANDROID) jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SDKAdapter", "initPackageInfo", "()V");')
     text=patch(text,'var script = data.runScriptInfo.script;','var script = ""; // Private client: disable downloaded script execution.')
     text=patch(text,'eval(data.msg.body);','console.warn("Remote code execution disabled in private client");')
@@ -80,6 +79,10 @@ def build(source,bundle,out,server,keep_package=False):
     settings+='\n'+(Path(__file__).parent/'private_time_peak.js').read_text()
     text='window.DB2_PRIVATE_DEFAULT_SERVER='+json.dumps(server)+';\n'+settings+'\n'+text
     text=patch(text,'msg: a,\nplayerId: t.player ? t.player.id : 0','msg: a,\ntoken: t.token || \"\",\nplayerId: t.player ? t.player.id : 0')
+    return text,data_report
+
+def build(source,bundle,out,server,keep_package=False):
+    text,data_report=patch_client(Path(bundle).read_text(),source,server)
     # Equal-length AXML string replacement keeps binary string offsets intact.
     # Java/Native class names and resource IDs are preserved.
     app_package='com.dp2.web.apk' if keep_package else 'com.dp2.web.dev' 

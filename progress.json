@@ -13,12 +13,13 @@
     "Documented private policies for missing backend rules and missing Time Peak content",
     "Signed Android development APK, tutorial skipped and whole-game Speed 1x-10x",
     "Current canonical-data APK reconstruction verified independently using PowerShell and Python",
-    "Android canonical shared data; selectively imported iOS boxes 373/379 and normalized 8 iOS tables plus soul maps; 8 headless full combat comparisons match"
+    "Android canonical shared data; selectively imported iOS boxes 373/379 and normalized 8 iOS tables plus soul maps; 8 headless full combat comparisons match",
+    "Unsigned private iOS IPA prepared and reconstructed; native bytes preserved; setup/model/live VM RPC checks pass; external iPhone connection and signing remain"
   ],
   "remaining": [
     "Android/BlueStacks rendering and end-to-end device gameplay verification of this new build",
     "Termux/Tailscale device runtime verification",
-    "Create and legitimately re-sign a private iOS client, then test on an iPhone"
+    "Legitimately sign the prepared private IPA on the user's Mac, establish a supported Cloud-to-phone connection and test on an iPhone"
   ],
   "playable_verified": false,
   "ios_ipa_obtained": true,
@@ -47,5 +48,12 @@
     373,
     379
   ],
-  "validation_report": "analysis/canonical-validation.json"
+  "validation_report": "analysis/canonical-validation.json",
+  "ios_private_unsigned_ipa_built": true,
+  "ios_private_client_report": "analysis/ios/private-client-build.json",
+  "ios_private_client_ipa_sha256": "8653b63259b17b1645d290a4de304a4d4e45f5df66a2cc26f121b4290cf809e1",
+  "ios_private_models_passed": true,
+  "cloud_live_http_and_rpc_verified": true,
+  "ios_phone_to_cloud_connection_verified": false,
+  "latest_targeted_tests_passed": 34
 }
