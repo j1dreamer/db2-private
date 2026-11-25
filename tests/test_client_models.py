@@ -27,9 +27,10 @@ class ClientModelTests(unittest.TestCase):
   state=self.client(self.profile,[],check_home=True)
   self.assertEqual(state['home']['playerName'],'Goku')
   self.assertEqual(state['home']['vip'],0)
-  for key in ('isShowFirstTopUp','isHaveCarnival','isHaveCarnival2','isShowAcePack','isShowDreamActivity'):
+  for key in ('isShowFirstTopUp','isHaveCarnival','isHaveCarnival2','isShowAcePack'):
    self.assertFalse(state['home'][key],key)
-  self.assertIsNone(state['home']['starSignPointPanel'])
+  self.assertTrue(state['home']['isShowDreamActivity'])
+  self.assertIsNotNone(state['home']['starSignPointPanel'])
   self.assertEqual(state['daily']['receivedPointMap'],{'daily':{},'weekly':{}})
   self.assertFalse(state['daily']['isCanReceiveTaskAward'])
   self.assertFalse(state['quick']['isNeedMark'])

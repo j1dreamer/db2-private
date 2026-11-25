@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 217,
-  "unsupported_routes": 125,
+  "implemented_routes": 228,
+  "unsupported_routes": 114,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -1414,16 +1414,20 @@
     },
     {
       "route": "logic.playerHandler.activitySaveGem",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.playerHandler.activitySelectDropList",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
@@ -1482,9 +1486,11 @@
     },
     {
       "route": "logic.playerHandler.dreamRoll",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
@@ -1525,16 +1531,20 @@
     },
     {
       "route": "logic.playerHandler.fillLoginTopUp",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.playerHandler.fillTaskActive",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
@@ -1568,9 +1578,11 @@
     },
     {
       "route": "logic.playerHandler.receiveScorePointBoxReward",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
@@ -1604,16 +1616,20 @@
     },
     {
       "route": "logic.playerHandler.rollDial",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.playerHandler.scorePoint",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
@@ -1700,9 +1716,11 @@
     },
     {
       "route": "logic.playerHandler.spWish",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
@@ -1725,16 +1743,20 @@
     },
     {
       "route": "logic.playerHandler.updateFreeActivity",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.playerHandler.updateRepeatReceiveActivityTime",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
       "device_verified": false
     },
     {

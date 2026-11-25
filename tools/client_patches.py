@@ -235,3 +235,33 @@ def patch_activity_callbacks(text,module=None):
             if text.count(old)!=1:raise ValueError('Unexpected activity callback implementation')
             text=text.replace(old,new,1)
     return text
+
+def patch_dream_state(text):
+    changes={
+        'var r = this.readServerData("playerPosData");\ne.curPos <= 0':'''var r = null;
+this.saveServerDate("_multiple", e.multiple || 1);
+this.saveServerDate("_bye", !!e.skip);
+this.saveServerDate("_hasItPassed", !1);
+this.saveServerDate("_onNextLap", 0);
+this.saveServerDate("_reversal", !1);
+e.curPos <= 0''',
+        'dreamCoin: 0,\nticket: 10,\nticketGold: 5':'dreamCoin: i.player.bag.getItemCount(93),\nticket: i.player.bag.getItemCount(94),\nticketGold: i.player.bag.getItemCount(95)',
+        'if (a.entityCountMap.length > 0) {':'if (a.entityCountMap && a.entityCountMap.length > 0) {',
+        'a._serverEvent = r;\ni && i(t);':'''a._serverEvent = r;
+if (e._temp && typeof e._temp.fromPos === "number") {
+a.index = e._temp.fromPos;
+a._multiple = e._temp.stepMultiplier || 1;
+a._bye = !!e._temp.skipReward;
+}
+i && i(t);''',
+        'e._serverEvent = i;\na && a();':'''e._serverEvent = i;
+if (t._temp && typeof t._temp.fromPos === "number") {
+e.index = t._temp.fromPos;
+e._bye = !!t._temp.skipReward;
+}
+a && a();'''
+    }
+    for old,new in changes.items():
+        if text.count(old)!=1:raise ValueError('Unexpected dream state implementation')
+        text=text.replace(old,new,1)
+    return text

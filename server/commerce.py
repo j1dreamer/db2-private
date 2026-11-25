@@ -12,6 +12,9 @@ GOODS={
  1:{'name':'Normal ticket x1','cost':300,'point':3,'rewards':'119x1,2x1','limit':1},
  2:{'name':'Advanced ticket x1','cost':600,'point':6,'rewards':'120x1,2x1','limit':1},
  3:{'name':'Training water x20','cost':200,'point':2,'rewards':'20001x20','limit':5},
+ 4:{'name':'Private wheel ticket x1','cost':100,'point':1,'rewards':'88x1','limit':8},
+ 5:{'name':'Normal dice x1','cost':50,'point':1,'rewards':'94x1','limit':20},
+ 6:{'name':'Golden dice x1','cost':100,'point':2,'rewards':'95x1','limit':5},
 }
 EXCHANGES={
  'exchange':{'moneyId':113,'list':[{'id':1,'entityId':20001,'count':5,'price':1,'maxBuyTimes':10,'extra':{}}]},
@@ -87,6 +90,8 @@ def handle(store,account,route,args):
         p=store.player(account);before=snapshot(p);temp={'privateLocalPurchase':True}
         if action in ('buyGemGoods','costTopUpPoint','costTopUpPoint2'):temp['entityCountMap']=purchase(p,action,args)
         elif action!='topUpGoodsList':temp['entityCountMap']=exchange(p,action,args)
-        refresh(p);store.save(p)
+        refresh(p)
+        from .activities import refresh as refresh_activities
+        refresh_activities(store,p);store.save(p)
         if action!='topUpGoodsList':store.audit('private_exchange',{'player':p['id'],'route':route,'id':args.get('id',args.get('goodsId'))})
         result=delta(before,p,route,temp);result['extra']={**result.get('extra',{}),'goodsList':p['extra']['goodsList']};return result

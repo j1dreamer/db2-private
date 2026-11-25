@@ -15,6 +15,7 @@ class Store:
         CREATE TABLE IF NOT EXISTS giftcodes(code TEXT PRIMARY KEY,gem INTEGER NOT NULL CHECK(gem>=0),expires INTEGER NOT NULL,max_uses INTEGER NOT NULL CHECK(max_uses>0));
         CREATE TABLE IF NOT EXISTS redemptions(code TEXT REFERENCES giftcodes(code),player INTEGER REFERENCES players(id),PRIMARY KEY(code,player));
         CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY,data TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS activity_claims(player INTEGER REFERENCES players(id),name TEXT NOT NULL,period TEXT NOT NULL,idx INTEGER NOT NULL,PRIMARY KEY(player,name,period,idx));
         CREATE TABLE IF NOT EXISTS event_claims(event TEXT REFERENCES events(id),player INTEGER REFERENCES players(id),PRIMARY KEY(event,player));
         CREATE TABLE IF NOT EXISTS pool_entries(pool INTEGER NOT NULL,entity INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(pool,entity));
         CREATE TABLE IF NOT EXISTS notifications(id INTEGER PRIMARY KEY AUTOINCREMENT,account INTEGER REFERENCES accounts(id),event TEXT NOT NULL,data TEXT NOT NULL);
@@ -99,7 +100,9 @@ class Store:
         from .expedition import refresh as refresh_expedition
         changed=refresh_expedition(data)or changed
         from .commerce import refresh as refresh_commerce
-        if refresh_commerce(data)or changed:self.save(data)
+        changed=refresh_commerce(data)or changed
+        from .activities import refresh as refresh_activities
+        if refresh_activities(self,data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

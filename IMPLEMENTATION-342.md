@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 217 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 125 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 217 luồng đã xác minh trên thiết bị.
-- Đã chạy 172 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
+- 228 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 114 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 228 luồng đã xác minh trên thiết bị.
+- Đã chạy 182 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
 
 ## Phần mới trong nhánh
 
@@ -87,3 +87,22 @@ Combat ba đội tải engine một lần cho toàn bộ trận; kết quả và
 3. Bang hội, đội nhiều người, chiến trường/liên server, lịch event và các RPC quản trị.
 
 Mỗi nhóm chỉ nâng trạng thái khi có xử lý và kiểm thử; không thay con số mục tiêu 342.
+
+## Event riêng và 11 route playerHandler
+
+Schema 21 thêm trạng thái event có ngày/tuần UTC+7, lưu SQLite; `receiveActivityAward` nhận được nhiều mốc khác nhau của cùng event trong một batch, nhưng chống trùng `(event, kỳ, chỉ số)`. Nếu một mốc sai, toàn bộ batch hoàn tác. Event gem do admin tạo trước đây tiếp tục dùng bảng `events/event_claims`; tên các event dựng sẵn bên dưới là tên dành riêng.
+
+Các giá, xác suất, mốc và thời gian sau đây là **luật riêng**, không phải cấu hình server gốc được khôi phục:
+
+- `saveGemUpgradeLevel`: gửi 1.000 gem một lần, nhận 600 gem ở cấp 20 và 40. `saveGemUpgradeLevelFree`: sau khi gửi, nhận 1 vé thường mỗi ngày. Cập nhật điều kiện miễn phí không tự phát thưởng.
+- `task_active`: mốc 20/40/60/80/100, mỗi mốc 1 phiếu vòng quay thường + 5 nước luyện. Bù điểm event tốn 2 gem/điểm còn thiếu, không thay điểm nhiệm vụ chính. `upgradeVip`: mỗi mốc VIP 1–16 cho 1 vé thường + `10 × VIP` vật phẩm 112.
+- `privateLogin`: từ thứ Hai đến hết Chủ nhật; mỗi ngày thực sự đăng nhập được tính một lần. Bù đến 7 ngày chỉ trong hai ngày cuối tuần, 50 gem/ngày. Mỗi ngày cho 1 xúc xắc thường; tầng thêm cho 1 xúc xắc vàng nếu đã từng đổi gói nội bộ 1. Không tăng `topUpMoney`, không xác nhận thanh toán thật.
+- `privateSelect`: chọn một trong 2 vé thường / 20 nước luyện / 20 đá luyện, chốt lựa chọn một lần rồi nhận qua route thưởng chung.
+- `endless_reward`: đã từng đổi gói nội bộ 1/2 thì có thể nhận 10.000 vàng/25 gem mỗi giờ tương ứng. Đồng hồ server; tăng tốc game không rút ngắn thời gian nhận. Khởi động lại không xóa cooldown.
+- Vòng quay sử dụng đúng ID tiền của hằng số gốc (113/114/117/89/88), hiển thị đúng 8 phần thưởng. Pool riêng: vàng 5.000 (30%), nước luyện 5 (20%), đá luyện 5 (15%), vé thường 1 (10%), vé cao cấp 1 (2%), đá tiến hóa 2 (10%), gem 50 (5%), phiếu thường 2 (8%). Quay pay dùng phiếu nội bộ 88, không lặp vị trí trong 8 lượt/ngày; các vòng khác có hoàn lại. Lượt hỗ trợ thường chỉ dùng token local loại 3 đã cấp và chỉ tiêu được một lần.
+- Hai pool tích điểm dùng 113 và 61002; 1 lượt = 1 điểm, có thể quay 1/10/100. Rương ở 10/30/50/100/200 điểm cho 2 phiếu thường / 1 vé thường / 1 vé cao cấp / 2 vé cao cấp / 3 vé cao cấp, mỗi rương một lần/tuần. Điểm xếp hạng lấy từ lượt đã tiêu thật.
+- SP riêng dùng class 55, vé 11; nếu thiếu vé cho cả batch thì dùng 300 gem/lượt, tối đa 10 lượt gem/ngày. Xác suất tướng 3 sao là 5%, còn lại là nguyên liệu theo `SP_POOL`; lượt thứ 20 liên tiếp chưa có tướng bảo đảm tướng, sau đó reset. Tướng trùng chuyển mảnh hồn theo hàm gốc; hiệu ứng client gốc được kiểm thử với delta trùng tướng.
+- Bàn Dream đọc trực tiếp bản đồ nhúng trong APK, lưu chứng cứ tại `analysis/dream-map.json`: 58 ô, ô event 4/13/23/35/50. Xúc xắc thường 94 ngẫu nhiên đều 1–6; vàng 95 chọn 1–6. Phần thưởng ô thường luân phiên vàng 5.000 / nước 5 / Dream coin 10 / đá 5; qua đích cho 100 Dream coin. Sáu event đồng xác suất: nhân ba thưởng ô kế tiếp / cho xúc xắc vàng / cho xúc xắc thường / nhân đôi bước thường kế tiếp / lùi 5 ô, chặn tại ô 1 đúng client / bỏ thưởng lượt kế. Vàng không dùng và xóa buff nhân bước. Quest gieo 5/10/20 lượt cho 50/100/200 Dream coin. Tuần mới đặt lại bàn và tiến độ; tối đa 100 log thưởng.
+- Gói nội bộ mới: 4 = 100 gem → 1 phiếu 88 (8/ngày), 5 = 50 gem → 1 xúc xắc 94 (20/ngày), 6 = 100 gem → 1 xúc xắc 95 (5/ngày). Vẫn dùng chung hạn mức giữa đổi gem và phiếu local, không có tiền nạp thật.
+
+Bản vá Dream khởi tạo số xúc xắc từ túi, khôi phục buff/vị trí từ server khi vào lại, xóa cờ vòng cũ và tránh truy cập `.length` trên danh sách thưởng null trong tự động gieo. APK mốc 228 đã chứa bản vá Dream này và được kiểm tra cấu trúc/chữ ký/tái tạo file; chưa chạy thử trên thiết bị.

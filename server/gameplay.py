@@ -112,20 +112,8 @@ def draw(store,account,mode,count):
         return {'code':200,**{key:player[key] for key in ('gem','coin','costGem','point')},'bag':{'items':item_delta,'lastIdx':player['bag']['lastIdx']},'team':{'roles':role_delta},'_temp':{'route':'logic.pointHandler.'+mode,'dropList':rewards,'entityCountMap':entity_map}}
 
 def claim_events(store,account,names,indices):
-    if not isinstance(names,list) or not isinstance(indices,list) or len(names)!=len(indices) or not 1<=len(names)<=50 or len(set(names))!=len(names):raise ValueError('Danh sách thưởng không hợp lệ')
-    with store.transaction():
-        p=store.player(account)
-        if not p:raise ValueError('Chưa có nhân vật')
-        gem=0
-        for name,index in zip(names,indices):
-            if not isinstance(name,str) or index!=0:raise ValueError('Chỉ hỗ trợ phần thưởng riêng số 0')
-            row=store.db.execute('SELECT data FROM events WHERE id=?',(name,)).fetchone()
-            if not row:raise ValueError('Event không tồn tại')
-            event=json.loads(row[0]);now=time.time()
-            if not event['start']<=now<event['end']:raise ValueError('Event chưa mở hoặc đã kết thúc')
-            store.db.execute('INSERT INTO event_claims VALUES(?,?)',(name,p['id']));gem+=event['gem']
-        p['gem']+=gem;store.save(p);store.audit('claim_events',{'player':p['id'],'events':names,'gem':gem})
-        return {'code':200,'gem':p['gem'],'_temp':{'route':'logic.playerHandler.receiveActivityAward','entityCountMap':{'102':gem}}}
+    from .activities import claim_batch
+    return claim_batch(store,account,names,indices)
 
 def validate_pool_entry(body):
     pool=int(body['pool']);entity=int(body['entity']);weight=int(body['weight']);count=int(body['count']);star=int(body.get('star',1))

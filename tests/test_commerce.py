@@ -14,7 +14,7 @@ class CommerceTests(unittest.TestCase):
  def call(self,action,args=None):
   route='logic.playerHandler.'+action;r=commerce.handle(self.store,1,route,args or {});self.seen.add(route);return r
  def test_all_nine_routes_charge_owned_resources_and_persist_limits(self):
-  r=self.call('topUpGoodsList');self.assertEqual(len(r['extra']['goodsList']),3)
+  r=self.call('topUpGoodsList');self.assertEqual(len(r['extra']['goodsList']),6)
   self.call('buyGemGoods',{'id':1,'costGem':300});p=self.store.player(1);self.assertEqual(p['gem'],99700);self.assertEqual(stack_count(p,2),1);self.assertEqual(p['vip']['topUpMoney'],0)
   insert(p,1,20);insert(p,2,20);insert(p,113,20);insert(p,119,20);insert(p,105,1000);insert(p,116,1000);insert(p,107,1000);self.store.save(p)
   self.call('costTopUpPoint',{'goodsId':2});self.call('costTopUpPoint2',{'goodsId':3})
@@ -38,6 +38,6 @@ class CommerceTests(unittest.TestCase):
  def test_recovered_shop_voucher_and_exchange_consumers_accept_profile(self):
   root=Path(__file__).parent;p=self.store.player(1);insert(p,1,4);insert(p,2,5);self.store.save(p);source=(root.parent/'client/main.decoded.js').read_text();subprocess.run(['node','--check'],input=patch_private_vouchers(source),text=True,capture_output=True,check=True)
   overrides={'dataApi':patch_voucher_labels((root/'fixtures/client_dataApi.js').read_text()),'topUpPanel':patch_optional_vip_gifts((root/'fixtures/client_topUpPanel.js').read_text())}
-  result=subprocess.run(['node',str(root/'fixtures/client_profile.cjs')],input=json.dumps({'profile':self.store.player(1),'checkTeam':True,'checkCommerce':True,'checkHome':True,'moduleOverrides':overrides}),text=True,capture_output=True);self.assertEqual(result.returncode,0,result.stderr);views=json.loads(result.stdout)['commerceViews'];self.assertEqual(len(views['goods']['topUpItems']),3);self.assertEqual(views['vouchers']['topUpPoint'],9);self.assertEqual(views['dailyVouchers']['topUpPoint'],4);self.assertEqual(views['voucherNames'],['Daily local voucher','Local voucher'])
+  result=subprocess.run(['node',str(root/'fixtures/client_profile.cjs')],input=json.dumps({'profile':self.store.player(1),'checkTeam':True,'checkCommerce':True,'checkHome':True,'moduleOverrides':overrides}),text=True,capture_output=True);self.assertEqual(result.returncode,0,result.stderr);views=json.loads(result.stdout)['commerceViews'];self.assertEqual(len(views['goods']['topUpItems']),6);self.assertEqual(views['vouchers']['topUpPoint'],9);self.assertEqual(views['dailyVouchers']['topUpPoint'],4);self.assertEqual(views['voucherNames'],['Daily local voucher','Local voucher'])
  def test_original_activity_buttons_send_names_prices_and_run_callbacks(self):
   root=Path(__file__).parent;overrides={name:patch_activity_callbacks((root/'fixtures'/('client_'+name+'.js')).read_text(),name)for name in ('activityPanel','dreamExtActivityPanel')};result=subprocess.run(['node',str(root/'fixtures/client_profile.cjs')],input=json.dumps({'profile':self.store.player(1),'checkTeam':True,'checkActivityCallbacks':True,'moduleOverrides':overrides}),text=True,capture_output=True);self.assertEqual(result.returncode,0,result.stderr);self.assertEqual(json.loads(result.stdout)['activityCalls'],[{'name':'privateTask','cost':2},{'updated':'task'},{'name':'privateLogin'},{'updated':'login'}])

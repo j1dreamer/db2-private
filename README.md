@@ -1,6 +1,6 @@
-> Nhánh phát triển `route-342`: **217/342 route**, 172 kiểm thử qua; còn 125 route. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
+> Nhánh phát triển `route-342`: **228/342 route**, 182 kiểm thử qua; còn 114 route. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
 >
-> APK mốc 217 route: [Client-Route342-Dev-Patch.zip](Client-Route342-Dev-Patch.zip), khoảng 5 MB. Giải nén cạnh **DB2-Private-Android-fixed.apk**, chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. Có bỏ hướng dẫn, Speed 1×–10× cho toàn game và các bản vá giao thức của nhánh; cùng package/chữ ký bản fixed. Đây là APK phát triển, chưa phải bản 342/342. Các ZIP cũ bên dưới chỉ dành cho main cũ.
+> APK mốc 228 route: [Client-Route342-Dev-Patch.zip](Client-Route342-Dev-Patch.zip), khoảng 5 MB. Giải nén cạnh **DB2-Private-Android-fixed.apk**, chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. Có bỏ hướng dẫn, Speed 1×–10× cho toàn game và các bản vá giao thức của nhánh; cùng package/chữ ký bản fixed. Đây là APK phát triển, chưa phải bản 342/342. Các ZIP cũ bên dưới chỉ dành cho main cũ.
 >
 > Server phải dùng [source nhánh route-342](https://github.com/j1dreamer/db2-private/archive/refs/heads/route-342.zip), có Python và **Node.js LTS** (`pkg install nodejs` trên Termux). Dừng server cũ, giải nén source vào thư mục mới, chép thư mục `data` từ bản cũ sang rồi chạy `start.bat`; giữ lại thư mục cũ làm bản sao lưu. `Check-Home.py` → `running_health` sẽ hiển thị build, schema và số route để phát hiện đang chạy nhầm server cũ.
 
@@ -12,7 +12,7 @@ Backend Python + SQLite, web quản trị và công cụ đóng gói client Andr
 
 ## Trạng thái thực tế
 
-- Nhánh hiện tại có 217 route nghiệp vụ/172 kiểm thử và profile schema 20; danh sách chi tiết ở `analysis/route-coverage.json`. Backend có đăng nhập/session/Pomelo, SQLite, web quản trị, giftcode/gacha, ải, túi/đội hình, nhiệm vụ, bạn bè/chat/thư, arena, bang, boss và đặc huấn.
+- Nhánh hiện tại có 217 route nghiệp vụ/182 kiểm thử và profile schema 20; danh sách chi tiết ở `analysis/route-coverage.json`. Backend có đăng nhập/session/Pomelo, SQLite, web quản trị, giftcode/gacha, ải, túi/đội hình, nhiệm vụ, bạn bè/chat/thư, arena, bang, boss và đặc huấn.
 - Đã kiểm thử giao thức và SQLite qua mạng loopback.
 - Còn 125 route chưa triển khai; chưa xác minh các luồng mới trên BlueStacks, chưa tích hợp mọi event vào UI gốc.
 - Người dùng đã vào sảnh/quay trên bản fixed cũ. APK phát triển mới bỏ hướng dẫn, có Speed 1×–10× và vá giao thức; mã SDK native vẫn trong gói nhưng JS không gửi telemetry/thanh toán native. Kết quả chơi trên APK mới vẫn cần kiểm tra thực tế.
@@ -69,7 +69,7 @@ Sao lưu khi server đã dừng, hoặc dùng SQLite backup API; không sao ché
 
 - Quay thường dùng vé 119 nếu đủ cho cả lượt quay; nếu thiếu, dùng 300 gem/lần hoặc 2.700 gem/10 lần. Quay 100 lần dùng 27.000 gem. Vé lẻ không bị trừ khi chọn thanh toán bằng gem.
 - Cao cấp dùng vé 120. Pool là 202/203/204; đổi pool tốn 300 gem theo hằng số client.
-- Nếu chưa có pool tùy chỉnh, đọc drop table được trích từ client. Lần quay đầu dùng class 101 hoặc 201. Chưa triển khai bảo hiểm và điều chỉnh xác suất theo wishlist; không khẳng định thuật toán giống server gốc.
+- Nếu chưa có pool tùy chỉnh, đọc drop table được trích từ client. Lần quay đầu dùng class 101 hoặc 201. Pool mặc định bảo đảm nhánh 3 sao mỗi lượt thứ 20 theo hằng số client, theo luật riêng dùng counter tích lũy. Pool admin giữ cấu hình riêng; chưa điều chỉnh xác suất theo wishlist. Không khẳng định thuật toán giống server gốc.
 - Tướng trùng chuyển thành 10 hồn cùng class: đây là chính sách server riêng hiện tại.
 - Trên web quản trị, thêm mục thưởng vào pool sẽ kích hoạt danh sách tùy chỉnh cho pool đó. Trọng số được chuẩn hóa tương đối, không phải phần trăm độc lập.
 - Event quản trị hiện có một phần thưởng gem tại chỉ số 0, nhận bằng route `logic.playerHandler.receiveActivityAward`. Mỗi nhân vật nhận một lần, thời gian server tính bằng giây Unix. Chưa nối các tên event tùy ý vào màn event gốc của game.

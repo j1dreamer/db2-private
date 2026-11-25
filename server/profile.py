@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=20
+SCHEMA_VERSION=21
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -44,6 +44,8 @@ def new_profile(pid,account,name,username):
     profile['expedition']['sixChallengerInfo']={'team':json.loads(json.dumps(preview))}
     from .commerce import refresh as refresh_commerce
     profile['buyGoodsTimesMap']={};profile['topUpPoint']=0;refresh_commerce(profile)
+    from .activities import refresh as refresh_activities
+    refresh_activities(None,profile)
     grant_starter_tickets(profile)
     from .shops import initialize
     initialize(profile)
