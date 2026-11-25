@@ -1,0 +1,132 @@
+{
+  "filename": "DB2-Private-Android-dev.apk",
+  "size": 524284609,
+  "sha256": "a198837ccae5a3ad662d2489c4e1748016aebe77359e84f4bc4734c5f389f430",
+  "parts": [
+    {
+      "file": "parts/part-000.bin",
+      "size": 20971520,
+      "sha256": "c797b41156b6dc800a8e7c1c5aa1d7fb45de5af6f19f76c87bb2275b7d297474"
+    },
+    {
+      "file": "parts/part-001.bin",
+      "size": 20971520,
+      "sha256": "a58d2395f40c117d5d12bdec881e783f178b73633021fea7d3760f299e995c9c"
+    },
+    {
+      "file": "parts/part-002.bin",
+      "size": 20971520,
+      "sha256": "f3a9c66be28a15d4a87bb9973316ba8ed69901a07f77c6a87d01cc65bc29716f"
+    },
+    {
+      "file": "parts/part-003.bin",
+      "size": 20971520,
+      "sha256": "79addebd156f65ffcb91220abb490e3b49d831ea8ee781b1d213cd70e3d8a19f"
+    },
+    {
+      "file": "parts/part-004.bin",
+      "size": 20971520,
+      "sha256": "da335369a11a4797efa4b86e5767b2399b0847451bc1d4f6245a7027b1eead76"
+    },
+    {
+      "file": "parts/part-005.bin",
+      "size": 20971520,
+      "sha256": "e86826e93f1d3ea88aa02be5e00e35aaece21aa817b6027b336ebae14853c4e2"
+    },
+    {
+      "file": "parts/part-006.bin",
+      "size": 20971520,
+      "sha256": "1c70ce358c4c6f82d5be0d96a3ad73c622c25b119d5c8a93c8ec70f93bde440f"
+    },
+    {
+      "file": "parts/part-007.bin",
+      "size": 20971520,
+      "sha256": "f4e583ca02c63b1368105bb9c89b0b41d092f4e6aa483bfb7a64dd801eb6dae6"
+    },
+    {
+      "file": "parts/part-008.bin",
+      "size": 20971520,
+      "sha256": "8bc946869bfaf310e98ee81281474d12a2d01e69542b45a023ecf39afd81cde7"
+    },
+    {
+      "file": "parts/part-009.bin",
+      "size": 20971520,
+      "sha256": "2175cce4d2262e409a057924ccc53a20d013a1f033e190a41dc4d75ee1cd17c4"
+    },
+    {
+      "file": "parts/part-010.bin",
+      "size": 20971520,
+      "sha256": "298934ad758bcedeafa6a33a7b3696e8659595a6fd93531a3d613dfb15522cec"
+    },
+    {
+      "file": "parts/part-011.bin",
+      "size": 20971520,
+      "sha256": "f23788bbd360615fabdb81015b0c2218011b5b45980e1e2e5a987136bbbf97f1"
+    },
+    {
+      "file": "parts/part-012.bin",
+      "size": 20971520,
+      "sha256": "645ae36b69ba56492d873ff6a4561a0d8a5d8cc778fd78d6bc8c59523e979242"
+    },
+    {
+      "file": "parts/part-013.bin",
+      "size": 20971520,
+      "sha256": "e1d11344353e2e4c4af8d0a3472a6b7dd69dff7a4b71814faa9d8729355b15be"
+    },
+    {
+      "file": "parts/part-014.bin",
+      "size": 20971520,
+      "sha256": "2516dfc8686861250667e92d4ac836232799728aae35d9860f8572bc4b874170"
+    },
+    {
+      "file": "parts/part-015.bin",
+      "size": 20971520,
+      "sha256": "c905b31e6d3f9f101095eb4726b4e7e7c0092d1dbcf80a643b49ad4aa2295218"
+    },
+    {
+      "file": "parts/part-016.bin",
+      "size": 20971520,
+      "sha256": "784f5fcd473d0b72ce3445b40a5fe15db482fb7ce3e69a5fde0d823bc68c12ab"
+    },
+    {
+      "file": "parts/part-017.bin",
+      "size": 20971520,
+      "sha256": "0555ca8f09eaba2348f129396ae73a7bb3ed0667c6e6a1c9f2c2ce50ce76a87a"
+    },
+    {
+      "file": "parts/part-018.bin",
+      "size": 20971520,
+      "sha256": "c769fc0f01f92ca500ce3439dd71d8a2566a65d294defefbe6440de247857d4f"
+    },
+    {
+      "file": "parts/part-019.bin",
+      "size": 20971520,
+      "sha256": "5e70890460efd1bbbd15cdfe4805a870734189941d49d98032313be037efb412"
+    },
+    {
+      "file": "parts/part-020.bin",
+      "size": 20971520,
+      "sha256": "0e70c0a0720370a55851d7ad1c6e1716f5ebe55c56afd355e46a109980e9d293"
+    },
+    {
+      "file": "parts/part-021.bin",
+      "size": 20971520,
+      "sha256": "0dfad0329491553dbed450a0877c2c8949851ba2605b217e6cdbbe6c22a56e74"
+    },
+    {
+      "file": "parts/part-022.bin",
+      "size": 20971520,
+      "sha256": "d8fca223748ca5ce0ab9ab4a0bd8ca270ccf3a8cbb112bd342accded4e00cf27"
+    },
+    {
+      "file": "parts/part-023.bin",
+      "size": 20971520,
+      "sha256": "d799cb263650eef89c459754d4e5c846f9a4df7d33c2a214d9e40c0ce1ff5aa1"
+    },
+    {
+      "file": "parts/part-024.bin",
+      "size": 20968129,
+      "sha256": "85503caee037e6c2fddd8ee3ff4075a012e1332694ba36c775ea80c2c7097e79"
+    }
+  ]
+}

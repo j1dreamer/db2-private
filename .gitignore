@@ -1,0 +1,3 @@
+*.apk
+*.assembling
+__pycache__/
