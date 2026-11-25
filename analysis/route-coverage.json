@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 176,
-  "unsupported_routes": 166,
+  "implemented_routes": 186,
+  "unsupported_routes": 156,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -1822,37 +1822,47 @@
     },
     {
       "route": "logic.practiceHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.practiceHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.practiceHandler.defenseTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.practiceHandler.match",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.practiceHandler.setDefenseInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {
@@ -2012,37 +2022,47 @@
     },
     {
       "route": "logic.sixPracticeHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.sixPracticeHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.sixPracticeHandler.defenseTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.sixPracticeHandler.match",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.sixPracticeHandler.setDefenseInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
       "device_verified": false
     },
     {

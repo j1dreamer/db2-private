@@ -128,3 +128,13 @@ def patch_boss_transport(text):
             if text.count(old)!=1:raise ValueError('Unexpected boss roster callback')
             text=text.replace(old,new,1)
     return text
+
+def patch_practice_transport(text):
+    for prefix in ('_','y'):
+        start=text.index(prefix+'.choose(this.statusData.opts.defenderId, this.data.selectIdxs, this.data.selectShipIdxs, this.statusData.opts.ctime, function(e) {')
+        end=text.index('\nbreak;',start);section=text[start:end]
+        old='d.practiceBattleInstant(l.clone(i), l.clone(o))'
+        if section.count(old)!=1:raise ValueError('Unexpected practice combat transport')
+        section=section.replace(old,'d.practiceBattleInstant(l.clone(i), l.clone(o), e._temp.seed)')
+        text=text[:start]+section+text[end:]
+    return text

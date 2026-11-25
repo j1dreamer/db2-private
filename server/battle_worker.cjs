@@ -28,6 +28,10 @@ if(input.mode==='progression'){
  for(const key of new Set([...role.getPower.toString().matchAll(/e\.(\w+)/g)].map(m=>m[1])))values.powerFactors[key]=role.getPower({...base,[key]:1},0,0);
  process.stdout.write(JSON.stringify(values));process.exit(0);
 }
+if(input.mode==='practiceRewards'){
+ const cfg=load('serverConfig');
+ process.stdout.write(JSON.stringify(input.cases.map(c=>c.mode==='practice'?cfg.PRACTICE.FUNS.getRewardDropList(c.type,c.level,c.trainingLevel,c.ratio,c.raid):cfg.SIX_PRACTICE.FUNS.getRewardDropList(c.vip,c.ratio))));process.exit(0);
+}
 if(input.mode==='clientTeam'){
  const source=fs.readFileSync(path.join(__dirname,'../client/main.decoded.js'),'utf8');
  const start=source.indexOf('F.buildBattleTeam = function('),end=source.indexOf('F.buildBlessingSkills = function(',start);
@@ -56,8 +60,8 @@ if(input.mode==='bestOfThree'){
  }
  process.stdout.write(JSON.stringify({isWin:wins===2,rounds}));process.exit(0);
 }
-if(input.mode==='pvp'){
- const outcome=main.pkBattleInstant(input.team,input.defender,input.seed||1);
+if(input.mode==='pvp'||input.mode==='practice'){
+ const outcome=input.mode==='practice'?main.practiceBattleInstant(input.team,input.defender,input.seed||1):main.pkBattleInstant(input.team,input.defender,input.seed||1);
  process.stdout.write(JSON.stringify({...outcome,tickNumber:fight.area.timer.tickNumber,damageMap:main.damageMap,attacker:fight.team1,defender:fight.team2}));process.exit(0);
 }
 main.rolesCount=input.team.roles.length;main.isAuto=!!input.auto;main.isInstant=true;main.isShow=false;

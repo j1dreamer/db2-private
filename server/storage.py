@@ -31,6 +31,7 @@ class Store:
         CREATE TABLE IF NOT EXISTS guild_requests(guild INTEGER REFERENCES guilds(id),player INTEGER REFERENCES players(id),created INTEGER NOT NULL,PRIMARY KEY(guild,player));
         CREATE TABLE IF NOT EXISTS boss_damage(mode TEXT NOT NULL,day TEXT NOT NULL,scope INTEGER NOT NULL,bracket TEXT NOT NULL,player INTEGER REFERENCES players(id),damage REAL NOT NULL,info TEXT NOT NULL,PRIMARY KEY(mode,day,scope,bracket,player));
         CREATE TABLE IF NOT EXISTS boss_settlements(mode TEXT NOT NULL,day TEXT NOT NULL,scope INTEGER NOT NULL,bracket TEXT NOT NULL,player INTEGER REFERENCES players(id),rank INTEGER NOT NULL,PRIMARY KEY(mode,day,scope,bracket,player));
+        CREATE TABLE IF NOT EXISTS practice_sessions(mode TEXT NOT NULL,player INTEGER REFERENCES players(id),ctime INTEGER NOT NULL,data TEXT NOT NULL,finish INTEGER NOT NULL,settled INTEGER NOT NULL,PRIMARY KEY(mode,player,ctime));
         CREATE INDEX IF NOT EXISTS chat_channel ON chat_messages(kind,scope,id);
         CREATE INDEX IF NOT EXISTS chat_sender ON chat_messages(player,id);
         CREATE TABLE IF NOT EXISTS friend_requests(source INTEGER REFERENCES players(id),target INTEGER REFERENCES players(id),created INTEGER NOT NULL,PRIMARY KEY(source,target));
@@ -85,7 +86,9 @@ class Store:
         from .guild import refresh as refresh_guild
         changed=refresh_guild(self,data)or changed
         from .bosses import refresh as refresh_bosses
-        if refresh_bosses(self,data)or changed:self.save(data)
+        changed=refresh_bosses(self,data)or changed
+        from .practice import refresh as refresh_practice
+        if refresh_practice(self,data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

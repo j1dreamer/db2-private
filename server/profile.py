@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=15
+SCHEMA_VERSION=16
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -31,6 +31,7 @@ def new_profile(pid,account,name,username):
     profile['guild']=empty();profile['guildLevel']=0;profile['guildSkill']={'levelMap':{key:0 for key in ('HP','ATK','DEF','MDEF')},'attr':{'hp':0,'atk':0,'def':0,'mdef':0}}
     for key in ('guildBattle','newGuildBattle','guildBoss'):profile['extra'][key]={'openInfo':{'isOpen':False,'openTime':now+86400000}}
     for key in ('worldBoss','guildBoss'):profile['extra'][key]={'openInfo':{'isOpen':False,'openTime':now+86400000,'attackTimes':0,'attackTeamIndexs':[],'attackShipIndexs':[],'upPower':1},'playerInfoMap':{}}
+    profile['practice']={'remainingDefenseTimes':6,'remainingChallengeTimes':6,'sixRemainingDefenseTimes':1,'sixRemainingChallengeTimes':2,'usedTeamIndexs':[],'usedShipIndexs':[],'allDefenseTeamIndexs':[],'allDefenseShipIndexs':[]}
     grant_starter_tickets(profile)
     from .shops import initialize
     initialize(profile)
