@@ -39,7 +39,7 @@ class ClientModelTests(unittest.TestCase):
   p['activity'].pop('scorePointInfoMap');p.pop('signInDays');p.pop('signInTime')
   p['gem']=789;self.store.save(p)
   migrated=self.store.player(1);state=self.client(migrated,[],check_home=True)
-  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],6)
+  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],7)
   self.assertEqual(state['home']['playerName'],'Goku')
  def test_migration_preserves_existing_task_rewards_and_activity_state(self):
   p=self.profile;p['profileSchemaVersion']=2
@@ -64,17 +64,17 @@ class ClientModelTests(unittest.TestCase):
   self.assertIn("reading 'actionPoint'",r.stderr)
   p['level']=12;p['gem']=987;p['actionPoint']=44;self.store.save(p)
   migrated=self.store.player(1);state=self.client(migrated,[])
-  self.assertEqual(migrated['profileSchemaVersion'],6)
+  self.assertEqual(migrated['profileSchemaVersion'],7)
   self.assertEqual(state['topBar']['maxActionPoint'],72)
   self.assertEqual(state['topBar']['actionPoint'],44)
   self.assertEqual(state['gem'],987)
  def test_recovery_migration_preserves_existing_caps_and_timestamps(self):
   p=self.profile;p['profileSchemaVersion']=3
-  p['timesMaxMap']['actionPoint']=123;p['nextRecoverTimeMap']['actionPoint']=456789
+  p['timesMaxMap']['actionPoint']=123;future=int(__import__('time').time()*1000)+600000;p['nextRecoverTimeMap']['actionPoint']=future
   p['vip']['buyActionPointTimes']=2;self.store.save(p)
   migrated=self.store.player(1)
   self.assertEqual(migrated['timesMaxMap']['actionPoint'],123)
-  self.assertEqual(migrated['nextRecoverTimeMap']['actionPoint'],456789)
+  self.assertEqual(migrated['nextRecoverTimeMap']['actionPoint'],future)
   self.assertEqual(migrated['vip']['buyActionPointTimes'],2)
  def test_rename_delta_updates_original_player_and_home(self):
   p=self.profile;p['name']=p['userName'];self.store.save(p)
@@ -101,7 +101,7 @@ class ClientModelTests(unittest.TestCase):
   state=self.client(migrated,[],check_home=True)
   self.assertEqual(migrated['smapStarMap'],{'1':{'101':{}}})
   self.assertEqual(state['point']['advancedTicketCount'],1)
-  self.assertEqual(migrated['profileSchemaVersion'],6)
+  self.assertEqual(migrated['profileSchemaVersion'],7)
  def test_advanced_draw_accepts_real_role_scene_and_result_generator(self):
   delta=draw(self.store,1,'advanced',1)
   state=self.client(self.profile,[delta],check_home=True)

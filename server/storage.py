@@ -17,6 +17,7 @@ class Store:
         CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS event_claims(event TEXT REFERENCES events(id),player INTEGER REFERENCES players(id),PRIMARY KEY(event,player));
         CREATE TABLE IF NOT EXISTS pool_entries(pool INTEGER NOT NULL,entity INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(pool,entity));
+        CREATE TABLE IF NOT EXISTS adventure_runs(player INTEGER PRIMARY KEY REFERENCES players(id),data TEXT NOT NULL,expires INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS audit(id INTEGER PRIMARY KEY,created INTEGER NOT NULL,action TEXT NOT NULL,detail TEXT NOT NULL);
         ''')
     @contextmanager
@@ -50,6 +51,8 @@ class Store:
             if not had_starter_gift and data.get('privateStarterTicketsGranted'):
                 self.audit('starter_tickets',{'player':data['id'],'items':{'119':1,'120':1}})
             self.save(data);self.audit('profile_migration',{'player':data['id'],'schema':data['profileSchemaVersion']})
+        from .state import refresh_time
+        if refresh_time(data):self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

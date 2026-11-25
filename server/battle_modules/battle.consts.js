@@ -1,0 +1,203 @@
+"battle.consts": [ function(e, a) {
+"use strict";
+cc._RF.push(a, "e9d45BPuHRM56E/gv1qOFaq", "battle.consts");
+a.exports = {
+END_TIME: 90,
+PK_END_TIME: 150,
+TAIL_END_TIME: 300,
+BOSS_END_TIME: 120,
+GUILD_BOSS_END_TIME: 60,
+MAX_MOVE_Y: 100,
+KILL_RECOVER_MP: 300,
+SKILL_RECOVER_MP: 80,
+MAX_MP: 1e3,
+WALK_SPEED: 200,
+PUBLIC_COOL_DOWN_TIME: 3,
+ZONE_WIN_REWARD_MP: 300,
+ZONE_WIN_REWARD_HP_PCT: 10,
+CHARACTER_TYPE: {
+ROLE: "role",
+MOB: "mob",
+MISSILE: "missile"
+},
+BATTLE_TYPE: {
+SMAP: 1,
+ARENA_PK: 2,
+EXPEDITION: 3,
+IDOLUM: 4,
+TAIL: 5,
+PRACTICE: 6,
+BOSS: 7,
+PRESTIGE: 8,
+NEW_GUILD_BATTLE: 9,
+DIY: 10,
+TEAM_BATTLE: 11,
+BEGIN_BATTLE: 12,
+GUILD_BOSS: 13,
+ISLAND: 14,
+TIME_PEAK: 15
+},
+FIGHT_SKILL: {
+TYPE: {
+ATTACK: 1,
+REMOTE_ATTACK: 2,
+PASSIVE: 3,
+SUMMON: 4,
+CONVERT: 5,
+BUFF: 6,
+ATTACK_BUFF: 7,
+REMOTE_ATTACK_BUFF: 8
+},
+TARGET_TYPEE: {
+NORMAL: 1,
+MIN_HP: 2,
+RANDOM: 3,
+FRONT: 4,
+BACK: 5,
+MIN_MP: 6,
+MAX_HP: 7,
+MAX_MP: 8
+},
+ATTACK_TYPE: {
+ATK: 1,
+MATK: 2,
+RECOVER: 3,
+BUFF: 4
+},
+MULTI_SUMMON_MOB_IDS: [ 1161, 1162 ],
+REPEL_WALKSPEED: 700,
+PUBLIC_COOLDOWN_TIME: 750,
+INTERRUPT_HP_RATE: .1,
+USE_ONE_TIMES_IDS: [],
+REVIVE_IDS: [ 107003 ],
+SHAKE_HIT_TIMES_MAP: {}
+},
+BUFF: {
+TYPE: {
+STATUS: 1,
+STATIC: 2,
+DYNAMIC: 3,
+SPECIAL: 4
+},
+EFFECTS: {
+HIT_JUDGE: [ "dizziness", "dizziness_1", "silence", "confused", "bundled", "repeled", "terror", "blink" ],
+UN_MOVE: [ "damageInterrupted", "sing", "dizziness", "dizziness_1", "unAction", "bundled", "repeled", "repeled_1", "drag" ],
+UN_ATTACK: [ "damageInterrupted", "sing", "dizziness", "dizziness_1", "unAction", "drag", "terror" ],
+UN_INIT_ATTACK: [ "bundled" ],
+INTERRUPT: [ "dizziness", "repeled", "repeled_1", "confused", "bundled", "drag", "terror" ]
+},
+DYNAMIC_TYPE: {
+SING: 1,
+SKILL: 2,
+DMG: 3,
+MP_RECOVER: 4,
+MP_ABSORB_TO_ALL: 5,
+BUFF: 6
+}
+},
+MISSILE: {
+DISTANCE: 2e3,
+INIT_POS: {
+x: 96,
+y: 50
+},
+TYPE: {
+NORMAL: 1,
+TARGET: 2,
+AOE: 3,
+TIME: 4,
+LINK: 5,
+GO_AND_BACK: 6,
+TIME_TARGET: 7
+}
+},
+AREA_POSITIONS: {
+WALK_DISTANCE: 500,
+LEFT: [ {
+x: 518,
+y: 360
+}, {
+x: 323,
+y: 220
+}, {
+x: 208,
+y: 360
+}, {
+x: 93,
+y: 220
+}, {
+x: -22,
+y: 360
+}, {
+x: -137,
+y: 220
+} ],
+RIGHT: [ {
+x: 618,
+y: 360
+}, {
+x: 813,
+y: 220
+}, {
+x: 928,
+y: 360
+}, {
+x: 1043,
+y: 220
+}, {
+x: 1158,
+y: 360
+}, {
+x: 1273,
+y: 220
+} ],
+Y_TOP: 500,
+Y_BOTTOM: 0
+},
+ENDLESS_BACKGROUND_IMG_IDS: [ 103, 109, 114 ],
+ARENA_BACKGROUND_IMG_IDS: [ 103, 109, 114 ],
+EXPEDITION_IMG_IDS: [ 102, 106, 107, 108 ],
+SIX_EXPEDITION_IMG_IDS: [ 101, 102, 105, 111, 113 ],
+TAIL_BACKGROUND_IMG_ID_MAP: {
+1: 103,
+2: 108,
+3: 110
+},
+WORLD_BOSS_BACKGROUND_IMG_ID: 111,
+GUILD_BOSS_BACKGROUND_IMG_ID: 103,
+GUILD_BATTLE_IMG_IDS: [ 102 ],
+PRESTIGE_BATTLE_BACKGROUND_IMG_ID: [ 106 ],
+TEAM_BATTLE_BACKGROUND_IMG_ID: 101,
+BOSS_MOB_CLASS_IDS: [ 1121, 1131, 1141, 1151, 121, 151, 161, 181, 41, 261, 331, 291, 431, 481 ],
+MAP_SKILL_IDS_MAP: {
+301: [ 100001 ],
+302: [ 100002 ],
+411: [ 100031 ]
+},
+MAP_SKILL_NEEED_BMAP_NO_MAP: {},
+SHIP_MOB_ID: 0,
+SHIP_SKILL_IDS: [ 2011, 2021, 2031, 2041, 2051, 2061, 2071, 2081, 2091, 2101, 2111, 2121, 2131, 2141, 2151, 2161, 20610, 21610, 2171, 2181, 2191 ],
+OVER_SKIP_SUMMON_MOB_IDS: [],
+_ID: {
+_101100: 101100,
+_101101: 101101,
+_102903: 102903,
+_104800: 104800,
+_105300: 105300,
+_105601: 105601,
+_111500: 111500,
+_111700: 111700,
+_106403: 106403,
+_106601: 106601,
+_106700: 106700,
+_106702: 106702,
+_1070020: 1070020,
+_107701: 107701,
+_108203: 108203,
+_108300: 108300,
+_108702: 108702,
+_108801: 108801
+}
+};
+cc._RF.pop();
+}, {} ],

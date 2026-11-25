@@ -16,13 +16,13 @@ def character(kind_id,idx,star=1):
     attrs.update({key:math.floor(role[key]) for key in ('hit','crit','dodge')})
     attrs.update({key:math.floor(role[key]*growth) for key in ('hpGrowth','atkGrowth','defGrowth','mdefGrowth')})
     equipment={f'evlItem_{i+1}':{'kindId':kind,'level':1} for i,kind in enumerate(role['initEvlItemIds'])}
-    return {'idx':idx,'kindId':kind_id,'level':1,'star':star,'experience':0,'nextLevelExp':exp['roleExp'],'attr':attrs,'initAttr':dict(attrs),'skills':[],'awakeSkills':[],'awakeLevel':0,'awakeRateIncreaseTimes':0,'evolveSkillRateIncreaseTimes':0,'evolveSkillIds':[],'trainLevelMap':{},'trainUnlockMap':{},'skillLevels':{},'equipments':equipment,'power':0}
+    return {'idx':idx,'kindId':kind_id,'level':1,'star':star,'experience':0,'nextLevelExp':exp['roleExp'],'attr':attrs,'initAttr':dict(attrs),'skills':[{'kindId':role['skillIds'][0],'level':1}],'awakeSkills':[],'awakeLevel':0,'awakeRateIncreaseTimes':0,'evolveSkillRateIncreaseTimes':0,'evolveSkillIds':[],'trainLevelMap':{},'trainUnlockMap':{},'skillLevels':{},'equipments':equipment,'power':0}
 def new_profile(pid,account,name,username):
     from .gameplay import point_default
     now=int(time.time()*1000)
     exp=next(r for r in table('experience') if r['level']==1)
     initial=character(100101,1)
-    profile={'id':pid,'userId':account,'userName':username,'name':name,'serverId':1,'oldServerId':1,'level':1,'gem':50,'coin':0,'experience':0,'nextLevelExp':exp['playerExp'],'ctime':now,'upgradeTime':now,'power':0,'costGem':0,'signInDays':0,'signInTime':0,'guildId':0,'guildName':'','actionPoint':60,'skillPoint':10,'timesMaxMap':{'actionPoint':61,'skillPoint':10},'nextRecoverTimeMap':{'actionPoint':0,'skillPoint':0},'bag':{'lastIdx':0,'items':{}},'team':{'roles':{'1':initial},'friendshipAttr':{'hp':0,'atk':0,'def':0,'mdef':0},'titleAttr':{}},'vip':{'level':0,'topUpMoney':0,'topUpGem':0,'buyActionPointTimes':0},'shop':{'hideRoleClassIds':[],'hideShipClassIds':[],'refreshTimesMap':{str(i):0 for i in range(1,15)},'goodsMap':{str(i):({'1':{'entityId':20001,'moneyId':101,'count':1,'price':100,'isSaleOut':True,'requireVip':0,'shopType':1,'priority':1},'2':{'entityId':20002,'moneyId':101,'count':1,'price':100,'isSaleOut':True,'requireVip':0,'shopType':1,'priority':2}} if i==1 else {}) for i in range(1,15)}},'task':{'daily':{},'dailyActivePoint':0,'weeklyActivePoint':0,'receivedPointMap':{'daily':{},'weekly':{}},'main':{'1':{'taskId':0,'show':{},'isComplete':False}}},'smapStarMap':{'1':{'101':{}}},'smapTimesMap':{},'bmapBoxReceivedMap':{},'friendshipUnlockMap':{},'photoInfo':{'photoImgId':1001,'shipImgId':901},'arena':{'rank':0,'challengeCD':0,'remainingChallengeTimes':5},'arena3v3':{'rank':0,'challengeCD':0,'remainingChallengeTimes':5},'friend':{'list':[],'infoMap':{},'point':0,'count':0,'pointReceiveTimes':0},'activity':{'map':{},'scorePointInfoMap':{}},'extra':{'mails':[],'serverTime':now,'serverTimeStr':datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'openDays':1,'goodsList':{},'chat':{'worldList':[],'guildList':[],'allServerList':[]}},'point':point_default(),'profileSchemaVersion':6,'privateCompatibilityDraft':True}
+    profile={'id':pid,'userId':account,'userName':username,'name':name,'serverId':1,'oldServerId':1,'level':1,'gem':50,'coin':0,'experience':0,'nextLevelExp':exp['playerExp'],'ctime':now,'upgradeTime':now,'power':0,'costGem':0,'signInDays':0,'signInTime':0,'guildId':0,'guildName':'','actionPoint':60,'skillPoint':10,'timesMaxMap':{'actionPoint':61,'skillPoint':10},'nextRecoverTimeMap':{'actionPoint':0,'skillPoint':0},'bag':{'lastIdx':0,'items':{}},'team':{'roles':{'1':initial},'friendshipAttr':{'hp':0,'atk':0,'def':0,'mdef':0},'titleAttr':{}},'vip':{'level':0,'topUpMoney':0,'topUpGem':0,'buyActionPointTimes':0,'buySkillPointTimes':0,'buyCoinTimes':0,'resetSmapTimesTimesMap':{},'buyMapType5Times':0},'shop':{'hideRoleClassIds':[],'hideShipClassIds':[],'refreshTimesMap':{str(i):0 for i in range(1,15)},'goodsMap':{str(i):({'1':{'entityId':20001,'moneyId':101,'count':1,'price':100,'isSaleOut':True,'requireVip':0,'shopType':1,'priority':1},'2':{'entityId':20002,'moneyId':101,'count':1,'price':100,'isSaleOut':True,'requireVip':0,'shopType':1,'priority':2}} if i==1 else {}) for i in range(1,15)}},'task':{'daily':{},'dailyActivePoint':0,'weeklyActivePoint':0,'receivedPointMap':{'daily':{},'weekly':{}},'main':{'1':{'taskId':0,'show':{},'isComplete':False}}},'endless':{'fruitMapPowerUp':0,'pursuitTeamMap':{},'fruitMapUseRolesNo':1,'starSignMapUseRolesNo':1},'smapStarMap':{'1':{'101':{}}},'smapTimesMap':{},'bmapBoxReceivedMap':{},'friendshipUnlockMap':{},'frameIds':[],'titleInfoMap':{},'chatSkinIds':[0],'isHideEqpt':False,'photoInfo':{'photoImgId':1001,'shipImgId':901},'arena':{'rank':0,'challengeCD':0,'remainingChallengeTimes':5},'arena3v3':{'rank':0,'challengeCD':0,'remainingChallengeTimes':5},'friend':{'list':[],'infoMap':{},'point':0,'count':0,'pointReceiveTimes':0},'activity':{'map':{},'scorePointInfoMap':{}},'extra':{'mails':[],'serverTime':now,'serverTimeStr':datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'openDays':1,'goodsList':{},'chat':{'worldList':[],'guildList':[],'allServerList':[]}},'point':point_default(),'profileSchemaVersion':7,'privateCompatibilityDraft':True}
     grant_starter_tickets(profile)
     return profile
 
@@ -39,7 +39,7 @@ def grant_starter_tickets(profile):
 
 def upgrade_profile(data,account):
     """Add missing fields from older development schemas without resetting balances."""
-    if data.get('profileSchemaVersion',0)>=6:return False
+    if data.get('profileSchemaVersion',0)>=7:return False
     base=new_profile(data['id'],account,data.get('name','Player'),data.get('userName',''))
     # A template must not overwrite bag slots or mark an old player as gifted.
     base['bag']={'lastIdx':0,'items':{}}
@@ -55,8 +55,11 @@ def upgrade_profile(data,account):
                 if key!='roles':fill(target[key],value)
     fill(data,base)
     for role in data.get('team',{}).get('roles',{}).values():
-        try:fill(role,character(role['kindId'],role['idx'],role.get('star',1)))
+        try:
+            template=character(role['kindId'],role['idx'],role.get('star',1))
+            fill(role,template)
+            if not role.get('skills'):role['skills']=template['skills']
         except (KeyError,StopIteration):continue
     grant_starter_tickets(data)
-    data['profileSchemaVersion']=6
+    data['profileSchemaVersion']=7
     return True

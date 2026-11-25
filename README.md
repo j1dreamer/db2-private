@@ -1,3 +1,5 @@
+> Nhánh phát triển `route-342`: mục tiêu **342/342** còn đang thực hiện. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) để biết tiến độ và phần chưa xác minh. Các ZIP/APK đã phát hành chưa được cập nhật theo nhánh này.
+
 # DB2 Private — bản phát triển
 
 > **Sửa lỗi cài đặt Android 11+**: APK `v0.1.0-dev` cũ đã nén `resources.arsc`, có thể bị hệ thống từ chối dù chữ ký hợp lệ. Dùng [APK-Install-Fix.zip](APK-Install-Fix.zip), giải nén cạnh APK cũ, nhấp đúp `Apply-Fix.bat` trên Windows rồi cài **DB2-Private-Android-fixed.apk**. Bản vá khoảng 1,5 MB; không cần tải lại toàn bộ APK.
