@@ -1,0 +1,38 @@
+{
+  "transport": "Actual iOS protocol module over a real localhost aiohttp/Pomelo WebSocket server",
+  "native_ios_runtime": false,
+  "successful_calls": [
+    {
+      "route": "connector.entryHandler.entry",
+      "code": 200
+    },
+    {
+      "route": "connector.playerHandler.createPlayer",
+      "code": 200
+    },
+    {
+      "route": "logic.playerHandler.rename",
+      "code": 200
+    },
+    {
+      "route": "logic.pointHandler.normal",
+      "code": 200
+    },
+    {
+      "route": "logic.pointHandler.advanced",
+      "code": 200
+    },
+    {
+      "route": "connector.playerHandler.entry",
+      "code": 200
+    }
+  ],
+  "final_models": {
+    "home_name": "iOS Goku",
+    "normal_tickets": 0,
+    "advanced_tickets": 0,
+    "role_count": 3,
+    "profile_schema": 28
+  },
+  "pass": true
+}

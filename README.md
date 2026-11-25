@@ -1,3 +1,5 @@
+> Phân tích iOS mới: [báo cáo IPA thực](analysis/ios/IOS-REPORT.md). Đã kiểm tra ARM64/JSC/342 request, model và engine bằng JavaScript lấy từ IPA; chưa có IPA private đã ký hoặc kiểm thử native trên iPhone. Có 8/34 bảng dữ liệu khác và counterexample sát thương; cần đồng bộ dữ liệu/cấu hình trước khi dùng chung combat.
+
 > Nhánh phát triển `route-342`: **342/342 route**, 229 kiểm thử qua; không còn route trống. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
 >
 > APK mốc 342 handler: [Client-Route342-Dev-Patch.zip](Client-Route342-Dev-Patch.zip), khoảng 5 MB. Giải nén cạnh **DB2-Private-Android-fixed.apk**, chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. Có bỏ hướng dẫn, Speed 1×–10× cho toàn game và các bản vá giao thức của nhánh; cùng package/chữ ký bản fixed. Đây là APK phát triển có đủ handler, chưa xác minh toàn bộ gameplay trên thiết bị. Time Peak dùng màn điều khiển và luật riêng. Các ZIP cũ bên dưới chỉ dành cho main cũ.

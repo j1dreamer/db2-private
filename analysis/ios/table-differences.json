@@ -1,0 +1,264 @@
+[
+  {
+    "name": "data/vipData",
+    "android_records": 17,
+    "ios_records": 17,
+    "header_fields_android_only": [],
+    "header_fields_ios_only": [],
+    "android_only_ids": [],
+    "ios_only_ids": [],
+    "changed_common_ids_count": 13,
+    "changed_common_ids_sample": [
+      "4",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17"
+    ],
+    "changed_fields_counts": {
+      "nextLevelTopUpGem": 13
+    }
+  },
+  {
+    "name": "data/artifactData",
+    "android_records": 117,
+    "ios_records": 117,
+    "header_fields_android_only": [],
+    "header_fields_ios_only": [],
+    "android_only_ids": [],
+    "ios_only_ids": [],
+    "changed_common_ids_count": 2,
+    "changed_common_ids_sample": [
+      "70706",
+      "70707"
+    ],
+    "changed_fields_counts": {
+      "starVals": 2,
+      "effect": 2
+    }
+  },
+  {
+    "name": "data/entityData",
+    "android_records": 2818,
+    "ios_records": 2818,
+    "header_fields_android_only": [],
+    "header_fields_ios_only": [],
+    "android_only_ids": [],
+    "ios_only_ids": [],
+    "changed_common_ids_count": 2,
+    "changed_common_ids_sample": [
+      "353",
+      "354"
+    ],
+    "changed_fields_counts": {
+      "extra": 2
+    }
+  },
+  {
+    "name": "data/taskData",
+    "android_records": 512,
+    "ios_records": 512,
+    "header_fields_android_only": [],
+    "header_fields_ios_only": [],
+    "android_only_ids": [],
+    "ios_only_ids": [],
+    "changed_common_ids_count": 4,
+    "changed_common_ids_sample": [
+      "2101",
+      "2102",
+      "2103",
+      "2104"
+    ],
+    "changed_fields_counts": {
+      "dropListDesc": 4
+    }
+  },
+  {
+    "name": "data/entityExtData",
+    "android_records": 25,
+    "ios_records": 47,
+    "header_fields_android_only": [],
+    "header_fields_ios_only": [],
+    "android_only_ids": [
+      "1"
+    ],
+    "ios_only_ids": [
+      "361",
+      "362",
+      "363",
+      "364",
+      "365",
+      "366",
+      "367",
+      "368",
+      "369",
+      "370",
+      "371",
+      "372",
+      "373",
+      "374",
+      "375",
+      "376",
+      "377",
+      "378",
+      "379",
+      "380",
+      "381",
+      "382",
+      "60005"
+    ],
+    "changed_common_ids_count": 1,
+    "changed_common_ids_sample": [
+      "2"
+    ],
+    "changed_fields_counts": {
+      "desc": 1
+    }
+  },
+  {
+    "name": "data/buffData",
+    "android_records": 1860,
+    "ios_records": 1869,
+    "header_fields_android_only": [],
+    "header_fields_ios_only": [],
+    "android_only_ids": [],
+    "ios_only_ids": [
+      "206122",
+      "207821",
+      "208539",
+      "208718",
+      "208719",
+      "208720",
+      "208721",
+      "208722",
+      "208723"
+    ],
+    "changed_common_ids_count": 29,
+    "changed_common_ids_sample": [
+      "31012",
+      "31022",
+      "205503",
+      "205504",
+      "206104",
+      "206115",
+      "206117",
+      "207609",
+      "207615",
+      "207622",
+      "208302",
+      "208306",
+      "208320",
+      "208322",
+      "208323",
+      "208401",
+      "208407",
+      "208503",
+      "208507",
+      "208529"
+    ],
+    "changed_fields_counts": {
+      "extra": 23,
+      "name": 2,
+      "overlapTimes": 4,
+      "timeout": 4,
+      "effectId": 1
+    }
+  },
+  {
+    "name": "data/fightSkillData",
+    "android_records": 765,
+    "ios_records": 765,
+    "header_fields_android_only": [],
+    "header_fields_ios_only": [],
+    "android_only_ids": [],
+    "ios_only_ids": [],
+    "changed_common_ids_count": 82,
+    "changed_common_ids_sample": [
+      "105501",
+      "105601",
+      "105602",
+      "105603",
+      "105701",
+      "105702",
+      "105703",
+      "105801",
+      "105802",
+      "105803",
+      "106001",
+      "106002",
+      "106101",
+      "106102",
+      "106103",
+      "106201",
+      "107601",
+      "107602",
+      "107603",
+      "107604"
+    ],
+    "changed_fields_counts": {
+      "initVal": 72,
+      "atkPer": 74,
+      "valGrowth": 72,
+      "growth": 46,
+      "base": 46,
+      "desc": 10,
+      "effect": 6,
+      "unlockExtra": 4,
+      "label": 6,
+      "descReplaceList": 6,
+      "unlockDesc": 10,
+      "buffIds": 4
+    }
+  },
+  {
+    "name": "data/roleData",
+    "android_records": 1760,
+    "ios_records": 1760,
+    "header_fields_android_only": [],
+    "header_fields_ios_only": [],
+    "android_only_ids": [],
+    "ios_only_ids": [],
+    "changed_common_ids_count": 1760,
+    "changed_common_ids_sample": [
+      "100101",
+      "100102",
+      "100103",
+      "100104",
+      "100105",
+      "100106",
+      "100107",
+      "100108",
+      "100109",
+      "100110",
+      "100111",
+      "100112",
+      "100113",
+      "100114",
+      "100115",
+      "100116",
+      "100117",
+      "100118",
+      "100119",
+      "100120"
+    ],
+    "changed_fields_counts": {
+      "initAtk": 620,
+      "defGrowth": 1340,
+      "initMdef": 740,
+      "initDef": 740,
+      "hpGrowth": 1760,
+      "mdefGrowth": 1340,
+      "atkGrowth": 1760,
+      "group": 960,
+      "initHp": 80
+    }
+  }
+]

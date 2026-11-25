@@ -17,12 +17,24 @@
   "remaining": [
     "Android/BlueStacks rendering and end-to-end device gameplay verification of this new build",
     "Termux/Tailscale device runtime verification",
-    "Obtain an authorized iOS IPA before Mach-O/client analysis and iOS packaging"
+    "Unify/version the 8 differing iOS data tables and soul configuration before shared advanced progression/combat",
+    "Create and legitimately re-sign a private iOS client, then test on an iPhone"
   ],
   "playable_verified": false,
-  "ios_ipa_obtained": false,
+  "ios_ipa_obtained": true,
   "apk_sha256": "e53311ef3a7a8c6d924a0bfa4f72bf11a85510506a96ab0bb458a83cc3115387",
   "patch_zip_sha256": "2b7fe4f307c67953544e4edebc9544d06dde5ae0b97537996a6744305bd0d038",
   "documentation": "IMPLEMENTATION-342.md",
-  "note": "Complete handler coverage is not a claim of complete original-server rules or device-verified gameplay. Time Peak is an explicit private adapter."
+  "note": "Complete handler coverage is not a claim of complete original-server rules or device-verified gameplay. Time Peak is an explicit private adapter.",
+  "ios_binary_inspected": true,
+  "ios_native_execution_tested": false,
+  "ios_analysis_report": "analysis/ios/IOS-REPORT.md",
+  "ios_analysis_tool_tests_passed": 4,
+  "ios_rpc_contracts_compared": 342,
+  "ios_headless_battle_cases_passed": 6,
+  "ios_headless_websocket_routes_passed": 6,
+  "ios_tables_identical_to_android": 26,
+  "ios_tables_total": 34,
+  "ios_combat_data_compatible": false,
+  "ios_combat_counterexamples_detected": 2
 }

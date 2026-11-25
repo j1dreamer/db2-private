@@ -1,11 +1,15 @@
 {
-  "source": "https://www.pgyer.com/dragonball",
-  "observed_version": "1.0.0",
-  "observed_build": 25,
-  "page_size_label": "489 MB",
-  "published": "2026-11-21",
-  "install_flow": "Public page supplied an itms-services manifest redirect; requests with page-provided token and same cookie session returned HTTP 404 for the manifest.",
-  "ipa_obtained": false,
-  "ios_binary_inspected": false,
-  "note": "No device-identity/access restrictions were bypassed. Page metadata alone is not IPA evidence."
+  "source": "User-provided pgyer-apps-cfw.appmeme.com signed IPA URL",
+  "download_http_status": 200,
+  "download_bytes": 512781670,
+  "ipa_sha256": "de3072e9ee041d809c7e0a0f7979d35e0ef14dbb066171e56e27846faa456261",
+  "ipa_obtained": true,
+  "ios_binary_inspected": true,
+  "ios_native_execution_tested": false,
+  "bundle_identifier": "com.ios.db.2.en",
+  "CFBundleVersion": "1.0",
+  "CFBundleShortVersionString": "1.0.0",
+  "source_project_manifest_version": "1.0.0.23",
+  "pgyer_page_build_label": 25,
+  "note": "The page build label differs from CFBundleVersion; binary metadata is reported directly. Download signature/cookies are not retained in this repository."
 }

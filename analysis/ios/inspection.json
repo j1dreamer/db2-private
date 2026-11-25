@@ -1,0 +1,252 @@
+{
+  "ipa_sha256": "de3072e9ee041d809c7e0a0f7979d35e0ef14dbb066171e56e27846faa456261",
+  "ipa_bytes": 512781670,
+  "native_execution_tested": false,
+  "signature_trust_verified": false,
+  "zip_files": 17266,
+  "uncompressed_bytes": 564611478,
+  "app_info": {
+    "CFBundleIdentifier": "com.ios.db.2.en",
+    "CFBundleExecutable": "dragonball",
+    "CFBundleVersion": "1.0",
+    "CFBundleShortVersionString": "1.0.0",
+    "MinimumOSVersion": "10.0",
+    "UIDeviceFamily": [
+      1,
+      2
+    ],
+    "DTPlatformName": "iphoneos",
+    "DTSDKName": "iphoneos26.2",
+    "NSAppTransportSecurity": {
+      "NSAllowsArbitraryLoads": true
+    }
+  },
+  "executable_sha256": "c925457ac1964ade6ddfde7e316091468f678cf7421bcdc3dec7fafacc0ec314",
+  "executable": {
+    "format": "Mach-O",
+    "architecture": "arm64",
+    "bits": 64,
+    "file_type": 2,
+    "load_commands": 69,
+    "encryption": [
+      {
+        "cryptoff": 16384,
+        "cryptsize": 14860288,
+        "cryptid": 0,
+        "encrypted": false
+      }
+    ],
+    "build": [
+      {
+        "legacy_ios_minimum": "10.0.0",
+        "sdk": "26.2.0"
+      }
+    ],
+    "dylibs": [
+      "/System/Library/Frameworks/CoreMedia.framework/CoreMedia",
+      "/System/Library/Frameworks/AVKit.framework/AVKit",
+      "/System/Library/Frameworks/WebKit.framework/WebKit",
+      "/System/Library/Frameworks/SystemConfiguration.framework/SystemConfiguration",
+      "/System/Library/Frameworks/JavaScriptCore.framework/JavaScriptCore",
+      "/usr/lib/libicucore.A.dylib",
+      "/System/Library/Frameworks/GameController.framework/GameController",
+      "/System/Library/Frameworks/MobileCoreServices.framework/MobileCoreServices",
+      "/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation",
+      "/System/Library/Frameworks/CFNetwork.framework/CFNetwork",
+      "/System/Library/Frameworks/CoreText.framework/CoreText",
+      "/usr/lib/libiconv.2.dylib",
+      "/System/Library/Frameworks/Security.framework/Security",
+      "/System/Library/Frameworks/CoreMotion.framework/CoreMotion",
+      "/usr/lib/libsqlite3.dylib",
+      "/usr/lib/libz.1.dylib",
+      "/System/Library/Frameworks/QuartzCore.framework/QuartzCore",
+      "/System/Library/Frameworks/OpenGLES.framework/OpenGLES",
+      "/System/Library/Frameworks/OpenAL.framework/OpenAL",
+      "/System/Library/Frameworks/AudioToolbox.framework/AudioToolbox",
+      "/System/Library/Frameworks/AVFoundation.framework/AVFoundation",
+      "/System/Library/Frameworks/UIKit.framework/UIKit",
+      "/System/Library/Frameworks/Foundation.framework/Foundation",
+      "/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics",
+      "/System/Library/Frameworks/CoreVideo.framework/CoreVideo",
+      "/usr/lib/libobjc.A.dylib",
+      "/usr/lib/libc++.1.dylib",
+      "/usr/lib/libSystem.B.dylib",
+      "/System/Library/Frameworks/AdSupport.framework/AdSupport",
+      "/System/Library/Frameworks/AppTrackingTransparency.framework/AppTrackingTransparency",
+      "/System/Library/Frameworks/AuthenticationServices.framework/AuthenticationServices",
+      "/System/Library/Frameworks/StoreKit.framework/StoreKit",
+      "/System/Library/Frameworks/SwiftUI.framework/SwiftUI",
+      "/usr/lib/swift/libswiftOSLog.dylib",
+      "/usr/lib/swift/libswiftSpatial.dylib",
+      "/usr/lib/swift/libswiftUniformTypeIdentifiers.dylib",
+      "@rpath/libswiftCore.dylib",
+      "@rpath/libswiftCoreFoundation.dylib",
+      "@rpath/libswiftCoreImage.dylib",
+      "@rpath/libswiftDarwin.dylib",
+      "@rpath/libswiftDispatch.dylib",
+      "@rpath/libswiftMetal.dylib",
+      "@rpath/libswiftObjectiveC.dylib",
+      "@rpath/libswiftQuartzCore.dylib",
+      "@rpath/libswiftXPC.dylib",
+      "@rpath/libswiftos.dylib",
+      "@rpath/libswiftsimd.dylib",
+      "@rpath/libswiftFoundation.dylib",
+      "@rpath/libswiftUIKit.dylib",
+      "@executable_path/CombinedPlugin.dylib",
+      "@executable_path/Frameworks/AppRuntime/ATHelper.dylib"
+    ],
+    "code_signature_blob": {
+      "offset": 16545744,
+      "size": 230432,
+      "within_file": true
+    }
+  },
+  "embedded_provision_profile": true,
+  "scripts": [
+    {
+      "path": "main.js",
+      "bytes": 5166,
+      "sha256": "14bfce15f2a4dddb5de7fe79eff92abe2a36ceb8f4deaeb09ab76d232aa415f1",
+      "first_bytes": "77696e646f772e626f6f74203d206675",
+      "entropy_bits_per_byte": 4.656,
+      "utf8": true,
+      "looks_like_javascript": true
+    },
+    {
+      "path": "assets/internal/index.jsc",
+      "bytes": 320,
+      "sha256": "a453761aef009b3204ef2e1dc81b99abffec0790e1aec916d6b3636972397276",
+      "first_bytes": "33f59c53fe473eb1098d0aeb88b78e19",
+      "entropy_bits_per_byte": 7.356,
+      "utf8": false
+    },
+    {
+      "path": "assets/resources/index.jsc",
+      "bytes": 320,
+      "sha256": "a453761aef009b3204ef2e1dc81b99abffec0790e1aec916d6b3636972397276",
+      "first_bytes": "33f59c53fe473eb1098d0aeb88b78e19",
+      "entropy_bits_per_byte": 7.356,
+      "utf8": false
+    },
+    {
+      "path": "assets/main/index.jsc",
+      "bytes": 1910868,
+      "sha256": "aad8601dd8f5becc6c25c17192c84136ec84533a880a267d30eda834feec1ef6",
+      "first_bytes": "d8ce61d9fc03d0a5655926185edd1f32",
+      "entropy_bits_per_byte": 8.0,
+      "utf8": false
+    },
+    {
+      "path": "jsb-adapter/jsb-engine.js",
+      "bytes": 207514,
+      "sha256": "6c379ca353f63b735887f17cffdf0554ea074f634a5fedc05dcd92489014413f",
+      "first_bytes": "2866756e6374696f6e28297b66756e63",
+      "entropy_bits_per_byte": 5.241,
+      "utf8": true,
+      "looks_like_javascript": true
+    },
+    {
+      "path": "jsb-adapter/jsb-builtin.js",
+      "bytes": 324295,
+      "sha256": "b3bf6ffd18859dc9f5ccaed761609c3c8ef8f1f1390f331e1ac7fde98b537f28",
+      "first_bytes": "2866756e6374696f6e28297b66756e63",
+      "entropy_bits_per_byte": 5.353,
+      "utf8": true,
+      "looks_like_javascript": true
+    },
+    {
+      "path": "src/settings.jsc",
+      "bytes": 200,
+      "sha256": "4caca440f78a5922e38dee7700abe831508d1998fd17daf0f4cc5400ac6136c6",
+      "first_bytes": "e5e8c5c8927ff0367c3f7ef6fb4d5867",
+      "entropy_bits_per_byte": 7.134,
+      "utf8": false
+    },
+    {
+      "path": "src/cocos2d-jsb.jsc",
+      "bytes": 365796,
+      "sha256": "e6781523f25aaab838c4f3b4c08fef39aa0277f04cadb2ac8bc37e30e94951f0",
+      "first_bytes": "a53eec2ad42971f928cc97efcce83c98",
+      "entropy_bits_per_byte": 8.0,
+      "utf8": false
+    }
+  ],
+  "native_libraries": [
+    {
+      "path": "Frameworks/libswiftCoreGraphics.dylib",
+      "bytes": 204416,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftQuartzCore.dylib",
+      "bytes": 76576,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/AppRuntime/ATHelper.dylib",
+      "bytes": 1376256,
+      "magic": "cafebabe"
+    },
+    {
+      "path": "Frameworks/libswiftDispatch.dylib",
+      "bytes": 347104,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftCoreImage.dylib",
+      "bytes": 73360,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftUIKit.dylib",
+      "bytes": 165808,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftos.dylib",
+      "bytes": 86400,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftDarwin.dylib",
+      "bytes": 123920,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftCoreFoundation.dylib",
+      "bytes": 73488,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftCore.dylib",
+      "bytes": 6085168,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftFoundation.dylib",
+      "bytes": 3040000,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftMetal.dylib",
+      "bytes": 85056,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftObjectiveC.dylib",
+      "bytes": 89584,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "Frameworks/libswiftsimd.dylib",
+      "bytes": 308736,
+      "magic": "cffaedfe"
+    },
+    {
+      "path": "CombinedPlugin.dylib",
+      "bytes": 118192,
+      "magic": "cffaedfe"
+    }
+  ],
+  "source": "User-provided signed download URL; downloaded with curl, HTTP 200"
+}

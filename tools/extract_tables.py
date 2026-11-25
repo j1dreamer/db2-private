@@ -1,5 +1,5 @@
 """Recover shipped JSON data tables via Cocos bundle UUID mappings."""
-import argparse,zipfile,json,base64,gzip,hashlib
+import argparse,zipfile,json,base64,gzip,hashlib,re
 from pathlib import Path
 
 def expand(value):
@@ -10,7 +10,12 @@ def extract(source,out):
  out=Path(out);out.mkdir(parents=True,exist_ok=True);report=[]
  with zipfile.ZipFile(source) as z:
   names=z.namelist();prefix='DB2-GD/' if 'DB2-GD/AndroidManifest.xml' in names else ''
-  root=prefix+'assets/assets/resources/';cfg=json.loads(z.read(root+'config.json'))
+  root=prefix+'assets/assets/resources/'
+  if root+'config.json'not in names:
+   configs=[name for name in names if re.fullmatch(r'Payload/[^/]+\.app/assets/resources/config\.json',name)]
+   if len(configs)!=1:raise ValueError('Expected one Android or iOS resources config')
+   root=configs[0][:-len('config.json')]
+  cfg=json.loads(z.read(root+'config.json'))
   for idx,info in cfg['paths'].items():
    if not info[0].startswith('data/'):continue
    uuid=expand(cfg['uuids'][int(idx)]);matches=[n for n in names if n.startswith(root+'native/') and n.endswith('/'+uuid+'.bin')]

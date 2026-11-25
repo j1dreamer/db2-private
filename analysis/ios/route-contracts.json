@@ -1,0 +1,4535 @@
+{
+  "source": "Payload/dragonball.app/assets/main/index.jsc decoded from user-provided iOS IPA",
+  "route_count": 342,
+  "contracts": [
+    {
+      "route": "chat.chatHandler.getGuildLast",
+      "calls": [
+        {
+          "module": "chatHandler",
+          "line": 18586,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "connector.entryHandler.entry",
+      "calls": [
+        {
+          "module": "socket",
+          "line": 124775,
+          "request_fields": null,
+          "request_expression": "a"
+        }
+      ]
+    },
+    {
+      "route": "connector.playerHandler.createPlayer",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101554,
+          "request_fields": [
+            "name"
+          ],
+          "request_expression": "{\nname: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "connector.playerHandler.entry",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101561,
+          "request_fields": [
+            "playerId",
+            "preReconnectTime"
+          ],
+          "request_expression": "{\nplayerId: e,\npreReconnectTime: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "connector.playerHandler.getPlayers",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101549,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "gate.gateHandler.queryEntry",
+      "calls": [
+        {
+          "module": "socket",
+          "line": 124746,
+          "request_fields": [
+            "uid"
+          ],
+          "request_expression": "{\nuid: n\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.challenge",
+      "calls": [
+        {
+          "module": "activityGuildBattleHandler",
+          "line": 1577,
+          "request_fields": [
+            "defenderId",
+            "diedNum"
+          ],
+          "request_expression": "{\ndefenderId: e,\ndiedNum: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.choose",
+      "calls": [
+        {
+          "module": "activityGuildBattleHandler",
+          "line": 1568,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexs",
+            "attackShipIndexs"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexs: a,\nattackShipIndexs: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.enter",
+      "calls": [
+        {
+          "module": "activityGuildBattleHandler",
+          "line": 1563,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.exit",
+      "calls": [
+        {
+          "module": "activityGuildBattleHandler",
+          "line": 1585,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.openInfo",
+      "calls": [
+        {
+          "module": "activityGuildBattleHandler",
+          "line": 1550,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.result",
+      "calls": [
+        {
+          "module": "activityGuildBattleHandler",
+          "line": 1595,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.setDefenseTeamInfo",
+      "calls": [
+        {
+          "module": "activityGuildBattleHandler",
+          "line": 1555,
+          "request_fields": [
+            "teamIndexs",
+            "shipIndexs"
+          ],
+          "request_expression": "{\nteamIndexs: e,\nshipIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.wintTimesRank",
+      "calls": [
+        {
+          "module": "activityGuildBattleHandler",
+          "line": 1590,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.apply",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3220,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.applyRank",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3225,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.beginBattle",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3255,
+          "request_fields": [
+            "toTowerNo"
+          ],
+          "request_expression": "{\ntoTowerNo: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.endBattle",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3262,
+          "request_fields": [
+            "hpMap",
+            "targetHpMap",
+            "isWin",
+            "seed",
+            "bgImgId"
+          ],
+          "request_expression": "{\nhpMap: e,\ntargetHpMap: a,\nisWin: t,\nseed: i,\nbgImgId: r\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.endTopRankInfo",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3295,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.enter",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3230,
+          "request_fields": [
+            "teamIndexs",
+            "shipIndexs"
+          ],
+          "request_expression": "{\nteamIndexs: e,\nshipIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.exit",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3238,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.getReport",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3273,
+          "request_fields": [
+            "reportId"
+          ],
+          "request_expression": "{\nreportId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.getTeam",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3250,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.move",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3243,
+          "request_fields": [
+            "toTowerNo"
+          ],
+          "request_expression": "{\ntoTowerNo: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.openInfo",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3215,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.receiveAward",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3285,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.recover",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3280,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.winTimesRank",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3290,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.worshipRank",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3307,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.allServerBattleHandler.worshipStatue",
+      "calls": [
+        {
+          "module": "allServerBattleHandler",
+          "line": 3300,
+          "request_fields": [
+            "levelType"
+          ],
+          "request_expression": "{\nlevelType: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.buyChallengeTimes",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4117,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.challenge",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4138,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexsMap",
+            "attackShipIndexsMap",
+            "isWin",
+            "winPlayerIdMap",
+            "seed",
+            "damageMapMap",
+            "bgImgId"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexsMap: a,\nattackShipIndexsMap: t,\nisWin: i,\nwinPlayerIdMap: r,\nseed: o,\ndamageMapMap: s,\nbgImgId: l\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.choose",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4129,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexsMap",
+            "attackShipIndexsMap"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexsMap: a,\nattackShipIndexsMap: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.defenseTeam",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4122,
+          "request_fields": [
+            "playerId"
+          ],
+          "request_expression": "{\nplayerId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.info",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4099,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.match",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4104,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.receive",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4157,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.reportList",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4152,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.setDefenseTeamIndexsMap",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4109,
+          "request_fields": [
+            "defenseTeamIndexsMap",
+            "defenseShipIndexsMap"
+          ],
+          "request_expression": "{\ndefenseTeamIndexsMap: e,\ndefenseShipIndexsMap: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.top50",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4169,
+          "request_fields": [
+            "levelType"
+          ],
+          "request_expression": "{\nlevelType: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.worshipRank",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4176,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arena3v3Handler.worshipStatue",
+      "calls": [
+        {
+          "module": "arena3v3Handler",
+          "line": 4162,
+          "request_fields": [
+            "levelType"
+          ],
+          "request_expression": "{\nlevelType: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arenaHandler.buyChallengeTimes",
+      "calls": [
+        {
+          "module": "arenaHandler",
+          "line": 4680,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arenaHandler.challenge",
+      "calls": [
+        {
+          "module": "arenaHandler",
+          "line": 4702,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexs",
+            "attackShipIndexs",
+            "isWin",
+            "seed",
+            "damageMap",
+            "bgImgId"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexs: a,\nattackShipIndexs: t,\nisWin: i,\nseed: r,\ndamageMap: o,\nbgImgId: s\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arenaHandler.choose",
+      "calls": [
+        {
+          "module": "arenaHandler",
+          "line": 4693,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexs",
+            "attackShipIndexs"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexs: a,\nattackShipIndexs: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arenaHandler.defenseTeam",
+      "calls": [
+        {
+          "module": "arenaHandler",
+          "line": 4685,
+          "request_fields": [
+            "playerId",
+            "isShow"
+          ],
+          "request_expression": "{\nplayerId: e,\nisShow: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arenaHandler.info",
+      "calls": [
+        {
+          "module": "arenaHandler",
+          "line": 4662,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arenaHandler.match",
+      "calls": [
+        {
+          "module": "arenaHandler",
+          "line": 4667,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arenaHandler.report",
+      "calls": [
+        {
+          "module": "arenaHandler",
+          "line": 4720,
+          "request_fields": [
+            "id"
+          ],
+          "request_expression": "{\nid: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arenaHandler.reportList",
+      "calls": [
+        {
+          "module": "arenaHandler",
+          "line": 4715,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.arenaHandler.setDefenseTeamIndexs",
+      "calls": [
+        {
+          "module": "arenaHandler",
+          "line": 4672,
+          "request_fields": [
+            "defenseTeamIndexs",
+            "defenseShipIndexs"
+          ],
+          "request_expression": "{\ndefenseTeamIndexs: e,\ndefenseShipIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.addShipExperience",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6368,
+          "request_fields": [
+            "bagIndex",
+            "experience"
+          ],
+          "request_expression": "{\nbagIndex: e,\nexperience: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.composeArtifact",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6319,
+          "request_fields": [
+            "fragmentId"
+          ],
+          "request_expression": "{\nfragmentId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.composeCapsule",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6412,
+          "request_fields": [
+            "bagIndexs",
+            "capsuleId"
+          ],
+          "request_expression": "{\nbagIndexs: e,\ncapsuleId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.composeFruit",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6340,
+          "request_fields": [
+            "fragmentId"
+          ],
+          "request_expression": "{\nfragmentId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.composeItem",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6311,
+          "request_fields": [
+            "kindId",
+            "isAll"
+          ],
+          "request_expression": "{\nkindId: e,\nisAll: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.composeRole",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6304,
+          "request_fields": [
+            "classId"
+          ],
+          "request_expression": "{\nclassId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.composeShip",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6361,
+          "request_fields": [
+            "fragmentId"
+          ],
+          "request_expression": "{\nfragmentId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.decomposeStarSign",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6427,
+          "request_fields": [
+            "bagIndexs"
+          ],
+          "request_expression": "{\nbagIndexs: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.increaseArtifactUpgradeStarSuccessRate",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6333,
+          "request_fields": [
+            "bagIndex"
+          ],
+          "request_expression": "{\nbagIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.increaseFruitUpgradeStarSuccessRate",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6354,
+          "request_fields": [
+            "bagIndex"
+          ],
+          "request_expression": "{\nbagIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.resetCapsule",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6397,
+          "request_fields": [
+            "bagIndex"
+          ],
+          "request_expression": "{\nbagIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.saveResetCapsule",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6404,
+          "request_fields": [
+            "bagIndex",
+            "isSave"
+          ],
+          "request_expression": "{\nbagIndex: e,\nisSave: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.sell",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6296,
+          "request_fields": [
+            "bagIndexs",
+            "itemCounts"
+          ],
+          "request_expression": "{\nbagIndexs: e,\nitemCounts: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.upgradeShip",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6376,
+          "request_fields": [
+            "bagIndex"
+          ],
+          "request_expression": "{\nbagIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.upgradeShipSkill",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6390,
+          "request_fields": [
+            "bagIndex"
+          ],
+          "request_expression": "{\nbagIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.upgradeShipStar",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6383,
+          "request_fields": [
+            "bagIndex"
+          ],
+          "request_expression": "{\nbagIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.upgradeStarArtifact",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6326,
+          "request_fields": [
+            "bagIndex"
+          ],
+          "request_expression": "{\nbagIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.upgradeStarFruit",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6347,
+          "request_fields": [
+            "bagIndex"
+          ],
+          "request_expression": "{\nbagIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.bagHandler.upgradeStarSign",
+      "calls": [
+        {
+          "module": "bagHandler",
+          "line": 6420,
+          "request_fields": [
+            "bagIndex"
+          ],
+          "request_expression": "{\nbagIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.doubleBattleHandler.apply",
+      "calls": [
+        {
+          "module": "doubleBattleHandler",
+          "line": 22012,
+          "request_fields": [
+            "themeNo",
+            "teamIndexsMap",
+            "shipIndexsMap"
+          ],
+          "request_expression": "{\nthemeNo: e,\nteamIndexsMap: a,\nshipIndexsMap: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.doubleBattleHandler.battleInfo",
+      "calls": [
+        {
+          "module": "doubleBattleHandler",
+          "line": 22005,
+          "request_fields": [
+            "themeNo"
+          ],
+          "request_expression": "{\nthemeNo: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.doubleBattleHandler.bet",
+      "calls": [
+        {
+          "module": "doubleBattleHandler",
+          "line": 22021,
+          "request_fields": [
+            "themeNo",
+            "type",
+            "targetId"
+          ],
+          "request_expression": "{\nthemeNo: e,\ntype: a,\ntargetId: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.doubleBattleHandler.getChampionTeam",
+      "calls": [
+        {
+          "module": "doubleBattleHandler",
+          "line": 22045,
+          "request_fields": [
+            "themeNo",
+            "levelType"
+          ],
+          "request_expression": "{\nthemeNo: e,\nlevelType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.doubleBattleHandler.getMyTeam",
+      "calls": [
+        {
+          "module": "doubleBattleHandler",
+          "line": 22038,
+          "request_fields": [
+            "themeNo"
+          ],
+          "request_expression": "{\nthemeNo: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.doubleBattleHandler.getTeam",
+      "calls": [
+        {
+          "module": "doubleBattleHandler",
+          "line": 22030,
+          "request_fields": [
+            "themeNo",
+            "targetId"
+          ],
+          "request_expression": "{\nthemeNo: e,\ntargetId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.doubleBattleHandler.openInfo",
+      "calls": [
+        {
+          "module": "doubleBattleHandler",
+          "line": 22000,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.doubleBattleHandler.worshipRank",
+      "calls": [
+        {
+          "module": "doubleBattleHandler",
+          "line": 22061,
+          "request_fields": [
+            "themeNo"
+          ],
+          "request_expression": "{\nthemeNo: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.doubleBattleHandler.worshipStatue",
+      "calls": [
+        {
+          "module": "doubleBattleHandler",
+          "line": 22053,
+          "request_fields": [
+            "themeNo",
+            "levelType"
+          ],
+          "request_expression": "{\nthemeNo: e,\nlevelType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.endlessHandler.begin",
+      "calls": [
+        {
+          "module": "endlessHandler",
+          "line": 25285,
+          "request_fields": [
+            "smapId",
+            "bmapId"
+          ],
+          "request_expression": "{\nsmapId: e,\nbmapId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.endlessHandler.buyFruitMapTimes",
+      "calls": [
+        {
+          "module": "endlessHandler",
+          "line": 25328,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.endlessHandler.pass",
+      "calls": [
+        {
+          "module": "endlessHandler",
+          "line": 25293,
+          "request_fields": [
+            "smapId",
+            "bmapId",
+            "teamIndexs",
+            "shipIdxs",
+            "seed",
+            "manualRecordMap1",
+            "manualRecordMap2",
+            "tickNumber"
+          ],
+          "request_expression": "{\nsmapId: e,\nbmapId: a,\nteamIndexs: t,\nshipIdxs: i,\nseed: r,\nmanualRecordMap1: o,\nmanualRecordMap2: s,\ntickNumber: l\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.endlessHandler.resetSetPursuitTeamTimes",
+      "calls": [
+        {
+          "module": "endlessHandler",
+          "line": 25321,
+          "request_fields": [
+            "bmapId"
+          ],
+          "request_expression": "{\nbmapId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.endlessHandler.setPursuitTeamIndexs",
+      "calls": [
+        {
+          "module": "endlessHandler",
+          "line": 25312,
+          "request_fields": [
+            "bmapId",
+            "teamIndexs",
+            "shipIndexs"
+          ],
+          "request_expression": "{\nbmapId: e,\nteamIndexs: a,\nshipIndexs: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.endlessHandler.skip",
+      "calls": [
+        {
+          "module": "endlessHandler",
+          "line": 25307,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.expeditionHandler.challenge",
+      "calls": [
+        {
+          "module": "expeditionHandler",
+          "line": 26885,
+          "request_fields": [
+            "selfHpMap",
+            "selfMpMap",
+            "challengerHpMap",
+            "challengerMpMap",
+            "isWin"
+          ],
+          "request_expression": "{\nselfHpMap: e,\nselfMpMap: a,\nchallengerHpMap: t,\nchallengerMpMap: i,\nisWin: r\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.expeditionHandler.receive",
+      "calls": [
+        {
+          "module": "expeditionHandler",
+          "line": 26896,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.expeditionHandler.reset",
+      "calls": [
+        {
+          "module": "expeditionHandler",
+          "line": 26875,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.expeditionHandler.skip",
+      "calls": [
+        {
+          "module": "expeditionHandler",
+          "line": 26880,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.eyeHandler.buyChallengeTimes",
+      "calls": [
+        {
+          "module": "eyeHandler",
+          "line": 27088,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.eyeHandler.challenge",
+      "calls": [
+        {
+          "module": "eyeHandler",
+          "line": 27100,
+          "request_fields": [
+            "rank",
+            "teamIndexs",
+            "shipIndexs",
+            "defenderId",
+            "isWin",
+            "seed",
+            "damageMap",
+            "bgImgId"
+          ],
+          "request_expression": "{\nrank: e,\nteamIndexs: a,\nshipIndexs: t,\ndefenderId: i,\nisWin: r,\nseed: o,\ndamageMap: s,\nbgImgId: l\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.eyeHandler.choose",
+      "calls": [
+        {
+          "module": "eyeHandler",
+          "line": 27079,
+          "request_fields": [
+            "rank",
+            "teamIndexs",
+            "shipIndexs"
+          ],
+          "request_expression": "{\nrank: e,\nteamIndexs: a,\nshipIndexs: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.eyeHandler.defenseTeam",
+      "calls": [
+        {
+          "module": "eyeHandler",
+          "line": 27093,
+          "request_fields": [
+            "playerId"
+          ],
+          "request_expression": "{\nplayerId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.eyeHandler.info",
+      "calls": [
+        {
+          "module": "eyeHandler",
+          "line": 27074,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.eyeHandler.report",
+      "calls": [
+        {
+          "module": "eyeHandler",
+          "line": 27121,
+          "request_fields": [
+            "id"
+          ],
+          "request_expression": "{\nid: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.eyeHandler.startPrivate",
+      "calls": [
+        {
+          "module": "eyeHandler",
+          "line": 27114,
+          "request_fields": [
+            "teamIndexs"
+          ],
+          "request_expression": "{\nteamIndexs: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.acceptAddFriend",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27829,
+          "request_fields": [
+            "targetId"
+          ],
+          "request_expression": "{\ntargetId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.exchangeTicket",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27872,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.findTarget",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27815,
+          "request_fields": [
+            "content"
+          ],
+          "request_expression": "{\ncontent: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.giveAndReceiveGiftAll",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27867,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.giveGift",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27843,
+          "request_fields": [
+            "targetId"
+          ],
+          "request_expression": "{\ntargetId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.giveGiftAll",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27857,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.myFriendList",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27800,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.receiveGift",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27850,
+          "request_fields": [
+            "targetId"
+          ],
+          "request_expression": "{\ntargetId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.receiveGiftAll",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27862,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.recommendList",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27805,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.refuseAddFriend",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27836,
+          "request_fields": [
+            "targetId"
+          ],
+          "request_expression": "{\ntargetId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.removeFriend",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27877,
+          "request_fields": [
+            "targetId"
+          ],
+          "request_expression": "{\ntargetId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.requestAddFriend",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27822,
+          "request_fields": [
+            "targetId"
+          ],
+          "request_expression": "{\ntargetId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.friendHandler.requestAddFriendList",
+      "calls": [
+        {
+          "module": "friendHandler",
+          "line": 27810,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.gmHandler.addItem",
+      "calls": [
+        {
+          "module": "gmHandler",
+          "line": 29083,
+          "request_fields": [
+            "kindId",
+            "itemCount",
+            "extra"
+          ],
+          "request_expression": "{\nkindId: e,\nitemCount: a,\nextra: t || {}\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.gmHandler.addRole",
+      "calls": [
+        {
+          "module": "gmHandler",
+          "line": 29092,
+          "request_fields": [
+            "kindId"
+          ],
+          "request_expression": "{\nkindId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.gmHandler.removeRole",
+      "calls": [
+        {
+          "module": "gmHandler",
+          "line": 29099,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildBossHandler.challenge",
+      "calls": [
+        {
+          "module": "guildBossHandler",
+          "line": 31644,
+          "request_fields": [
+            "bossHp",
+            "attackTeamIndexs",
+            "attackShipIndexs",
+            "seed"
+          ],
+          "request_expression": "{\nbossHp: e,\nattackTeamIndexs: a,\nattackShipIndexs: t,\nseed: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildBossHandler.choose",
+      "calls": [
+        {
+          "module": "guildBossHandler",
+          "line": 31636,
+          "request_fields": [
+            "attackTeamIndexs",
+            "attackShipIndexs"
+          ],
+          "request_expression": "{\nattackTeamIndexs: e,\nattackShipIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildBossHandler.dmgRank",
+      "calls": [
+        {
+          "module": "guildBossHandler",
+          "line": 31654,
+          "request_fields": [
+            "type"
+          ],
+          "request_expression": "{\ntype: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildBossHandler.openInfo",
+      "calls": [
+        {
+          "module": "guildBossHandler",
+          "line": 31631,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.addViceChairman",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31904,
+          "request_fields": [
+            "targetId",
+            "targetName"
+          ],
+          "request_expression": "{\ntargetId: e,\ntargetName: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.applyJoin",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31848,
+          "request_fields": [
+            "guildId"
+          ],
+          "request_expression": "{\nguildId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.changeChairman",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31920,
+          "request_fields": [
+            "targetId",
+            "targetName"
+          ],
+          "request_expression": "{\ntargetId: e,\ntargetName: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.create",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31835,
+          "request_fields": [
+            "name",
+            "badgeId"
+          ],
+          "request_expression": "{\nname: e,\nbadgeId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.dismiss",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31899,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.drum",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31941,
+          "request_fields": [
+            "type"
+          ],
+          "request_expression": "{\ntype: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.exit",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31928,
+          "request_fields": [
+            "targetId",
+            "targetName"
+          ],
+          "request_expression": "{\ntargetId: e,\ntargetName: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.handleApply",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31878,
+          "request_fields": [
+            "isAgree",
+            "targetId",
+            "targetName"
+          ],
+          "request_expression": "{\nisAgree: e,\ntargetId: a,\ntargetName: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.info",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31830,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.inherit",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31894,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.list",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31843,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.modifyNotice",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31887,
+          "request_fields": [
+            "notice"
+          ],
+          "request_expression": "{\nnotice: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.modifySetting",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31868,
+          "request_fields": [
+            "badgeId",
+            "guildName",
+            "joinRequireType",
+            "joinLevelLimit"
+          ],
+          "request_expression": "{\nbadgeId: e,\nguildName: a,\njoinRequireType: t,\njoinLevelLimit: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.openBox",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31936,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.receiveWorshipAward",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31863,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.removeViceChairman",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31912,
+          "request_fields": [
+            "targetId",
+            "targetName"
+          ],
+          "request_expression": "{\ntargetId: e,\ntargetName: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.upgradeSkill",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31948,
+          "request_fields": [
+            "type"
+          ],
+          "request_expression": "{\ntype: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.guildHandler.worship",
+      "calls": [
+        {
+          "module": "guildHandler",
+          "line": 31855,
+          "request_fields": [
+            "targetId",
+            "worshipType"
+          ],
+          "request_expression": "{\ntargetId: e,\nworshipType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.buyChallengeTimes",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35059,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.challenge",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35033,
+          "request_fields": [
+            "targetId",
+            "defenderId",
+            "id",
+            "attackTeamIndexs",
+            "attackShipIndexs",
+            "isWin",
+            "seed",
+            "bgImgId"
+          ],
+          "request_expression": "{\ntargetId: e,\ndefenderId: a,\nid: t,\nattackTeamIndexs: i,\nattackShipIndexs: r,\nisWin: o,\nseed: s,\nbgImgId: l\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.choose",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35023,
+          "request_fields": [
+            "defenderId",
+            "id",
+            "attackTeamIndexs",
+            "attackShipIndexs"
+          ],
+          "request_expression": "{\ndefenderId: e,\nid: a,\nattackTeamIndexs: t,\nattackShipIndexs: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.defenseTeam",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35015,
+          "request_fields": [
+            "playerId",
+            "id"
+          ],
+          "request_expression": "{\nplayerId: e,\nid: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.earlySettlement",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35052,
+          "request_fields": [
+            "resourceInfoId"
+          ],
+          "request_expression": "{\nresourceInfoId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.enemyList",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35064,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.help",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35089,
+          "request_fields": [
+            "targetId",
+            "resourceInfoId",
+            "defenseTeamIndexs",
+            "defenseShipIndexs"
+          ],
+          "request_expression": "{\ntargetId: e,\nresourceInfoId: a,\ndefenseTeamIndexs: t,\ndefenseShipIndexs: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.match",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35000,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.myIslandList",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35069,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.practice",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35005,
+          "request_fields": [
+            "resourceId",
+            "isNeedHelp",
+            "defenseTeamIndexs",
+            "defenseShipIndexs"
+          ],
+          "request_expression": "{\nresourceId: e,\nisNeedHelp: a,\ndefenseTeamIndexs: t,\ndefenseShipIndexs: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.report",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35104,
+          "request_fields": [
+            "id"
+          ],
+          "request_expression": "{\nid: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.reportList",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35099,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.reviveRole",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35074,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.setNeedHelp",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35081,
+          "request_fields": [
+            "resourceInfoId",
+            "isNeedHelp"
+          ],
+          "request_expression": "{\nresourceInfoId: e,\nisNeedHelp: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.islandHandler.settlement",
+      "calls": [
+        {
+          "module": "islandHandler",
+          "line": 35047,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.mailHandler.read",
+      "calls": [
+        {
+          "module": "mailHandler",
+          "line": 89676,
+          "request_fields": [
+            "mailId"
+          ],
+          "request_expression": "{\nmailId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.mailHandler.receive",
+      "calls": [
+        {
+          "module": "mailHandler",
+          "line": 89683,
+          "request_fields": [
+            "mailId",
+            "isSys"
+          ],
+          "request_expression": "{\nmailId: e,\nisSys: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.mailHandler.receiveAll",
+      "calls": [
+        {
+          "module": "mailHandler",
+          "line": 89691,
+          "request_fields": [
+            "isHaveSys"
+          ],
+          "request_expression": "{\nisHaveSys: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.mailHandler.removeAllRead",
+      "calls": [
+        {
+          "module": "mailHandler",
+          "line": 89706,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.mailHandler.send",
+      "calls": [
+        {
+          "module": "mailHandler",
+          "line": 89698,
+          "request_fields": [
+            "targetId",
+            "content"
+          ],
+          "request_expression": "{\ntargetId: e,\ncontent: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.newGuildBattleHandler.challenge",
+      "calls": [
+        {
+          "module": "newGuildBattleHandler",
+          "line": 97613,
+          "request_fields": [
+            "defenderId",
+            "diedNum"
+          ],
+          "request_expression": "{\ndefenderId: e,\ndiedNum: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.newGuildBattleHandler.choose",
+      "calls": [
+        {
+          "module": "newGuildBattleHandler",
+          "line": 97604,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexs",
+            "attackShipIndexs"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexs: a,\nattackShipIndexs: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.newGuildBattleHandler.enter",
+      "calls": [
+        {
+          "module": "newGuildBattleHandler",
+          "line": 97599,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.newGuildBattleHandler.exit",
+      "calls": [
+        {
+          "module": "newGuildBattleHandler",
+          "line": 97621,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.newGuildBattleHandler.openInfo",
+      "calls": [
+        {
+          "module": "newGuildBattleHandler",
+          "line": 97586,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.newGuildBattleHandler.result",
+      "calls": [
+        {
+          "module": "newGuildBattleHandler",
+          "line": 97631,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.newGuildBattleHandler.setDefenseTeamInfo",
+      "calls": [
+        {
+          "module": "newGuildBattleHandler",
+          "line": 97591,
+          "request_fields": [
+            "teamIndexs",
+            "shipIndexs"
+          ],
+          "request_expression": "{\nteamIndexs: e,\nshipIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.newGuildBattleHandler.winTimesRank",
+      "calls": [
+        {
+          "module": "newGuildBattleHandler",
+          "line": 97626,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.activitySaveGem",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101712,
+          "request_fields": [
+            "activityName"
+          ],
+          "request_expression": "{\nactivityName: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.activitySelectDropList",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101866,
+          "request_fields": [
+            "activityName",
+            "selectDropIdxs"
+          ],
+          "request_expression": "{\nactivityName: e,\nselectDropIdxs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.buyActionPoint",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101649,
+          "request_fields": [
+            "isAd"
+          ],
+          "request_expression": "{\nisAd: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.buyCoin",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101656,
+          "request_fields": [
+            "isAd"
+          ],
+          "request_expression": "{\nisAd: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.buyGemGoods",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101881,
+          "request_fields": [
+            "id",
+            "costGem"
+          ],
+          "request_expression": "{\nid: e,\ncostGem: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.buySkillPoint",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101663,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.costTopUpPoint",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101822,
+          "request_fields": [
+            "goodsId"
+          ],
+          "request_expression": "{\ngoodsId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.costTopUpPoint2",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101829,
+          "request_fields": [
+            "goodsId"
+          ],
+          "request_expression": "{\ngoodsId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.dreamRoll",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101843,
+          "request_fields": [
+            "diyPoint"
+          ],
+          "request_expression": "{\ndiyPoint: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.exchange",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101776,
+          "request_fields": [
+            "exchangeId",
+            "id"
+          ],
+          "request_expression": "{\nexchangeId: e,\nid: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.exchange2Buy",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101762,
+          "request_fields": [
+            "id"
+          ],
+          "request_expression": "{\nid: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.exchange4Buy",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101769,
+          "request_fields": [
+            "id"
+          ],
+          "request_expression": "{\nid: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.exchangeBuy",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101755,
+          "request_fields": [
+            "id"
+          ],
+          "request_expression": "{\nid: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.fillLoginTopUp",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101635,
+          "request_fields": [
+            "activityName"
+          ],
+          "request_expression": "{\nactivityName: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.fillTaskActive",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101627,
+          "request_fields": [
+            "activityName",
+            "oneCostGem"
+          ],
+          "request_expression": "{\nactivityName: e,\noneCostGem: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.incOnlineTime",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101791,
+          "request_fields": [
+            "seconds"
+          ],
+          "request_expression": "{\nseconds: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.receiveActivityAward",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101704,
+          "request_fields": [
+            "activityNames",
+            "rewardIdxs"
+          ],
+          "request_expression": "{\nactivityNames: e,\nrewardIdxs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.receiveHonourReward",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101836,
+          "request_fields": [
+            "level"
+          ],
+          "request_expression": "{\nlevel: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.receiveScorePointBoxReward",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101858,
+          "request_fields": [
+            "activityName",
+            "score"
+          ],
+          "request_expression": "{\nactivityName: e,\nscore: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.receiveTaskActiveAward",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101619,
+          "request_fields": [
+            "type",
+            "point"
+          ],
+          "request_expression": "{\ntype: e,\npoint: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.receiveTaskAward",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101611,
+          "request_fields": [
+            "taskId",
+            "isAd"
+          ],
+          "request_expression": "{\ntaskId: e,\nisAd: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.rename",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101569,
+          "request_fields": [
+            "name"
+          ],
+          "request_expression": "{\nname: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.rollDial",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101738,
+          "request_fields": [
+            "type",
+            "times",
+            "isAd"
+          ],
+          "request_expression": "{\ntype: e,\ntimes: a,\nisAd: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.scorePoint",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101850,
+          "request_fields": [
+            "activityName",
+            "times"
+          ],
+          "request_expression": "{\nactivityName: e,\ntimes: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.selectBoxReward",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101686,
+          "request_fields": [
+            "bagIndex",
+            "rewardIdxs",
+            "itemCount"
+          ],
+          "request_expression": "{\nbagIndex: e,\nrewardIdxs: a,\nitemCount: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.selectBoxReward2",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101695,
+          "request_fields": [
+            "bagIndex",
+            "itemCount",
+            "rewardIdxCountMap"
+          ],
+          "request_expression": "{\nbagIndex: e,\nitemCount: a,\nrewardIdxCountMap: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.sendChat",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101747,
+          "request_fields": [
+            "type",
+            "words"
+          ],
+          "request_expression": "{\ntype: e,\nwords: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.setChatSkin",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101590,
+          "request_fields": [
+            "imgId"
+          ],
+          "request_expression": "{\nimgId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.setHideEqpt",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101604,
+          "request_fields": [
+            "isHideEqpt"
+          ],
+          "request_expression": "{\nisHideEqpt: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.setPhotoImg",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101576,
+          "request_fields": [
+            "imgId"
+          ],
+          "request_expression": "{\nimgId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.setShipImg",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101583,
+          "request_fields": [
+            "imgId"
+          ],
+          "request_expression": "{\nimgId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.setTitleImg",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101597,
+          "request_fields": [
+            "imgId"
+          ],
+          "request_expression": "{\nimgId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.signIn",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101642,
+          "request_fields": [
+            "isAd"
+          ],
+          "request_expression": "{\nisAd: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.spWish",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101798,
+          "request_fields": [
+            "activityName",
+            "times"
+          ],
+          "request_expression": "{\nactivityName: e,\ntimes: 1\n}"
+        },
+        {
+          "module": "playerHandler",
+          "line": 101806,
+          "request_fields": [
+            "activityName",
+            "times"
+          ],
+          "request_expression": "{\nactivityName: e,\ntimes: 10\n}"
+        },
+        {
+          "module": "playerHandler",
+          "line": 101814,
+          "request_fields": [
+            "activityName",
+            "times"
+          ],
+          "request_expression": "{\nactivityName: e,\ntimes: 100\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.spWishExchangeBuy",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101784,
+          "request_fields": [
+            "id"
+          ],
+          "request_expression": "{\nid: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.topUpGoodsList",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101668,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.updateFreeActivity",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101719,
+          "request_fields": [
+            "activityName"
+          ],
+          "request_expression": "{\nactivityName: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.updateRepeatReceiveActivityTime",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101726,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.useAllBox",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101673,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.useGiftCode",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101731,
+          "request_fields": [
+            "giftCode"
+          ],
+          "request_expression": "{\ngiftCode: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.useItem",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101678,
+          "request_fields": [
+            "bagIndex",
+            "itemCount"
+          ],
+          "request_expression": "{\nbagIndex: e,\nitemCount: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.playerHandler.viewAd",
+      "calls": [
+        {
+          "module": "playerHandler",
+          "line": 101874,
+          "request_fields": [
+            "type"
+          ],
+          "request_expression": "{\ntype: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.pointHandler.adReward",
+      "calls": [
+        {
+          "module": "pointHandler",
+          "line": 102494,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.pointHandler.advanced",
+      "calls": [
+        {
+          "module": "pointHandler",
+          "line": 102465,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.pointHandler.advancedHundred",
+      "calls": [
+        {
+          "module": "pointHandler",
+          "line": 102475,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.pointHandler.advancedTen",
+      "calls": [
+        {
+          "module": "pointHandler",
+          "line": 102470,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.pointHandler.normal",
+      "calls": [
+        {
+          "module": "pointHandler",
+          "line": 102450,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.pointHandler.normalHundred",
+      "calls": [
+        {
+          "module": "pointHandler",
+          "line": 102460,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.pointHandler.normalTen",
+      "calls": [
+        {
+          "module": "pointHandler",
+          "line": 102455,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.pointHandler.selectWishClassId",
+      "calls": [
+        {
+          "module": "pointHandler",
+          "line": 102480,
+          "request_fields": [
+            "classId"
+          ],
+          "request_expression": "{\nclassId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.pointHandler.switchAdvancedPool",
+      "calls": [
+        {
+          "module": "pointHandler",
+          "line": 102487,
+          "request_fields": [
+            "idx"
+          ],
+          "request_expression": "{\nidx: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.practiceHandler.challenge",
+      "calls": [
+        {
+          "module": "practiceHandler",
+          "line": 103570,
+          "request_fields": [
+            "defenderId",
+            "ctime",
+            "attackTeamIndexs",
+            "attackShipIndexs",
+            "isWin",
+            "seed"
+          ],
+          "request_expression": "{\ndefenderId: e,\nctime: a,\nattackTeamIndexs: t,\nattackShipIndexs: i,\nisWin: r,\nseed: o\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.practiceHandler.choose",
+      "calls": [
+        {
+          "module": "practiceHandler",
+          "line": 103560,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexs",
+            "attackShipIndexs",
+            "ctime"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexs: a,\nattackShipIndexs: t,\nctime: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.practiceHandler.defenseTeam",
+      "calls": [
+        {
+          "module": "practiceHandler",
+          "line": 103552,
+          "request_fields": [
+            "playerId",
+            "ctime"
+          ],
+          "request_expression": "{\nplayerId: e,\nctime: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.practiceHandler.match",
+      "calls": [
+        {
+          "module": "practiceHandler",
+          "line": 103537,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.practiceHandler.setDefenseInfo",
+      "calls": [
+        {
+          "module": "practiceHandler",
+          "line": 103542,
+          "request_fields": [
+            "type",
+            "defenseTeamIndexs",
+            "defenseShipIndexs",
+            "level"
+          ],
+          "request_expression": "{\ntype: e,\ndefenseTeamIndexs: a,\ndefenseShipIndexs: t,\nlevel: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.challenge",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103831,
+          "request_fields": [
+            "attackTeamId",
+            "defenderTeamId",
+            "isWin",
+            "winPlayerIdMap",
+            "damageMapMap",
+            "seed"
+          ],
+          "request_expression": "{\nattackTeamId: e,\ndefenderTeamId: a,\nisWin: t,\nwinPlayerIdMap: i,\ndamageMapMap: r,\nseed: o\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.choose",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103823,
+          "request_fields": [
+            "attackTeamId",
+            "defenderTeamId"
+          ],
+          "request_expression": "{\nattackTeamId: e,\ndefenderTeamId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.createTeam",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103776,
+          "request_fields": [
+            "teamIndexs",
+            "shipIndexs"
+          ],
+          "request_expression": "{\nteamIndexs: e,\nshipIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.dissolveTeam",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103801,
+          "request_fields": [
+            "teamId"
+          ],
+          "request_expression": "{\nteamId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.getInfo",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103761,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.getReadyTeamInfos",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103766,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.joinTeam",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103784,
+          "request_fields": [
+            "teamId",
+            "teamIndexs",
+            "shipIndexs"
+          ],
+          "request_expression": "{\nteamId: e,\nteamIndexs: a,\nshipIndexs: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.match",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103771,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.practice",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103816,
+          "request_fields": [
+            "teamId"
+          ],
+          "request_expression": "{\nteamId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.rank",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103843,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.removeTeamMember",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103793,
+          "request_fields": [
+            "teamId",
+            "playerId"
+          ],
+          "request_expression": "{\nteamId: e,\nplayerId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.prestigeBattleHandler.setAutoPractice",
+      "calls": [
+        {
+          "module": "prestigeBattleHandler",
+          "line": 103808,
+          "request_fields": [
+            "teamId",
+            "isAuto"
+          ],
+          "request_expression": "{\nteamId: e,\nisAuto: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.rankHandler.arenaTop50",
+      "calls": [
+        {
+          "module": "rankHandler",
+          "line": 105554,
+          "request_fields": [
+            "isDaily"
+          ],
+          "request_expression": "{\nisDaily: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.rankHandler.top50",
+      "calls": [
+        {
+          "module": "rankHandler",
+          "line": 105561,
+          "request_fields": [
+            "type"
+          ],
+          "request_expression": "{\ntype: e\n}"
+        },
+        {
+          "module": "rankHandler",
+          "line": 105568,
+          "request_fields": [
+            "type",
+            "begin",
+            "end",
+            "serverId"
+          ],
+          "request_expression": "{\ntype: a,\nbegin: t,\nend: i,\nserverId: e || 0\n}"
+        },
+        {
+          "module": "rankHandler",
+          "line": 105578,
+          "request_fields": [
+            "type",
+            "begin",
+            "end"
+          ],
+          "request_expression": "{\ntype: e,\nbegin: a,\nend: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.shopHandler.buy",
+      "calls": [
+        {
+          "module": "shopHandler",
+          "line": 123220,
+          "request_fields": [
+            "kindId"
+          ],
+          "request_expression": "{\nkindId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.shopHandler.refresh",
+      "calls": [
+        {
+          "module": "shopHandler",
+          "line": 123213,
+          "request_fields": [
+            "type"
+          ],
+          "request_expression": "{\ntype: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixExpeditionHandler.challenge",
+      "calls": [
+        {
+          "module": "sixExpeditionHandler",
+          "line": 123552,
+          "request_fields": [
+            "selfHpMap",
+            "selfMpMap",
+            "challengerHpMap",
+            "challengerMpMap",
+            "isWin"
+          ],
+          "request_expression": "{\nselfHpMap: e,\nselfMpMap: a,\nchallengerHpMap: t,\nchallengerMpMap: i,\nisWin: r\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixExpeditionHandler.info",
+      "calls": [
+        {
+          "module": "sixExpeditionHandler",
+          "line": 123537,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixExpeditionHandler.receive",
+      "calls": [
+        {
+          "module": "sixExpeditionHandler",
+          "line": 123563,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixExpeditionHandler.reset",
+      "calls": [
+        {
+          "module": "sixExpeditionHandler",
+          "line": 123542,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixExpeditionHandler.skip",
+      "calls": [
+        {
+          "module": "sixExpeditionHandler",
+          "line": 123547,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixPracticeHandler.challenge",
+      "calls": [
+        {
+          "module": "sixPracticeHandler",
+          "line": 123607,
+          "request_fields": [
+            "defenderId",
+            "ctime",
+            "attackTeamIndexs",
+            "attackShipIndexs",
+            "isWin",
+            "seed"
+          ],
+          "request_expression": "{\ndefenderId: e,\nctime: a,\nattackTeamIndexs: t,\nattackShipIndexs: i,\nisWin: r,\nseed: o\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixPracticeHandler.choose",
+      "calls": [
+        {
+          "module": "sixPracticeHandler",
+          "line": 123597,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexs",
+            "attackShipIndexs",
+            "ctime"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexs: a,\nattackShipIndexs: t,\nctime: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixPracticeHandler.defenseTeam",
+      "calls": [
+        {
+          "module": "sixPracticeHandler",
+          "line": 123589,
+          "request_fields": [
+            "playerId",
+            "ctime"
+          ],
+          "request_expression": "{\nplayerId: e,\nctime: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixPracticeHandler.match",
+      "calls": [
+        {
+          "module": "sixPracticeHandler",
+          "line": 123576,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.sixPracticeHandler.setDefenseInfo",
+      "calls": [
+        {
+          "module": "sixPracticeHandler",
+          "line": 123581,
+          "request_fields": [
+            "defenseTeamIndexs",
+            "defenseShipIndexs"
+          ],
+          "request_expression": "{\ndefenseTeamIndexs: e,\ndefenseShipIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.smapHandler.beginSmap",
+      "calls": [
+        {
+          "module": "smapHandler",
+          "line": 124299,
+          "request_fields": [
+            "smapId",
+            "teamIndexs"
+          ],
+          "request_expression": "{\nsmapId: e,\nteamIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.smapHandler.buyMapType5Times",
+      "calls": [
+        {
+          "module": "smapHandler",
+          "line": 124344,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.smapHandler.endSmap",
+      "calls": [
+        {
+          "module": "smapHandler",
+          "line": 124307,
+          "request_fields": [
+            "star",
+            "teamIndexs",
+            "shipIdxs",
+            "seed",
+            "manualRecordMap1",
+            "manualRecordMap2",
+            "tickNumber"
+          ],
+          "request_expression": "{\nstar: e,\nteamIndexs: a,\nshipIdxs: t,\nseed: i,\nmanualRecordMap1: r,\nmanualRecordMap2: o,\ntickNumber: s\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.smapHandler.receiveBmapAward",
+      "calls": [
+        {
+          "module": "smapHandler",
+          "line": 124328,
+          "request_fields": [
+            "bmapId",
+            "star"
+          ],
+          "request_expression": "{\nbmapId: e,\nstar: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.smapHandler.resetSmapTimes",
+      "calls": [
+        {
+          "module": "smapHandler",
+          "line": 124336,
+          "request_fields": [
+            "smapId",
+            "isAd"
+          ],
+          "request_expression": "{\nsmapId: e,\nisAd: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.smapHandler.skip",
+      "calls": [
+        {
+          "module": "smapHandler",
+          "line": 124320,
+          "request_fields": [
+            "smapId",
+            "times"
+          ],
+          "request_expression": "{\nsmapId: e,\ntimes: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.tailHandler.challenge",
+      "calls": [
+        {
+          "module": "tailHandler",
+          "line": 127494,
+          "request_fields": [
+            "bossHp",
+            "attackTeamIndexs",
+            "attackShipIndexs",
+            "seed"
+          ],
+          "request_expression": "{\nbossHp: e,\nattackTeamIndexs: a,\nattackShipIndexs: t,\nseed: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.tailHandler.choose",
+      "calls": [
+        {
+          "module": "tailHandler",
+          "line": 127485,
+          "request_fields": [
+            "tailType",
+            "attackTeamIndexs",
+            "attackShipIndexs"
+          ],
+          "request_expression": "{\ntailType: e,\nattackTeamIndexs: a,\nattackShipIndexs: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.challenge",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127774,
+          "request_fields": [
+            "attackTeamId",
+            "defenderTeamId",
+            "isWin",
+            "winPlayerIdMap",
+            "damageMapMap",
+            "seed"
+          ],
+          "request_expression": "{\nattackTeamId: e,\ndefenderTeamId: a,\nisWin: t,\nwinPlayerIdMap: i,\ndamageMapMap: r,\nseed: o\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.choose",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127766,
+          "request_fields": [
+            "attackTeamId",
+            "defenderTeamId"
+          ],
+          "request_expression": "{\nattackTeamId: e,\ndefenderTeamId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.createTeam",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127719,
+          "request_fields": [
+            "teamIndexs",
+            "shipIndexs"
+          ],
+          "request_expression": "{\nteamIndexs: e,\nshipIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.dissolveTeam",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127744,
+          "request_fields": [
+            "teamId"
+          ],
+          "request_expression": "{\nteamId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.getInfo",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127699,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.getReadyTeamInfos",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127704,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.joinTeam",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127727,
+          "request_fields": [
+            "teamId",
+            "teamIndexs",
+            "shipIndexs"
+          ],
+          "request_expression": "{\nteamId: e,\nteamIndexs: a,\nshipIndexs: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.match",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127714,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.practice",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127759,
+          "request_fields": [
+            "teamId"
+          ],
+          "request_expression": "{\nteamId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.rank",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127786,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.refresh",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127709,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.removeTeamMember",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127736,
+          "request_fields": [
+            "teamId",
+            "playerId"
+          ],
+          "request_expression": "{\nteamId: e,\nplayerId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamBattleHandler.setAutoPractice",
+      "calls": [
+        {
+          "module": "teamBattleHandler",
+          "line": 127751,
+          "request_fields": [
+            "teamId",
+            "isAuto"
+          ],
+          "request_expression": "{\nteamId: e,\nisAuto: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.equipAllArtifact",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128548,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.equipAllCapsule",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128640,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.equipAllStarSign",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128693,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.equipAllStone",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128518,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.equipArtifact",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128532,
+          "request_fields": [
+            "teamIndex",
+            "bagIndex"
+          ],
+          "request_expression": "{\nteamIndex: e,\nbagIndex: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.equipCapsule",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128624,
+          "request_fields": [
+            "teamIndex",
+            "bagIndex"
+          ],
+          "request_expression": "{\nteamIndex: e,\nbagIndex: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.equipStarSign",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128677,
+          "request_fields": [
+            "teamIndex",
+            "bagIndex"
+          ],
+          "request_expression": "{\nteamIndex: e,\nbagIndex: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.equipStone",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128502,
+          "request_fields": [
+            "teamIndex",
+            "bagIndex"
+          ],
+          "request_expression": "{\nteamIndex: e,\nbagIndex: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.evolveAllEquipment",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128455,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.evolveEquipment",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128447,
+          "request_fields": [
+            "teamIndex",
+            "equipmentType"
+          ],
+          "request_expression": "{\nteamIndex: e,\nequipmentType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.evolveRole",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128417,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.evolveRoleSkill",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128669,
+          "request_fields": [
+            "teamIndex",
+            "skillKindId"
+          ],
+          "request_expression": "{\nteamIndex: e,\nskillKindId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.increaseAwakeLevelUpgradeSuccessRate",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128569,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.increaseEvolveSkillSuccessRate",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128662,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.resetRole",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128617,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.resetRoleTrain",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128593,
+          "request_fields": [
+            "teamIndex",
+            "type"
+          ],
+          "request_expression": "{\nteamIndex: e,\ntype: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.roleBreak",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128469,
+          "request_fields": [
+            "teamIndex",
+            "bagIndexs"
+          ],
+          "request_expression": "{\nteamIndex: e,\nbagIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.soulRole",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128654,
+          "request_fields": [
+            "teamIndex",
+            "type"
+          ],
+          "request_expression": "{\nteamIndex: e,\ntype: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.trainRole",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128585,
+          "request_fields": [
+            "teamIndex",
+            "type"
+          ],
+          "request_expression": "{\nteamIndex: e,\ntype: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unEquipAllArtifact",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128555,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unEquipAllCapsule",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128647,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unEquipAllStarSign",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128700,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unEquipAllStone",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128525,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unEquipArtifact",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128540,
+          "request_fields": [
+            "teamIndex",
+            "equipmentType"
+          ],
+          "request_expression": "{\nteamIndex: e,\nequipmentType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unEquipCapsule",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128632,
+          "request_fields": [
+            "teamIndex",
+            "equipmentType"
+          ],
+          "request_expression": "{\nteamIndex: e,\nequipmentType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unEquipStarSign",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128685,
+          "request_fields": [
+            "teamIndex",
+            "equipmentType"
+          ],
+          "request_expression": "{\nteamIndex: e,\nequipmentType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unEquipStone",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128510,
+          "request_fields": [
+            "teamIndex",
+            "equipmentType"
+          ],
+          "request_expression": "{\nteamIndex: e,\nequipmentType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unlockFriendship",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128609,
+          "request_fields": [
+            "friendShipId",
+            "classId"
+          ],
+          "request_expression": "{\nfriendShipId: e,\nclassId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.unlockRoleTrain",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128601,
+          "request_fields": [
+            "teamIndex",
+            "type"
+          ],
+          "request_expression": "{\nteamIndex: e,\ntype: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.upgradeAllEquipmentMax",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128440,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.upgradeEquipment",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128424,
+          "request_fields": [
+            "teamIndex",
+            "equipmentType"
+          ],
+          "request_expression": "{\nteamIndex: e,\nequipmentType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.upgradeEquipmentMax",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128432,
+          "request_fields": [
+            "teamIndex",
+            "equipmentType"
+          ],
+          "request_expression": "{\nteamIndex: e,\nequipmentType: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.upgradeRoleAwakeLevel",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128562,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.upgradeRoleAwakeSkill",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128576,
+          "request_fields": [
+            "teamIndex",
+            "skillKindId",
+            "isMax"
+          ],
+          "request_expression": "{\nteamIndex: e,\nskillKindId: a,\nisMax: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.upgradeRoleSkill",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128477,
+          "request_fields": [
+            "teamIndex",
+            "skillKindId",
+            "isMax"
+          ],
+          "request_expression": "{\nteamIndex: e,\nskillKindId: a,\nisMax: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.upgradeRoleStar",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128462,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.useExpItem",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128486,
+          "request_fields": [
+            "teamIndex",
+            "bagIndex",
+            "itemCount"
+          ],
+          "request_expression": "{\nteamIndex: e,\nbagIndex: a,\nitemCount: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.teamHandler.useExpItemMax",
+      "calls": [
+        {
+          "module": "teamHandler",
+          "line": 128495,
+          "request_fields": [
+            "teamIndex"
+          ],
+          "request_expression": "{\nteamIndex: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.altar",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130030,
+          "request_fields": [
+            "smapId"
+          ],
+          "request_expression": "{\nsmapId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.borrowRole",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130015,
+          "request_fields": [
+            "smapId",
+            "roleIdx"
+          ],
+          "request_expression": "{\nsmapId: e,\nroleIdx: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.challenge",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 129995,
+          "request_fields": [
+            "smapId",
+            "selfHpMap",
+            "selfMpMap",
+            "challengerHpMap",
+            "challengerMpMap",
+            "isWin"
+          ],
+          "request_expression": "{\nsmapId: e,\nselfHpMap: a,\nselfMpMap: t,\nchallengerHpMap: i,\nchallengerMpMap: r,\nisWin: o\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.closeMap",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 129990,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.getBlessing",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130067,
+          "request_fields": [
+            "smapId"
+          ],
+          "request_expression": "{\nsmapId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.openBox",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130037,
+          "request_fields": [
+            "smapId"
+          ],
+          "request_expression": "{\nsmapId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.openMap",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 129983,
+          "request_fields": [
+            "bmapId"
+          ],
+          "request_expression": "{\nbmapId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.recordLog",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130052,
+          "request_fields": [
+            "text"
+          ],
+          "request_expression": "{\ntext: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.selectBlessing",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130007,
+          "request_fields": [
+            "smapId",
+            "blessingId"
+          ],
+          "request_expression": "{\nsmapId: e,\nblessingId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.setExtInfo",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130059,
+          "request_fields": [
+            "key",
+            "value"
+          ],
+          "request_expression": "{\nkey: e,\nvalue: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.setStatus",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130044,
+          "request_fields": [
+            "smapId",
+            "status"
+          ],
+          "request_expression": "{\nsmapId: e,\nstatus: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.spa",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130023,
+          "request_fields": [
+            "smapId"
+          ],
+          "request_expression": "{\nsmapId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.timePeakHandler.updateBattleInfo",
+      "calls": [
+        {
+          "module": "timePeakHandler",
+          "line": 130074,
+          "request_fields": [
+            "selfHpMap",
+            "selfMpMap",
+            "challengerInfoMap",
+            "winSmapIds"
+          ],
+          "request_expression": "{\nselfHpMap: e,\nselfMpMap: a,\nchallengerInfoMap: t,\nwinSmapIds: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.buyMatchTimes",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130144,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.challenge",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130126,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexsMap",
+            "attackShipIndexsMap",
+            "isWin",
+            "winPlayerIdMap",
+            "seed",
+            "bgImgId"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexsMap: a,\nattackShipIndexsMap: t,\nisWin: i,\nwinPlayerIdMap: r,\nseed: o,\nbgImgId: s\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.challengeTop",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130161,
+          "request_fields": [
+            "no",
+            "defenderId",
+            "attackTeamIndexsMap",
+            "attackShipIndexsMap",
+            "isWin",
+            "winPlayerIdMap",
+            "seed",
+            "bgImgId"
+          ],
+          "request_expression": "{\nno: e,\ndefenderId: a,\nattackTeamIndexsMap: t,\nattackShipIndexsMap: i,\nisWin: r,\nwinPlayerIdMap: o,\nseed: s,\nbgImgId: l\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.challengeTopNull",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130154,
+          "request_fields": [
+            "no"
+          ],
+          "request_expression": "{\nno: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.choose",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130117,
+          "request_fields": [
+            "defenderId",
+            "attackTeamIndexsMap",
+            "attackShipIndexsMap"
+          ],
+          "request_expression": "{\ndefenderId: e,\nattackTeamIndexsMap: a,\nattackShipIndexsMap: t\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.defenseTeam",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130110,
+          "request_fields": [
+            "playerId"
+          ],
+          "request_expression": "{\nplayerId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.info",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130092,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.match",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130097,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.receiveFirstReachReward",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130149,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.reportList",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130139,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.topArena3v3Handler.setDefenseTeamIndexsMap",
+      "calls": [
+        {
+          "module": "topArena3v3Handler",
+          "line": 130102,
+          "request_fields": [
+            "defenseTeamIndexsMap",
+            "defenseShipIndexsMap"
+          ],
+          "request_expression": "{\ndefenseTeamIndexsMap: e,\ndefenseShipIndexsMap: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worldBossHandler.challenge",
+      "calls": [
+        {
+          "module": "worldBossHandler",
+          "line": 134184,
+          "request_fields": [
+            "bossHp",
+            "attackTeamIndexs",
+            "attackShipIndexs",
+            "seed"
+          ],
+          "request_expression": "{\nbossHp: e,\nattackTeamIndexs: a,\nattackShipIndexs: t,\nseed: i\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worldBossHandler.choose",
+      "calls": [
+        {
+          "module": "worldBossHandler",
+          "line": 134176,
+          "request_fields": [
+            "attackTeamIndexs",
+            "attackShipIndexs"
+          ],
+          "request_expression": "{\nattackTeamIndexs: e,\nattackShipIndexs: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worldBossHandler.dmgRank",
+      "calls": [
+        {
+          "module": "worldBossHandler",
+          "line": 134194,
+          "request_fields": [
+            "type"
+          ],
+          "request_expression": "{\ntype: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worldBossHandler.inspire",
+      "calls": [
+        {
+          "module": "worldBossHandler",
+          "line": 134201,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worldBossHandler.openInfo",
+      "calls": [
+        {
+          "module": "worldBossHandler",
+          "line": 134171,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worshipBattleHandler.apply",
+      "calls": [
+        {
+          "module": "worshipBattleHandler",
+          "line": 134411,
+          "request_fields": [
+            "teamIndexsMap",
+            "shipIndexsMap"
+          ],
+          "request_expression": "{\nteamIndexsMap: e,\nshipIndexsMap: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worshipBattleHandler.battleInfo",
+      "calls": [
+        {
+          "module": "worshipBattleHandler",
+          "line": 134406,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worshipBattleHandler.bet",
+      "calls": [
+        {
+          "module": "worshipBattleHandler",
+          "line": 134419,
+          "request_fields": [
+            "type",
+            "targetId"
+          ],
+          "request_expression": "{\ntype: e,\ntargetId: a\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worshipBattleHandler.getChampionTeam",
+      "calls": [
+        {
+          "module": "worshipBattleHandler",
+          "line": 134439,
+          "request_fields": [
+            "levelType"
+          ],
+          "request_expression": "{\nlevelType: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worshipBattleHandler.getMyTeam",
+      "calls": [
+        {
+          "module": "worshipBattleHandler",
+          "line": 134434,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worshipBattleHandler.getTeam",
+      "calls": [
+        {
+          "module": "worshipBattleHandler",
+          "line": 134427,
+          "request_fields": [
+            "targetId"
+          ],
+          "request_expression": "{\ntargetId: e\n}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worshipBattleHandler.openInfo",
+      "calls": [
+        {
+          "module": "worshipBattleHandler",
+          "line": 134401,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worshipBattleHandler.worshipRank",
+      "calls": [
+        {
+          "module": "worshipBattleHandler",
+          "line": 134453,
+          "request_fields": [],
+          "request_expression": "{}"
+        }
+      ]
+    },
+    {
+      "route": "logic.worshipBattleHandler.worshipStatue",
+      "calls": [
+        {
+          "module": "worshipBattleHandler",
+          "line": 134446,
+          "request_fields": [
+            "levelType"
+          ],
+          "request_expression": "{\nlevelType: e\n}"
+        }
+      ]
+    }
+  ],
+  "source_sha256": "3edb048a08a29e1107d32007fa523a38fe0973f560906f55caa54c87c2d3516f"
+}
