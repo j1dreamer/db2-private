@@ -1,8 +1,8 @@
 {
   "stage": "development-not-device-verified",
-  "implemented_routes": 273,
+  "implemented_routes": 289,
   "target_routes": 342,
-  "apk_sha256": "f93de619b7e8a5d2525376642f0158f1204f6af2cd5980e2abca5030a7f39d18",
+  "apk_sha256": "378fa867f94f12d4e21676bdf74008e4507fe48018aee30bb85d695bb49936a9",
   "old_apk_sha256": "d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f",
   "resources": {
     "resources_compression": "stored",
@@ -25,8 +25,8 @@
   ],
   "powershell_full_reconstruction_verified": true,
   "python_full_reconstruction_verified": true,
-  "bundle_sha256": "eac926ad69d398c155195c8336ff6d2b39e7f157aacaf0e041a638221901023f",
-  "tests_passed": 200,
+  "bundle_sha256": "270df45d9beecbedc93847e45bf434811df0a4f14881712f5a9daa4df00df139",
+  "tests_passed": 207,
   "changed_non_signature_entries": [
     "assets/assets/main/index.jsc"
   ],

@@ -1,0 +1,27 @@
+{
+  "archive": "user-provided File_000",
+  "format": "same XXTEA + gzip as main bundle; inspected decoded contents",
+  "bundles": [
+    {
+      "path": "DB2-GD/assets/assets/resources/index.jsc",
+      "size": 320,
+      "decoded_size": 563,
+      "sha256": "7797411ef5e6c439b3b13999c9ee94c2142d743021727044531da33109e917bf",
+      "inspection": "empty module table: ({}, {}, [])"
+    },
+    {
+      "path": "DB2-GD/assets/assets/internal/index.jsc",
+      "size": 320,
+      "decoded_size": 563,
+      "sha256": "7797411ef5e6c439b3b13999c9ee94c2142d743021727044531da33109e917bf",
+      "inspection": "empty module table: ({}, {}, [])"
+    },
+    {
+      "path": "DB2-GD/assets/src/cocos2d-jsb.jsc",
+      "size": 365796,
+      "decoded_size": 1587373,
+      "sha256": "63a6617cc067781e72a5da77e5097c8664e8361136914c02f20d7bd2b2d8e78f",
+      "inspection": "Cocos engine, not game feature modules"
+    }
+  ]
+}

@@ -433,5 +433,14 @@
         }
       ]
     }
-  ]
+  ],
+  "engine_parser_evidence": {
+    "engine_sha256": "63a6617cc067781e72a5da77e5097c8664e8361136914c02f20d7bd2b2d8e78f",
+    "decoded_engine_lines": [
+      43705,
+      44088,
+      44096
+    ],
+    "meaning": "TMX objects initialize XML id, then parse custom properties into the same object, overriding id with the board property. The 58 road property ids are the effective client ids."
+  }
 }
