@@ -1,0 +1,23 @@
+{
+  "stage": "development-client-not-device-tested",
+  "server": "http://127.0.0.1:20003",
+  "source_sha256": "027cbdae200848d67103a2dd3e3520f4ea42215d1d37e8efb74305d8f655d069",
+  "patched_bundle_sha256": "45648e420da812a565ff028aae710a0230022c96c31db9e527a7371ec466d9f2",
+  "apk_sha256": "995276f26f2f25d3cebffca935d1ae59c5ce261c496c4a9ee55dd345d64a3322",
+  "package": "com.dp2.web.dev",
+  "sdk_login": "local-account",
+  "tutorial": false,
+  "speed_range": [
+    1,
+    10
+  ],
+  "response_error_recovery": true,
+  "hot_update": false,
+  "server_script_execution": false,
+  "signed_apk_sha256": "650e472cfbcc821dcb23a280921d1cab863964a0ff22a994aa8fc4177bff5b6f",
+  "patch_source_sha256": "d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f",
+  "signer_certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953",
+  "patch_bytes": 5061145,
+  "android_resource_layout_verified": true,
+  "blue_stacks_verified": false
+}

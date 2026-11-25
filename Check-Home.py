@@ -3,7 +3,7 @@ from pathlib import Path
 import argparse,hashlib,json,sqlite3,urllib.request,datetime
 
 ROOT=Path(__file__).resolve().parent
-REQUIRED=('task.daily','task.dailyActivePoint','task.weeklyActivePoint','task.receivedPointMap.daily','task.receivedPointMap.weekly','activity.scorePointInfoMap','timesMaxMap.actionPoint','timesMaxMap.skillPoint','nextRecoverTimeMap.actionPoint','nextRecoverTimeMap.skillPoint')
+REQUIRED=('task.daily','task.dailyActivePoint','task.weeklyActivePoint','task.receivedPointMap.daily','task.receivedPointMap.weekly','activity.scorePointInfoMap','timesMaxMap.actionPoint','timesMaxMap.skillPoint','nextRecoverTimeMap.actionPoint','nextRecoverTimeMap.skillPoint','smapStarMap.1.101','smapTimesMap','bmapBoxReceivedMap')
 def missing(profile):
     result=[]
     for path in REQUIRED:
@@ -48,7 +48,7 @@ def main():
                 for ident,created,action,detail in rows:
                     d=json.loads(detail)
                     summary={k:d[k] for k in ('player','schema') if k in d}
-                    if action=='client_error':summary={'error':str(d.get('msg','')).split('\n')[0][:300]}
+                    if action=='client_error':summary={'error':str(d.get('msg',''))[:2400]}
                     out['recent_audit'].append({'id':ident,'time':datetime.datetime.fromtimestamp(created).astimezone().isoformat(),'action':action,**summary})
         except Exception as exc:out['database_error']=str(exc)
     else:out['database_error']='Database not found in this folder; check --data or server folder.'

@@ -74,7 +74,7 @@ Sao lưu khi server đã dừng, hoặc dùng SQLite backup API; không sao ché
 
 Linux x86_64, Python 3.12, Node 24 (chỉ dùng cho test codec gốc), Java 21. Chưa chạy trên Termux, Windows, macOS hoặc Android thật. Backend được viết đa nền tảng; đây chưa phải xác nhận mọi nền tảng đã được thử.
 
-43 kiểm thử backend/codec/đóng gói và dữ liệu client đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
+47 kiểm thử backend/codec/đóng gói và dữ liệu client đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
 
 ## Đối chiếu với JavaScript gốc
 
@@ -123,7 +123,7 @@ Sau khi zipalign và ký, phải chạy `python tools/verify_apk.py FILE.apk` b�
 - APK sửa SHA-256: `d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f`.
 - Bản vá chỉ sao chép các vùng byte không đổi và thay những vùng đã sửa/ký; kiểm tra checksum nguồn và đầu ra, giữ nguyên APK cũ.
 - `tools/download_apk.py` hiện tự áp dụng bản vá sau khi tải/ghép APK nền.
-- 43 kiểm thử backend/codec/đóng gói/bản vá và dữ liệu sảnh đã pass; bản sửa schema 3 vẫn cần xác nhận sảnh hiển thị đúng trên Android/BlueStacks.
+- 47 kiểm thử backend/codec/đóng gói/bản vá và dữ liệu sảnh đã pass; bản sửa schema 3 vẫn cần xác nhận sảnh hiển thị đúng trên Android/BlueStacks.
 
 Bản vá Windows dùng PowerShell có sẵn; không đổi execution policy. Đã chạy thử thuật toán PowerShell trên cùng APK gốc và xác nhận đầu ra khớp SHA-256 bản sửa đã ký. File `Apply-Fix-Python.bat` là lựa chọn thay thế khi có Python.
 
@@ -143,7 +143,7 @@ Bộ kiểm thử còn chạy `quickNode.genData` với các hàm gốc achievem
 
 Thiết bị đã xác nhận code và nhân vật schema 3, sau đó báo `Cannot read property 'actionPoint' of undefined` trong `coinTopNode.update_`. Schema 4 thêm `timesMaxMap` và `nextRecoverTimeMap` cho thể lực/điểm kỹ năng, cùng bộ đếm mua thể lực. Giới hạn thể lực theo hàm gốc `PLAYER.FUNS.getActionPointMax(level) = 60 + level`; trường có sẵn được giữ nguyên khi nâng cấp nhân vật cũ. Mốc hồi phục mặc định bằng 0 (chưa lên lịch); logic tự hồi thể lực phía server vẫn chưa triển khai.
 
-Dừng server, tải và giải nén [Home-Fix.zip](Home-Fix.zip) vào thư mục chứa `start.bat`, ghi đè các file code, chạy server lại rồi mở lại game. Gói tích lũy hiện chứa các file code `server/profile.py`, `server/storage.py`, `server/app.py`, `server/gameplay.py` và `Check-Home.py`, không chứa database. Nhật ký migration ghi schema thực tế. 43 kiểm thử đã pass, bao gồm tái hiện lỗi schema 3, chạy chính lifecycle `coinTopNode.onLoad/update_/tick_` và thao tác mở/đóng bảng hồi thể lực với schema 4, cả nhánh có mốc hồi phục. Chưa xác nhận bản sửa mới trên BlueStacks.
+Dừng server, tải và giải nén [Home-Fix.zip](Home-Fix.zip) vào thư mục chứa `start.bat`, ghi đè các file code, chạy server lại rồi mở lại game. Gói tích lũy hiện chứa các file code `server/profile.py`, `server/storage.py`, `server/app.py`, `server/gameplay.py` và `Check-Home.py`, không chứa database. Nhật ký migration ghi schema thực tế. 47 kiểm thử đã pass, bao gồm tái hiện lỗi schema 3, chạy chính lifecycle `coinTopNode.onLoad/update_/tick_` và thao tác mở/đóng bảng hồi thể lực với schema 4, cả nhánh có mốc hồi phục. Chưa xác nhận bản sửa mới trên BlueStacks.
 
 ## Đặt tên đội trong hướng dẫn
 
@@ -169,3 +169,24 @@ Mỗi nhân vật mới nhận một vé thường (119) và một vé cao cấp
 Cập nhật gói `Home-Fix.zip`, mở lại server rồi đăng nhập lại game để lấy dữ liệu túi mới. `Check-Home.py` hiển thị cờ đã cấp và số vé 119/120. Đã kiểm tra các hàm Player/Bag/pointScene gốc thấy cả hai loại vé và nhận delta tiêu vé; quay mỗi loại một lần không trừ gem. Bộ kiểm thử cũng kiểm tra cộng vào nhân vật cũ, giữ vật phẩm khác và không cấp lặp sau mở lại SQLite.
 
 Khi APK fixed cũ còn chạy hướng dẫn, callback quay thành công mới gọi `guideNext1`. Phản hồi thiếu tài nguyên (`code:500`) gỡ loading trong `serverMain.sync` nhưng bỏ qua callback thành công trong `socket._request`, nên bước hướng dẫn chưa hoàn thành và lớp chặn thao tác có thể vẫn còn. Cài APK no-guide đã phát hành để tắt hướng dẫn; cấp vé khởi đầu không thay thế bản vá client. Chưa xác nhận thao tác mới trên thiết bị.
+
+## Bản sửa sau quay cao cấp + tốc độ 1–10×
+
+Log thiết bị schema 5 báo lỗi `Cannot read property '1' of undefined` trong hàm `test` của hướng dẫn. Mã gốc chuyển từ tuyển tướng sang `firstBattle.test` và đọc `smapStarMap[1]`, tiếp theo `smapBattleTo.test` đọc `[1][101]`. Schema 6 thêm cấu trúc tiến độ ải đầu rỗng, map lượt chơi/rương trống, cùng các trường tướng còn thiếu dùng khi dựng màn hình kỹ năng. Giữ nguyên gem, vé đã tiêu, tướng và tiến độ cũ; không cấp lại quà khởi đầu hay đánh dấu thắng ải.
+
+Cập nhật `Home-Fix.zip` như các bản trước, khởi động lại server và game. `Check-Home.py` mới kiểm tra cả tiến độ ải và xuất stack lỗi (tối đa 2400 ký tự) thay vì chỉ dòng đầu.
+
+[APK-Speed-Fix.zip](APK-Speed-Fix.zip) (~5 MB) áp dụng trực tiếp từ `DB2-Private-Android-fixed.apk`; không cần cài bản no-guide trung gian. Giải nén vào thư mục riêng, chép APK fixed vào đó, chạy `Apply-Speed.bat` hoặc `Apply-Speed-Python.bat`. Cài cập nhật `DB2-Private-speed.apk` bằng ADB `install -r` để giữ dữ liệu ứng dụng.
+
+Client mới gồm:
+
+- Tắt hướng dẫn.
+- Nút `Speed Nx` gần góc trên bên phải, bấm để đổi lần lượt 1–10 rồi về 1; lưu lựa chọn. Scale engine hiệu dụng bị giới hạn 10×, giữ pause; không sửa Date.now hoặc timer mạng thực. Cập nhật tốc độ Spine khi đổi mức trong trận.
+- Hiệu ứng quay mặc định bỏ nhanh; checkbox Skip trong màn quay vẫn thay đổi và lưu lựa chọn này.
+- Lỗi xử lý phản hồi/callback được ghi vào nhật ký và hiển thị thông báo, gỡ loading rồi tiếp tục hàng đợi. Không tự gửi lại lệnh quay đã được server chấp nhận.
+
+APK đầu ra SHA-256: `650e472cfbcc821dcb23a280921d1cab863964a0ff22a994aa8fc4177bff5b6f`. Package và chứng chỉ giữ nguyên. Đã kiểm tra cú pháp, ciphertext JSC khớp bundle build, chữ ký v1/v2/v3 và tài nguyên không nén/căn lề. Bản vá được tái tạo và xác minh bằng Python và PowerShell. Chưa xác nhận cài đặt/giao diện mới trên BlueStacks. Thông tin build: `client/speed-build.json`.
+
+### Phạm vi gameplay
+
+[Đối chiếu gameplay](analysis/gameplay-review.md) ghi các nguồn YouTube/nhà phát hành và hạn chế truy cập video. [Danh sách route](analysis/route-coverage.json) hiện có 16/342 route đã dispatch, còn 326 route chưa triển khai; đây không phải bản server hoàn chỉnh. Headless tests không thay thế kiểm thử trận đấu/giao diện trên thiết bị. Các route chưa có vẫn báo lỗi, không trả thành công giả.

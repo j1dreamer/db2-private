@@ -38,7 +38,13 @@ def build(source,bundle,out,server,keep_package=False):
     text=patch(text,'var script = data.runScriptInfo.script;','var script = ""; // Private client: disable downloaded script execution.')
     text=patch(text,'eval(data.msg.body);','console.warn("Remote code execution disabled in private client");')
     text=patch(text,'b.instance || (b.instance = this);\np.spThemeClassId', 'b.instance || (b.instance = this);\nwindow.DB2PrivateSettings && window.DB2PrivateSettings();\np.spThemeClassId')
+    try:from tools.client_patches import patch_response_boundary
+    except ModuleNotFoundError:from client_patches import patch_response_boundary
+    text=patch_response_boundary(text)
+    text=patch(text,'this.skipMove = !1;','this.skipMove = cc.sys.localStorage.getItem("db2.private.fastSummon") !== "0";')
+    text=patch(text,'onSkip_: function() {\nthis.skipMove = !this.skipMove;','onSkip_: function() {\nthis.skipMove = !this.skipMove;\ncc.sys.localStorage.setItem("db2.private.fastSummon", this.skipMove ? "1" : "0");')
     settings=(Path(__file__).parent/'private_settings.js').read_text()
+    settings+='\n'+(Path(__file__).parent/'private_runtime.js').read_text()
     text='window.DB2_PRIVATE_DEFAULT_SERVER='+json.dumps(server)+';\n'+settings+'\n'+text
     text=patch(text,'msg: a,\nplayerId: t.player ? t.player.id : 0','msg: a,\ntoken: t.token || \"\",\nplayerId: t.player ? t.player.id : 0')
     # Equal-length AXML string replacement keeps binary string offsets intact.
@@ -60,7 +66,7 @@ def build(source,bundle,out,server,keep_package=False):
             # Android 11+ rejects compressed resources.arsc for target SDK >= 30.
             compression=zipfile.ZIP_STORED if name=='resources.arsc' else zipfile.ZIP_DEFLATED
             zout.writestr(name,data,compress_type=compression)
-    report={'stage':'development-client-not-device-tested','server':server,'source_sha256':file_hash(source),'patched_bundle_sha256':hashlib.sha256(text.encode()).hexdigest(),'apk_sha256':file_hash(out),'package':app_package,'sdk_login':'local-account','tutorial':False,'hot_update':False,'server_script_execution':False}
+    report={'stage':'development-client-not-device-tested','server':server,'source_sha256':file_hash(source),'patched_bundle_sha256':hashlib.sha256(text.encode()).hexdigest(),'apk_sha256':file_hash(out),'package':app_package,'sdk_login':'local-account','tutorial':False,'speed_range':[1,10],'response_error_recovery':True,'hot_update':False,'server_script_execution':False}
     out.with_suffix('.json').write_text(json.dumps(report,indent=2));out.with_suffix('.patched.js').write_text(text)
     print(json.dumps(report,indent=2))
 if __name__=='__main__':

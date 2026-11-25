@@ -12,7 +12,7 @@ class EconomyTests(unittest.TestCase):
   p=self.store.player(1);p.pop('profileSchemaVersion');p['gem']=777;p.pop('photoInfo');p.pop('friendshipUnlockMap');p['team']['roles']['1']['attr']['hp']=77
   self.store.save(p);restored=self.store.player(1)
   self.assertEqual(restored['gem'],777);self.assertEqual(restored['team']['roles']['1']['attr']['hp'],77);self.assertEqual(len(restored['team']['roles']),1)
-  self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],5)
+  self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],6)
  def test_first_rename_is_free_persistent_and_repeat_is_idempotent(self):
   p=self.store.player(1);p['name']=p['userName'];p['gem']=50;self.store.save(p)
   response=rename_player(self.store,1,'Son Goku')

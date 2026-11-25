@@ -20,7 +20,7 @@ const callbackOnly = new Set(["allServerBattleHandler", "arena3v3Handler", "aren
 for(const name of callbackOnly)if(!(name in cache))cache[name]=function(){};
 const frames=[];
 const cc={_RF:{push(mod){frames.push(mod)},pop(){frames.pop()}},Class:def=>{const cls=function(){};Object.assign(cls.prototype,def);Object.assign(cls,def.statics||{});frames.at(-1).exports=cls;return cls;},Component:{},Node:{},Sprite:{},Label:{},SpriteFrame:{},ProgressBar:{},Layout:{},RichText:{}};
-const context={cc,window:{},console:{log(...args){process.stderr.write(args.join(' ')+'\n');},warn(...args){process.stderr.write(args.join(' ')+'\n');}},Date,Uint8Array,setInterval:()=>1,clearInterval(){}};
+const context={cc,window:{},console:{log(...args){process.stderr.write(args.join(' ')+'\n');},warn(...args){process.stderr.write(args.join(' ')+'\n');}},Date,Uint8Array,storage:{getItem(){return null;},setItem(){}},setInterval:()=>1,clearInterval(){}};
 function load(name){
  if(name in cache)return cache[name];
  const source=fs.readFileSync(__dirname+'/client_'+name+'.js','utf8');
@@ -49,6 +49,8 @@ top.unschedule=()=>{};top.schedule=()=>{};
 cc.Node.EventType={TOUCH_START:'start',TOUCH_END:'end',TOUCH_CANCEL:'cancel'};
 cache.helper.replaceLabel=(node,values)=>{node.values=values;};
 cache.helper.scaleEffect=()=>{};
+// Recovered helper.floatStrip.
+cache.helper.floatStrip=value=>parseFloat(value.toPrecision(12));
 // Real moment handles the recovery branch if a stored profile has an active timer.
 cache.helper.formatDuration=(...values)=>values.join(':');
 top.onLoad();
@@ -69,10 +71,24 @@ if(input.checkHome){
 if(input.checkNoGuide){
  delete cache.guide;cache.async={};cache.buildExt.isSkipGuide=true;
  // The actual guide must return before probing tutorial steps or local storage.
- load('guide').run([{test(){throw Error('Tutorial must not start');}}]);
+ const guide=load('guide');guide.run([{test(){throw Error('Tutorial must not start');}}]);
+ if(!guide.firstBattle.test())throw Error('New player must not have a fabricated victory');
+ guide.smapBattleTo.test();
+}
+let roleScenes,effects=[];
+if(input.checkGameplay){
+ cache.forgePanel={};cache.artifactUpgradePanel={};
+ delete cache.roleScene;load('roleScene');
+ cache.sceneManager.teamData={teamItemMap:Object.fromEntries(Object.values(player.team.roles).map(r=>[r.idx,load('teamScene').genTeamItemData(r)]))};
+ roleScenes=Object.values(player.team.roles).map(r=>load('roleScene').genData(r));
+ for(const delta of input.deltas||[]){
+  if(!delta._temp||!delta._temp.dropList)continue;
+  const map={};for(const r of Object.values(delta.team?.roles||{}))map[r.kindId]=r;
+  effects.push(load('pointScene').genPointEffectData(3,delta._temp.dropList,map));
+ }
 }
 const daily=load('dailyTaskPanel').genData();
 let point;
 if(input.checkPoint)point=load('pointScene').genData();
 let roles;if(input.checkRoles){if(!cache.roleItem.genData){delete cache.roleItem;load('roleItem');}roles=Object.values(player.team.roles).map(r=>load('roleItem').genData(r));}
-player.destroy();process.stdout.write(JSON.stringify({snapshots,topBar,quick,home,daily,point,roles,teamItems,friendship,gem:player.gem,bag:player.bag.items,team:player.team.roles}));
+player.destroy();process.stdout.write(JSON.stringify({snapshots,roleScenes,effects,topBar,quick,home,daily,point,roles,teamItems,friendship,gem:player.gem,bag:player.bag.items,team:player.team.roles}));

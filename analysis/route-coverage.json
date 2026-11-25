@@ -1,0 +1,1377 @@
+{
+  "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
+  "routes_in_client": 342,
+  "implemented_routes": 16,
+  "unsupported_routes": 326,
+  "note": "Counts describe implemented dispatch only, not device-verified gameplay. HTTP account/admin endpoints are separate.",
+  "routes": [
+    {
+      "route": "chat.chatHandler.getGuildLast",
+      "implemented": false
+    },
+    {
+      "route": "connector.entryHandler.entry",
+      "implemented": true
+    },
+    {
+      "route": "connector.playerHandler.createPlayer",
+      "implemented": true
+    },
+    {
+      "route": "connector.playerHandler.entry",
+      "implemented": true
+    },
+    {
+      "route": "connector.playerHandler.getPlayers",
+      "implemented": true
+    },
+    {
+      "route": "gate.gateHandler.queryEntry",
+      "implemented": true
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.enter",
+      "implemented": false
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.exit",
+      "implemented": false
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.openInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.result",
+      "implemented": false
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.setDefenseTeamInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.activityGuildBattleHandler.wintTimesRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.apply",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.applyRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.beginBattle",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.endBattle",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.endTopRankInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.enter",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.exit",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.getReport",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.getTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.move",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.openInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.receiveAward",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.recover",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.winTimesRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.worshipRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.allServerBattleHandler.worshipStatue",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.buyChallengeTimes",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.defenseTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.info",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.match",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.receive",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.reportList",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.setDefenseTeamIndexsMap",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.top50",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.worshipRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.arena3v3Handler.worshipStatue",
+      "implemented": false
+    },
+    {
+      "route": "logic.arenaHandler.buyChallengeTimes",
+      "implemented": false
+    },
+    {
+      "route": "logic.arenaHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.arenaHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.arenaHandler.defenseTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.arenaHandler.info",
+      "implemented": false
+    },
+    {
+      "route": "logic.arenaHandler.match",
+      "implemented": false
+    },
+    {
+      "route": "logic.arenaHandler.report",
+      "implemented": false
+    },
+    {
+      "route": "logic.arenaHandler.reportList",
+      "implemented": false
+    },
+    {
+      "route": "logic.arenaHandler.setDefenseTeamIndexs",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.addShipExperience",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.composeArtifact",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.composeCapsule",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.composeFruit",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.composeItem",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.composeRole",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.composeShip",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.decomposeStarSign",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.increaseArtifactUpgradeStarSuccessRate",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.increaseFruitUpgradeStarSuccessRate",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.resetCapsule",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.saveResetCapsule",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.sell",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.upgradeShip",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.upgradeShipSkill",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.upgradeShipStar",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.upgradeStarArtifact",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.upgradeStarFruit",
+      "implemented": false
+    },
+    {
+      "route": "logic.bagHandler.upgradeStarSign",
+      "implemented": false
+    },
+    {
+      "route": "logic.doubleBattleHandler.apply",
+      "implemented": false
+    },
+    {
+      "route": "logic.doubleBattleHandler.battleInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.doubleBattleHandler.bet",
+      "implemented": false
+    },
+    {
+      "route": "logic.doubleBattleHandler.getChampionTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.doubleBattleHandler.getMyTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.doubleBattleHandler.getTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.doubleBattleHandler.openInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.doubleBattleHandler.worshipRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.doubleBattleHandler.worshipStatue",
+      "implemented": false
+    },
+    {
+      "route": "logic.endlessHandler.begin",
+      "implemented": false
+    },
+    {
+      "route": "logic.endlessHandler.buyFruitMapTimes",
+      "implemented": false
+    },
+    {
+      "route": "logic.endlessHandler.pass",
+      "implemented": false
+    },
+    {
+      "route": "logic.endlessHandler.resetSetPursuitTeamTimes",
+      "implemented": false
+    },
+    {
+      "route": "logic.endlessHandler.setPursuitTeamIndexs",
+      "implemented": false
+    },
+    {
+      "route": "logic.endlessHandler.skip",
+      "implemented": false
+    },
+    {
+      "route": "logic.expeditionHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.expeditionHandler.receive",
+      "implemented": false
+    },
+    {
+      "route": "logic.expeditionHandler.reset",
+      "implemented": false
+    },
+    {
+      "route": "logic.expeditionHandler.skip",
+      "implemented": false
+    },
+    {
+      "route": "logic.eyeHandler.buyChallengeTimes",
+      "implemented": false
+    },
+    {
+      "route": "logic.eyeHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.eyeHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.eyeHandler.defenseTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.eyeHandler.info",
+      "implemented": false
+    },
+    {
+      "route": "logic.eyeHandler.report",
+      "implemented": false
+    },
+    {
+      "route": "logic.eyeHandler.startPrivate",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.acceptAddFriend",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.exchangeTicket",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.findTarget",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.giveAndReceiveGiftAll",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.giveGift",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.giveGiftAll",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.myFriendList",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.receiveGift",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.receiveGiftAll",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.recommendList",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.refuseAddFriend",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.removeFriend",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.requestAddFriend",
+      "implemented": false
+    },
+    {
+      "route": "logic.friendHandler.requestAddFriendList",
+      "implemented": false
+    },
+    {
+      "route": "logic.gmHandler.addItem",
+      "implemented": false
+    },
+    {
+      "route": "logic.gmHandler.addRole",
+      "implemented": false
+    },
+    {
+      "route": "logic.gmHandler.removeRole",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildBossHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildBossHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildBossHandler.dmgRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildBossHandler.openInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.addViceChairman",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.applyJoin",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.changeChairman",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.create",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.dismiss",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.drum",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.exit",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.handleApply",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.info",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.inherit",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.list",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.modifyNotice",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.modifySetting",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.openBox",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.receiveWorshipAward",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.removeViceChairman",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.upgradeSkill",
+      "implemented": false
+    },
+    {
+      "route": "logic.guildHandler.worship",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.buyChallengeTimes",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.defenseTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.earlySettlement",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.enemyList",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.help",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.match",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.myIslandList",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.practice",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.report",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.reportList",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.reviveRole",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.setNeedHelp",
+      "implemented": false
+    },
+    {
+      "route": "logic.islandHandler.settlement",
+      "implemented": false
+    },
+    {
+      "route": "logic.mailHandler.read",
+      "implemented": false
+    },
+    {
+      "route": "logic.mailHandler.receive",
+      "implemented": false
+    },
+    {
+      "route": "logic.mailHandler.receiveAll",
+      "implemented": false
+    },
+    {
+      "route": "logic.mailHandler.removeAllRead",
+      "implemented": false
+    },
+    {
+      "route": "logic.mailHandler.send",
+      "implemented": false
+    },
+    {
+      "route": "logic.newGuildBattleHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.newGuildBattleHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.newGuildBattleHandler.enter",
+      "implemented": false
+    },
+    {
+      "route": "logic.newGuildBattleHandler.exit",
+      "implemented": false
+    },
+    {
+      "route": "logic.newGuildBattleHandler.openInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.newGuildBattleHandler.result",
+      "implemented": false
+    },
+    {
+      "route": "logic.newGuildBattleHandler.setDefenseTeamInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.newGuildBattleHandler.winTimesRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.activitySaveGem",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.activitySelectDropList",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.buyActionPoint",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.buyCoin",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.buyGemGoods",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.buySkillPoint",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.costTopUpPoint",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.costTopUpPoint2",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.dreamRoll",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.exchange",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.exchange2Buy",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.exchange4Buy",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.exchangeBuy",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.fillLoginTopUp",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.fillTaskActive",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.incOnlineTime",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.receiveActivityAward",
+      "implemented": true
+    },
+    {
+      "route": "logic.playerHandler.receiveHonourReward",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.receiveScorePointBoxReward",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.receiveTaskActiveAward",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.receiveTaskAward",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.rename",
+      "implemented": true
+    },
+    {
+      "route": "logic.playerHandler.rollDial",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.scorePoint",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.selectBoxReward",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.selectBoxReward2",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.sendChat",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.setChatSkin",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.setHideEqpt",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.setPhotoImg",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.setShipImg",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.setTitleImg",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.signIn",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.spWish",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.spWishExchangeBuy",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.topUpGoodsList",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.updateFreeActivity",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.updateRepeatReceiveActivityTime",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.useAllBox",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.useGiftCode",
+      "implemented": true
+    },
+    {
+      "route": "logic.playerHandler.useItem",
+      "implemented": false
+    },
+    {
+      "route": "logic.playerHandler.viewAd",
+      "implemented": false
+    },
+    {
+      "route": "logic.pointHandler.adReward",
+      "implemented": false
+    },
+    {
+      "route": "logic.pointHandler.advanced",
+      "implemented": true
+    },
+    {
+      "route": "logic.pointHandler.advancedHundred",
+      "implemented": true
+    },
+    {
+      "route": "logic.pointHandler.advancedTen",
+      "implemented": true
+    },
+    {
+      "route": "logic.pointHandler.normal",
+      "implemented": true
+    },
+    {
+      "route": "logic.pointHandler.normalHundred",
+      "implemented": true
+    },
+    {
+      "route": "logic.pointHandler.normalTen",
+      "implemented": true
+    },
+    {
+      "route": "logic.pointHandler.selectWishClassId",
+      "implemented": true
+    },
+    {
+      "route": "logic.pointHandler.switchAdvancedPool",
+      "implemented": true
+    },
+    {
+      "route": "logic.practiceHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.practiceHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.practiceHandler.defenseTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.practiceHandler.match",
+      "implemented": false
+    },
+    {
+      "route": "logic.practiceHandler.setDefenseInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.createTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.dissolveTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.getInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.getReadyTeamInfos",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.joinTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.match",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.practice",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.rank",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.removeTeamMember",
+      "implemented": false
+    },
+    {
+      "route": "logic.prestigeBattleHandler.setAutoPractice",
+      "implemented": false
+    },
+    {
+      "route": "logic.rankHandler.arenaTop50",
+      "implemented": false
+    },
+    {
+      "route": "logic.rankHandler.top50",
+      "implemented": false
+    },
+    {
+      "route": "logic.shopHandler.buy",
+      "implemented": false
+    },
+    {
+      "route": "logic.shopHandler.refresh",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixExpeditionHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixExpeditionHandler.info",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixExpeditionHandler.receive",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixExpeditionHandler.reset",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixExpeditionHandler.skip",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixPracticeHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixPracticeHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixPracticeHandler.defenseTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixPracticeHandler.match",
+      "implemented": false
+    },
+    {
+      "route": "logic.sixPracticeHandler.setDefenseInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.smapHandler.beginSmap",
+      "implemented": false
+    },
+    {
+      "route": "logic.smapHandler.buyMapType5Times",
+      "implemented": false
+    },
+    {
+      "route": "logic.smapHandler.endSmap",
+      "implemented": false
+    },
+    {
+      "route": "logic.smapHandler.receiveBmapAward",
+      "implemented": false
+    },
+    {
+      "route": "logic.smapHandler.resetSmapTimes",
+      "implemented": false
+    },
+    {
+      "route": "logic.smapHandler.skip",
+      "implemented": false
+    },
+    {
+      "route": "logic.tailHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.tailHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.createTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.dissolveTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.getInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.getReadyTeamInfos",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.joinTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.match",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.practice",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.rank",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.refresh",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.removeTeamMember",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamBattleHandler.setAutoPractice",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.equipAllArtifact",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.equipAllCapsule",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.equipAllStarSign",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.equipAllStone",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.equipArtifact",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.equipCapsule",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.equipStarSign",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.equipStone",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.evolveAllEquipment",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.evolveEquipment",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.evolveRole",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.evolveRoleSkill",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.increaseAwakeLevelUpgradeSuccessRate",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.increaseEvolveSkillSuccessRate",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.resetRole",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.resetRoleTrain",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.roleBreak",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.soulRole",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.trainRole",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unEquipAllArtifact",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unEquipAllCapsule",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unEquipAllStarSign",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unEquipAllStone",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unEquipArtifact",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unEquipCapsule",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unEquipStarSign",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unEquipStone",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unlockFriendship",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.unlockRoleTrain",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.upgradeAllEquipmentMax",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.upgradeEquipment",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.upgradeEquipmentMax",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.upgradeRoleAwakeLevel",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.upgradeRoleAwakeSkill",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.upgradeRoleSkill",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.upgradeRoleStar",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.useExpItem",
+      "implemented": false
+    },
+    {
+      "route": "logic.teamHandler.useExpItemMax",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.altar",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.borrowRole",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.closeMap",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.getBlessing",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.openBox",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.openMap",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.recordLog",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.selectBlessing",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.setExtInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.setStatus",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.spa",
+      "implemented": false
+    },
+    {
+      "route": "logic.timePeakHandler.updateBattleInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.buyMatchTimes",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.challengeTop",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.challengeTopNull",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.defenseTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.info",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.match",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.receiveFirstReachReward",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.reportList",
+      "implemented": false
+    },
+    {
+      "route": "logic.topArena3v3Handler.setDefenseTeamIndexsMap",
+      "implemented": false
+    },
+    {
+      "route": "logic.worldBossHandler.challenge",
+      "implemented": false
+    },
+    {
+      "route": "logic.worldBossHandler.choose",
+      "implemented": false
+    },
+    {
+      "route": "logic.worldBossHandler.dmgRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.worldBossHandler.inspire",
+      "implemented": false
+    },
+    {
+      "route": "logic.worldBossHandler.openInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.worshipBattleHandler.apply",
+      "implemented": false
+    },
+    {
+      "route": "logic.worshipBattleHandler.battleInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.worshipBattleHandler.bet",
+      "implemented": false
+    },
+    {
+      "route": "logic.worshipBattleHandler.getChampionTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.worshipBattleHandler.getMyTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.worshipBattleHandler.getTeam",
+      "implemented": false
+    },
+    {
+      "route": "logic.worshipBattleHandler.openInfo",
+      "implemented": false
+    },
+    {
+      "route": "logic.worshipBattleHandler.worshipRank",
+      "implemented": false
+    },
+    {
+      "route": "logic.worshipBattleHandler.worshipStatue",
+      "implemented": false
+    }
+  ]
+}

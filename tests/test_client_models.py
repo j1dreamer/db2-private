@@ -12,7 +12,7 @@ class ClientModelTests(unittest.TestCase):
   self.tmp=tempfile.TemporaryDirectory();self.store=Store(Path(self.tmp.name)/'db');self.store.register('tester','password');self.profile=self.store.create_player(1,'Goku')
  def tearDown(self):self.store.db.close();self.tmp.cleanup()
  def client(self,profile,deltas,check_home=False):
-  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True,'checkHome':check_home,'checkNoGuide':True}),text=True,capture_output=True,check=True)
+  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True,'checkHome':check_home,'checkGameplay':check_home,'checkNoGuide':True}),text=True,capture_output=True,check=True)
   return json.loads(result.stdout)
  def test_initial_profile_constructs_original_models(self):
   state=self.client(self.profile,[])
@@ -39,7 +39,7 @@ class ClientModelTests(unittest.TestCase):
   p['activity'].pop('scorePointInfoMap');p.pop('signInDays');p.pop('signInTime')
   p['gem']=789;self.store.save(p)
   migrated=self.store.player(1);state=self.client(migrated,[],check_home=True)
-  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],5)
+  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],6)
   self.assertEqual(state['home']['playerName'],'Goku')
  def test_migration_preserves_existing_task_rewards_and_activity_state(self):
   p=self.profile;p['profileSchemaVersion']=2
@@ -64,7 +64,7 @@ class ClientModelTests(unittest.TestCase):
   self.assertIn("reading 'actionPoint'",r.stderr)
   p['level']=12;p['gem']=987;p['actionPoint']=44;self.store.save(p)
   migrated=self.store.player(1);state=self.client(migrated,[])
-  self.assertEqual(migrated['profileSchemaVersion'],5)
+  self.assertEqual(migrated['profileSchemaVersion'],6)
   self.assertEqual(state['topBar']['maxActionPoint'],72)
   self.assertEqual(state['topBar']['actionPoint'],44)
   self.assertEqual(state['gem'],987)
@@ -92,6 +92,22 @@ class ClientModelTests(unittest.TestCase):
   self.assertEqual(state['gem'],50)
   self.assertEqual(state['point']['normalTicketCount'],0)
   self.assertEqual(state['point']['advancedTicketCount'],0)
+ def test_schema_five_adventure_guard_error_then_additive_migration(self):
+  p=self.profile;p['profileSchemaVersion']=5
+  p.pop('smapStarMap');p.pop('smapTimesMap');p.pop('bmapBoxReceivedMap')
+  r=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':p,'checkNoGuide':True}),text=True,capture_output=True)
+  self.assertNotEqual(r.returncode,0);self.assertIn("reading '1'",r.stderr)
+  self.store.save(p);migrated=self.store.player(1)
+  state=self.client(migrated,[],check_home=True)
+  self.assertEqual(migrated['smapStarMap'],{'1':{'101':{}}})
+  self.assertEqual(state['point']['advancedTicketCount'],1)
+  self.assertEqual(migrated['profileSchemaVersion'],6)
+ def test_advanced_draw_accepts_real_role_scene_and_result_generator(self):
+  delta=draw(self.store,1,'advanced',1)
+  state=self.client(self.profile,[delta],check_home=True)
+  self.assertEqual(len(state['effects'][0]['entityItems']),1)
+  self.assertEqual(len(state['roleScenes']),2)
+  for role in state['roleScenes']:self.assertIsNotNone(role['evolveSkillCurRate'])
  def test_consumed_ticket_removed_by_original_client(self):
   p=self.profile;p['bag']={'lastIdx':1,'items':{'1':{'kindId':119,'idx':1,'count':1}}};self.store.save(p)
   response=draw(self.store,1,'normal',1);state=self.client(p,[response]);persisted=self.store.player(1)
