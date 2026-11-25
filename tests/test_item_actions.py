@@ -45,3 +45,12 @@ class ItemActionTests(unittest.TestCase):
   key=self.grant(351);p=self.store.player(1);self.assertTrue(p['bag']['items'][key]['kindName']);self.assertEqual(self.call('useItem',{'bagIndex':key,'itemCount':1})['_temp']['entityCountMap'],{'101':1000})
   p=self.store.player(1)
   with self.assertRaises(ValueError):add_reward(p,{'entityId':351,'count':1,'extra':{'id':999}})
+ def test_android_referenced_ios_box_definitions_consume_once(self):
+  key=self.grant(373)
+  result=self.call('selectBoxReward',{'bagIndex':key,'itemCount':1,'rewardIdxs':[0]})
+  self.assertEqual(result['_temp']['entityCountMap'],{'9070':1})
+  with self.assertRaises(ValueError):self.call('selectBoxReward',{'bagIndex':key,'itemCount':1,'rewardIdxs':[0]})
+  key=self.grant(379)
+  result=self.call('useItem',{'bagIndex':key,'itemCount':1})
+  self.assertEqual(result['_temp']['entityCountMap'],{str(i):1 for i in (60104,60204,60304,60404,60504,60604)})
+  with self.assertRaises(ValueError):self.call('useItem',{'bagIndex':key,'itemCount':1})

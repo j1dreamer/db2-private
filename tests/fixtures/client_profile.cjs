@@ -1,6 +1,11 @@
 // Execute only recovered model constructors/data generators; no Cocos renderer.
 const fs=require('fs'),vm=require('vm'),crypto=require('crypto');
 const input=JSON.parse(fs.readFileSync(0,'utf8'));
+const NativeDate=globalThis.Date;
+const Date=input.now===undefined?NativeDate:class extends NativeDate{
+ constructor(...args){super(...(args.length?args:[input.now]));}
+ static now(){return input.now;}
+};
 const tables={};for(const name of ['vip','role','entity','soul']){
  const raw=JSON.parse(fs.readFileSync(__dirname+'/../../tables/'+name+'Data.json','utf8'));
  tables[name]=raw.slice(1).map(row=>Object.fromEntries(raw[0].map((key,i)=>[key,row[i]])));

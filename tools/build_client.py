@@ -30,6 +30,9 @@ def build(source,bundle,out,server,keep_package=False):
     if url.scheme!='http' or not url.hostname or url.path not in ('','/') or url.username or url.password or url.query or url.fragment:raise ValueError('Use http://HOST:PORT with no path, userinfo or query')
     server=server.rstrip('/');port=url.port or 80
     text=Path(bundle).read_text()
+    from tools.client_data import overlay,patch_bundle
+    data_script,data_report=overlay(source)
+    text=patch_bundle(text,data_script)
     # Resolve endpoints from a saved setting on every launch, with the build argument as default.
     start='c.init = function() {\nif (!o.isDev) {'
     text=patch(text,start,'c.init = function() {\nvar privateUrl = cc.sys.localStorage.getItem("db2.private.server") || '+json.dumps(server)+';\nvar privateMatch = /^(http):\\/\\/([^/:]+)(?::(\\d+))?$/.exec(privateUrl);\nif (!privateMatch) throw new Error("Invalid private server URL");\nc.isSkipUpdate = true; c.isHideNoticePanel = true; c.isSkipGuide = true;\nif (!o.isDev) {')
@@ -97,6 +100,7 @@ def build(source,bundle,out,server,keep_package=False):
             compression=zipfile.ZIP_STORED if name=='resources.arsc' else zipfile.ZIP_DEFLATED
             zout.writestr(name,data,compress_type=compression)
     report={'stage':'development-client-not-device-tested','server':server,'source_sha256':file_hash(source),'patched_bundle_sha256':hashlib.sha256(text.encode()).hexdigest(),'apk_sha256':file_hash(out),'package':app_package,'sdk_login':'local-account','tutorial':False,'speed_range':[1,10],'response_error_recovery':True,'hot_update':False,'server_script_execution':False}
+    report['canonical_data']=data_report
     out.with_suffix('.json').write_text(json.dumps(report,indent=2));out.with_suffix('.patched.js').write_text(text)
     print(json.dumps(report,indent=2))
 if __name__=='__main__':

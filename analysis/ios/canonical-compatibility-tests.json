@@ -1,0 +1,188 @@
+{
+  "canonical_sha256": "c436403350a1fc1236eeb6b1d2320c54f4af965e3da93d97ff4fbcace1ccb079",
+  "android": {
+    "baseline": "android",
+    "canonical_sha256": "c436403350a1fc1236eeb6b1d2320c54f4af965e3da93d97ff4fbcace1ccb079",
+    "overridden_tables": [
+      "entityExt"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "3f83e1978a0a8a512750f833d2279b05dea28a82ad3b9a87c448460a5a77771b",
+    "native_modified": false
+  },
+  "ios": {
+    "baseline": "android",
+    "canonical_sha256": "c436403350a1fc1236eeb6b1d2320c54f4af965e3da93d97ff4fbcace1ccb079",
+    "overridden_tables": [
+      "artifact",
+      "buff",
+      "entity",
+      "entityExt",
+      "fightSkill",
+      "role",
+      "task",
+      "vip"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "995f3d908dad7073d42dbb7ed01e32c1b28b6fd330b283d81fcc4284de9db031",
+    "native_modified": false
+  },
+  "native_execution_tested": false,
+  "cases": [
+    {
+      "mode": "pvp",
+      "seed": 1,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "pvp",
+      "seed": 777,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "practice",
+      "seed": 1,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "practice",
+      "seed": 777,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "island",
+      "seed": 1,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "island",
+      "seed": 777,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "pvp",
+      "seed": 1,
+      "changed_skill": 105501,
+      "identical_full_result": true,
+      "difference_paths": [],
+      "android_damage": {
+        "1": {
+          "1": {
+            "type": "role",
+            "entityId": 1,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 105501,
+            "damage": 99711
+          }
+        },
+        "2": {
+          "2": {
+            "type": "role",
+            "entityId": 2,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 100101,
+            "damage": 63302
+          }
+        }
+      },
+      "ios_canonical_damage": {
+        "1": {
+          "1": {
+            "type": "role",
+            "entityId": 1,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 105501,
+            "damage": 99711
+          }
+        },
+        "2": {
+          "2": {
+            "type": "role",
+            "entityId": 2,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 100101,
+            "damage": 63302
+          }
+        }
+      }
+    },
+    {
+      "mode": "pvp",
+      "seed": 777,
+      "changed_skill": 105501,
+      "identical_full_result": true,
+      "difference_paths": [],
+      "android_damage": {
+        "1": {
+          "1": {
+            "type": "role",
+            "entityId": 1,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 105501,
+            "damage": 99711
+          }
+        },
+        "2": {
+          "2": {
+            "type": "role",
+            "entityId": 2,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 100101,
+            "damage": 63302
+          }
+        }
+      },
+      "ios_canonical_damage": {
+        "1": {
+          "1": {
+            "type": "role",
+            "entityId": 1,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 105501,
+            "damage": 99711
+          }
+        },
+        "2": {
+          "2": {
+            "type": "role",
+            "entityId": 2,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 100101,
+            "damage": 63302
+          }
+        }
+      }
+    }
+  ],
+  "constant_differences": [],
+  "ios_data_only_jsc": {
+    "sha256": "7ae44372841b9de0e05e7dff70cb472002dadf779d64adbbf47151d2acc18523",
+    "decoded_sha256": "88b44a1c413b6ad0bde97cb05237674362e70d7e7bd58884c62dc0bc81c0f5ea",
+    "bytes": 2048808,
+    "private_server_endpoint_patched": false,
+    "signed_ipa_built": false
+  },
+  "normalized_table_differences": [],
+  "all_34_normalized_tables_equal": true,
+  "passed": true
+}

@@ -12,8 +12,10 @@ class ClientModelTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.store=Store(Path(self.tmp.name)/'db');self.store.register('tester','password');self.profile=self.store.create_player(1,'Goku')
  def tearDown(self):self.store.db.close();self.tmp.cleanup()
- def client(self,profile,deltas,check_home=False):
-  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True,'checkHome':check_home,'checkGameplay':check_home,'checkNoGuide':True}),text=True,capture_output=True,check=True)
+ def client(self,profile,deltas,check_home=False,now=None):
+  payload={'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True,'checkHome':check_home,'checkGameplay':check_home,'checkNoGuide':True}
+  if now is not None:payload['now']=now
+  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps(payload),text=True,capture_output=True,check=True)
   return json.loads(result.stdout)
  def test_initial_profile_constructs_original_models(self):
   state=self.client(self.profile,[])
@@ -24,7 +26,11 @@ class ClientModelTests(unittest.TestCase):
   self.assertGreater(len(state['friendship']['friendshipItems']),0)
   self.assertEqual(state['teamItems'][0]['classId'],1)
  def test_home_generator_hides_absent_events_and_reads_daily_state(self):
-  state=self.client(self.profile,[],check_home=True)
+  # Daily stamina awards become available during meal windows. Freeze this
+  # initial-home assertion at 05:00 rather than depending on runner time/TZ.
+  from datetime import datetime,timezone
+  now=datetime.fromtimestamp(self.profile['ctime']/1000,timezone.utc).replace(hour=5,minute=0,second=0,microsecond=0)
+  state=self.client(self.profile,[],check_home=True,now=int(now.timestamp()*1000))
   self.assertEqual(state['home']['playerName'],'Goku')
   self.assertEqual(state['home']['vip'],0)
   for key in ('isShowFirstTopUp','isHaveCarnival','isHaveCarnival2','isShowAcePack'):

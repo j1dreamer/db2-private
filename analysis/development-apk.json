@@ -2,7 +2,7 @@
   "stage": "development-not-device-verified",
   "implemented_routes": 342,
   "target_routes": 342,
-  "apk_sha256": "e53311ef3a7a8c6d924a0bfa4f72bf11a85510506a96ab0bb458a83cc3115387",
+  "apk_sha256": "56643ec7827e97a811ffad7b87063da5c7fefc12f193ab6447ec1c80d763989b",
   "old_apk_sha256": "d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f",
   "resources": {
     "resources_compression": "stored",
@@ -25,8 +25,8 @@
   ],
   "powershell_full_reconstruction_verified": true,
   "python_full_reconstruction_verified": true,
-  "bundle_sha256": "99117a52df8132f741e15881a80a73f28ce09cfec9e2eb5aef94635f8e0c9563",
-  "tests_passed": 229,
+  "bundle_sha256": "18585183aa88da7529fd2883d1198e2219300174b806de7b88673a173f7ccd7c",
+  "tests_passed": 236,
   "changed_non_signature_entries": [
     "assets/assets/main/index.jsc"
   ],
@@ -37,9 +37,22 @@
   "all_route_handlers_implemented": true,
   "private_time_peak_adapter": true,
   "profile_schema": 28,
-  "patch_zip_sha256": "2b7fe4f307c67953544e4edebc9544d06dde5ae0b97537996a6744305bd0d038",
+  "patch_zip_sha256": "b48834041b411a7eeccd5b22a0a4e7f546a406b6cd153de0d6c4b04c8f7cbe0d",
   "native_library_sha256": {
     "lib/arm64-v8a/libcocos2djs.so": "6350c8631c3c323ed43721351c71261cd31a1c2edc56daaf735248dbd39c175e"
   },
-  "manifest_unchanged_from_fixed_apk": true
+  "manifest_unchanged_from_fixed_apk": true,
+  "canonical_data": {
+    "baseline": "android",
+    "canonical_sha256": "c436403350a1fc1236eeb6b1d2320c54f4af965e3da93d97ff4fbcace1ccb079",
+    "overridden_tables": [
+      "entityExt"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "3f83e1978a0a8a512750f833d2279b05dea28a82ad3b9a87c448460a5a77771b",
+    "native_modified": false
+  }
 }

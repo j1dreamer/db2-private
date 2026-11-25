@@ -1,3 +1,5 @@
+> Sau phân tích gói gốc: chủ dự án chọn Android làm chuẩn. Xem [chọn dữ liệu và kiểm thử sau đồng bộ](CANONICAL-DATA.md). Báo cáo dưới đây mô tả các gói gốc trước đồng bộ.
+
 # Kiểm tra IPA DB2 được cung cấp
 
 Đã tải trực tiếp bằng `curl`, HTTP 200, 512.781.670 byte (~489 MiB). SHA-256: `de3072e9ee041d809c7e0a0f7979d35e0ef14dbb066171e56e27846faa456261`. URL ký tạm/cookie không được lưu trong repo. IPA gốc và native binary không được đẩy lên GitHub.

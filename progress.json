@@ -4,7 +4,7 @@
   "source_rpc_contracts": 342,
   "implemented_rpc_handlers": 342,
   "profile_schema": 28,
-  "tests_passed": 229,
+  "tests_passed": 236,
   "completed": [
     "All 342 recovered client RPC contracts have business handlers and positive route-group tests",
     "Durable SQLite player state, accounts, gacha, giftcodes, events, guilds, shops, equipment, combat and ranking rules",
@@ -12,18 +12,18 @@
     "Original client constructors, generators, transport and cooperative combat-loop checks",
     "Documented private policies for missing backend rules and missing Time Peak content",
     "Signed Android development APK, tutorial skipped and whole-game Speed 1x-10x",
-    "Full 500 MB APK reconstruction verified independently using PowerShell and Python"
+    "Current canonical-data APK reconstruction verified independently using PowerShell and Python",
+    "Android canonical shared data; selectively imported iOS boxes 373/379 and normalized 8 iOS tables plus soul maps; 8 headless full combat comparisons match"
   ],
   "remaining": [
     "Android/BlueStacks rendering and end-to-end device gameplay verification of this new build",
     "Termux/Tailscale device runtime verification",
-    "Unify/version the 8 differing iOS data tables and soul configuration before shared advanced progression/combat",
     "Create and legitimately re-sign a private iOS client, then test on an iPhone"
   ],
   "playable_verified": false,
   "ios_ipa_obtained": true,
-  "apk_sha256": "e53311ef3a7a8c6d924a0bfa4f72bf11a85510506a96ab0bb458a83cc3115387",
-  "patch_zip_sha256": "2b7fe4f307c67953544e4edebc9544d06dde5ae0b97537996a6744305bd0d038",
+  "apk_sha256": "56643ec7827e97a811ffad7b87063da5c7fefc12f193ab6447ec1c80d763989b",
+  "patch_zip_sha256": "b48834041b411a7eeccd5b22a0a4e7f546a406b6cd153de0d6c4b04c8f7cbe0d",
   "documentation": "IMPLEMENTATION-342.md",
   "note": "Complete handler coverage is not a claim of complete original-server rules or device-verified gameplay. Time Peak is an explicit private adapter.",
   "ios_binary_inspected": true,
@@ -36,5 +36,16 @@
   "ios_tables_identical_to_android": 26,
   "ios_tables_total": 34,
   "ios_combat_data_compatible": false,
-  "ios_combat_counterexamples_detected": 2
+  "ios_combat_counterexamples_detected": 2,
+  "canonical_data_sha256": "c436403350a1fc1236eeb6b1d2320c54f4af965e3da93d97ff4fbcace1ccb079",
+  "canonical_data_baseline": "android",
+  "ios_canonical_headless_combat_cases_passed": 8,
+  "ios_canonical_tables_equal": 34,
+  "ios_canonical_constant_differences": 0,
+  "ios_private_signed_ipa_built": false,
+  "ios_selected_definitions_imported": [
+    373,
+    379
+  ],
+  "validation_report": "analysis/canonical-validation.json"
 }

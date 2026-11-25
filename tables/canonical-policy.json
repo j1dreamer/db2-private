@@ -1,0 +1,59 @@
+{
+  "baseline": "android",
+  "decision": "User chose Android for shared game data; import iOS-only definitions only where Android already needs them",
+  "source_android_project_version": "1.0.0.01",
+  "source_ios_project_version": "1.0.0.23",
+  "source_ios_sha256": "de3072e9ee041d809c7e0a0f7979d35e0ef14dbb066171e56e27846faa456261",
+  "imported_definitions": [
+    {
+      "table": "entityExt",
+      "kindId": 373,
+      "source": "user-provided iOS IPA",
+      "reason": "Referenced by existing Android gmData reward descriptions; all reward dependencies and icons exist in Android"
+    },
+    {
+      "table": "entityExt",
+      "kindId": 379,
+      "source": "user-provided iOS IPA",
+      "reason": "Referenced by existing Android gmData reward descriptions; all reward dependencies and icons exist in Android"
+    }
+  ],
+  "preserve_android_overrides": [
+    60005
+  ],
+  "deferred_box_ids": [
+    361,
+    362,
+    363,
+    364,
+    365,
+    366,
+    367,
+    368,
+    369,
+    370,
+    371,
+    372,
+    374,
+    375,
+    376,
+    377,
+    378,
+    380,
+    381,
+    382
+  ],
+  "deferred_buff_ids": [
+    206122,
+    207821,
+    208539,
+    208718,
+    208719,
+    208720,
+    208721,
+    208722,
+    208723
+  ],
+  "native_platform_resources": "keep original iOS SDK/Info.plist/assets; data policy does not rewrite native code or signing",
+  "profile_migration_required": false
+}
