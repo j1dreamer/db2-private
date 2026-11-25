@@ -15,7 +15,7 @@ def choose(entries):
         if n<0:return r
     raise ValueError('Pool không hợp lệ')
 
-def drops(class_id,depth=0):
+def drops(class_id,depth=0,multiplier=1):
     if depth>12:raise ValueError('Drop reference cycle')
     groups={}
     for row in rows('drop'):
@@ -24,15 +24,15 @@ def drops(class_id,depth=0):
     result=[]
     for entries in groups.values():
         row=choose(entries)
-        # The recovered table contains zero-quantity leaves/references. They
-        # represent no reward under our documented private-server drop policy.
-        if row['count']==0:continue
+        # Many role/soul leaves use zero while their parent reference supplies
+        # the quantity (e.g. gacha 102 -> 10403). Our private policy inherits
+        # that quantity; a direct zero leaf defaults to one, never an empty draw.
         if row['count']<0:raise ValueError('Negative drop quantity')
+        quantity=(row['count']or 1)*multiplier
         if row['refClassId']:
-            for child in drops(row['refClassId'],depth+1):
-                child=dict(child);child['count']*=row['count'];result.append(child)
+            result.extend(drops(row['refClassId'],depth+1,quantity))
         elif row['entityId']:
-            result.append({'entityId':row['entityId'],'count':row['count'],'extra':row['extra'] if isinstance(row['extra'],dict) else {}})
+            result.append({'entityId':row['entityId'],'count':quantity,'extra':row['extra'] if isinstance(row['extra'],dict) else {}})
     return result
 
 def add_reward(player,reward):
@@ -93,7 +93,15 @@ def draw(store,account,mode,count):
         for i in range(count):
             if overrides:
                 item=dict(choose(overrides));item.pop('weight',None);rewards.append(item)
-            else:rewards.extend(drops((101 if mode=='normal' else 201) if previous+i==0 else pool))
+            else:
+                from .rules import constants
+                limit=constants('server.POINT.CONSTS.'+mode.upper()+'_MUST_STAR3_TIMES')
+                if (previous+i+1)%limit==0:
+                    # Every twentieth built-in draw uses the shipped 3-star
+                    # branch. Admin-defined pools explicitly keep their rules.
+                    branch=next(r['refClassId']for r in rows('drop')if r['classId']==pool and r['refClassId']and any(x['classId']==r['refClassId']and isinstance(x['extra'],dict)and x['extra'].get('star',0)>=3 for x in rows('drop')))
+                    rewards.extend(drops(branch))
+                else:rewards.extend(drops((101 if mode=='normal' else 201) if previous+i==0 else pool))
         entity_map={}
         for reward in rewards:
             granted=add_reward(player,reward)

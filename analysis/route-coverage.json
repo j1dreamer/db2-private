@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 199,
-  "unsupported_routes": 143,
+  "implemented_routes": 208,
+  "unsupported_routes": 134,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -718,30 +718,38 @@
     },
     {
       "route": "logic.expeditionHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.expeditionHandler.receive",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.expeditionHandler.reset",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.expeditionHandler.skip",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
       "device_verified": false
     },
     {
@@ -2013,37 +2021,47 @@
     },
     {
       "route": "logic.sixExpeditionHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.sixExpeditionHandler.info",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.sixExpeditionHandler.receive",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.sixExpeditionHandler.reset",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.sixExpeditionHandler.skip",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
       "device_verified": false
     },
     {

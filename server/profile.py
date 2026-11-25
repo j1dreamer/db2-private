@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=18
+SCHEMA_VERSION=19
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -36,6 +36,12 @@ def new_profile(pid,account,name,username):
     profile['vip']['buyEyeChallengeTimesTimes']=0
     profile['vip']['endlessSkipTimes']=0
     profile['endless'].update(topPassId=0,otherTopPassIdMap={},fruitMapChallengeTimes=0,fruitMapBuyTimes=0,starSignMapChallengeTimes=0,setPursuitTeamTimesMap={},fruitMapPassTimesMap={},starSignMapPassTimesMap={})
+    profile['expedition']={name:value for name,value in [('passId',0),('prePassId',0),('sixPassId',0),('preSixPassId',0),('status',1),('sixStatus',1),('selfInfo',{'hpMap':{},'mpMap':{}}),('sixSelfInfo',{'hpMap':{},'mpMap':{}}),('sixPlayerInfos',[])]}
+    profile['vip'].update(resetExpeditionTimes=0,resetSixExpeditionTimes=0)
+    from .arena import npc,raw_team
+    preview=raw_team(npc(1))
+    profile['expedition']['challengerInfo']={'team':preview}
+    profile['expedition']['sixChallengerInfo']={'team':json.loads(json.dumps(preview))}
     grant_starter_tickets(profile)
     from .shops import initialize
     initialize(profile)

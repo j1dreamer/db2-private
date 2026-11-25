@@ -70,12 +70,25 @@ class EconomyTests(unittest.TestCase):
   with patch('server.gameplay.drops',side_effect=ValueError('broken table')):
    with self.assertRaises(ValueError):draw(self.store,1,'normal',10)
   p=self.store.player(1);self.assertEqual(p['gem'],10000);self.assertEqual(p['point']['normalTimes'],0)
- def test_zero_quantity_nested_source_drop_is_an_empty_reward(self):
+ def test_zero_quantity_nested_source_leaf_inherits_parent_count(self):
   from server.gameplay import drops
-  # The free guild chest can select 10304, whose original leaves all have
-  # count zero. Force that branch so the regression cannot hide behind RNG.
+  # Both the free guild chest and most gacha role leaves store count zero.
+  # Parent count one must reach the leaf rather than create an empty draw.
   with patch('server.gameplay.choose',side_effect=lambda entries:entries[0]):
-   self.assertEqual(drops(701),[])
+   self.assertEqual(drops(701),[{'entityId':50020,'count':1,'extra':{}}])
+   self.assertEqual(drops(10403)[0]['count'],1)
+ def test_twentieth_builtin_draw_is_three_star_in_all_pools(self):
+  from server.state import stack_count
+  for mode,index in (('normal',0),('advanced',0),('advanced',1),('advanced',2)):
+   p=self.store.player(1);p['point'][mode+'Times']=19;p['point']['selectAdvancedIdx']=index;p['gem']=10000
+   from server.inventory import insert
+   insert(p,119 if mode=='normal'else 120,1);self.store.save(p)
+   with patch('server.gameplay.choose',side_effect=lambda entries:entries[0]):r=draw(self.store,1,mode,1)
+   self.assertEqual(r['_temp']['dropList'][0]['extra']['star'],3);self.assertEqual(r['_temp']['dropList'][0]['count'],1)
+ def test_nested_reference_multiplier_preserves_positive_and_zero_leaves(self):
+  from server.gameplay import drops
+  data=[{'classId':1,'groupId':1,'weight':1,'count':3,'refClassId':2,'entityId':0,'extra':{}},{'classId':2,'groupId':1,'weight':1,'count':0,'refClassId':0,'entityId':101,'extra':{}}]
+  with patch('server.gameplay.rows',return_value=data):self.assertEqual(drops(1),[{'entityId':101,'count':3,'extra':{}}])
  def test_insufficient_advanced_tickets_cannot_spend_gem(self):
   with self.assertRaises(ValueError):draw(self.store,1,'advanced',1)
   self.assertEqual(self.store.player(1)['gem'],10000)

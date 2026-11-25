@@ -166,3 +166,31 @@ shipIdxs: r,
 smapId: e,'''
     if text.count(old)!=1:raise ValueError('Unexpected endless begin transport')
     return text.replace(old,new,1)
+
+def patch_expedition_transport(text):
+    for case,six in (('n.EXPEDITION_ATTACK_TEAM',False),('n.SIX_EXPEDITION_ATTACK_TEAM',True)):
+        start=text.index('case '+case+':');end=text.index('\nbreak;',start);section=text[start:end]
+        old='''s.preload(x, function() {
+K.pushScene(K.NAME.BATTLE_SCENE, V);
+});'''
+        new='''s.addLoading();
+window.__require("socket").request("logic.privateHandler.beginExpedition", {
+isSix: %s, teamIndexs: r.data.selectIdxs, shipIdxs: r.data.selectShipIdxs
+}, function(privateExpeditionStart) {
+window.DB2_PRIVATE_EXPEDITION_SEED = privateExpeditionStart._temp.seed;
+V.team1 = privateExpeditionStart._temp.team1;
+V.team2 = privateExpeditionStart._temp.team2;
+s.preload(x, function() { K.pushScene(K.NAME.BATTLE_SCENE, V); });
+});'''%('true'if six else 'false')
+        if section.count(old)!=1:raise ValueError('Unexpected expedition start selector')
+        text=text[:start]+section.replace(old,new,1)+text[end:]
+    start=text.index('s.expeditionBattle = function(');end=text.index('s.pkBattleInstant = function(',start);section=text[start:end]
+    if section.count('s.setSeed(Date.now());')!=1:raise ValueError('Unexpected expedition seed implementation')
+    section=section.replace('s.setSeed(Date.now());','s.manualRecordMap = {};\nvar privateExpeditionSeed = window.DB2_PRIVATE_EXPEDITION_SEED;\ndelete window.DB2_PRIVATE_EXPEDITION_SEED;\ns.setSeed(privateExpeditionSeed || Date.now());')
+    text=text[:start]+section+text[end:]
+    for name in ('expedition','sixExpedition'):
+        old='n.request("logic.'+name+'Handler.challenge", {\nselfHpMap: e,'
+        new='n.request("logic.'+name+'Handler.challenge", {\nseed: window.__require("battleMain").seed,\nmanualRecordMap: window.__require("battleMain").manualRecordMap || {},\ntickNumber: window.__require("battle.fightHandler").area.timer.tickNumber,\nselfHpMap: e,'
+        if text.count(old)!=1:raise ValueError('Unexpected expedition result transport')
+        text=text.replace(old,new,1)
+    return text

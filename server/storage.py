@@ -95,7 +95,9 @@ class Store:
         from .eye import refresh as refresh_eye
         changed=refresh_eye(self,data)or changed
         from .endless import refresh as refresh_endless
-        if refresh_endless(data)or changed:self.save(data)
+        changed=refresh_endless(data)or changed
+        from .expedition import refresh as refresh_expedition
+        if refresh_expedition(data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

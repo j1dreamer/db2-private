@@ -40,6 +40,11 @@ if(input.mode==='clientTeam'){
  const p=input.player;process.stdout.write(JSON.stringify(F.buildBattleTeam(p.id,(input.shipIndices||[]).map(i=>p.bag.items[i]),input.indices.map(i=>p.team.roles[i]))));process.exit(0);
 }
 const main=load('battleMain'),fight=load('battle.fightHandler');
+if(input.mode==='expedition'){
+ const manual=main.genManualSkillInfo(input.team,input.defender);main.manualShipSkillIds=manual.shipSkillIds;main.manualSkillIds=manual.roleSkillIds;
+ main.manualRecordMap=input.manualRecordMap||{};main.isAuto=!!input.auto;main.isInstant=true;main.isShow=false;main.battleType=load('battle.consts').BATTLE_TYPE.EXPEDITION;main.damageMap={};main.usedMap={};main.setSeed(input.seed);fight.pkBattle(input.team,input.defender);
+ process.stdout.write(JSON.stringify({isWin:main.isWin,tickNumber:fight.area.timer.tickNumber,attacker:fight.team1,defender:fight.team2}));process.exit(0);
+}
 if(input.mode==='boss'){
  if(!['TAIL','BOSS','GUILD_BOSS'].includes(input.bossType))throw Error('Unknown boss mode');
  main.BOSS_CONFIG=input.config;main.manualRecordMap=input.manualRecordMap||{};main.setSeed(input.seed);
