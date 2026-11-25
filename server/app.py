@@ -114,6 +114,10 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 elif action in mapping:result=draw(store,uid,*mapping[action]);result['_temp']['route']=route
                                 else:raise ValueError('Thao tác pool chưa triển khai')
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route=='logic.playerHandler.rename':
+                            from .gameplay import rename_player
+                            try:result=rename_player(store,uid,args.get('name'))
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route=='logic.playerHandler.receiveActivityAward':
                             from .gameplay import claim_events
                             try:result=claim_events(store,uid,args.get('activityNames'),args.get('rewardIdxs'))

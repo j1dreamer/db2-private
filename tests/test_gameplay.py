@@ -2,7 +2,7 @@ import tempfile,unittest,time,json,sqlite3
 from pathlib import Path
 from unittest.mock import patch
 from server.storage import Store
-from server.gameplay import draw,claim_events,validate_pool_entry
+from server.gameplay import draw,claim_events,validate_pool_entry,rename_player
 
 class EconomyTests(unittest.TestCase):
  def setUp(self):
@@ -13,6 +13,26 @@ class EconomyTests(unittest.TestCase):
   self.store.save(p);restored=self.store.player(1)
   self.assertEqual(restored['gem'],777);self.assertEqual(restored['team']['roles']['1']['attr']['hp'],77);self.assertEqual(len(restored['team']['roles']),1)
   self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],4)
+ def test_first_rename_is_free_persistent_and_repeat_is_idempotent(self):
+  p=self.store.player(1);p['name']=p['userName'];p['gem']=50;self.store.save(p)
+  response=rename_player(self.store,1,'Son Goku')
+  self.assertEqual(response['name'],'Son Goku');self.assertEqual(response['gem'],50)
+  self.assertEqual(self.store.player(1)['privateRenameCount'],1)
+  self.assertEqual(rename_player(self.store,1,'Son Goku')['gem'],50)
+ def test_later_rename_costs_100_and_failure_rolls_back(self):
+  p=self.store.player(1);p['gem']=100;self.store.save(p)
+  self.assertEqual(rename_player(self.store,1,'Vegeta')['gem'],0)
+  with self.assertRaises(ValueError):rename_player(self.store,1,'Gohan')
+  self.assertEqual(self.store.player(1)['name'],'Vegeta')
+  self.assertEqual(self.store.player(1)['gem'],0)
+ def test_invalid_or_duplicate_rename_cannot_charge(self):
+  self.store.register('another','password');self.store.create_player(2,'Vegeta')
+  before=self.store.player(1)
+  for name in (None,123,'','   ','a\nb','<b>Goku','12345678901','vegeta','tester'):
+   with self.subTest(name=name):
+    with self.assertRaises(ValueError):rename_player(self.store,1,name)
+  self.assertEqual(self.store.player(1)['gem'],before['gem'])
+  self.assertEqual(self.store.player(1)['name'],before['name'])
  def test_ten_draws_use_admin_pool_and_charge_once(self):
   pool,entry=validate_pool_entry({'pool':102,'entity':101,'weight':1,'count':5})
   self.store.db.execute('INSERT INTO pool_entries VALUES(?,?,?)',(pool,101,json.dumps(entry)))

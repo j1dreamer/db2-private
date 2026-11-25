@@ -4,7 +4,7 @@ UI and network dependencies are stubbed; this is not a rendering/device test.
 import json,shutil,subprocess,tempfile,unittest
 from pathlib import Path
 from server.storage import Store
-from server.gameplay import draw
+from server.gameplay import draw,rename_player
 
 @unittest.skipUnless(shutil.which('node'),'Node required for recovered-client model checks')
 class ClientModelTests(unittest.TestCase):
@@ -76,6 +76,13 @@ class ClientModelTests(unittest.TestCase):
   self.assertEqual(migrated['timesMaxMap']['actionPoint'],123)
   self.assertEqual(migrated['nextRecoverTimeMap']['actionPoint'],456789)
   self.assertEqual(migrated['vip']['buyActionPointTimes'],2)
+ def test_rename_delta_updates_original_player_and_home(self):
+  p=self.profile;p['name']=p['userName'];self.store.save(p)
+  result=rename_player(self.store,1,'Vegeta')
+  state=self.client(p,[result],check_home=True)
+  self.assertEqual(state['home']['playerName'],'Vegeta')
+  self.assertNotEqual(state['home']['playerName'],state['home']['userName'])
+  self.assertEqual(state['gem'],50)
  def test_consumed_ticket_removed_by_original_client(self):
   p=self.profile;p['bag']={'lastIdx':1,'items':{'1':{'kindId':119,'idx':1,'count':1}}};self.store.save(p)
   response=draw(self.store,1,'normal',1);state=self.client(p,[response]);persisted=self.store.player(1)

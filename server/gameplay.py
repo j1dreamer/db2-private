@@ -135,3 +135,28 @@ def select_pool(store,account,action,args):
         else:raise ValueError('Thao tác không hợp lệ')
         store.save(p);store.audit(action,{'player':p['id'],**args})
         return {'code':200,'gem':p['gem'],'costGem':p['costGem'],'point':point,'_temp':{'route':'logic.pointHandler.'+action}}
+
+def rename_player(store,account,name):
+    """Client sends only name; infer the tutorial's first rename from saved state."""
+    if not isinstance(name,str) or not name.strip() or not name.isprintable() or '<' in name or '>' in name:
+        raise ValueError('Tên không hợp lệ')
+    name=name.strip()
+    # Cocos EditBox/JS limits use UTF-16 code units (this client displays 10).
+    if len(name.encode('utf-16-le',errors='surrogatepass'))//2>10:
+        raise ValueError('Tên tối đa 10 ký tự')
+    with store.transaction():
+        p=store.player(account)
+        if not p:raise ValueError('Chưa có nhân vật')
+        if name==p['userName']:raise ValueError('Chọn tên đội khác tên tài khoản để hoàn tất hướng dẫn')
+        route='logic.playerHandler.rename'
+        if name==p['name']:
+            return {'code':200,'name':p['name'],'gem':p['gem'],'costGem':p['costGem'],'_temp':{'route':route}}
+        for row in store.db.execute('SELECT id,data FROM players WHERE id<>?',(p['id'],)):
+            if json.loads(row['data']).get('name','').casefold()==name.casefold():
+                raise ValueError('Tên đội đã được sử dụng')
+        count=p.get('privateRenameCount',0 if p['name']==p['userName'] else 1)
+        cost=0 if count==0 else 100  # recovered PLAYER.CONSTS.RE_NAME_COST_GEM
+        if p['gem']<cost:raise ValueError('Đổi tên cần 100 gem')
+        p['gem']-=cost;p['costGem']+=cost;p['name']=name;p['privateRenameCount']=count+1
+        store.save(p);store.audit('rename',{'player':p['id'],'cost':cost})
+        return {'code':200,'name':name,'gem':p['gem'],'costGem':p['costGem'],'_temp':{'route':route}}

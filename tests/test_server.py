@@ -69,6 +69,26 @@ class ServerTests(unittest.IsolatedAsyncioTestCase):
   self.assertEqual((await call(ws,'connector.playerHandler.entry',{'playerId':p['id']+1}))['code'],500)
   result=await call(ws,'connector.playerHandler.entry',{'playerId':p['id']});p=json.loads(gzip.decompress(base64.b64decode(result['player'])));self.assertEqual(p['gem'],150)
   await ws.close()
+ async def test_rename_route_requires_auth_and_returns_saved_name(self):
+  await self.client.post('/user/register',data={'name':'tester','password':'password'})
+  login=await (await self.client.post('/user/login',data={'name':'tester','password':'password'})).json()
+  ws=await self.client.ws_connect('/');await ws.send_bytes(package(1,b'{"sys":{}}'));await ws.receive();await ws.send_bytes(package(2));await ws.receive()
+  next_id=0
+  async def call(route,body):
+   nonlocal next_id
+   next_id+=1;r=route.encode()
+   await ws.send_bytes(package(4,bytes([0,next_id,len(r)])+r+json.dumps(body).encode()))
+   return json.loads(list(packages((await ws.receive()).data))[0][1][2:])
+  self.assertEqual((await call('logic.playerHandler.rename',{'name':'Goku'}))['code'],500)
+  await call('connector.entryHandler.entry',{'token':login['token'],'serverId':1})
+  await call('connector.playerHandler.createPlayer',{'name':'tester'})
+  result=await call('logic.playerHandler.rename',{'name':'Goku'})
+  self.assertEqual(result['code'],200);self.assertEqual(result['name'],'Goku');self.assertEqual(result['gem'],50)
+  self.assertEqual((await call('logic.playerHandler.rename',{'name':'Goku'}))['gem'],50)
+  self.assertEqual((await call('logic.playerHandler.rename',{'name':'Vegeta'}))['code'],500)
+  state=await (await self.client.get('/admin/api',headers={'Authorization':'Bearer test-secret'})).json()
+  self.assertEqual(state['players'][0]['name'],'Goku');self.assertEqual(state['players'][0]['gem'],50)
+  await ws.close()
  def test_truncated_package_rejected(self):
   with self.assertRaises(ValueError):list(packages(b'\4\0\0\2x'))
 if __name__=='__main__':unittest.main()

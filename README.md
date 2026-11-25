@@ -6,7 +6,7 @@ Backend Python + SQLite, web quản trị và công cụ đóng gói client Andr
 
 ## Trạng thái thực tế
 
-- Đã có: đăng ký/đăng nhập tài khoản riêng, session 24 giờ, Pomelo handshake/heartbeat, gate/connector, tạo/chọn nhân vật theo schema dự thảo, đổi giftcode, web quản trị có token, tạo giftcode, cấp gem, pool gacha tùy chỉnh và lưu lịch event.
+- Đã có: đăng ký/đăng nhập tài khoản riêng, session 24 giờ, Pomelo handshake/heartbeat, gate/connector, tạo/chọn nhân vật theo schema dự thảo, đặt/đổi tên đội, đổi giftcode, web quản trị có token, tạo giftcode, cấp gem, pool gacha tùy chỉnh và lưu lịch event.
 - Đã kiểm thử giao thức và SQLite qua mạng loopback.
 - Chưa có: xác minh profile đủ trường để vào sảnh trên thiết bị, toàn bộ 342 route gameplay, tích hợp các event tùy ý vào UI event gốc.
 - Người dùng đã cài APK trên BlueStacks và tới cảnh sảnh; phát hiện lỗi khởi tạo dữ liệu sảnh. Schema 3 sửa lỗi này ở server, cần xác nhận lại trên thiết bị. Mã SDK Java vẫn còn trong gói.
@@ -74,7 +74,7 @@ Sao lưu khi server đã dừng, hoặc dùng SQLite backup API; không sao ché
 
 Linux x86_64, Python 3.12, Node 24 (chỉ dùng cho test codec gốc), Java 21. Chưa chạy trên Termux, Windows, macOS hoặc Android thật. Backend được viết đa nền tảng; đây chưa phải xác nhận mọi nền tảng đã được thử.
 
-33 kiểm thử backend/codec/đóng gói và dữ liệu client đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
+38 kiểm thử backend/codec/đóng gói và dữ liệu client đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
 
 ## Đối chiếu với JavaScript gốc
 
@@ -123,7 +123,7 @@ Sau khi zipalign và ký, phải chạy `python tools/verify_apk.py FILE.apk` b�
 - APK sửa SHA-256: `d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f`.
 - Bản vá chỉ sao chép các vùng byte không đổi và thay những vùng đã sửa/ký; kiểm tra checksum nguồn và đầu ra, giữ nguyên APK cũ.
 - `tools/download_apk.py` hiện tự áp dụng bản vá sau khi tải/ghép APK nền.
-- 33 kiểm thử backend/codec/đóng gói/bản vá và dữ liệu sảnh đã pass; bản sửa schema 3 vẫn cần xác nhận sảnh hiển thị đúng trên Android/BlueStacks.
+- 38 kiểm thử backend/codec/đóng gói/bản vá và dữ liệu sảnh đã pass; bản sửa schema 3 vẫn cần xác nhận sảnh hiển thị đúng trên Android/BlueStacks.
 
 Bản vá Windows dùng PowerShell có sẵn; không đổi execution policy. Đã chạy thử thuật toán PowerShell trên cùng APK gốc và xác nhận đầu ra khớp SHA-256 bản sửa đã ký. File `Apply-Fix-Python.bat` là lựa chọn thay thế khi có Python.
 
@@ -143,4 +143,10 @@ Bộ kiểm thử còn chạy `quickNode.genData` với các hàm gốc achievem
 
 Thiết bị đã xác nhận code và nhân vật schema 3, sau đó báo `Cannot read property 'actionPoint' of undefined` trong `coinTopNode.update_`. Schema 4 thêm `timesMaxMap` và `nextRecoverTimeMap` cho thể lực/điểm kỹ năng, cùng bộ đếm mua thể lực. Giới hạn thể lực theo hàm gốc `PLAYER.FUNS.getActionPointMax(level) = 60 + level`; trường có sẵn được giữ nguyên khi nâng cấp nhân vật cũ. Mốc hồi phục mặc định bằng 0 (chưa lên lịch); logic tự hồi thể lực phía server vẫn chưa triển khai.
 
-Dừng server, tải và giải nén [Home-Fix.zip](Home-Fix.zip) vào thư mục chứa `start.bat`, ghi đè các file code, chạy server lại rồi mở lại game. Gói chỉ chứa `server/profile.py`, `server/storage.py` và `Check-Home.py`, không chứa database. Nhật ký migration ghi schema thực tế. 33 kiểm thử đã pass, bao gồm tái hiện lỗi schema 3, chạy chính lifecycle `coinTopNode.onLoad/update_/tick_` và thao tác mở/đóng bảng hồi thể lực với schema 4, cả nhánh có mốc hồi phục. Chưa xác nhận bản sửa mới trên BlueStacks.
+Dừng server, tải và giải nén [Home-Fix.zip](Home-Fix.zip) vào thư mục chứa `start.bat`, ghi đè các file code, chạy server lại rồi mở lại game. Gói tích lũy hiện chứa các file code `server/profile.py`, `server/storage.py`, `server/app.py`, `server/gameplay.py` và `Check-Home.py`, không chứa database. Nhật ký migration ghi schema thực tế. 38 kiểm thử đã pass, bao gồm tái hiện lỗi schema 3, chạy chính lifecycle `coinTopNode.onLoad/update_/tick_` và thao tác mở/đóng bảng hồi thể lực với schema 4, cả nhánh có mốc hồi phục. Chưa xác nhận bản sửa mới trên BlueStacks.
+
+## Đặt tên đội trong hướng dẫn
+
+Đã xử lý `logic.playerHandler.rename` với body `{name: ...}` như client gốc. Dựa trên `firstReName.test`/`renamePanel`, lần đặt tên đầu khi tên hiện tại trùng `userName` được miễn phí; các lần sau tốn 100 gem theo `PLAYER.CONSTS.RE_NAME_COST_GEM`. Bộ đếm riêng lưu trong profile ngăn lặp miễn phí. Gửi lại cùng tên đang dùng trả thành công và không trừ thêm. Phản hồi trả `name`, `gem`, `costGem` để Player gốc cập nhật trước callback đóng panel.
+
+Quy định server riêng: tên tối đa 10 đơn vị UTF-16 như ô nhập client, không rỗng/control/markup; tên đội không trùng tên tài khoản (tránh kích hoạt lại hướng dẫn) và không trùng tên đội khác khi so sánh casefold. Kiểm tra/trừ gem/lưu tên nằm trong cùng transaction. Đã kiểm tra WebSocket có xác thực, lưu DB, giữ số dư khi thất bại và hàm Player/homeScene gốc nhận tên mới. Chưa xác nhận phần hướng dẫn sau đổi tên trên thiết bị; các route gameplay khác vẫn đang triển khai.
