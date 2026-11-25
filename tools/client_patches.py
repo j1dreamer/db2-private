@@ -21,7 +21,11 @@ window.DB2PrivateRuntime.reportResponseError(e, privateResponseError);
 }'''
 def patch_response_boundary(text):
     if text.count(SOCKET_OLD)!=1:raise ValueError('Unexpected socket response implementation')
-    return text.replace(SOCKET_OLD,SOCKET_NEW,1)
+    text=text.replace(SOCKET_OLD,SOCKET_NEW,1)
+    old='l._request = function(e, a, n) {\nt.request(e, a, function(a) {'
+    new='l._request = function(e, a, n) {\nl.timeOut = /(?:\\.challenge(?:Top)?|\\.endSmap|\\.end|\\.battle|\\.fight|\\.finish)$/i.test(e) ? 60 : 10;\nt.request(e, a, function(a) {'
+    if text.count(old)!=1:raise ValueError('Unexpected request timeout implementation')
+    return text.replace(old,new,1)
 
 def patch_adventure_transport(text):
     changes={
@@ -75,3 +79,19 @@ var n, o, h = e._temp.attackTeam'''
 var n = e._temp.seed, o, h = e._temp.attackTeam'''
     if text.count(old)!=1:raise ValueError('Unexpected arena3v3 transport implementation')
     return text.replace(old,new,1)
+
+def patch_guild_membership(text):
+    old='u.player.guild.members.push(n);'
+    new='if (!t.findWhere(u.player.guild.members, { playerId: n.playerId })) u.player.guild.members.push(n);'
+    if text.count(old)!=1:raise ValueError('Unexpected guild member callback implementation')
+    return text.replace(old,new,1)
+
+def patch_private_sdk(text):
+    changes={
+        'emitData: function(e, a, n) {\nif (!r.isNoEmit || e == h.EMIT_TYPE.LOGIN) {':'emitData: function(e, a, n) {\nreturn; // Private build: no native SDK telemetry.\nif (!r.isNoEmit || e == h.EMIT_TYPE.LOGIN) {',
+        'pay: function(e, a, n, s) {\nvar o = c.player,':'pay: function(e, a, n, s) {\nvar privatePaymentView = window.__require("baseView");\nvar privateGoods = c.player && c.player.extra.goodsList[e];\nif (!privateGoods || !privateGoods.privateCostGem) { privatePaymentView.removeLoading(); privatePaymentView.addHintPanel("This private server uses in-game gem offers only."); return; }\nprivatePaymentView.addLoading();\nwindow.__require("playerHandler").buyGemGoods(Number(e), privateGoods.privateCostGem, function(privateResult) {\nif (privateResult._temp && privateResult._temp.entityCountMap) privatePaymentView.addRewardEffectPanel(privateResult._temp.entityCountMap);\n});\nreturn;\nvar o = c.player,'
+    }
+    for old,new in changes.items():
+        if text.count(old)!=1:raise ValueError('Unexpected private SDK implementation')
+        text=text.replace(old,new,1)
+    return text

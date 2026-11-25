@@ -1,6 +1,6 @@
 import json,shutil,subprocess,unittest
 from pathlib import Path
-from tools.client_patches import patch_response_boundary
+from tools.client_patches import patch_response_boundary,patch_private_sdk
 
 @unittest.skipUnless(shutil.which('node'),'Node needed for recovered client checks')
 class RuntimeTests(unittest.TestCase):
@@ -12,3 +12,7 @@ class RuntimeTests(unittest.TestCase):
   source=patch_response_boundary(source)
   result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_runtime.cjs')],input=json.dumps({'socket':source}),text=True,capture_output=True,check=True)
   self.assertEqual(json.loads(result.stdout)['reports'],2)
+ def test_private_sdk_uses_internal_gem_offer_and_never_native_payment_or_telemetry(self):
+  source=patch_private_sdk((Path(__file__).parent/'fixtures/client_sdkApi.js').read_text())
+  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_private_sdk.cjs')],input=json.dumps({'source':source}),text=True,capture_output=True,check=True)
+  self.assertEqual(json.loads(result.stdout),{'native':0,'offers':1})

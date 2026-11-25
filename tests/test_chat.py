@@ -19,9 +19,12 @@ class ChatTests(unittest.TestCase):
   with self.assertRaises(ValueError):self.send(words='Again')
   self.assertEqual(len(history(self.store,p,1)),1)
  def test_guild_scope_excludes_nonmembers_and_history_matches(self):
+  from server.guild import handle as guild_action
   for account in (1,2):
-   p=self.store.player(account);p['guildId']=7;self.store.save(p)
-  self.send(2);targets=[r[0]for r in self.store.db.execute('SELECT account FROM notifications')];self.assertEqual(targets,[1,2])
+   p=self.store.player(account);p.update(level=20,gem=1000);self.store.save(p)
+  gid=guild_action(self.store,1,'logic.guildHandler.create',{'name':'Saiyans','badgeId':1})['guildId']
+  guild_action(self.store,2,'logic.guildHandler.applyJoin',{'guildId':gid});guild_action(self.store,1,'logic.guildHandler.handleApply',{'targetId':2,'isAgree':True})
+  self.send(2);targets=[r[0]for r in self.store.db.execute("SELECT account FROM notifications WHERE event='onChat'")];self.assertEqual(targets,[1,2])
   result=handle(self.store,2,'chat.chatHandler.getGuildLast',{})
   self.assertEqual(len(result['extra']['chat']['guildList']),1)
   self.assertEqual(history(self.store,self.store.player(3),2),[])

@@ -36,6 +36,16 @@ if(input.mode==='clientTeam'){
  const p=input.player;process.stdout.write(JSON.stringify(F.buildBattleTeam(p.id,(input.shipIndices||[]).map(i=>p.bag.items[i]),input.indices.map(i=>p.team.roles[i]))));process.exit(0);
 }
 const main=load('battleMain'),fight=load('battle.fightHandler');
+if(input.mode==='bestOfThree'){
+ const rounds=[];let wins=0,losses=0;
+ for(const pair of input.pairs){
+  const outcome=main.pkBattleInstant(pair.team,pair.defender,input.seed||1);
+  rounds.push({key:pair.key,isWin:outcome.isWin,damageMap:JSON.parse(JSON.stringify(main.damageMap))});
+  outcome.isWin?wins++:losses++;
+  if(wins===2||losses===2)break;
+ }
+ process.stdout.write(JSON.stringify({isWin:wins===2,rounds}));process.exit(0);
+}
 if(input.mode==='pvp'){
  const outcome=main.pkBattleInstant(input.team,input.defender,input.seed||1);
  process.stdout.write(JSON.stringify({...outcome,tickNumber:fight.area.timer.tickNumber,damageMap:main.damageMap,attacker:fight.team1,defender:fight.team2}));process.exit(0);

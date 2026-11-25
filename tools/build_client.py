@@ -38,13 +38,15 @@ def build(source,bundle,out,server,keep_package=False):
     text=patch(text,'var script = data.runScriptInfo.script;','var script = ""; // Private client: disable downloaded script execution.')
     text=patch(text,'eval(data.msg.body);','console.warn("Remote code execution disabled in private client");')
     text=patch(text,'b.instance || (b.instance = this);\np.spThemeClassId', 'b.instance || (b.instance = this);\nwindow.DB2PrivateSettings && window.DB2PrivateSettings();\np.spThemeClassId')
-    try:from tools.client_patches import patch_response_boundary,patch_adventure_transport,patch_roster_removal,patch_arena_transport,patch_arena3v3_transport
-    except ModuleNotFoundError:from client_patches import patch_response_boundary,patch_adventure_transport,patch_roster_removal,patch_arena_transport,patch_arena3v3_transport
+    try:from tools.client_patches import patch_response_boundary,patch_adventure_transport,patch_roster_removal,patch_arena_transport,patch_arena3v3_transport,patch_guild_membership,patch_private_sdk
+    except ModuleNotFoundError:from client_patches import patch_response_boundary,patch_adventure_transport,patch_roster_removal,patch_arena_transport,patch_arena3v3_transport,patch_guild_membership,patch_private_sdk
     text=patch_response_boundary(text)
     text=patch_adventure_transport(text)
     text=patch_roster_removal(text)
     text=patch_arena_transport(text)
     text=patch_arena3v3_transport(text)
+    text=patch_guild_membership(text)
+    text=patch_private_sdk(text)
     text=patch(text,'this.skipMove = !1;','this.skipMove = cc.sys.localStorage.getItem("db2.private.fastSummon") !== "0";')
     text=patch(text,'onSkip_: function() {\nthis.skipMove = !this.skipMove;','onSkip_: function() {\nthis.skipMove = !this.skipMove;\ncc.sys.localStorage.setItem("db2.private.fastSummon", this.skipMove ? "1" : "0");')
     settings=(Path(__file__).parent/'private_settings.js').read_text()

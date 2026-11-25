@@ -18,6 +18,8 @@ const cache={rulePanel:{},shipScene:{},teamHandler:{},soundComponent:{},roleScen
 // Missing methods deliberately stay undefined: calling a stub fails the check.
 const callbackOnly = new Set(["allServerBattleHandler", "arena3v3Handler", "arenaHandler", "arenaScene", "bagHandler", "bagScene", "baseView", "bmapScene", "buildExt", "canUseRolesPanel", "coinTopNode", "cryptoApi", "dailyBmapScene", "data", "dial2Panel", "dialPanel", "doubleBattleHandler", "dreamActivityPanel", "dreamExtActivityPanel", "eyeHandler", "friendHandler", "guide", "guideNode", "guildHandler", "guildScene", "helper", "http", "i18n", "idfaPanel", "mailHandler", "md5", "moment", "newGuildBattleHandler", "playerHandler", "pointHandler", "prestigeBattleHandler", "rankHandler", "rankPanel", "renamePanel", "resource", "roleScene", "rulePanel", "sceneManager", "serverMain", "settingPanel", "shipScene", "shopHandler", "skillInfoPanel", "skillItem", "socket", "soundApi", "soundComponent", "stringUtil", "strongGoalMorePanel", "teamBattleHandler", "teamHandler", "topUpPanel", "util", "viewBattleTeamPanel", "worldBossHandler", "worshipBattleHandler", "upgradeShowPanel"]);
 callbackOnly.add('battlefieldRankPanel');callbackOnly.add('worshipRankPanel');
+callbackOnly.add('guildBossHandler');
+callbackOnly.add('newGuildBattleScene');
 for(const name of callbackOnly)if(!(name in cache))cache[name]=function(){};
 const frames=[];
 cache.selectBattleRolesScene={TYPE:{ARENA_3V3_DEFENSE_TEAM:7}};
@@ -41,6 +43,12 @@ let rosterNavigationCount=0;
 if(input.prepareRosterCache){cache.sceneManager.teamData={teamItemMap:Object.fromEntries(Object.keys(player.team.roles).map(key=>[key,{}])),roleSceneMap:Object.fromEntries(Object.keys(player.team.roles).map(key=>[key,{}]))};cache.sceneManager.popToHomeScene=()=>{rosterNavigationCount++;};}
 const snapshots=[];
 for(const delta of input.deltas||[]){player.update(delta);snapshots.push({gem:player.gem,bag:JSON.parse(JSON.stringify(player.bag.items)),team:JSON.parse(JSON.stringify(player.team.roles))});}
+if(input.guildApprovalDelta){
+ const applicant=player.guild.applyPlayerList[0];cache.baseView.addLoading=()=>{};
+ cache.guildHandler.handleApply=(agree,id,name,cb)=>{player.update(input.guildApprovalDelta);cb(input.guildApprovalDelta);};
+ delete cache.guildScene;const view=new (load('guildScene'))();view.update_=()=>{};
+ view.onApplyAgree_({target:{data:applicant,memberItem:{}}});
+}
 let teamItems,friendship;
 if(input.checkTeam){delete cache.roleItem;load('roleItem');delete cache.itemItem;load('itemItem');friendship=load('teamScene').genFriendshipData();teamItems=Object.values(player.team.roles).map(r=>load('teamScene').genTeamItemData(r));}
 // Exercise actual top-bar lifecycle and touch handlers with renderer-only adapters.
@@ -94,7 +102,8 @@ if(input.checkGameplay){
 }
 const daily=load('dailyTaskPanel').genData();
 let arenaThree;if(input.checkArena3v3){delete cache.roleItem;delete cache.shipItem;load('roleItem');load('shipItem');arenaThree=load('arena3v3Scene').genData();}
+let guildView;if(input.checkGuild){delete cache.itemItem;load('itemItem');delete cache.guildScene;guildView=load('guildScene').genData();}
 let point;
 if(input.checkPoint)point=load('pointScene').genData();
 let roles;if(input.checkRoles){if(!cache.roleItem.genData){delete cache.roleItem;load('roleItem');}roles=Object.values(player.team.roles).map(r=>load('roleItem').genData(r));}
-player.destroy();process.stdout.write(JSON.stringify({snapshots,roleScenes,effects,topBar,quick,home,daily,point,roles,teamItems,friendship,arenaThree,rosterNavigationCount,rosterCachedIds:Object.keys(cache.sceneManager.teamData?.roleSceneMap||{}),gem:player.gem,bag:player.bag.items,team:player.team.roles}));
+player.destroy();process.stdout.write(JSON.stringify({snapshots,roleScenes,effects,topBar,quick,home,daily,point,roles,teamItems,friendship,arenaThree,guildView,guildMemberIds:(player.guild?.members||[]).map(member=>member.playerId),rosterNavigationCount,rosterCachedIds:Object.keys(cache.sceneManager.teamData?.roleSceneMap||{}),gem:player.gem,bag:player.bag.items,team:player.team.roles}));

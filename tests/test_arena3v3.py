@@ -1,9 +1,10 @@
-import tempfile,unittest,shutil,json,subprocess,time
+import tempfile,unittest,shutil,json,subprocess,time,asyncio
 from pathlib import Path
 from server.storage import Store
 from server.profile import character
 from server.progression import learn_skills,friendships
 from server import arena3v3,arena
+from server.battle import simulate
 from tools.client_patches import patch_arena3v3_transport
 
 class ArenaThreeTests(unittest.IsolatedAsyncioTestCase):
@@ -52,6 +53,13 @@ class ArenaThreeTests(unittest.IsolatedAsyncioTestCase):
   await self.call('info');p=self.store.player(1);p['private3v3CoinClock']=int(time.time()*1000)-100*3600000;rate=p['arena3v3']['hourCoin'];self.store.save(p)
   r=await self.call('receive');self.assertEqual(r['_temp']['entityCountMap'],{'106':24*rate})
   self.assertEqual(self.store.player(1)['arena3v3']['receiveCoin'],0)
+ @unittest.skipUnless(shutil.which('node'),'Node required for original engine comparison')
+ async def test_batched_replay_matches_individual_original_engine_rounds(self):
+  await self.call('info');target=(await self.call('match'))['_temp']['smaller']['playerId'];await self.call('choose',{'defenderId':target,'attackTeamIndexsMap':self.roles,'attackShipIndexsMap':self.ships})
+  run=json.loads(self.store.db.execute('SELECT data FROM pvp_runs WHERE player=1 AND mode=?',('arena3v3',)).fetchone()[0]);overall,win_map,damage=await arena3v3.replay(run)
+  for key in win_map:
+   outcome=await asyncio.to_thread(simulate,{'mode':'pvp','team':arena3v3.round_team(run['attack'],key),'defender':arena3v3.round_team(run['defense'],key),'seed':run['seed']})
+   self.assertEqual(win_map[key],run['attack']['playerId']if outcome['isWin']else run['defense']['playerId']);self.assertEqual(damage[key],outcome['damageMap'])
  @unittest.skipUnless(shutil.which('node'),'Node required for recovered UI generator')
  async def test_original_ui_generator_and_transport_accept_server_data(self):
   await self.call('info');p=self.store.player(1);payload={'profile':p,'checkTeam':True,'checkArena3v3':True}

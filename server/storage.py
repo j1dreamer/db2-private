@@ -26,6 +26,9 @@ class Store:
         CREATE TABLE IF NOT EXISTS battle_reports(id TEXT PRIMARY KEY,mode TEXT NOT NULL,attacker INTEGER NOT NULL,defender INTEGER NOT NULL,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS multi_ladder(mode TEXT NOT NULL,bracket TEXT NOT NULL,player INTEGER NOT NULL,rank INTEGER NOT NULL,source TEXT NOT NULL,data TEXT NOT NULL,PRIMARY KEY(mode,bracket,player),UNIQUE(mode,bracket,rank));
         CREATE TABLE IF NOT EXISTS worship_counts(mode TEXT NOT NULL,player INTEGER NOT NULL,value INTEGER NOT NULL,PRIMARY KEY(mode,player));
+        CREATE TABLE IF NOT EXISTS guilds(id INTEGER PRIMARY KEY,name TEXT UNIQUE NOT NULL,data TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS guild_members(player INTEGER PRIMARY KEY REFERENCES players(id),guild INTEGER REFERENCES guilds(id),role TEXT NOT NULL,joined INTEGER NOT NULL,contribution INTEGER NOT NULL,data TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS guild_requests(guild INTEGER REFERENCES guilds(id),player INTEGER REFERENCES players(id),created INTEGER NOT NULL,PRIMARY KEY(guild,player));
         CREATE INDEX IF NOT EXISTS chat_channel ON chat_messages(kind,scope,id);
         CREATE INDEX IF NOT EXISTS chat_sender ON chat_messages(player,id);
         CREATE TABLE IF NOT EXISTS friend_requests(source INTEGER REFERENCES players(id),target INTEGER REFERENCES players(id),created INTEGER NOT NULL,PRIMARY KEY(source,target));
@@ -76,7 +79,9 @@ class Store:
         from .arena import refresh as refresh_arena
         changed=refresh_arena(self,data)or changed
         from .arena3v3 import refresh as refresh_three
-        if refresh_three(self,data)or changed:self.save(data)
+        changed=refresh_three(self,data)or changed
+        from .guild import refresh as refresh_guild
+        if refresh_guild(self,data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

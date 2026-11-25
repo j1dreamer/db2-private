@@ -67,6 +67,7 @@ def recalculate(player,role):
         if len(names)==1 and color>=3:suit=constants('server.STAR_SIGN.CONSTS.ATTR_NAME_SUIT_SKILL_IDS_MAP')[rows[0]['extra']['attr']][int(color>=5)]
     role['equipments']['starSignSkillId']=suit
     add_attrs(attrs,player['team']['friendshipAttr']);add_attrs(attrs,player['team']['titleAttr'])
+    add_attrs(attrs,player.get('guildSkill',{}).get('attr',{}))
     for typ,level in role['trainLevelMap'].items():
         for attr_id in cfg['TRAIN_ITEM_IDS_MAP'][typ][:level]:add_attrs(attrs,cfg['TRAIN_ATTR_ITEM_MAP'][str(attr_id)])
     soul_map=cfg['SOUL_TYPE_SP_ATTR_ITEM_MAP']if row['group']>=5 else cfg['SOUL_TYPE_ATTR_ITEM_MAP']

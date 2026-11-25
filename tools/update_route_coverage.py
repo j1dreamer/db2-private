@@ -17,13 +17,14 @@ from server.gm import ROUTES as GM
 from server.arena import ROUTES as ARENA
 from server.local_boosts import ROUTES as BOOSTS
 from server.arena3v3 import ROUTES as THREE
+from server.guild import ROUTES as GUILD
 ROOT=Path(__file__).resolve().parent.parent
 CORE={'gate.gateHandler.queryEntry','connector.entryHandler.entry','connector.playerHandler.getPlayers','connector.playerHandler.createPlayer','connector.playerHandler.entry','logic.playerHandler.rename','logic.playerHandler.useGiftCode','logic.playerHandler.receiveActivityAward'}
 CORE|={'logic.pointHandler.'+name+suffix for name in ('normal','advanced') for suffix in ('','Ten','Hundred')}
 CORE|={'logic.pointHandler.switchAdvancedPool','logic.pointHandler.selectWishClassId'}
 def update():
     groups=[(CORE,['tests/test_server.py','tests/test_gameplay.py','tests/test_client_models.py']),(ADVENTURE,['tests/test_adventure.py']),(PLAYER,['tests/test_player_actions.py']),(SOCIAL|MAIL,['tests/test_social_mail.py','tests/test_push.py']),(RANK,['tests/test_rank.py']),(SHOP,['tests/test_shops.py']),(CHAT,['tests/test_chat.py','tests/test_push.py']),(BAG,['tests/test_bag_actions.py']),(TEAM,['tests/test_team_actions.py'])]
-    groups.extend([(ITEMS,['tests/test_item_actions.py']),(TASKS,['tests/test_tasks.py']),(ONLINE,['tests/test_online.py']),(GM,['tests/test_gm.py','tests/test_server.py']),(ARENA,['tests/test_arena.py']),(BOOSTS,['tests/test_local_boosts.py']),(THREE,['tests/test_arena3v3.py'])])
+    groups.extend([(ITEMS,['tests/test_item_actions.py']),(TASKS,['tests/test_tasks.py']),(ONLINE,['tests/test_online.py']),(GM,['tests/test_gm.py','tests/test_server.py']),(ARENA,['tests/test_arena.py']),(BOOSTS,['tests/test_local_boosts.py']),(THREE,['tests/test_arena3v3.py']),(GUILD,['tests/test_guild.py','tests/test_push.py'])])
     contracts=json.loads((ROOT/'analysis/route-contracts.json').read_text());implemented=set().union(*(routes for routes,tests in groups))
     rows=[]
     for item in contracts['contracts']:

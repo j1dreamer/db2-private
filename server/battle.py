@@ -59,7 +59,7 @@ def simulate(payload):
     node=shutil.which('node')
     if not node:raise ValueError('Combat cần Node.js; cài Node.js LTS rồi mở lại server')
     try:
-        result=subprocess.run([node,str(WORKER)],input=json.dumps(payload),text=True,capture_output=True,timeout=15,check=True)
+        result=subprocess.run([node,str(WORKER)],input=json.dumps(payload),text=True,capture_output=True,timeout=30 if payload.get('mode')=='bestOfThree'else 15,check=True)
         return json.loads(result.stdout)
     except (subprocess.TimeoutExpired,subprocess.CalledProcessError,json.JSONDecodeError) as exc:
         raise ValueError('Không thể kiểm tra trận đấu; kết quả chưa được nhận thưởng') from exc
@@ -68,4 +68,12 @@ _limits=weakref.WeakKeyDictionary()
 async def simulate_async(payload):
     loop=asyncio.get_running_loop()
     semaphore=_limits.setdefault(loop,asyncio.Semaphore(2))
-    async with semaphore:return await asyncio.to_thread(simulate,payload)
+    try:await asyncio.wait_for(semaphore.acquire(),timeout=5)
+    except asyncio.TimeoutError as exc:raise ValueError('Server đang kiểm tra nhiều trận; hãy thử lại, kết quả chưa được nhận')from exc
+    worker=asyncio.create_task(asyncio.to_thread(simulate,payload))
+    try:
+        try:return await asyncio.shield(worker)
+        except asyncio.CancelledError:
+            try:await worker
+            finally:raise
+    finally:semaphore.release()

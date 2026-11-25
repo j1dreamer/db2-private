@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 147,
-  "unsupported_routes": 195,
+  "implemented_routes": 165,
+  "unsupported_routes": 177,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -981,128 +981,182 @@
     },
     {
       "route": "logic.guildHandler.addViceChairman",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.applyJoin",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.changeChairman",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.create",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.dismiss",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.drum",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.exit",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.handleApply",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.info",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.inherit",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.list",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.modifyNotice",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.modifySetting",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.openBox",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.receiveWorshipAward",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.removeViceChairman",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.upgradeSkill",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildHandler.worship",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {

@@ -42,3 +42,14 @@ class PushTests(unittest.IsolatedAsyncioTestCase):
   self.assertEqual(result['code'],200);self.assertNotIn('extra',result)
   for peer in (alice,bobby):
    name,body=await self.event(peer);self.assertEqual(name,'onChat');self.assertEqual(body['words'],'Hi');self.assertIn('photoImgId',body['playerPhotoInfo'])
+ async def test_guild_application_acceptance_and_dismissal_push_durable_membership(self):
+  from server.storage import Store
+  from pathlib import Path
+  alice=await self.player('alice');bobby=await self.player('bobby');s=Store(Path(self.tmp.name)/'game.sqlite3')
+  for account in (1,2):
+   p=s.player(account);p.update(level=20,gem=1000);s.save(p)
+  s.db.close()
+  r=await self.call(alice,'logic.guildHandler.create',{'name':'Saiyans','badgeId':1});gid=r['guildId'];self.assertGreater(gid,0)
+  await self.call(bobby,'logic.guildHandler.applyJoin',{'guildId':gid});name,body=await self.event(alice);self.assertEqual(name,'onSync');self.assertEqual(body['guild']['applyPlayerList'][0]['playerId'],2)
+  await self.call(alice,'logic.guildHandler.handleApply',{'targetId':2,'isAgree':True});name,body=await self.event(bobby);self.assertEqual(name,'onSync');self.assertEqual(body['guildId'],gid);self.assertEqual(len(body['guild']['members']),2)
+  await self.call(alice,'logic.guildHandler.dismiss',{});name,body=await self.event(bobby);self.assertEqual(name,'onSync');self.assertEqual(body['guildId'],0);self.assertEqual(body['guild']['members'],[])

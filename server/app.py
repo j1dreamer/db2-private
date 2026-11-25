@@ -3,7 +3,7 @@ from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -117,7 +117,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                 for kind,body in packages(msg.data):
                     if kind==1:
                         json.loads(body);handshake=True
-                        await ws.send_bytes(package(1,json.dumps({'code':200,'sys':{'heartbeat':5,'dict':{},'protos':{'version':1,'server':{},'client':{}}}}).encode()))
+                        await ws.send_bytes(package(1,json.dumps({'code':200,'sys':{'heartbeat':30,'dict':{},'protos':{'version':1,'server':{},'client':{}}}}).encode()))
                     elif kind==2:
                         if not handshake:raise ValueError('Missing handshake')
                         acked=True;await ws.send_bytes(package(3))
@@ -125,7 +125,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                         if not acked:raise ValueError('Missing handshake ACK')
                         await ws.send_bytes(package(3))
                         if uid and ws in selected_players:
-                            store.player(uid);start_notifications()
+                            current=store.player(uid)
+                            if current:current['atime']=int(time.time()*1000);store.save(current)
+                            start_notifications()
                     elif kind==4:
                         if not acked:raise ValueError('Missing handshake ACK')
                         ident,route,args=request(body)
@@ -154,6 +156,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 mail_seen[ws]={m['_id'] for m in p['extra']['mails']}
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route.startswith(('logic.','chat.'))and ws not in selected_players:result={'code':500,'msg':'Chưa chọn nhân vật'}
+                        elif route in guild.ROUTES:
+                            try:result=guild.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in arena3v3.ROUTES:
                             try:result=await arena3v3.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}

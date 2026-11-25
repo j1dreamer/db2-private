@@ -24,6 +24,10 @@ def drops(class_id,depth=0):
     result=[]
     for entries in groups.values():
         row=choose(entries)
+        # The recovered table contains zero-quantity leaves/references. They
+        # represent no reward under our documented private-server drop policy.
+        if row['count']==0:continue
+        if row['count']<0:raise ValueError('Negative drop quantity')
         if row['refClassId']:
             for child in drops(row['refClassId'],depth+1):
                 child=dict(child);child['count']*=row['count'];result.append(child)

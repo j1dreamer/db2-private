@@ -38,5 +38,7 @@ if(input.socket){
  socket.request('three',{},()=>{throw Error('animation failure');});pending.shift().cb({code:200});assert.equal(socket.queue.length,0);
  socket.request('four',{},()=>success++);pending.shift().cb({code:200});assert.equal(success,1);
  assert.equal(removed,2);assert.equal(reports.length,2);assert.equal(hints.length,2);
+ socket.request('logic.arena3v3Handler.challenge',{},()=>{});assert.equal(socket.timeOut,60);
+ socket.request('logic.friendHandler.myFriendList',{},()=>{});pending.shift().cb({code:200});assert.equal(socket.timeOut,10);pending.shift().cb({code:200});assert.equal(socket.queue.length,0);
 }
 process.stdout.write(JSON.stringify({scale,removed,reports:reports.length,speed:runtime.getSpeed()}));

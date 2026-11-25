@@ -70,6 +70,12 @@ class EconomyTests(unittest.TestCase):
   with patch('server.gameplay.drops',side_effect=ValueError('broken table')):
    with self.assertRaises(ValueError):draw(self.store,1,'normal',10)
   p=self.store.player(1);self.assertEqual(p['gem'],10000);self.assertEqual(p['point']['normalTimes'],0)
+ def test_zero_quantity_nested_source_drop_is_an_empty_reward(self):
+  from server.gameplay import drops
+  # The free guild chest can select 10304, whose original leaves all have
+  # count zero. Force that branch so the regression cannot hide behind RNG.
+  with patch('server.gameplay.choose',side_effect=lambda entries:entries[0]):
+   self.assertEqual(drops(701),[])
  def test_insufficient_advanced_tickets_cannot_spend_gem(self):
   with self.assertRaises(ValueError):draw(self.store,1,'advanced',1)
   self.assertEqual(self.store.player(1)['gem'],10000)

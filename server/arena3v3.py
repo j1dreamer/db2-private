@@ -99,14 +99,10 @@ def choose(store,account,args):
         return delta(before,p,'logic.arena3v3Handler.choose',{'attackTeam':attack,'defenseTeam':defense,'seed':seed})
 
 async def replay(run):
-    wins=0;losses=0;win_map={};damage={}
-    for key in ('1','2','3'):
-        outcome=await simulate_async({'mode':'pvp','team':round_team(run['attack'],key),'defender':round_team(run['defense'],key),'seed':run['seed']})
-        if outcome['isWin']:wins+=1
-        else:losses+=1
-        win_map[key]=run['attack']['playerId']if outcome['isWin']else run['defense']['playerId'];damage[key]=outcome['damageMap']
-        if max(wins,losses)==2:break
-    return wins==2,win_map,damage
+    pairs=[{'key':key,'team':round_team(run['attack'],key),'defender':round_team(run['defense'],key)}for key in ('1','2','3')]
+    result=await simulate_async({'mode':'bestOfThree','pairs':pairs,'seed':run['seed']})
+    win_map={row['key']:run['attack']['playerId']if row['isWin']else run['defense']['playerId']for row in result['rounds']};damage={row['key']:row['damageMap']for row in result['rounds']}
+    return result['isWin'],win_map,damage
 
 async def challenge(store,account,args):
     p=store.player(account);row=store.db.execute('SELECT * FROM pvp_runs WHERE player=?AND mode=?',(p['id'],MODE)).fetchone()
