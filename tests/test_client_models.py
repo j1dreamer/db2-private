@@ -12,7 +12,7 @@ class ClientModelTests(unittest.TestCase):
   self.tmp=tempfile.TemporaryDirectory();self.store=Store(Path(self.tmp.name)/'db');self.store.register('tester','password');self.profile=self.store.create_player(1,'Goku')
  def tearDown(self):self.store.db.close();self.tmp.cleanup()
  def client(self,profile,deltas,check_home=False):
-  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True,'checkHome':check_home}),text=True,capture_output=True,check=True)
+  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True,'checkHome':check_home,'checkNoGuide':True}),text=True,capture_output=True,check=True)
   return json.loads(result.stdout)
  def test_initial_profile_constructs_original_models(self):
   state=self.client(self.profile,[])

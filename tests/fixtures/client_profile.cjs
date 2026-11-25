@@ -66,6 +66,11 @@ if(input.checkHome){
  cache.sceneManager.teamData={teamItemMap:Object.fromEntries(Object.values(player.team.roles).map(r=>[r.idx,load('teamScene').genTeamItemData(r)]))};
  quick=load('quickNode').genData();
 }
+if(input.checkNoGuide){
+ delete cache.guide;cache.async={};cache.buildExt.isSkipGuide=true;
+ // The actual guide must return before probing tutorial steps or local storage.
+ load('guide').run([{test(){throw Error('Tutorial must not start');}}]);
+}
 const daily=load('dailyTaskPanel').genData();
 let point;
 if(input.checkPoint)point=load('pointScene').genData();

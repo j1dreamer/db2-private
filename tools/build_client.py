@@ -32,7 +32,7 @@ def build(source,bundle,out,server,keep_package=False):
     text=Path(bundle).read_text()
     # Resolve endpoints from a saved setting on every launch, with the build argument as default.
     start='c.init = function() {\nif (!o.isDev) {'
-    text=patch(text,start,'c.init = function() {\nvar privateUrl = cc.sys.localStorage.getItem("db2.private.server") || '+json.dumps(server)+';\nvar privateMatch = /^(http):\\/\\/([^/:]+)(?::(\\d+))?$/.exec(privateUrl);\nif (!privateMatch) throw new Error("Invalid private server URL");\nc.isSkipUpdate = true; c.isHideNoticePanel = true;\nif (!o.isDev) {')
+    text=patch(text,start,'c.init = function() {\nvar privateUrl = cc.sys.localStorage.getItem("db2.private.server") || '+json.dumps(server)+';\nvar privateMatch = /^(http):\\/\\/([^/:]+)(?::(\\d+))?$/.exec(privateUrl);\nif (!privateMatch) throw new Error("Invalid private server URL");\nc.isSkipUpdate = true; c.isHideNoticePanel = true; c.isSkipGuide = true;\nif (!o.isDev) {')
     for old,new in [('o.url = "http://lz-fun.miaomuxian.cn:20003";','o.url = privateUrl;'),('o.staticUrl = "http://lz-fun.miaomuxian.cn:20001";','o.staticUrl = privateUrl;'),('o.gateHost = "lz-fun.miaomuxian.cn";','o.gateHost = privateMatch[2];'),('o.gatePort = "20100";','o.gatePort = privateMatch[3] || "80";')]:text=patch(text,old,new)
     text=patch(text,'init: function() {\nif (cc.sys.isNative) {\nif (cc.sys.os == cc.sys.OS_ANDROID) jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SDKAdapter", "initPackageInfo", "()V");','init: function() {\nthis.sdkName="mmx"; this.channel="private"; this.packageInfo="DB2-private-dev"; return;\nif (cc.sys.isNative) {\nif (cc.sys.os == cc.sys.OS_ANDROID) jsb.reflection.callStaticMethod("org/cocos2dx/javascript/SDKAdapter", "initPackageInfo", "()V");')
     text=patch(text,'var script = data.runScriptInfo.script;','var script = ""; // Private client: disable downloaded script execution.')
@@ -60,7 +60,7 @@ def build(source,bundle,out,server,keep_package=False):
             # Android 11+ rejects compressed resources.arsc for target SDK >= 30.
             compression=zipfile.ZIP_STORED if name=='resources.arsc' else zipfile.ZIP_DEFLATED
             zout.writestr(name,data,compress_type=compression)
-    report={'stage':'development-client-not-device-tested','server':server,'source_sha256':file_hash(source),'patched_bundle_sha256':hashlib.sha256(text.encode()).hexdigest(),'apk_sha256':file_hash(out),'package':app_package,'sdk_login':'local-account','hot_update':False,'server_script_execution':False}
+    report={'stage':'development-client-not-device-tested','server':server,'source_sha256':file_hash(source),'patched_bundle_sha256':hashlib.sha256(text.encode()).hexdigest(),'apk_sha256':file_hash(out),'package':app_package,'sdk_login':'local-account','tutorial':False,'hot_update':False,'server_script_execution':False}
     out.with_suffix('.json').write_text(json.dumps(report,indent=2));out.with_suffix('.patched.js').write_text(text)
     print(json.dumps(report,indent=2))
 if __name__=='__main__':
