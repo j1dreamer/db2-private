@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=23
+SCHEMA_VERSION=24
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -50,6 +50,8 @@ def new_profile(pid,account,name,username):
     refresh_tournaments(None,profile)
     from .top_arena import refresh as refresh_top
     refresh_top(profile)
+    from .resources import refresh as refresh_resources
+    refresh_resources(None,profile)
     grant_starter_tickets(profile)
     from .shops import initialize
     initialize(profile)

@@ -81,11 +81,11 @@ def refresh(store,p):
         for theme in range(1,6)if mode=='doubleBattle'else (0,):
             room=load(store,mode,theme,create=False)if store else None;room=room or {'mode':mode,'start':start,'entries':{},'groups':{},'champions':{},'bets':{}}
             prior=previous(store,mode,theme,season);champions={level:entry['public']for level,entry in champion_catalog(store,mode,theme).items()}
-            info={'openInfo':{'status':room_status(room),'isApply':str(p['id'])in room['entries'],'openTime':start*1000,'endTime':(start+7*86400)*1000},'playerInfoMap':champions,'battleInfo':battle_info(room,p['id'],prior)}
+            info={'getOpenInfoTime':int(time.time()*1000),'openInfo':{'status':room_status(room),'isApply':str(p['id'])in room['entries'],'openTime':start*1000,'endTime':(start+7*86400)*1000},'playerInfoMap':champions,'battleInfo':battle_info(room,p['id'],prior)}
             if mode=='doubleBattle':infos.append(info)
             else:p['extra'][mode]=info
         if mode=='doubleBattle':
-            selected=private.get('theme',1);p['extra'][mode]={'infos':infos,'battleInfo':infos[selected-1]['battleInfo']}
+            selected=private.get('theme',1);p['extra'][mode]={'getOpenInfoTime':int(time.time()*1000),'openInfo':{'isOpen':any(i['openInfo']['status']!=1 for i in infos),'openTime':start*1000},'infos':infos,'battleInfo':infos[selected-1]['battleInfo']}
     return before!=json.dumps(p,sort_keys=True)
 
 def selected(mode,args):
@@ -253,4 +253,7 @@ async def handle(store,account,route,args):
             target=p['worshipStatueDoubleMap'][str(row['theme'])]if mode=='doubleBattle'else p['worshipStatueExtMap'];target[row['level']]=True
         store.save(p);store.audit('tournament_'+action,{'player':p['id'],'mode':mode,'theme':theme})
         if action=='battleInfo':temp['battleInfo']=p['extra'][mode]['battleInfo']
+        if action=='openInfo':
+            if mode=='doubleBattle':temp['infos']=p['extra'][mode]['infos']
+            else:temp.update(openInfo=p['extra'][mode]['openInfo'],playerInfoMap=p['extra'][mode]['playerInfoMap'])
         result=delta(before,p,route,temp);result['extra']={**result.get('extra',{}),mode:p['extra'][mode]};return result

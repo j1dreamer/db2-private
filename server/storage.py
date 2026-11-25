@@ -30,6 +30,11 @@ class Store:
         CREATE TABLE IF NOT EXISTS guilds(id INTEGER PRIMARY KEY,name TEXT UNIQUE NOT NULL,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS guild_members(player INTEGER PRIMARY KEY REFERENCES players(id),guild INTEGER REFERENCES guilds(id),role TEXT NOT NULL,joined INTEGER NOT NULL,contribution INTEGER NOT NULL,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS guild_requests(guild INTEGER REFERENCES guilds(id),player INTEGER REFERENCES players(id),created INTEGER NOT NULL,PRIMARY KEY(guild,player));
+        CREATE TABLE IF NOT EXISTS resource_rooms(day TEXT NOT NULL,level TEXT NOT NULL,data TEXT NOT NULL,PRIMARY KEY(day,level));
+        CREATE TABLE IF NOT EXISTS resource_registrations(day TEXT NOT NULL,player INTEGER REFERENCES players(id),level TEXT NOT NULL,PRIMARY KEY(day,player));
+        CREATE TABLE IF NOT EXISTS resource_awards(day TEXT NOT NULL,level TEXT NOT NULL,player INTEGER REFERENCES players(id),kind TEXT NOT NULL,PRIMARY KEY(day,level,player,kind));
+        CREATE TABLE IF NOT EXISTS resource_champions(level TEXT PRIMARY KEY,player INTEGER REFERENCES players(id),data TEXT NOT NULL,day TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS resource_worship(day TEXT NOT NULL,player INTEGER REFERENCES players(id),level TEXT NOT NULL,champion INTEGER REFERENCES players(id),PRIMARY KEY(day,player,level));
         CREATE TABLE IF NOT EXISTS top_arena_seats(season INTEGER NOT NULL,no INTEGER NOT NULL,player INTEGER REFERENCES players(id),joined INTEGER NOT NULL,paid INTEGER NOT NULL,end INTEGER NOT NULL,PRIMARY KEY(season,no),UNIQUE(season,player));
         CREATE TABLE IF NOT EXISTS top_arena_settlements(season INTEGER NOT NULL,no INTEGER NOT NULL,player INTEGER REFERENCES players(id),PRIMARY KEY(season,no,player));
         CREATE TABLE IF NOT EXISTS tournament_rooms(mode TEXT NOT NULL,theme INTEGER NOT NULL,season TEXT NOT NULL,data TEXT NOT NULL,PRIMARY KEY(mode,theme,season));
@@ -112,7 +117,9 @@ class Store:
         from .tournaments import refresh as refresh_tournaments
         changed=refresh_tournaments(self,data)or changed
         from .top_arena import refresh as refresh_top
-        if refresh_top(data)or changed:self.save(data)
+        changed=refresh_top(data)or changed
+        from .resources import refresh as refresh_resources
+        if refresh_resources(self,data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

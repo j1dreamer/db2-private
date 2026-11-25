@@ -3,7 +3,7 @@ from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless,expedition,commerce,activities,tournaments,top_arena
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless,expedition,commerce,activities,tournaments,top_arena,resources
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -158,6 +158,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 mail_seen[ws]={m['_id'] for m in p['extra']['mails']}
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route.startswith(('logic.','chat.'))and ws not in selected_players:result={'code':500,'msg':'Chưa chọn nhân vật'}
+                        elif route in resources.ROUTES:
+                            try:result=await resources.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in top_arena.ROUTES:
                             try:result=await top_arena.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}

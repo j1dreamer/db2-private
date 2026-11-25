@@ -16,3 +16,10 @@ class RuntimeTests(unittest.TestCase):
   source=patch_private_sdk((Path(__file__).parent/'fixtures/client_sdkApi.js').read_text())
   result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_private_sdk.cjs')],input=json.dumps({'source':source}),text=True,capture_output=True,check=True)
   self.assertEqual(json.loads(result.stdout),{'native':0,'offers':1})
+
+ def test_original_tournament_controls_select_explicit_rank_and_do_not_load_empty_report(self):
+  from tools.client_patches import patch_tournament_controls
+  from server.profile import new_profile
+  root=Path(__file__).parent;overrides={name:patch_tournament_controls((root/'fixtures'/('client_'+name+'.js')).read_text(),name)for name in ('worshipRankPanel','arena3v3Scene')}
+  result=subprocess.run(['node',str(root/'fixtures/client_profile.cjs')],input=json.dumps({'profile':new_profile(1,1,'Tester','tester'),'moduleOverrides':overrides,'checkTournamentControls':True}),text=True,capture_output=True,check=True)
+  self.assertEqual(json.loads(result.stdout)['tournamentControls'],{'enumValue':4,'theme':3,'rows':[{'playerId':1}],'network':0,'hints':1,'loadingExtra':0})

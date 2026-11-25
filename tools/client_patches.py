@@ -265,3 +265,39 @@ a && a();'''
         if text.count(old)!=1:raise ValueError('Unexpected dream state implementation')
         text=text.replace(old,new,1)
     return text
+
+def patch_resource_transport(text):
+    old='''m = g.buildBattleTeam(d.playerId, d.ships, d.roles), p = g.buildBattleTeam(h.playerId, h.ships, h.roles), _ = t.pkBattleInstant(a.clone(m), a.clone(p))'''
+    new='''m = g.buildBattleTeam(d.playerId, d.ships, d.roles, null, e._temp.battleInfo.hpMap), p = g.buildBattleTeam(h.playerId, h.ships, h.roles, null, e._temp.battleInfo.targetHpMap), _ = t.pkBattleInstant(a.clone(m), a.clone(p), e._temp.battleInfo.seed)'''
+    if text.count(old)!=1:raise ValueError('Unexpected resource battle start')
+    text=text.replace(old,new,1)
+    old='''var n = a.attackTeam, o = a.defenseTeam, l = s.buildBattleTeam(n.playerId, n.ships, n.roles), c = s.buildBattleTeam(o.playerId, o.ships, o.roles);'''
+    new='''var n = a.attackTeam, o = a.defenseTeam, l = s.buildBattleTeam(n.playerId, n.ships, n.roles, null, a.hpMap), c = s.buildBattleTeam(o.playerId, o.ships, o.roles, null, a.targetHpMap);'''
+    if text.count(old)!=1:raise ValueError('Unexpected resource report replay')
+    text=text.replace(old,new,1)
+    old='''this._updateCDSchedule = this._updateCDSchedule || function() {
+if (0 != e.moveCD || 0 != e.getRewardCD) {
+e.moveCD -= 1;
+e.moveCD = e.moveCD < 0 ? 0 : e.moveCD;
+e.getRewardCD -= 1;
+e.getRewardCD = e.getRewardCD < 0 ? 0 : e.getRewardCD;
+this.updateBattle_();'''
+    new='''this._updateCDSchedule = this._updateCDSchedule || function() {
+var e = h.player.extra.allServerBattle, privatePreviousRewardCd = e.getRewardCD;
+if (0 != e.moveCD || 0 != e.getRewardCD) {
+e.moveCD = Math.max(0, Math.ceil((h.tTime(e.moveAt || 0) - Date._now()) / 1000));
+e.getRewardCD = Math.max(0, Math.ceil((h.tTime(e.rewardAt || 0) - Date._now()) / 1000));
+this.updateBattle_();
+if (privatePreviousRewardCd > 0 && e.getRewardCD === 0) this.autoUpdateCD_();'''
+    if text.count(old)!=1:raise ValueError('Unexpected resource cooldown implementation')
+    return text.replace(old,new,1)
+
+def patch_tournament_controls(text,module=None):
+    changes={'worshipRankPanel':{'WORSHIP_BATTLE: 3\n};\nd.genData':'WORSHIP_BATTLE: 3,\nDOUBLE_BATTLE: 4\n};\nd.genData'},'arena3v3Scene':{'onPlay_: function(e) {\nvar a = e.target.data;\nr.addLoading();\nu.report':'onPlay_: function(e) {\nvar a = e.target.data;\nif (!a || !a.reportId) { r.addHintPanel(m.t("No battle report for this slot.")); return; }\nr.addLoading();\nu.report'}}
+    if module is not None and module not in changes:raise ValueError('Unknown tournament control module')
+    for name,replacements in changes.items():
+        if module is not None and module!=name:continue
+        for old,new in replacements.items():
+            if text.count(old)!=1:raise ValueError('Unexpected tournament control implementation')
+            text=text.replace(old,new,1)
+    return text

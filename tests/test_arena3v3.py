@@ -1,7 +1,7 @@
 import tempfile,unittest,shutil,json,subprocess,time,asyncio
 from pathlib import Path
 from server.storage import Store
-from server.profile import character
+from server.profile import character,table
 from server.progression import learn_skills,friendships
 from server import arena3v3,arena
 from server.battle import simulate
@@ -11,6 +11,8 @@ class ArenaThreeTests(unittest.IsolatedAsyncioTestCase):
  async def asyncSetUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.store=Store(Path(self.tmp.name)/'db');self.store.register('tester','password');p=self.store.create_player(1,'Goku');p.update(level=100,gem=10000);p['vip']['level']=5
   p['team']['roles']['2']=character(100801,2);p['team']['roles']['3']=character(101101,3)
+  extras=[i for i in range(1,16)if i not in (1,8,11)]
+  for idx,class_id in enumerate(extras,4):p['team']['roles'][str(idx)]=character(min(r['kindId']for r in table('role')if r['classId']==class_id),idx)
   for role in p['team']['roles'].values():role.update(level=100,star=5);learn_skills(role)
   friendships(p);self.store.save(p);self.roles={str(i):[str(i)]for i in range(1,4)};self.ships={str(i):[]for i in range(1,4)};self.seen=set()
  async def asyncTearDown(self):self.store.db.close();self.tmp.cleanup()
@@ -49,6 +51,8 @@ class ArenaThreeTests(unittest.IsolatedAsyncioTestCase):
   other_level='level_40_59';target=self.store.db.execute('SELECT player FROM multi_ladder WHERE mode=?AND bracket=?LIMIT 1',('arena3v3',other_level)).fetchone()[0]
   with self.assertRaises(ValueError):await self.call('choose',{'defenderId':target,'attackTeamIndexsMap':self.roles,'attackShipIndexsMap':self.ships})
   self.assertEqual(self.store.player(1)['arena3v3']['remainingChallengeTimes'],5)
+  p=self.store.player(1);p['team']['roles'].pop('15');self.store.save(p)
+  with self.assertRaises(ValueError):await self.call('info')
  async def test_coin_cap_and_receive_are_persistent_without_double_accrual(self):
   await self.call('info');p=self.store.player(1);p['private3v3CoinClock']=int(time.time()*1000)-100*3600000;rate=p['arena3v3']['hourCoin'];self.store.save(p)
   r=await self.call('receive');self.assertEqual(r['_temp']['entityCountMap'],{'106':24*rate})

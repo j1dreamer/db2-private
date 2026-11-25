@@ -128,6 +128,7 @@ async def handle(store,account,route,args):
             if level not in cfg['LEVEL_TYPE_BETWEEN']:raise ValueError('Bảng cấp độ không hợp lệ')
             scope=0 if mode=='worldBoss'else p['guildId'];ranks=ranking(store,mode,p['privateDay'],scope,level);mine=next((r for r in ranks if r['playerId']==p['id']),{})
             temp.update(list=ranks[:100],myRank=mine.get('rank',0),myValue=mine.get('value',0))
+        if action=='openInfo':temp.update(openInfo=p['extra'][mode]['openInfo'],playerInfoMap=p['extra'][mode]['playerInfoMap'])
         store.save(p);result=delta(before,p,route,temp)
         # openInfo is also the refresh entry point for scenes whose constructor
         # may have cleared a cached extra object.

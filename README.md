@@ -1,6 +1,6 @@
-> Nhánh phát triển `route-342`: **257/342 route**, 192 kiểm thử qua; còn 85 route. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
+> Nhánh phát triển `route-342`: **273/342 route**, 200 kiểm thử qua; còn 69 route. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
 >
-> APK mốc 228 route: [Client-Route342-Dev-Patch.zip](Client-Route342-Dev-Patch.zip), khoảng 5 MB. Giải nén cạnh **DB2-Private-Android-fixed.apk**, chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. Có bỏ hướng dẫn, Speed 1×–10× cho toàn game và các bản vá giao thức của nhánh; cùng package/chữ ký bản fixed. Đây là APK phát triển, chưa phải bản 342/342. Các ZIP cũ bên dưới chỉ dành cho main cũ.
+> APK mốc 273 route: [Client-Route342-Dev-Patch.zip](Client-Route342-Dev-Patch.zip), khoảng 5 MB. Giải nén cạnh **DB2-Private-Android-fixed.apk**, chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. Có bỏ hướng dẫn, Speed 1×–10× cho toàn game và các bản vá giao thức của nhánh; cùng package/chữ ký bản fixed. Đây là APK phát triển, chưa phải bản 342/342. Các ZIP cũ bên dưới chỉ dành cho main cũ.
 >
 > Server phải dùng [source nhánh route-342](https://github.com/j1dreamer/db2-private/archive/refs/heads/route-342.zip), có Python và **Node.js LTS** (`pkg install nodejs` trên Termux). Dừng server cũ, giải nén source vào thư mục mới, chép thư mục `data` từ bản cũ sang rồi chạy `start.bat`; giữ lại thư mục cũ làm bản sao lưu. `Check-Home.py` → `running_health` sẽ hiển thị build, schema và số route để phát hiện đang chạy nhầm server cũ.
 

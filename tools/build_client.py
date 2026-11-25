@@ -46,10 +46,12 @@ def build(source,bundle,out,server,keep_package=False):
     except ModuleNotFoundError:from client_patches import patch_endless_transport,patch_expedition_transport
     try:from tools.client_patches import patch_private_vouchers
     except ModuleNotFoundError:from client_patches import patch_private_vouchers
-    try:from tools.client_patches import patch_activity_callbacks,patch_dream_state
-    except ModuleNotFoundError:from client_patches import patch_activity_callbacks,patch_dream_state
+    try:from tools.client_patches import patch_activity_callbacks,patch_dream_state,patch_resource_transport,patch_tournament_controls
+    except ModuleNotFoundError:from client_patches import patch_activity_callbacks,patch_dream_state,patch_resource_transport,patch_tournament_controls
     text=patch_activity_callbacks(text)
     text=patch_dream_state(text)
+    text=patch_resource_transport(text)
+    text=patch_tournament_controls(text)
     text=patch_private_vouchers(text)
     text=patch_endless_transport(text)
     text=patch_expedition_transport(text)

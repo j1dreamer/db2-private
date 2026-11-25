@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 257,
-  "unsupported_routes": 85,
+  "implemented_routes": 273,
+  "unsupported_routes": 69,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -129,114 +129,146 @@
     },
     {
       "route": "logic.allServerBattleHandler.apply",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.applyRank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.beginBattle",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.endBattle",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.endTopRankInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.enter",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.exit",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.getReport",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.getTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.move",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.openInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.receiveAward",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.recover",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.winTimesRank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.worshipRank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.worshipStatue",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
       "device_verified": false
     },
     {

@@ -42,7 +42,7 @@ if(input.mode==='clientTeam'){
  const start=source.indexOf('F.buildBattleTeam = function('),end=source.indexOf('F.buildBlessingSkills = function(',start);
  if(start<0||end<0)throw Error('Missing original team builder');
  const F={};vm.runInNewContext(source.slice(start,end),{F,t:load('underscore'),o:load('dataApi'),u:load('serverConfig'),l:{clone:x=>JSON.parse(JSON.stringify(x))}});
- const p=input.player;process.stdout.write(JSON.stringify(F.buildBattleTeam(p.id,(input.shipIndices||[]).map(i=>p.bag.items[i]),input.indices.map(i=>p.team.roles[i]))));process.exit(0);
+ const p=input.player;process.stdout.write(JSON.stringify(F.buildBattleTeam(p.id,(input.shipIndices||[]).map(i=>p.bag.items[i]),input.indices.map(i=>p.team.roles[i]),null,input.hpMap,input.mpMap)));process.exit(0);
 }
 const main=load('battleMain'),fight=load('battle.fightHandler');
 if(input.mode==='expedition'){

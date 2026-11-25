@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 257 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 85 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 257 luồng đã xác minh trên thiết bị.
-- Đã chạy 192 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
+- 273 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 69 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 273 luồng đã xác minh trên thiết bị.
+- Đã chạy 200 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
 
 ## Phần mới trong nhánh
 
@@ -130,3 +130,23 @@ Luật riêng: thắng trận ghép +3 điểm và 10 tiền 97, thua -1 điểm
 Chu kỳ riêng dùng ngày đầu 2024-01-01 UTC+7, tổng 18 ngày theo `RESET_DAYS=16`, `DELAY_DAYS=2`; đóng tranh đấu lúc 21:00 ngày hoạt động thứ 16, nghỉ đến đầu chu kỳ tiếp theo. Ghế tích lũy tiền theo **giờ tròn thực sự giữ**, trả thư gộp khi truy cập/chuyển chủ; phần giờ lẻ không trả. Thưởng chốt mùa cho chủ cuối, chống lặp qua SQLite. Mùa mới reset điểm/lượt và ghế, giữ tiền và cờ thưởng bậc đã nhận suốt tài khoản.
 
 Hàm `getFirstReachRewardDesc` nguồn tham chiếu 689–694, nhưng tra trực tiếp mọi bảng entity dùng bởi `inventory.entity` không tìm thấy các ID đó. Giữ tiền 97 lần lượt 500/700/1000/1300/1600/2000; thay phần thiếu bằng vé thường ×1/×2 rồi vé cao cấp ×1/×2/×3/×4. Đây là **thay thế riêng**, không phải phần thưởng gốc được phục hồi. Response ghi các ID thiếu ở `_temp.privateMissingOriginalRewardIds`; vật phẩm trả về đều có model trong client. Mỗi bậc nhận một lần, mở lại SQLite hoặc đổi mùa không cấp lại.
+
+## Chiến trường tài nguyên: 16 route
+
+Dùng trực tiếp lịch Chủ nhật/thứ Tư/thứ Sáu, đăng ký 00:00–21:00, mở 21:10 trong 20 phút, các bảng cấp 58/70/80/90/95, đồ thị 22 điểm và 3 loại tài nguyên trong client. Giữ thời gian chờ di chuyển 10 giây, nhận tài nguyên 40 giây, hồi HP giá 50 gem, drop thắng/thua 901/902 và thưởng hạng/danh hiệu/cổ vũ nguồn. `openInfo`, danh sách và báo cáo đều có DTO cho callback gốc, không chỉ dữ liệu lưu trong `extra`.
+
+Luật riêng được định nghĩa cho phần server còn thiếu:
+
+- Ba phe trên **cùng server riêng**, đánh dấu `Private camp 1–3`, gán ổn định theo ID người chơi. Mỗi phe/bảng có tối đa 30 suất vào theo tổng power 5 tướng cao nhất tại lúc đăng ký, hòa thì ID nhỏ trước. Bảng đã đăng ký được giữ dù lên cấp. Không tạo người chơi hoặc đối thủ NPC trong chiến trường.
+- Lần vào đầu chốt 1–5 tướng và tối đa 3 đồng hành. Giữ snapshot và HP suốt phiên; thoát/vào lại không hồi miễn phí hoặc đổi đội. Hồi trả đủ 50 gem mới phục hồi HP tối đa đã chốt. HP dùng cho trận gồm cả cộng thêm từ đồng hành.
+- Điểm không còn đội giữ trở lại trung lập; ba căn cứ luôn thuộc phe tương ứng. Di chuyển chỉ theo cạnh gốc, có đội địch thì phải đấu, không đi vào căn cứ địch. Bắt đầu chọn người giữ có ID nhỏ nhất, không chọn mục tiêu tùy ý từ client.
+- Server giữ seed/HP/đội/vị trí trước trận rồi chạy PvP gốc. Engine nhân HP PvP ×1,45; kiểm tra đúng hai map HP client đã chia hệ số đó. Sau trận, HP mang tiếp được chặn trong 0..maxHP snapshot. Nếu đối thủ đã di chuyển/đổi HP khi worker đang chạy, không ghi kết quả cũ. Run nhận một lần, hết hạn tối đa 5 phút và không vượt giờ đóng.
+- Bên thua trở về căn cứ, giữ HP còn lại (tướng chết vẫn 0); bên thắng chuyển vào điểm khi không còn phe địch giữ. Thắng 10 trận liên tiếp thì về căn cứ và reset chuỗi, giữ tổng thắng để xếp hạng. Trả drop thắng/thua gốc sau giao dịch hợp lệ; không tin cờ thắng hoặc map HP gửi lên.
+- Thưởng điểm gồm danh sách cố định gốc và một phần thưởng chọn đều từ danh sách bonus gốc. Hơn 10 đội đứng tại cùng điểm thì giảm một nửa số lượng, làm tròn xuống, tối thiểu 1. Di chuyển đặt lại 40 giây; không nhận bù các chu kỳ bỏ lỡ. Đây là cách server riêng áp dụng danh sách random và hằng số quá đông, không khẳng định thuật toán gốc.
+- Khi đóng, xếp người đã vào theo tổng thắng, hòa thì ID nhỏ; gửi thư thưởng hạng, danh hiệu cho đầu bảng và thưởng không vào cho người chỉ đăng ký. Cờ đã trả nằm cùng transaction; mở lại không nhân thư. Giữ nhà vô địch gần nhất theo bảng cấp để cổ vũ mỗi ngày một lần. `endTopRankInfo` trả bảng kiểm soát điểm đã chốt, không trả một trạng thái đóng giả.
+
+Push dùng đúng sự kiện `onAllServerBattle` gốc để cập nhật map, vị trí, báo cáo và thời gian chờ cho người đang tham gia; đóng trận gửi `isEnd` để client thoát qua route rút lui có tính lặp an toàn. Client mới truyền seed và HP-map vào cả trận lẫn phát lại. Bộ đếm di chuyển/nhận thưởng dùng timestamp, không giảm nhanh theo Speed, đọc đối tượng mới sau mỗi delta và tự hẹn nhận khi đến giờ thật.
+
+Đối chiếu callback vào các chế độ cũng sửa `_temp.openInfo/playerInfoMap` cho boss và Worship, `_temp.infos` cho Double, các trường rank/hourCoin/receiveCoin cho arena 3v3. Arena 3v3 kiểm tra đủ 15 tướng theo điều kiện vào sảnh thật. Giao diện chọn hạng Double có enum rõ ràng; cặp miễn đấu không còn gửi yêu cầu xem báo cáo rỗng. Các kiểm thử chạy chính callback Cocos nguồn và bộ dựng đội nguồn với trường hợp HP còn lại thấp hơn phần HP đồng hành cộng thêm.
+
+Từ phần chiến trường này cần APK mới có bản vá seed/HP-map/timestamp; APK checkpoint 228 không có các bản vá đó.

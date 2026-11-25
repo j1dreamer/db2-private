@@ -61,7 +61,7 @@ def refresh(store,p):
     row=store.db.execute('SELECT rank FROM multi_ladder WHERE mode=?AND bracket=?AND player=?',(MODE,bracket(p['level']),p['id'])).fetchone()
     if not row:
         prior=store.db.execute('SELECT 1 FROM multi_ladder WHERE mode=?AND player=?AND source=?',(MODE,p['id'],'player')).fetchone()
-        if prior and p['level']>=40 and len(p['team']['roles'])>=3:ensure(store,p);return True
+        if prior and p['level']>=40 and len(p['team']['roles'])>=15:ensure(store,p);return True
         return False
     before=json.dumps(p,sort_keys=True);accrue(p);p['arena3v3']['rank']=row['rank'];p['arena3v3']['hourCoin']=hour_coin(row['rank'])
     return before!=json.dumps(p,sort_keys=True)
@@ -69,7 +69,7 @@ def refresh(store,p):
 def ensure(store,p):
     cfg=constants('server.ARENA_3V3.CONSTS')
     if p['level']<cfg['REQUIRED_LEVEL']:raise ValueError('Cần cấp đội 40 để mở đấu ba đội')
-    if len(p['team']['roles'])<3:raise ValueError('Cần ít nhất ba chiến binh khác nhau')
+    if len(p['team']['roles'])<15:raise ValueError('Cần ít nhất 15 chiến binh theo điều kiện vào sảnh client')
     seed_ladders(store);own=p['arena3v3'];keys=list(p['team']['roles']);default={str(i+1):[key]for i,key in enumerate(keys[:3])}
     p['vip'].setdefault('buy3v3ChallengeTimesTimes',0);p['vip'].setdefault('worshipStatue3v3Times',0)
     try:roles,ships=validate_maps(p,own.get('defenseTeamIndexsMap'),own.get('defenseShipIndexsMap',{}))
@@ -172,4 +172,6 @@ async def handle(store,account,route,args):
             for row in rows:
                 report=json.loads(row['data']);is_attacker=row['attacker']==p['id'];logs.append({'id':row['id'],'ctime':report['ctime'],'isAttacker':is_attacker,'isWin':report['isWin']if is_attacker else not report['isWin'],'up':report['up']if is_attacker else -report['up'],'is3v3':True,'playerInfo':report['defenseTeam']if is_attacker else report['attackTeam']})
             temp['reportList']=logs
+        if action=='info':temp.update({key:own[key]for key in ('rank','hourCoin','receiveCoin','playerInfoMap')})
+        if action=='top50':temp['myLevel']=constants('server.ARENA_3V3.CONSTS.LEVEL_BETWEEN')[constants('server.ARENA_3V3.CONSTS.LEVEL_TYPE_BETWEEN').index(args['levelType'])]
         store.save(p);return delta(before,p,route,temp)
