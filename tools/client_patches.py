@@ -23,7 +23,7 @@ def patch_response_boundary(text):
     if text.count(SOCKET_OLD)!=1:raise ValueError('Unexpected socket response implementation')
     text=text.replace(SOCKET_OLD,SOCKET_NEW,1)
     old='l._request = function(e, a, n) {\nt.request(e, a, function(a) {'
-    new='l._request = function(e, a, n) {\nl.timeOut = /(?:\\.challenge(?:Top)?|\\.endSmap|\\.end|\\.battle|\\.fight|\\.finish)$/i.test(e) ? 60 : 10;\nt.request(e, a, function(a) {'
+    new='l._request = function(e, a, n) {\nl.timeOut = /(?:\\.challenge(?:Top)?|\\.endSmap|\\.end|\\.pass|\\.battle|\\.fight|\\.finish)$/i.test(e) ? 60 : 10;\nt.request(e, a, function(a) {'
     if text.count(old)!=1:raise ValueError('Unexpected request timeout implementation')
     return text.replace(old,new,1)
 
@@ -145,3 +145,24 @@ def patch_eye_transport(text):
     if section.count(old)!=1:raise ValueError('Unexpected eye combat transport')
     section=section.replace(old,'d.pkBattleInstant(l.clone(i), l.clone(o), e._temp.seed)')
     return text[:start]+section+text[end:]
+
+def patch_endless_transport(text):
+    old='''this.statusData.opts.isEndless || this.statusData.opts.isFruitMap || this.statusData.opts.isStarSignMap ? A.begin(this.statusData.opts.smapId, this.statusData.opts.bmapId, function() {
+h([], r.statusData.opts.isEndless, r.statusData.opts.isFruitMap, r.statusData.opts.isStarSignMap);
+}) : C.beginSmap'''
+    new='''this.statusData.opts.isEndless || this.statusData.opts.isFruitMap || this.statusData.opts.isStarSignMap ? A.begin(this.statusData.opts.smapId, this.statusData.opts.bmapId, function(e) {
+window.DB2_PRIVATE_BATTLE_SEED = e._temp.seed;
+h([], r.statusData.opts.isEndless, r.statusData.opts.isFruitMap, r.statusData.opts.isStarSignMap);
+}, this.data.selectIdxs, this.data.selectShipIdxs) : C.beginSmap'''
+    if text.count(old)!=1:raise ValueError('Unexpected endless selector implementation')
+    text=text.replace(old,new,1)
+    old='''t.begin = function(e, a, t) {
+n.request("logic.endlessHandler.begin", {
+smapId: e,'''
+    new='''t.begin = function(e, a, t, i, r) {
+n.request("logic.endlessHandler.begin", {
+teamIndexs: i,
+shipIdxs: r,
+smapId: e,'''
+    if text.count(old)!=1:raise ValueError('Unexpected endless begin transport')
+    return text.replace(old,new,1)

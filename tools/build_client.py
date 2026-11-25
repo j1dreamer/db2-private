@@ -42,6 +42,9 @@ def build(source,bundle,out,server,keep_package=False):
     except ModuleNotFoundError:from client_patches import patch_response_boundary,patch_adventure_transport,patch_roster_removal,patch_arena_transport,patch_arena3v3_transport,patch_guild_membership,patch_private_sdk
     try:from tools.client_patches import patch_tail_transport,patch_boss_transport,patch_practice_transport,patch_eye_transport
     except ModuleNotFoundError:from client_patches import patch_tail_transport,patch_boss_transport,patch_practice_transport,patch_eye_transport
+    try:from tools.client_patches import patch_endless_transport
+    except ModuleNotFoundError:from client_patches import patch_endless_transport
+    text=patch_endless_transport(text)
     text=patch_tail_transport(text)
     text=patch_boss_transport(text)
     text=patch_practice_transport(text)

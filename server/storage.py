@@ -93,7 +93,9 @@ class Store:
         from .practice import refresh as refresh_practice
         changed=refresh_practice(self,data)or changed
         from .eye import refresh as refresh_eye
-        if refresh_eye(self,data)or changed:self.save(data)
+        changed=refresh_eye(self,data)or changed
+        from .endless import refresh as refresh_endless
+        if refresh_endless(data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

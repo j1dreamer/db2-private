@@ -1,0 +1,35 @@
+{
+  "stage": "development-not-device-verified",
+  "implemented_routes": 199,
+  "target_routes": 342,
+  "apk_sha256": "14e1644c015bfd8fff06128aaa84eb1b9ab38d28812aec923df6dfdd1969c7d8",
+  "old_apk_sha256": "d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f",
+  "resources": {
+    "resources_compression": "stored",
+    "resources_offset": 44,
+    "aligned_4_bytes": true,
+    "size": 696528
+  },
+  "tutorial": false,
+  "game_speed": [
+    1,
+    10
+  ],
+  "server_branch": "route-342",
+  "new_original_routes_complete": false,
+  "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953",
+  "verified_signature_schemes": [
+    1,
+    2,
+    3
+  ],
+  "powershell_full_reconstruction_verified": true,
+  "python_full_reconstruction_verified": true,
+  "bundle_sha256": "dbf662565d94370cbb210541e891b4966181953d94aecc4365f325a71cd57a74",
+  "changed_non_signature_entries": [
+    "assets/assets/main/index.jsc"
+  ],
+  "arm64_native_elf_machine": 183,
+  "native_libraries_unchanged": true,
+  "tests_passed": 159
+}

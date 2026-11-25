@@ -22,6 +22,7 @@ from server.tail import ROUTES as TAIL
 from server.bosses import ROUTES as BOSSES
 from server.practice import ROUTES as PRACTICE
 from server.eye import ROUTES as EYE
+from server.endless import ROUTES as ENDLESS
 ROOT=Path(__file__).resolve().parent.parent
 CORE={'gate.gateHandler.queryEntry','connector.entryHandler.entry','connector.playerHandler.getPlayers','connector.playerHandler.createPlayer','connector.playerHandler.entry','logic.playerHandler.rename','logic.playerHandler.useGiftCode','logic.playerHandler.receiveActivityAward'}
 CORE|={'logic.pointHandler.'+name+suffix for name in ('normal','advanced') for suffix in ('','Ten','Hundred')}
@@ -31,6 +32,7 @@ def update():
     groups.extend([(ITEMS,['tests/test_item_actions.py']),(TASKS,['tests/test_tasks.py']),(ONLINE,['tests/test_online.py']),(GM,['tests/test_gm.py','tests/test_server.py']),(ARENA,['tests/test_arena.py']),(BOOSTS,['tests/test_local_boosts.py']),(THREE,['tests/test_arena3v3.py']),(GUILD,['tests/test_guild.py','tests/test_push.py']),(TAIL,['tests/test_tail.py']),(BOSSES,['tests/test_bosses.py'])])
     groups.append((PRACTICE,['tests/test_practice.py']))
     groups.append((EYE,['tests/test_eye.py']))
+    groups.append((ENDLESS,['tests/test_endless.py']))
     contracts=json.loads((ROOT/'analysis/route-contracts.json').read_text());implemented=set().union(*(routes for routes,tests in groups))
     rows=[]
     for item in contracts['contracts']:

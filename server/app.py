@@ -3,12 +3,14 @@ from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
     data_dir=Path(data_dir);data_dir.mkdir(parents=True,exist_ok=True)
     store=Store(data_dir/'game.sqlite3');token=admin_token or secrets.token_urlsafe(32)
+    from .profile import SCHEMA_VERSION
+    route_coverage=json.loads((ROOT/'analysis/route-coverage.json').read_text())
     app=web.Application(client_max_size=256*1024)
     app[web.AppKey('store',Store)]=store
     live={};mail_seen={};selected_players={};notification_lock=asyncio.Lock();notification_task=None
@@ -43,7 +45,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     def start_notifications():
         nonlocal notification_task
         if notification_task is None or notification_task.done():notification_task=asyncio.create_task(flush_notifications())
-    async def health(req):return web.json_response({'status':'ok','stage':'protocol-development','playable_verified':False})
+    async def health(req):return web.json_response({'status':'ok','stage':'protocol-development','playable_verified':False,'build':'route-342-development','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
     async def config(req):return web.json_response({'runScriptInfo':{'script':''},'inReviewPackageInfos':[]})
     async def account(req):
         fields=await req.post();name=fields.get('name','');password=fields.get('password','')
@@ -156,6 +158,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 mail_seen[ws]={m['_id'] for m in p['extra']['mails']}
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route.startswith(('logic.','chat.'))and ws not in selected_players:result={'code':500,'msg':'Chưa chọn nhân vật'}
+                        elif route in endless.ROUTES:
+                            try:result=await endless.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in eye.ROUTES:
                             try:result=await eye.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}

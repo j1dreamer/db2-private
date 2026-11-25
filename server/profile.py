@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=17
+SCHEMA_VERSION=18
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -34,6 +34,8 @@ def new_profile(pid,account,name,username):
     profile['practice']={'remainingDefenseTimes':6,'remainingChallengeTimes':6,'sixRemainingDefenseTimes':1,'sixRemainingChallengeTimes':2,'usedTeamIndexs':[],'usedShipIndexs':[],'allDefenseTeamIndexs':[],'allDefenseShipIndexs':[]}
     profile['eye']={'type':'','startTime':0,'remainingChallengeTimes':2,'list':[{'rank':rank,'playerId':0,'eyeDuration':0}for rank in range(1,12)]}
     profile['vip']['buyEyeChallengeTimesTimes']=0
+    profile['vip']['endlessSkipTimes']=0
+    profile['endless'].update(topPassId=0,otherTopPassIdMap={},fruitMapChallengeTimes=0,fruitMapBuyTimes=0,starSignMapChallengeTimes=0,setPursuitTeamTimesMap={},fruitMapPassTimesMap={},starSignMapPassTimesMap={})
     grant_starter_tickets(profile)
     from .shops import initialize
     initialize(profile)
