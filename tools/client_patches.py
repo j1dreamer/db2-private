@@ -193,4 +193,45 @@ s.preload(x, function() { K.pushScene(K.NAME.BATTLE_SCENE, V); });
         new='n.request("logic.'+name+'Handler.challenge", {\nseed: window.__require("battleMain").seed,\nmanualRecordMap: window.__require("battleMain").manualRecordMap || {},\ntickNumber: window.__require("battle.fightHandler").area.timer.tickNumber,\nselfHpMap: e,'
         if text.count(old)!=1:raise ValueError('Unexpected expedition result transport')
         text=text.replace(old,new,1)
+    old='[ n.BATTLE_TYPE.SMAP, n.BATTLE_TYPE.TAIL, n.BATTLE_TYPE.BOSS, n.BATTLE_TYPE.GUILD_BOSS ]'
+    new='[ n.BATTLE_TYPE.SMAP, n.BATTLE_TYPE.TAIL, n.BATTLE_TYPE.BOSS, n.BATTLE_TYPE.GUILD_BOSS, n.BATTLE_TYPE.EXPEDITION ]'
+    if text.count(old)!=2:raise ValueError('Unexpected expedition manual history boundaries')
+    return text.replace(old,new)
+
+def patch_private_vouchers(text):
+    old='c.moneyTicketId = 2;'
+    if text.count(old)!=1:raise ValueError('Unexpected voucher configuration')
+    text=text.replace(old,old+'\nc.moneyTicket2Id = 1;',1)
+    return patch_optional_vip_gifts(patch_voucher_labels(text))
+
+def patch_optional_vip_gifts(text):
+    old='var a = r.player.activity.map.upgradeVip, i = s.vip.findOneBy("level", e)'
+    new='var a = r.player.activity.map.upgradeVip || { name: "upgradeVip", rewards: [] }, i = s.vip.findOneBy("level", e)'
+    if text.count(old)!=1:raise ValueError('Unexpected VIP gift generator')
+    return text.replace(old,new,1)
+
+def patch_voucher_labels(text):
+    old='r.battleDataMd5 = r.genBattleMd5();'
+    new='''[1, 2].forEach(function(privateVoucherId) {
+var privateVoucher = r.entity.findById(privateVoucherId);
+privateVoucher.kindName = privateVoucher._kindName = privateVoucherId === 1 ? "Daily local voucher" : "Local voucher";
+privateVoucher.desc = privateVoucher._desc = privateVoucherId === 1 ? "For local game offers only. Expires at server midnight. No real money value." : "For local game offers only. No real money value.";
+});
+r.battleDataMd5 = r.genBattleMd5();'''
+    if text.count(old)!=1:raise ValueError('Unexpected data translation boundary')
+    return text.replace(old,new,1)
+
+def patch_activity_callbacks(text,module=None):
+    groups={'activityPanel':{'S.fillTaskActive(a.activityName, function() {':'S.fillTaskActive(a.activityName, 2, function() {'},'dreamExtActivityPanel':{
+        'curPoint: he,\nmaxPoint: ue':'activityName: n.name,\ncurPoint: he,\nmaxPoint: ue',
+        'k.fillLoginTopUp(function() {':'k.fillLoginTopUp(a.activityName, function() {',
+        'd.ACTIVITY.FUNS.getBuySpActiveCostGem(ue - he)':'d.ACTIVITY.FUNS.getBuyReachValCostGem(ue - he, 50)',
+        'd.ACTIVITY.FUNS.getBuySpActiveCostGem(a.maxPoint - a.curPoint)':'d.ACTIVITY.FUNS.getBuyReachValCostGem(a.maxPoint - a.curPoint, 50)'
+    }}
+    if module is not None and module not in groups:raise ValueError('Unknown activity module')
+    for name,changes in groups.items():
+        if module is not None and name!=module:continue
+        for old,new in changes.items():
+            if text.count(old)!=1:raise ValueError('Unexpected activity callback implementation')
+            text=text.replace(old,new,1)
     return text

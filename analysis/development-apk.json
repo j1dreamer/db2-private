@@ -1,8 +1,8 @@
 {
   "stage": "development-not-device-verified",
-  "implemented_routes": 199,
+  "implemented_routes": 217,
   "target_routes": 342,
-  "apk_sha256": "14e1644c015bfd8fff06128aaa84eb1b9ab38d28812aec923df6dfdd1969c7d8",
+  "apk_sha256": "65169b0a34631d55b8406744c62e6abaa917fabb3095017134eb945626647e64",
   "old_apk_sha256": "d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f",
   "resources": {
     "resources_compression": "stored",
@@ -25,11 +25,13 @@
   ],
   "powershell_full_reconstruction_verified": true,
   "python_full_reconstruction_verified": true,
-  "bundle_sha256": "dbf662565d94370cbb210541e891b4966181953d94aecc4365f325a71cd57a74",
+  "bundle_sha256": "13bef65f27c13f45594eb9bdffc4cc77470cdd1f5724d2b6c4bd63e0f19601d2",
+  "tests_passed": 172,
   "changed_non_signature_entries": [
     "assets/assets/main/index.jsc"
   ],
   "arm64_native_elf_machine": 183,
-  "native_libraries_unchanged": true,
-  "tests_passed": 159
+  "native_libraries_unchanged": [
+    "lib/arm64-v8a/libcocos2djs.so"
+  ]
 }

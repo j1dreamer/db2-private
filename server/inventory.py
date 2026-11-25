@@ -76,6 +76,10 @@ def insert(player,kind,count,extra=None):
     row=entity(kind);bag=player['bag'];limit=row.get('maxNum',-1)
     if limit==1 and count>1000:raise ValueError('Quá nhiều vật phẩm riêng lẻ')
     extra=extra or {}
+    if kind==1 and not extra.get('expireTime'):
+        import datetime
+        clock=datetime.datetime.fromtimestamp(time.time(),datetime.timezone(datetime.timedelta(hours=7)));end=clock.replace(hour=0,minute=0,second=0,microsecond=0)+datetime.timedelta(days=1)
+        extra={**extra,'expireTime':int(end.timestamp()*1000)-1}
     if kind==351 and 'id'in extra:
         config=player['shop'].get('randomBoxList',{}).get(str(extra['id']))
         if not config:raise ValueError('Mã cấu hình rương riêng không tồn tại')

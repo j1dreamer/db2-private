@@ -47,3 +47,7 @@ class ExpeditionTests(unittest.IsolatedAsyncioTestCase):
  async def test_recovered_expedition_generators_and_transport_accept_data(self):
   await self.call(False,'reset');await self.call(True,'reset');root=Path(__file__).parent;result=subprocess.run(['node',str(root/'fixtures/client_profile.cjs')],input=json.dumps({'profile':self.store.player(1),'checkTeam':True,'checkExpedition':True}),text=True,capture_output=True);self.assertEqual(result.returncode,0,result.stderr);views=json.loads(result.stdout)['expeditionViews'];self.assertEqual(views['normal']['passId'],0);self.assertEqual(len(views['six']['playerInfos']),12)
   source=patch_expedition_transport((root.parent/'client/main.decoded.js').read_text());subprocess.run(['node','--check'],input=source,text=True,capture_output=True,check=True)
+ async def test_manual_skill_history_is_recorded_and_replayed_in_expedition(self):
+  await self.call(False,'reset');p=self.store.player(1);p['team']['roles']['1']['mp']=100;self.store.save(p);r=await self.begin(False);t=r['_temp'];out=await asyncio.to_thread(simulate,{'mode':'expedition','team':t['team1'],'defender':t['team2'],'seed':t['seed'],'auto':True});self.assertTrue(out['records'])
+  a_hp,a_mp=expedition.hpmp(out['attacker']);d_hp,d_mp=expedition.hpmp(out['defender']);args={'seed':t['seed'],'manualRecordMap':out['records'],'tickNumber':out['tickNumber'],'isWin':out['isWin'],'selfHpMap':a_hp,'selfMpMap':a_mp,'challengerHpMap':d_hp,'challengerMpMap':d_mp}
+  await self.call(False,'challenge',args)

@@ -1,6 +1,6 @@
-> Nhánh phát triển `route-342`: **208/342 route**, 166 kiểm thử qua; còn 134 route. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
+> Nhánh phát triển `route-342`: **217/342 route**, 172 kiểm thử qua; còn 125 route. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
 >
-> APK mốc 199 route (chưa có transport viễn chinh mới): [Client-Route342-Dev-Patch.zip](Client-Route342-Dev-Patch.zip), khoảng 5 MB. Giải nén cạnh **DB2-Private-Android-fixed.apk**, chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. Có bỏ hướng dẫn, Speed 1×–10× cho toàn game và các bản vá giao thức của nhánh; cùng package/chữ ký bản fixed. Đây là APK phát triển, chưa phải bản 342/342. Các ZIP cũ bên dưới chỉ dành cho main cũ.
+> APK mốc 217 route: [Client-Route342-Dev-Patch.zip](Client-Route342-Dev-Patch.zip), khoảng 5 MB. Giải nén cạnh **DB2-Private-Android-fixed.apk**, chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. Có bỏ hướng dẫn, Speed 1×–10× cho toàn game và các bản vá giao thức của nhánh; cùng package/chữ ký bản fixed. Đây là APK phát triển, chưa phải bản 342/342. Các ZIP cũ bên dưới chỉ dành cho main cũ.
 >
 > Server phải dùng [source nhánh route-342](https://github.com/j1dreamer/db2-private/archive/refs/heads/route-342.zip), có Python và **Node.js LTS** (`pkg install nodejs` trên Termux). Dừng server cũ, giải nén source vào thư mục mới, chép thư mục `data` từ bản cũ sang rồi chạy `start.bat`; giữ lại thư mục cũ làm bản sao lưu. `Check-Home.py` → `running_health` sẽ hiển thị build, schema và số route để phát hiện đang chạy nhầm server cũ.
 
@@ -12,9 +12,9 @@ Backend Python + SQLite, web quản trị và công cụ đóng gói client Andr
 
 ## Trạng thái thực tế
 
-- Nhánh hiện tại có 208 route nghiệp vụ/166 kiểm thử và profile schema 19; danh sách chi tiết ở `analysis/route-coverage.json`. Backend có đăng nhập/session/Pomelo, SQLite, web quản trị, giftcode/gacha, ải, túi/đội hình, nhiệm vụ, bạn bè/chat/thư, arena, bang, boss và đặc huấn.
+- Nhánh hiện tại có 217 route nghiệp vụ/172 kiểm thử và profile schema 20; danh sách chi tiết ở `analysis/route-coverage.json`. Backend có đăng nhập/session/Pomelo, SQLite, web quản trị, giftcode/gacha, ải, túi/đội hình, nhiệm vụ, bạn bè/chat/thư, arena, bang, boss và đặc huấn.
 - Đã kiểm thử giao thức và SQLite qua mạng loopback.
-- Còn 134 route chưa triển khai; chưa xác minh các luồng mới trên BlueStacks, chưa tích hợp mọi event vào UI gốc.
+- Còn 125 route chưa triển khai; chưa xác minh các luồng mới trên BlueStacks, chưa tích hợp mọi event vào UI gốc.
 - Người dùng đã vào sảnh/quay trên bản fixed cũ. APK phát triển mới bỏ hướng dẫn, có Speed 1×–10× và vá giao thức; mã SDK native vẫn trong gói nhưng JS không gửi telemetry/thanh toán native. Kết quả chơi trên APK mới vẫn cần kiểm tra thực tế.
 - Các thao tác chưa triển khai trả lỗi rõ ràng; không giả lập thành công.
 
