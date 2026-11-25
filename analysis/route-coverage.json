@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 228,
-  "unsupported_routes": 114,
+  "implemented_routes": 246,
+  "unsupported_routes": 96,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -601,65 +601,83 @@
     },
     {
       "route": "logic.doubleBattleHandler.apply",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.battleInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.bet",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.getChampionTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.getMyTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.getTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.openInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.worshipRank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.worshipStatue",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
@@ -2869,65 +2887,83 @@
     },
     {
       "route": "logic.worshipBattleHandler.apply",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.battleInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.bet",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.getChampionTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.getMyTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.getTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.openInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.worshipRank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.worshipStatue",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
       "device_verified": false
     }
   ]

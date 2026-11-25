@@ -3,7 +3,7 @@ from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless,expedition,commerce,activities
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless,expedition,commerce,activities,tournaments
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -158,6 +158,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 mail_seen[ws]={m['_id'] for m in p['extra']['mails']}
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route.startswith(('logic.','chat.'))and ws not in selected_players:result={'code':500,'msg':'Chưa chọn nhân vật'}
+                        elif route in tournaments.ROUTES:
+                            try:result=await tournaments.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in activities.ROUTES:
                             try:result=activities.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
@@ -287,6 +290,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     async def close(app):
         if notification_task and not notification_task.done():
             notification_task.cancel();await asyncio.gather(notification_task,return_exceptions=True)
+        await tournaments.close(store)
         store.db.close()
     app.on_cleanup.append(close)
     return app

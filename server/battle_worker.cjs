@@ -62,15 +62,17 @@ if(input.mode==='boss'){
  const boss=fight.area.getEntityBy({teamId:2,idx:0})[0];
  process.stdout.write(JSON.stringify({...outcome,bossHp:boss?boss.hp:0,tickNumber:fight.area.timer.tickNumber,damageMap:main.damageMap}));process.exit(0);
 }
-if(input.mode==='bestOfThree'){
+if(input.mode==='bestOfThree'||input.mode==='series'){
+ const needed=input.mode==='series'?Math.floor(input.pairs.length/2)+1:2;
+ if(input.mode==='series'&&![3,5].includes(input.pairs.length))throw Error('Series requires three or five teams');
  const rounds=[];let wins=0,losses=0;
  for(const pair of input.pairs){
   const outcome=main.pkBattleInstant(pair.team,pair.defender,input.seed||1);
   rounds.push({key:pair.key,isWin:outcome.isWin,damageMap:JSON.parse(JSON.stringify(main.damageMap))});
   outcome.isWin?wins++:losses++;
-  if(wins===2||losses===2)break;
+  if(wins===needed||losses===needed)break;
  }
- process.stdout.write(JSON.stringify({isWin:wins===2,rounds}));process.exit(0);
+ process.stdout.write(JSON.stringify({isWin:wins===needed,rounds}));process.exit(0);
 }
 if(input.mode==='pvp'||input.mode==='practice'){
  const outcome=input.mode==='practice'?main.practiceBattleInstant(input.team,input.defender,input.seed||1):main.pkBattleInstant(input.team,input.defender,input.seed||1);

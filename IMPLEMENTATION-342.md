@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 228 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 114 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 228 luồng đã xác minh trên thiết bị.
-- Đã chạy 182 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
+- 246 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 96 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 246 luồng đã xác minh trên thiết bị.
+- Đã chạy 187 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
 
 ## Phần mới trong nhánh
 
@@ -106,3 +106,15 @@ Các giá, xác suất, mốc và thời gian sau đây là **luật riêng**, k
 - Gói nội bộ mới: 4 = 100 gem → 1 phiếu 88 (8/ngày), 5 = 50 gem → 1 xúc xắc 94 (20/ngày), 6 = 100 gem → 1 xúc xắc 95 (5/ngày). Vẫn dùng chung hạn mức giữa đổi gem và phiếu local, không có tiền nạp thật.
 
 Bản vá Dream khởi tạo số xúc xắc từ túi, khôi phục buff/vị trí từ server khi vào lại, xóa cờ vòng cũ và tránh truy cập `.length` trên danh sách thưởng null trong tự động gieo. APK mốc 228 đã chứa bản vá Dream này và được kiểm tra cấu trúc/chữ ký/tái tạo file; chưa chạy thử trên thiết bị.
+
+## Giải Worship và Double: 18 route
+
+Dùng bảng cấp, danh sách tướng theo chủ đề Double, tiền thưởng đăng ký/vòng loại/vô địch, danh hiệu, phí dự đoán 80 gem và mức trả 2 lần từ hằng số client. Worship cần 5 đội; Double cần 3 đội, tối đa 2 tướng/đội theo mã chọn đội gốc. Không trùng tướng hoặc đồng hành giữa các đội. Đội được chốt bằng snapshot khi đăng ký.
+
+Luật ghép cặp riêng: tối đa 32 **người chơi thật** mỗi bảng cấp, xáo bằng seed lưu theo mùa, chỗ thiếu là lượt miễn đấu, không tạo NPC giả làm người đăng ký. Tất cả cặp có hai người dùng engine PvP gốc, thắng đa số trong 3 hoặc 5 đội; lưu seed, kết quả từng đội và sát thương để hàm `nvnBattleLogPanel` gốc xem lại. Báo cáo hai giải là công khai; báo cáo arena thường vẫn cần là người tham gia.
+
+Lịch tuần UTC+7: đăng ký từ Chủ nhật 00:00 đến thứ Tư 00:00; vòng 32 thứ Tư 20:00, vòng 16 thứ Năm 20:00, vòng 8 thứ Sáu 20:00, bán kết và chung kết thứ Bảy 20:00. Worship dựa trên ngày/giờ có trong client; lịch tuần và 5 chủ đề song song của Double là luật riêng, chưa khôi phục được cách server gốc áp dụng `DELAY_DAYS=15`. Hai giải cùng dùng cơ chế ghép riêng trên. Dự đoán cho nhà vô địch mở từ khi có 8 người đến lúc bắt đầu vòng 8; mỗi bảng một lượt, đối tượng phải còn trong vòng đó.
+
+Phần thưởng các mốc đi qua được gửi thư một lần cùng transaction với kết quả. Công việc chạy trễ được xử lý khi mở lại giải; server chỉ chờ tối đa 3 giây trong RPC, phần còn lại chạy nền. DTO chỉ công bố giai đoạn có dữ liệu đã commit. Lỗi worker không tạo kết quả hay phần thưởng, có thể thử lại. Giữ nhà vô địch gần nhất của từng bảng nếu mùa mới không có người chơi; cổ vũ mỗi bảng một lần/ngày, thưởng theo hàm cấp gốc. SQLite giữ mùa, báo cáo, dự đoán, thư và cờ đã trả thưởng; khởi động lại không phát lại.
+
+Bản server 246 dùng được giao thức APK phát triển mốc 228. APK này chưa được chạy trên thiết bị; không có bản iOS đã xây dựng.

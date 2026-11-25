@@ -59,7 +59,7 @@ def simulate(payload):
     node=shutil.which('node')
     if not node:raise ValueError('Combat cần Node.js; cài Node.js LTS rồi mở lại server')
     try:
-        result=subprocess.run([node,str(WORKER)],input=json.dumps(payload),text=True,capture_output=True,timeout=30 if payload.get('mode')=='bestOfThree'else 15,check=True)
+        result=subprocess.run([node,str(WORKER)],input=json.dumps(payload),text=True,capture_output=True,timeout=30 if payload.get('mode')in ('bestOfThree','series')else 15,check=True)
         return json.loads(result.stdout)
     except (subprocess.TimeoutExpired,subprocess.CalledProcessError,json.JSONDecodeError) as exc:
         raise ValueError('Không thể kiểm tra trận đấu; kết quả chưa được nhận thưởng') from exc
