@@ -138,3 +138,10 @@ def patch_practice_transport(text):
         section=section.replace(old,'d.practiceBattleInstant(l.clone(i), l.clone(o), e._temp.seed)')
         text=text[:start]+section+text[end:]
     return text
+
+def patch_eye_transport(text):
+    start=text.index('P.choose(this.statusData.opts.rank, this.data.selectIdxs, this.data.selectShipIdxs, function(e) {')
+    end=text.index('\nbreak;',start);section=text[start:end];old='d.pkBattleInstant(l.clone(i), l.clone(o))'
+    if section.count(old)!=1:raise ValueError('Unexpected eye combat transport')
+    section=section.replace(old,'d.pkBattleInstant(l.clone(i), l.clone(o), e._temp.seed)')
+    return text[:start]+section+text[end:]

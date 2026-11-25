@@ -40,11 +40,12 @@ def build(source,bundle,out,server,keep_package=False):
     text=patch(text,'b.instance || (b.instance = this);\np.spThemeClassId', 'b.instance || (b.instance = this);\nwindow.DB2PrivateSettings && window.DB2PrivateSettings();\np.spThemeClassId')
     try:from tools.client_patches import patch_response_boundary,patch_adventure_transport,patch_roster_removal,patch_arena_transport,patch_arena3v3_transport,patch_guild_membership,patch_private_sdk
     except ModuleNotFoundError:from client_patches import patch_response_boundary,patch_adventure_transport,patch_roster_removal,patch_arena_transport,patch_arena3v3_transport,patch_guild_membership,patch_private_sdk
-    try:from tools.client_patches import patch_tail_transport,patch_boss_transport,patch_practice_transport
-    except ModuleNotFoundError:from client_patches import patch_tail_transport,patch_boss_transport,patch_practice_transport
+    try:from tools.client_patches import patch_tail_transport,patch_boss_transport,patch_practice_transport,patch_eye_transport
+    except ModuleNotFoundError:from client_patches import patch_tail_transport,patch_boss_transport,patch_practice_transport,patch_eye_transport
     text=patch_tail_transport(text)
     text=patch_boss_transport(text)
     text=patch_practice_transport(text)
+    text=patch_eye_transport(text)
     text=patch_response_boundary(text)
     text=patch_adventure_transport(text)
     text=patch_roster_removal(text)
