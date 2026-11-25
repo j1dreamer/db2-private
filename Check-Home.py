@@ -3,7 +3,7 @@ from pathlib import Path
 import argparse,hashlib,json,sqlite3,urllib.request,datetime
 
 ROOT=Path(__file__).resolve().parent
-REQUIRED=('task.daily','task.dailyActivePoint','task.weeklyActivePoint','task.receivedPointMap.daily','task.receivedPointMap.weekly','activity.scorePointInfoMap')
+REQUIRED=('task.daily','task.dailyActivePoint','task.weeklyActivePoint','task.receivedPointMap.daily','task.receivedPointMap.weekly','activity.scorePointInfoMap','timesMaxMap.actionPoint','timesMaxMap.skillPoint','nextRecoverTimeMap.actionPoint','nextRecoverTimeMap.skillPoint')
 def missing(profile):
     result=[]
     for path in REQUIRED:

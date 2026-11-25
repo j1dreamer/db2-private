@@ -74,7 +74,7 @@ Sao lưu khi server đã dừng, hoặc dùng SQLite backup API; không sao ché
 
 Linux x86_64, Python 3.12, Node 24 (chỉ dùng cho test codec gốc), Java 21. Chưa chạy trên Termux, Windows, macOS hoặc Android thật. Backend được viết đa nền tảng; đây chưa phải xác nhận mọi nền tảng đã được thử.
 
-30 kiểm thử backend/codec/đóng gói và dữ liệu client đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
+33 kiểm thử backend/codec/đóng gói và dữ liệu client đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
 
 ## Đối chiếu với JavaScript gốc
 
@@ -123,7 +123,7 @@ Sau khi zipalign và ký, phải chạy `python tools/verify_apk.py FILE.apk` b�
 - APK sửa SHA-256: `d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f`.
 - Bản vá chỉ sao chép các vùng byte không đổi và thay những vùng đã sửa/ký; kiểm tra checksum nguồn và đầu ra, giữ nguyên APK cũ.
 - `tools/download_apk.py` hiện tự áp dụng bản vá sau khi tải/ghép APK nền.
-- 30 kiểm thử backend/codec/đóng gói/bản vá và dữ liệu sảnh đã pass; bản sửa schema 3 vẫn cần xác nhận sảnh hiển thị đúng trên Android/BlueStacks.
+- 33 kiểm thử backend/codec/đóng gói/bản vá và dữ liệu sảnh đã pass; bản sửa schema 3 vẫn cần xác nhận sảnh hiển thị đúng trên Android/BlueStacks.
 
 Bản vá Windows dùng PowerShell có sẵn; không đổi execution policy. Đã chạy thử thuật toán PowerShell trên cùng APK gốc và xác nhận đầu ra khớp SHA-256 bản sửa đã ký. File `Apply-Fix-Python.bat` là lựa chọn thay thế khi có Python.
 
@@ -138,3 +138,9 @@ Dừng server rồi cập nhật source (hoặc chỉ thay `server/profile.py` t
 Trong thư mục chứa `start.bat`, chạy `python Check-Home.py` khi server đang mở. Công cụ chỉ đọc mã nguồn, các trường schema cần thiết trong SQLite, năm dòng audit liên quan gần nhất và `/health`; không xuất mật khẩu, token hoặc toàn bộ hồ sơ nhân vật. Nếu chạy server với `--data`, truyền cùng thư mục đó cho công cụ. Kết quả cho biết bản code schema nào, dữ liệu nhân vật còn thiếu trường nào và đường dẫn đang kiểm tra. Công cụ không nâng cấp hoặc ghi database.
 
 Bộ kiểm thử còn chạy `quickNode.genData` với các hàm gốc achievement/ship/skill và cache team tạo bằng hàm gốc. Đây là luồng gây lỗi `daily` trong log thiết bị; với schema 3, cả homeScene và quickNode tạo dữ liệu thành công. Vẫn cần dữ liệu chẩn đoán từ máy chạy game để xác định lỗi sau cập nhật.
+
+## Sửa thanh thể lực (schema 4)
+
+Thiết bị đã xác nhận code và nhân vật schema 3, sau đó báo `Cannot read property 'actionPoint' of undefined` trong `coinTopNode.update_`. Schema 4 thêm `timesMaxMap` và `nextRecoverTimeMap` cho thể lực/điểm kỹ năng, cùng bộ đếm mua thể lực. Giới hạn thể lực theo hàm gốc `PLAYER.FUNS.getActionPointMax(level) = 60 + level`; trường có sẵn được giữ nguyên khi nâng cấp nhân vật cũ. Mốc hồi phục mặc định bằng 0 (chưa lên lịch); logic tự hồi thể lực phía server vẫn chưa triển khai.
+
+Dừng server, tải và giải nén [Home-Fix.zip](Home-Fix.zip) vào thư mục chứa `start.bat`, ghi đè các file code, chạy server lại rồi mở lại game. Gói chỉ chứa `server/profile.py`, `server/storage.py` và `Check-Home.py`, không chứa database. Nhật ký migration ghi schema thực tế. 33 kiểm thử đã pass, bao gồm tái hiện lỗi schema 3, chạy chính lifecycle `coinTopNode.onLoad/update_/tick_` và thao tác mở/đóng bảng hồi thể lực với schema 4, cả nhánh có mốc hồi phục. Chưa xác nhận bản sửa mới trên BlueStacks.

@@ -12,7 +12,7 @@ class EconomyTests(unittest.TestCase):
   p=self.store.player(1);p.pop('profileSchemaVersion');p['gem']=777;p.pop('photoInfo');p.pop('friendshipUnlockMap');p['team']['roles']['1']['attr']['hp']=77
   self.store.save(p);restored=self.store.player(1)
   self.assertEqual(restored['gem'],777);self.assertEqual(restored['team']['roles']['1']['attr']['hp'],77);self.assertEqual(len(restored['team']['roles']),1)
-  self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],3)
+  self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],4)
  def test_ten_draws_use_admin_pool_and_charge_once(self):
   pool,entry=validate_pool_entry({'pool':102,'entity':101,'weight':1,'count':5})
   self.store.db.execute('INSERT INTO pool_entries VALUES(?,?,?)',(pool,101,json.dumps(entry)))

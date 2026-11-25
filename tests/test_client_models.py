@@ -39,7 +39,7 @@ class ClientModelTests(unittest.TestCase):
   p['activity'].pop('scorePointInfoMap');p.pop('signInDays');p.pop('signInTime')
   p['gem']=789;self.store.save(p)
   migrated=self.store.player(1);state=self.client(migrated,[],check_home=True)
-  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],3)
+  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],4)
   self.assertEqual(state['home']['playerName'],'Goku')
  def test_migration_preserves_existing_task_rewards_and_activity_state(self):
   p=self.profile;p['profileSchemaVersion']=2
@@ -49,6 +49,33 @@ class ClientModelTests(unittest.TestCase):
   self.assertEqual(migrated['task']['receivedPointMap']['daily'],{'20':True})
   self.assertEqual(migrated['task']['dailyActivePoint'],20)
   self.assertEqual(migrated['activity']['scorePointInfoMap']['custom']['score'],123)
+ def test_original_topbar_lifecycle_and_recovery_panel(self):
+  state=self.client(self.profile,[])
+  self.assertEqual(state['topBar']['actionPoint'],60)
+  self.assertEqual(state['topBar']['maxActionPoint'],61)
+  self.assertEqual(state['topBar']['buyTimes'][0],0)
+  p=self.profile;p['nextRecoverTimeMap']['actionPoint']=int(__import__('time').time()*1000)+300000
+  state=self.client(p,[])
+  self.assertTrue(state['topBar']['nextRecoveryLabel'])
+ def test_schema_three_topbar_error_reproduces_then_migrates(self):
+  p=self.profile;p['profileSchemaVersion']=3;p.pop('timesMaxMap');p.pop('nextRecoverTimeMap')
+  r=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':p}),text=True,capture_output=True)
+  self.assertNotEqual(r.returncode,0)
+  self.assertIn("reading 'actionPoint'",r.stderr)
+  p['level']=12;p['gem']=987;p['actionPoint']=44;self.store.save(p)
+  migrated=self.store.player(1);state=self.client(migrated,[])
+  self.assertEqual(migrated['profileSchemaVersion'],4)
+  self.assertEqual(state['topBar']['maxActionPoint'],72)
+  self.assertEqual(state['topBar']['actionPoint'],44)
+  self.assertEqual(state['gem'],987)
+ def test_recovery_migration_preserves_existing_caps_and_timestamps(self):
+  p=self.profile;p['profileSchemaVersion']=3
+  p['timesMaxMap']['actionPoint']=123;p['nextRecoverTimeMap']['actionPoint']=456789
+  p['vip']['buyActionPointTimes']=2;self.store.save(p)
+  migrated=self.store.player(1)
+  self.assertEqual(migrated['timesMaxMap']['actionPoint'],123)
+  self.assertEqual(migrated['nextRecoverTimeMap']['actionPoint'],456789)
+  self.assertEqual(migrated['vip']['buyActionPointTimes'],2)
  def test_consumed_ticket_removed_by_original_client(self):
   p=self.profile;p['bag']={'lastIdx':1,'items':{'1':{'kindId':119,'idx':1,'count':1}}};self.store.save(p)
   response=draw(self.store,1,'normal',1);state=self.client(p,[response]);persisted=self.store.player(1)

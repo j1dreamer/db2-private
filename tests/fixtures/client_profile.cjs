@@ -38,6 +38,23 @@ const snapshots=[];
 for(const delta of input.deltas||[]){player.update(delta);snapshots.push({gem:player.gem,bag:JSON.parse(JSON.stringify(player.bag.items)),team:JSON.parse(JSON.stringify(player.team.roles))});}
 let teamItems,friendship;
 if(input.checkTeam){delete cache.roleItem;load('roleItem');delete cache.itemItem;load('itemItem');friendship=load('teamScene').genFriendshipData();teamItems=Object.values(player.team.roles).map(r=>load('teamScene').genTeamItemData(r));}
+// Exercise actual top-bar lifecycle and touch handlers with renderer-only adapters.
+delete cache.moment;load('moment');
+delete cache.coinTopNode;
+const topClass=load('coinTopNode');const top=new topClass();
+const label=()=>({string:'',node:{}});
+for(const key of ['coinLabel','gemLabel','apLabel','maxApLabel','apRecoverDescLabel','apRecoverNextApLabel','apRecoverFullApLabel','apRecoverBuyApTimesLabel'])top[key]=label();
+top.apRecoverBt={targetOff(){},on(){}};top.apRecoverPanel={};
+top.unschedule=()=>{};top.schedule=()=>{};
+cc.Node.EventType={TOUCH_START:'start',TOUCH_END:'end',TOUCH_CANCEL:'cancel'};
+cache.helper.replaceLabel=(node,values)=>{node.values=values;};
+cache.helper.scaleEffect=()=>{};
+// Real moment handles the recovery branch if a stored profile has an active timer.
+cache.helper.formatDuration=(...values)=>values.join(':');
+top.onLoad();
+top.onViewApRecover_({type:cc.Node.EventType.TOUCH_START});
+top.onViewApRecover_({type:cc.Node.EventType.TOUCH_END});
+const topBar={coin:top.coinLabel.string,gem:top.gemLabel.string,actionPoint:top.apLabel.string,maxActionPoint:top.maxApLabel.values[0],nextRecoveryLabel:top.apRecoverNextApLabel.string,buyTimes:top.apRecoverBuyApTimesLabel.values};
 let quick;
 let home;
 if(input.checkHome){
@@ -53,4 +70,4 @@ const daily=load('dailyTaskPanel').genData();
 let point;
 if(input.checkPoint)point=load('pointScene').genData();
 let roles;if(input.checkRoles){if(!cache.roleItem.genData){delete cache.roleItem;load('roleItem');}roles=Object.values(player.team.roles).map(r=>load('roleItem').genData(r));}
-player.destroy();process.stdout.write(JSON.stringify({snapshots,quick,home,daily,point,roles,teamItems,friendship,gem:player.gem,bag:player.bag.items,team:player.team.roles}));
+player.destroy();process.stdout.write(JSON.stringify({snapshots,topBar,quick,home,daily,point,roles,teamItems,friendship,gem:player.gem,bag:player.bag.items,team:player.team.roles}));

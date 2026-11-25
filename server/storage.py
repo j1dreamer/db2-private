@@ -43,7 +43,7 @@ class Store:
         data=json.loads(row['data'])
         from .profile import upgrade_profile
         if upgrade_profile(data,account):
-            self.save(data);self.audit('profile_migration',{'player':data['id'],'schema':2})
+            self.save(data);self.audit('profile_migration',{'player':data['id'],'schema':data['profileSchemaVersion']})
         return data
     def create_player(self,account,name):
         from .profile import new_profile
