@@ -4,6 +4,8 @@
 
 ## Tải và cài trên Mac
 
+**Trạng thái phân phối:** IPA đã build và kiểm tra trong workspace. GitHub release đang ở dạng draft, chưa có payload; thao tác tải payload lên bị automatic approval review từ chối vì chưa có ủy quyền rõ ràng cho công khai IPA dẫn xuất trên repo public. Chờ chủ dự án cho phép trước khi tiếp tục upload. Lệnh tải dưới đây chỉ hoạt động sau khi release được hoàn tất.
+
 Tải source nhánh `route-342`, mở Terminal trong thư mục đó:
 
 ```sh

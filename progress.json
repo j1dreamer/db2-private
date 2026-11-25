@@ -55,5 +55,7 @@
   "ios_private_models_passed": true,
   "cloud_live_http_and_rpc_verified": true,
   "ios_phone_to_cloud_connection_verified": false,
-  "latest_targeted_tests_passed": 34
+  "latest_targeted_tests_passed": 34,
+  "ios_private_ipa_published": false,
+  "ios_private_ipa_publication_status": "automatic-review-rejected-upload-pending-explicit-public-ipa-authorization"
 }

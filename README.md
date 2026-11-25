@@ -1,4 +1,4 @@
-> iOS: đã có **IPA private thử nghiệm chưa ký**, tải bằng `python3 Download-iOS.py`; xem [ký/cài trên Mac và kết nối server Cloud](IOS-PRIVATE.md). Chưa xác minh native trên iPhone hoặc đường iPhone → Cloud. Dữ liệu chung lấy **Android làm chuẩn**; xem [đồng bộ dữ liệu](analysis/ios/CANONICAL-DATA.md) và [phân tích IPA gốc](analysis/ios/IOS-REPORT.md).
+> iOS: đã có **IPA private thử nghiệm chưa ký**, công cụ tải `Download-iOS.py` đã chuẩn bị nhưng payload GitHub chưa được tải lên do chờ cho phép công khai; xem [ký/cài trên Mac và kết nối server Cloud](IOS-PRIVATE.md). Chưa xác minh native trên iPhone hoặc đường iPhone → Cloud. Dữ liệu chung lấy **Android làm chuẩn**; xem [đồng bộ dữ liệu](analysis/ios/CANONICAL-DATA.md) và [phân tích IPA gốc](analysis/ios/IOS-REPORT.md).
 
 > Nhánh phát triển `route-342`: **342/342 route**, 236 kiểm thử đã xác minh qua suite và chạy lại nhóm client ([chi tiết](analysis/canonical-validation.json)); không còn route trống. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
 >

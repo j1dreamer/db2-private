@@ -110,5 +110,7 @@
       "size": 7680670,
       "sha256": "099986109a7f68fd4ed5b6741639b0d3b686f60bcdf9c0badb14035db5fa26c9"
     }
-  ]
+  ],
+  "published": false,
+  "distribution_status": "upload-blocked-pending-explicit-publication-authorization"
 }
