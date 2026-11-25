@@ -46,8 +46,8 @@ def build(source,bundle,out,server,keep_package=False):
     except ModuleNotFoundError:from client_patches import patch_endless_transport,patch_expedition_transport
     try:from tools.client_patches import patch_private_vouchers
     except ModuleNotFoundError:from client_patches import patch_private_vouchers
-    try:from tools.client_patches import patch_activity_callbacks,patch_dream_state,patch_resource_transport,patch_tournament_controls,patch_guild_war_transport,patch_island_transport,patch_cooperative_transport
-    except ModuleNotFoundError:from client_patches import patch_activity_callbacks,patch_dream_state,patch_resource_transport,patch_tournament_controls,patch_guild_war_transport,patch_island_transport,patch_cooperative_transport
+    try:from tools.client_patches import patch_activity_callbacks,patch_dream_state,patch_resource_transport,patch_tournament_controls,patch_guild_war_transport,patch_island_transport,patch_cooperative_transport,patch_time_peak_transport
+    except ModuleNotFoundError:from client_patches import patch_activity_callbacks,patch_dream_state,patch_resource_transport,patch_tournament_controls,patch_guild_war_transport,patch_island_transport,patch_cooperative_transport,patch_time_peak_transport
     text=patch_activity_callbacks(text)
     text=patch_dream_state(text)
     text=patch_resource_transport(text)
@@ -55,6 +55,7 @@ def build(source,bundle,out,server,keep_package=False):
     text=patch_guild_war_transport(text)
     text=patch_island_transport(text)
     text=patch_cooperative_transport(text)
+    text=patch_time_peak_transport(text)
     text=patch_private_vouchers(text)
     text=patch_endless_transport(text)
     text=patch_expedition_transport(text)
@@ -73,6 +74,7 @@ def build(source,bundle,out,server,keep_package=False):
     text=patch(text,'onSkip_: function() {\nthis.skipMove = !this.skipMove;','onSkip_: function() {\nthis.skipMove = !this.skipMove;\ncc.sys.localStorage.setItem("db2.private.fastSummon", this.skipMove ? "1" : "0");')
     settings=(Path(__file__).parent/'private_settings.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_runtime.js').read_text()
+    settings+='\n'+(Path(__file__).parent/'private_time_peak.js').read_text()
     text='window.DB2_PRIVATE_DEFAULT_SERVER='+json.dumps(server)+';\n'+settings+'\n'+text
     text=patch(text,'msg: a,\nplayerId: t.player ? t.player.id : 0','msg: a,\ntoken: t.token || \"\",\nplayerId: t.player ? t.player.id : 0')
     # Equal-length AXML string replacement keeps binary string offsets intact.

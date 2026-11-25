@@ -351,3 +351,42 @@ def patch_cooperative_transport(text):
         if text.count(old)!=1:raise ValueError('Unexpected cooperative scene anchor: '+old)
         text=text.replace(old,new,1)
     return text
+
+def patch_time_peak_transport(text):
+    begin=text.index('case n.TIME_PEAK_ATTACK_TEAM:\ns.addLoading();')
+    end=text.index('\n}\n}\n} else s.addHintPanel',begin)
+    replacement='''case n.TIME_PEAK_ATTACK_TEAM:
+s.addLoading();
+window.__require("socket").request("logic.privateHandler.beginTimePeak", { smapId:r.statusData.opts.smapId, teamIndexs:r.data.selectIdxs, shipIdxs:r.data.selectShipIdxs }, function(privateData) {
+var privatePeak = privateData._temp;
+window.DB2_PRIVATE_TIME_PEAK_SEED = privatePeak.seed;
+var privateKinds = t.map(privatePeak.team1.roles.concat(privatePeak.team2.roles), function(role) { return role.kindId; });
+var privatePreload = F.getPreLoadInfos(privateKinds, r.statusData.opts.bgImgId);
+s.preload(privatePreload, function() {
+K.pushScene(K.NAME.BATTLE_SCENE, {team1:privatePeak.team1,team2:privatePeak.team2,battleType:c.BATTLE_TYPE.TIME_PEAK,opts:{selectIdxs:r.data.selectIdxs,selectShipIdxs:r.data.selectShipIdxs,smapId:r.statusData.opts.smapId,bgImgId:r.statusData.opts.bgImgId}});
+});
+});'''
+    text=text[:begin]+replacement+text[end:]
+    begin=text.index('timePeakHandler: [ function(');end=text.index('cc._RF.pop();',begin);part=text[begin:end]
+    old='challengerMpMap: r,\nisWin: s\n'
+    new='''challengerMpMap: r,
+isWin: s,
+seed: window.DB2_PRIVATE_TIME_PEAK_SEED,
+manualRecordMap: window.__require("battleMain").manualRecordMap || {},
+tickNumber: window.__require("battle.fightHandler").area.timer.tickNumber
+'''
+    if part.count(old)!=1:raise ValueError('Unexpected Time Peak challenge payload')
+    part=part.replace(old,new);text=text[:begin]+part+text[end:]
+    begin=text.index('s.timePeakBattle = function(');end=text.index('cc._RF.pop();',begin);part=text[begin:end]
+    if part.count('s.setSeed(Date.now());')!=1:raise ValueError('Unexpected Time Peak seed')
+    part=part.replace('s.setSeed(Date.now());','s.setSeed(window.DB2_PRIVATE_TIME_PEAK_SEED);');text=text[:begin]+part+text[end:]
+    # Borrowed heroes remain local to this mode; they are not inserted into the
+    # persistent roster and cannot be spent by other handlers.
+    old='var i = m.player, r = i.id, s = B.clone(i.team.roles), l = i.bag.getItemByType(u.CONSTS.ENTITY_TYPE.SHIP);'
+    new=old+'\nif (a === F.TYPE.TIME_PEAK_ATTACK_TEAM && i.timePeak) t.extend(s, B.clone(i.timePeak.borrowedRoleMap));'
+    if text.count(old)!=1:raise ValueError('Unexpected Time Peak selector roster')
+    text=text.replace(old,new,1)
+    old='n && n.smapId && !n.isEndless && !n.isPursuit && (I = o.smap.findById(n.smapId).bmapId);'
+    new='n && n.smapId && a !== F.TYPE.TIME_PEAK_ATTACK_TEAM && !n.isEndless && !n.isPursuit && (I = o.smap.findById(n.smapId).bmapId);'
+    if text.count(old)!=1:raise ValueError('Unexpected normal-map lookup in Time Peak selector')
+    return text.replace(old,new,1)

@@ -47,6 +47,7 @@ class Store:
         CREATE TABLE IF NOT EXISTS tournament_worship(mode TEXT NOT NULL,theme INTEGER NOT NULL,day TEXT NOT NULL,player INTEGER REFERENCES players(id),level TEXT NOT NULL,champion INTEGER REFERENCES players(id),PRIMARY KEY(mode,theme,day,player,level));
         CREATE TABLE IF NOT EXISTS boss_damage(mode TEXT NOT NULL,day TEXT NOT NULL,scope INTEGER NOT NULL,bracket TEXT NOT NULL,player INTEGER REFERENCES players(id),damage REAL NOT NULL,info TEXT NOT NULL,PRIMARY KEY(mode,day,scope,bracket,player));
         CREATE TABLE IF NOT EXISTS boss_settlements(mode TEXT NOT NULL,day TEXT NOT NULL,scope INTEGER NOT NULL,bracket TEXT NOT NULL,player INTEGER REFERENCES players(id),rank INTEGER NOT NULL,PRIMARY KEY(mode,day,scope,bracket,player));
+        CREATE TABLE IF NOT EXISTS time_peak_claims(player INTEGER REFERENCES players(id),smap INTEGER NOT NULL,PRIMARY KEY(player,smap));
         CREATE TABLE IF NOT EXISTS cooperative_teams(id INTEGER PRIMARY KEY AUTOINCREMENT,mode TEXT NOT NULL,day TEXT NOT NULL,status INTEGER NOT NULL,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS cooperative_scores(mode TEXT NOT NULL,period TEXT NOT NULL,player INTEGER REFERENCES players(id),score INTEGER NOT NULL,PRIMARY KEY(mode,period,player));
         CREATE TABLE IF NOT EXISTS cooperative_awards(mode TEXT NOT NULL,period TEXT NOT NULL,team INTEGER NOT NULL,player INTEGER REFERENCES players(id),PRIMARY KEY(mode,period,team,player));
@@ -136,7 +137,9 @@ class Store:
         from .island import refresh as refresh_island
         changed=refresh_island(self,data)or changed
         from .cooperative import refresh as refresh_cooperative
-        if refresh_cooperative(self,data)or changed:self.save(data)
+        changed=refresh_cooperative(self,data)or changed
+        from .time_peak import refresh as refresh_time_peak
+        if refresh_time_peak(data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

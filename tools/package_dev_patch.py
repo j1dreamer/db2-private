@@ -28,11 +28,11 @@ exit /b 1
 if errorlevel 1 exit /b 1
 "%DB2_ADB%" -s 127.0.0.1:6610 reverse tcp:20003 tcp:20003
 "%DB2_ADB%" -s 127.0.0.1:6610 reverse --list''')
-    coverage=json.loads((ROOT/'analysis/route-coverage.json').read_text());manifest={'stage':'development-not-device-verified','implemented_routes':coverage['implemented_routes'],'target_routes':342,'apk_sha256':target_sha,'old_apk_sha256':OLD_SHA,'resources':layout,'tutorial':False,'game_speed':[1,10],'server_branch':'route-342','new_original_routes_complete':False}
+    coverage=json.loads((ROOT/'analysis/route-coverage.json').read_text());manifest={'stage':'development-not-device-verified','implemented_routes':coverage['implemented_routes'],'target_routes':342,'apk_sha256':target_sha,'old_apk_sha256':OLD_SHA,'resources':layout,'tutorial':False,'game_speed':[1,10],'server_branch':'route-342','new_original_routes_complete':False,'all_route_handlers_implemented':coverage['implemented_routes']==342,'private_time_peak_adapter':True}
     (output/'development-build.json').write_text(json.dumps(manifest,indent=2)+'\n')
     (output/'README.txt').write_text('''DB2 route-342 - BẢN PHÁT TRIỂN, CHƯA XÁC MINH TRÊN THIẾT BỊ
 
-Độ phủ server: %s/342 route. Đây chưa phải bản hoàn chỉnh.
+Độ phủ server: %s/342 route. Đây chưa phải bản chơi đã được xác minh trên thiết bị.
 1. Giải nén gói này vào thư mục mới.
 2. Chép DB2-Private-Android-fixed.apk đã ghép/cài thành công trước đây vào cùng thư mục.
 3. Mở Apply-Dev.bat (PowerShell có sẵn). Hoặc Apply-Dev-Python.bat nếu đã cài Python.
@@ -43,7 +43,8 @@ if errorlevel 1 exit /b 1
 APK cùng package/chứng thư bản fixed, cài đè bằng install -r; không cần gỡ app trước.
 Bỏ hướng dẫn; nút Speed góc màn hình chuyển 1x đến 10x cho cả giao diện. Timer/thưởng/ngày dựa trên server.
 ADB không thấy máy: kiểm tra cổng trong BlueStacks, sửa 6610 trong Install-Dev.bat nếu cổng đã đổi.
-APK/server là nhánh phát triển. Không đổi tên gói này thành bản 342/342.
+APK/server là nhánh phát triển. Đủ handler không đồng nghĩa mọi luồng gameplay đã được thử trên thiết bị.
+Time Peak dùng màn điều khiển và luật riêng vì source gốc thiếu màn hình/bảng blessing/quái.
 SHA-256 APK mới: %s
 '''%(coverage['implemented_routes'],target_sha))
     names=['plan.json','literals.bin','apply-dev.ps1','apply-dev.py','Apply-Dev.bat','Apply-Dev-Python.bat','Install-Dev.bat','README.txt','development-build.json']

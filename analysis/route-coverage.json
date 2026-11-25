@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 329,
-  "unsupported_routes": 13,
+  "implemented_routes": 342,
+  "unsupported_routes": 0,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -2818,94 +2818,133 @@
     },
     {
       "route": "logic.timePeakHandler.altar",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.borrowRole",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.closeMap",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.getBlessing",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.openBox",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.openMap",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.recordLog",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.selectBlessing",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.setExtInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.setStatus",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.spa",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.updateBattleInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
-      "device_verified": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.topArena3v3Handler.buyMatchTimes",

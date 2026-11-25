@@ -32,6 +32,7 @@ from server.resources import ROUTES as RESOURCES
 from server.guild_wars import ROUTES as GUILD_WARS
 from server.island import ROUTES as ISLAND
 from server.cooperative import ROUTES as COOPERATIVE
+from server.time_peak import ROUTES as TIME_PEAK
 ROOT=Path(__file__).resolve().parent.parent
 CORE={'gate.gateHandler.queryEntry','connector.entryHandler.entry','connector.playerHandler.getPlayers','connector.playerHandler.createPlayer','connector.playerHandler.entry','logic.playerHandler.rename','logic.playerHandler.useGiftCode','logic.playerHandler.receiveActivityAward'}
 CORE|={'logic.pointHandler.'+name+suffix for name in ('normal','advanced') for suffix in ('','Ten','Hundred')}
@@ -51,12 +52,13 @@ def update():
     groups.append((GUILD_WARS,['tests/test_guild_wars.py']))
     groups.append((ISLAND,['tests/test_island.py']))
     groups.append((COOPERATIVE,['tests/test_cooperative.py']))
+    groups.append((TIME_PEAK,['tests/test_time_peak.py']))
     contracts=json.loads((ROOT/'analysis/route-contracts.json').read_text());implemented=set().union(*(routes for routes,tests in groups))
     rows=[]
     for item in contracts['contracts']:
         route=item['route'];ready=route in implemented
         tests=next((tests for routes,tests in groups if route in routes),[])
-        rows.append({'route':route,'implemented':ready,'status':'headless-tested' if ready else 'not-implemented','test_groups':tests,'device_verified':False})
+        rows.append({'route':route,'implemented':ready,'status':'headless-tested' if ready else 'not-implemented','test_groups':tests,'device_verified':False,**({'compatibility_kind':'documented-private-adapter-missing-original-content'}if route in TIME_PEAK else {})})
     report={'source_bundle_sha256':hashlib.sha256((ROOT/'client/main.decoded.js').read_bytes()).hexdigest(),'target':342,'routes_in_client':len(rows),'implemented_routes':sum(r['implemented'] for r in rows),'unsupported_routes':sum(not r['implemented'] for r in rows),'note':'Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.','routes':rows}
     (ROOT/'analysis/route-coverage.json').write_text(json.dumps(report,indent=2)+'\n')
     return report

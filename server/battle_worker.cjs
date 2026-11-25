@@ -11,10 +11,10 @@ function load(name){
  if(name in records)return records[name].exports;
  if(name in cache)return cache[name];
  let source=fs.readFileSync(path.join(__dirname,'battle_modules',name+'.js'),'utf8');
- if(name==='battle.timer'&&input.mode==='expedition'){
+ if(name==='battle.timer'&&['expedition','timePeak'].includes(input.mode)){
   const old='[ n.BATTLE_TYPE.SMAP, n.BATTLE_TYPE.TAIL, n.BATTLE_TYPE.BOSS, n.BATTLE_TYPE.GUILD_BOSS ]';
   if(source.split(old).length!==3)throw Error('Unexpected expedition record boundary');
-  source=source.split(old).join('[ n.BATTLE_TYPE.SMAP, n.BATTLE_TYPE.TAIL, n.BATTLE_TYPE.BOSS, n.BATTLE_TYPE.GUILD_BOSS, n.BATTLE_TYPE.EXPEDITION ]');
+  source=source.split(old).join('[ n.BATTLE_TYPE.SMAP, n.BATTLE_TYPE.TAIL, n.BATTLE_TYPE.BOSS, n.BATTLE_TYPE.GUILD_BOSS, n.BATTLE_TYPE.'+(input.mode==='timePeak'?'TIME_PEAK':'EXPEDITION')+' ]');
  }
  const begin=source.indexOf('function('),end=source.lastIndexOf('}, {');
  if(end<0)throw Error('Bad recovered module: '+name);
@@ -61,11 +61,11 @@ if(input.mode==='cooperativeClient'){
  vm.runInNewContext('('+method+')',ctx).call({viewTeamPanel:{}},{target:{data:teamMode?{defenderTeamId:input.defense.teamId}:{teamInfo:{...input.attack,attackTimes:0},defenderTeamId:input.defense.teamId}}});
  if(!result)throw Error('No original cooperative challenge callback');process.stdout.write(JSON.stringify(result));process.exit(0);
 }
-if(input.mode==='expedition'){
+if(input.mode==='expedition'||input.mode==='timePeak'){
  const trace={},useSkill=fight.useSkill;
  fight.useSkill=function(teamId,skillId){if(input.auto){const tick=this.area.timer.tickNumber;(trace[tick]||(trace[tick]=[])).push({teamId,skillId});}return useSkill.call(this,teamId,skillId);};
  const manual=main.genManualSkillInfo(input.team,input.defender);main.manualShipSkillIds=manual.shipSkillIds;main.manualSkillIds=manual.roleSkillIds;
- main.manualRecordMap=input.manualRecordMap||{};main.isAuto=!!input.auto;main.isInstant=true;main.isShow=false;main.battleType=load('battle.consts').BATTLE_TYPE.EXPEDITION;main.damageMap={};main.usedMap={};main.setSeed(input.seed);fight.pkBattle(input.team,input.defender);
+ main.manualRecordMap=input.manualRecordMap||{};main.isAuto=!!input.auto;main.isInstant=true;main.isShow=false;main.battleType=load('battle.consts').BATTLE_TYPE[input.mode==='timePeak'?'TIME_PEAK':'EXPEDITION'];main.damageMap={};main.usedMap={};main.setSeed(input.seed);fight.pkBattle(input.team,input.defender);
  process.stdout.write(JSON.stringify({isWin:main.isWin,tickNumber:fight.area.timer.tickNumber,attacker:fight.team1,defender:fight.team2,records:trace}));process.exit(0);
 }
 if(input.mode==='boss'){

@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=27
+SCHEMA_VERSION=28
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -58,6 +58,8 @@ def new_profile(pid,account,name,username):
     refresh_island(None,profile)
     from .cooperative import refresh as refresh_cooperative
     refresh_cooperative(None,profile)
+    from .time_peak import refresh as refresh_time_peak
+    refresh_time_peak(profile)
     grant_starter_tickets(profile)
     from .shops import initialize
     initialize(profile)

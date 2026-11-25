@@ -1,43 +1,28 @@
 {
+  "stage": "all-rpc-handlers-implemented-device-verification-pending",
+  "branch": "route-342",
+  "source_rpc_contracts": 342,
+  "implemented_rpc_handlers": 342,
+  "profile_schema": 28,
+  "tests_passed": 229,
   "completed": [
-    "launcher",
-    "admin web",
-    "SQLite persistence",
-    "account auth",
-    "Pomelo gate/connector",
-    "create/entry draft profile",
-    "giftcode redemption",
-    "34 shipped tables",
-    "signed development APK localhost",
-    "normal/advanced gacha 1/10/100",
-    "admin pool overrides",
-    "atomic event claims",
-    "runtime endpoint selector",
-    "separate dev package",
-    "authenticated client-error audit",
-    "AST module extraction (319 outer modules)",
-    "profile schema 2 additive migration",
-    "starter role equipment and friendship model shape",
-    "portable runtime doctor",
-    "consistent SQLite WAL backup CLI"
-  ],
-  "verified": [
-    "15 backend and original-JS-codec tests",
-    "browser admin login/giftcode/gacha save",
-    "XXTEA independent roundtrip",
-    "patched bundle syntax",
-    "APK v1/v2/v3 signing and alignment",
-    "20 tests including recovered client dataApi, Player, Bag, Team, pointScene, roleItem, eqptScene, teamScene generators",
-    "21 tests including active-WAL backup and no-overwrite guarantee",
-    "Linux runtime doctor all checks pass"
+    "All 342 recovered client RPC contracts have business handlers and positive route-group tests",
+    "Durable SQLite player state, accounts, gacha, giftcodes, events, guilds, shops, equipment, combat and ranking rules",
+    "Original-engine replay and once-only reward validation",
+    "Original client constructors, generators, transport and cooperative combat-loop checks",
+    "Documented private policies for missing backend rules and missing Time Peak content",
+    "Signed Android development APK, tutorial skipped and whole-game Speed 1x-10x",
+    "Full 500 MB APK reconstruction verified independently using PowerShell and Python"
   ],
   "remaining": [
-    "Android device install/login/home compatibility",
-    "original event UI mapping",
-    "complete gameplay routes",
-    "gacha pity and wishlist probability",
-    "private release signing",
-    "cross-platform runtime testing"
+    "Android/BlueStacks rendering and end-to-end device gameplay verification of this new build",
+    "Termux/Tailscale device runtime verification",
+    "Obtain an authorized iOS IPA before Mach-O/client analysis and iOS packaging"
   ],
-  "current_blocker": "No Android device/emulator is connected; cannot verify APK installation or original home scene. Awaiting user device information."
+  "playable_verified": false,
+  "ios_ipa_obtained": false,
+  "apk_sha256": "e53311ef3a7a8c6d924a0bfa4f72bf11a85510506a96ab0bb458a83cc3115387",
+  "patch_zip_sha256": "2b7fe4f307c67953544e4edebc9544d06dde5ae0b97537996a6744305bd0d038",
+  "documentation": "IMPLEMENTATION-342.md",
+  "note": "Complete handler coverage is not a claim of complete original-server rules or device-verified gameplay. Time Peak is an explicit private adapter."
 }

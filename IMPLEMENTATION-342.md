@@ -2,7 +2,7 @@
 
 Mục tiêu đã được người dùng yêu cầu: toàn bộ 342 route có xử lý nghiệp vụ, dữ liệu bền vững và phản hồi tương thích client. Route đăng ký tên rồi trả thành công rỗng không được tính hoàn tất.
 
-Nhánh làm việc: `route-342`. Đây là nhánh phát triển, không thay thế các APK/gói vá đã phát hành ở main. Mục tiêu còn đang mở; chưa hoàn tất.
+Nhánh làm việc: `route-342`. Đây là nhánh phát triển, không thay thế các APK/gói vá đã phát hành ở main. Phần triển khai đủ 342 handler đã hoàn thành; xác minh toàn bộ gameplay trên thiết bị còn mở.
 
 ## Định nghĩa hoàn tất
 
@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 329 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 13 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 329 luồng đã xác minh trên thiết bị.
-- Đã chạy 222 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
+- 342 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Không còn route trống trong danh sách 342. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 342 luồng đã xác minh trên thiết bị.
+- Đã chạy 229 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
 
 ## Phần mới trong nhánh
 
@@ -178,3 +178,15 @@ Schema 27 thêm đội chờ/đội đang chạy, quota thành viên, bảng đi
 Đấu đội chạy đủ ba trận theo thứ tự `idx`, thắng ít nhất hai; thắng ba được 3 điểm, thắng hai được 2, thua được 0 như hàm gốc. Danh vọng sắp thành viên theo cấp giảm dần, người thắng tiếp tục đấu với HP do engine vừa trả, đúng phép cập nhật raw role của scene gốc (gồm cả cách cộng HP khi build lại). Kiểm thử gọi chính callback chiến đấu trích từ scene gốc và so toàn bộ `winPlayerIdMap`, HP còn lại và `damageMapMap`. Client mới gửi seed server, cài trạng thái chuẩn sau callback để những `++`, `--`, nối mảng sẵn có không tính hai lần; sửa nhãn quota bị đọc nhầm response và cho đội chưa có gia tộc đấu nhau (chỉ cùng gia tộc có ID thực mới bị cấm).
 
 Luật riêng cho phần không có server: danh vọng hoàn thành vào 23 giờ mỗi ngày, mỗi thành viên nhận số tiền theo quy mô đội và 30 gem theo bảng gốc, trừ phần đã bị cướp; loot chia đều cho đội thắng, dư theo ID tăng dần. Tổng tiền bị trừ bằng tổng được cướp; không tạo thêm loot do làm tròn. Hạng danh vọng theo tiền cướp tuần, không tự đặt phần thưởng hạng khi không có bảng. Hạng đấu đội tính tổng điểm thành viên trong tuần thứ Hai–Chủ nhật, quyết toán Chủ nhật 23 giờ, thưởng lấy bảng hạng gốc; điểm bằng nhau ưu tiên ID thấp, chỉ điểm dương xếp hạng. Quyết toán lười trong lần gọi chế độ tiếp theo, SQL chống thư lặp. Báo cáo chỉ thành viên hai đội được đọc. Những chính sách này không được mô tả như backend gốc đã xác minh.
+
+### Time Peak: 13 route với bộ thay thế riêng có ghi rõ nguồn
+
+Schema 28 thêm trạng thái lượt Time Peak, HP/MP, tướng mượn tạm, blessing riêng, trạng thái từng ô, tùy chọn giao diện và sổ nhận rương SQLite. `analysis/time-peak-source-gaps.json` ghi kết quả kiểm tra thực: có 46 bảng đồ, 3.742 ô; 8.300 ID quái được tham chiếu đều không có trong bảng `mob`, không có `blessingData` và không có module `timePeakScene`. Tên/mô tả một số bản đồ còn là nội dung Naruto. Đây không phải một chế độ DB2 nguyên bản đã khôi phục đầy đủ. Các bundle resources/internal cũng đã giải mã và kiểm tra, chỉ có loader rỗng.
+
+Giữ từ nguồn: ID/thứ tự bản đồ và ô, ải mở khóa `unlockSmapId`, điều kiện 60% bản đồ trước, nhóm hai sau 14 ngày, cấp mở 50 từ `INIT_BATTLE_LEVEL`, và toàn bộ 1.309 mô tả thưởng rương parse được với ID vật phẩm thực. Thưởng rương là lần đầu vĩnh viễn theo người chơi/ô, không lặp khi reset lượt hoặc khởi động lại. Bộ kiểm tra đã xác nhận tất cả ID thưởng rương hiện có đều giải được. Hằng số gốc mô tả loại 1–6; loại 7/8 được xử lý như điểm dừng riêng không thưởng.
+
+Luật thay thế được định nghĩa công khai: di chuyển tuần tự theo `no` vì thiếu scene/layout/chướng ngại gốc; quái dùng mẫu sparring `robot` của bảng gốc tại hạng 20, hệ số chỉ số `1 + 0.25 × enemyType`, không giả nhận là quái Time Peak gốc. Giữ chỉ số đội của người chơi, không tự chuẩn hóa mọi tướng thành cấp 50. Mỗi trận thắng chờ chọn một trong ba passive riêng: skill có thật 3011/3021/3041, ID blessing riêng 900001/900002/900003, mỗi loại chỉ cộng một lần/lượt. Sau khi chọn mới mở ô tiếp theo. Suối hồi 50% HP tối đa cho tướng còn sống; bàn thờ hồi sinh ở 50% và MP 0; mỗi ô dùng một lần/lượt. Trại cho mượn một tướng cấp 50 thuộc lớp 1/2/3, tính chỉ số bằng hàm tăng trưởng thực. Tướng mượn chỉ ở `timePeak.borrowedRoleMap`, không vào kho chính, không dùng làm nguyên liệu hoặc tham gia chế độ khác. Đóng bản đồ xóa hiệu lực run, mở lại tạo lượt mới; sổ rương đã nhận và tiến độ mở khóa giữ lại.
+
+Thêm route phụ `logic.privateHandler.beginTimePeak` để lấy snapshot hai đội/seed trước trận. Kết quả dùng engine gốc `TIME_PEAK`, không dùng hệ số HP của arena. Server chạy lại lịch sử kỹ năng, đối chiếu tick, kết quả và cả bốn map HP/MP trước khi commit. Run hết hạn 15 phút, đổi/reset bản đồ làm run cũ vô hiệu; không cho `setStatus` hoặc `updateBattleInfo` tự tạo thắng, tự hồi máu hoặc tự đổi đối thủ. `updateBattleInfo` là xác nhận cache đã khớp, không phải quyền ghi kết quả chiến đấu. `setExtInfo` chỉ nhận bốn tùy chọn giao diện đã định nghĩa; `recordLog` giới hạn 2.048 ký tự và lưu audit.
+
+Client mới có nút **Time Peak** từ cấp 50, dùng màn điều khiển riêng tối giản để mở/reset lượt, chọn đội, chọn blessing và dùng ô. Trận vẫn đi qua selector và màn chiến đấu Cocos gốc. Sửa selector để không tra nhầm ID ô Time Peak vào bảng smap thường và chỉ hiển thị tướng mượn ở chế độ này. Màn điều khiển/selector/transport được chạy kiểm tra JavaScript; chưa xác minh cảm ứng, tải asset và gameplay trên Android thật/BlueStacks. Không có bằng chứng đã tạo được bản iOS.

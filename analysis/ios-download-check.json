@@ -1,0 +1,11 @@
+{
+  "source": "https://www.pgyer.com/dragonball",
+  "observed_version": "1.0.0",
+  "observed_build": 25,
+  "page_size_label": "489 MB",
+  "published": "2026-11-21",
+  "install_flow": "Public page supplied an itms-services manifest redirect; requests with page-provided token and same cookie session returned HTTP 404 for the manifest.",
+  "ipa_obtained": false,
+  "ios_binary_inspected": false,
+  "note": "No device-identity/access restrictions were bypassed. Page metadata alone is not IPA evidence."
+}
