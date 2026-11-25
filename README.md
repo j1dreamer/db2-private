@@ -1,6 +1,6 @@
 # DB2 Private — bản phát triển
 
-> **Sửa lỗi cài đặt Android 11+**: APK `v0.1.0-dev` cũ đã nén `resources.arsc`, có thể bị hệ thống từ chối dù chữ ký hợp lệ. Dùng [APK-Install-Fix.zip](APK-Install-Fix.zip), giải nén cạnh APK cũ, chạy `Apply-Fix.bat` với Python 3 rồi cài **DB2-Private-Android-fixed.apk**. Bản vá khoảng 1,5 MB; không cần tải lại toàn bộ APK.
+> **Sửa lỗi cài đặt Android 11+**: APK `v0.1.0-dev` cũ đã nén `resources.arsc`, có thể bị hệ thống từ chối dù chữ ký hợp lệ. Dùng [APK-Install-Fix.zip](APK-Install-Fix.zip), giải nén cạnh APK cũ, nhấp đúp `Apply-Fix.bat` trên Windows rồi cài **DB2-Private-Android-fixed.apk**. Bản vá khoảng 1,5 MB; không cần tải lại toàn bộ APK.
 
 Backend Python + SQLite, web quản trị và công cụ đóng gói client Android từ bộ file người dùng cung cấp. iOS chưa nằm trong bản này.
 
@@ -124,3 +124,5 @@ Sau khi zipalign và ký, phải chạy `python tools/verify_apk.py FILE.apk` b�
 - Bản vá chỉ sao chép các vùng byte không đổi và thay những vùng đã sửa/ký; kiểm tra checksum nguồn và đầu ra, giữ nguyên APK cũ.
 - `tools/download_apk.py` hiện tự áp dụng bản vá sau khi tải/ghép APK nền.
 - 27 kiểm thử backend/codec/đóng gói/bản vá đã pass; vẫn cần kiểm thử cài và vào sảnh trên Android/BlueStacks.
+
+Bản vá Windows dùng PowerShell có sẵn; không đổi execution policy. Đã chạy thử thuật toán PowerShell trên cùng APK gốc và xác nhận đầu ra khớp SHA-256 bản sửa đã ký. File `Apply-Fix-Python.bat` là lựa chọn thay thế khi có Python.
