@@ -95,3 +95,36 @@ def patch_private_sdk(text):
         if text.count(old)!=1:raise ValueError('Unexpected private SDK implementation')
         text=text.replace(old,new,1)
     return text
+
+def patch_tail_transport(text):
+    changes={
+        'k.choose(U, this.data.selectIdxs, this.data.selectShipIdxs, function(e) {':'k.choose(U, this.data.selectIdxs, this.data.selectShipIdxs, function(e) {\nwindow.DB2_PRIVATE_TAIL_SEED = e._temp.seed;',
+        's.BOSS_CONFIG = t;\ns.setSeed(Date.now());':'s.BOSS_CONFIG = t;\nvar privateTailSeed = window.DB2_PRIVATE_TAIL_SEED;\ndelete window.DB2_PRIVATE_TAIL_SEED;\ns.setSeed(privateTailSeed || Date.now());'
+    }
+    for old,new in changes.items():
+        if text.count(old)!=1:raise ValueError('Unexpected tail transport implementation')
+        text=text.replace(old,new,1)
+    return text
+
+def patch_boss_transport(text):
+    for prefix,key,method in (('$','WORLD_BOSS','bossBattle'),('I','GUILD_BOSS','guildeBossBattle')):
+        old=prefix+'.choose(this.data.selectIdxs, this.data.selectShipIdxs, function(e) {'
+        if text.count(old)!=1:raise ValueError('Unexpected boss choose implementation')
+        text=text.replace(old,old+'\nwindow.DB2_PRIVATE_'+key+'_SEED = e._temp.seed;',1)
+        start=text.index('s.'+method+' = function(');end=text.index('s.'+method+'Instant = function(',start)
+        section=text[start:end]
+        if section.count('s.setSeed(Date.now());')!=1:raise ValueError('Unexpected boss seed implementation')
+        section=section.replace('s.setSeed(Date.now());','var privateBossSeed = window.DB2_PRIVATE_'+key+'_SEED;\ndelete window.DB2_PRIVATE_'+key+'_SEED;\ns.setSeed(privateBossSeed || Date.now());')
+        text=text[:start]+section+text[end:]
+    for mode in ('worldBoss','guildBoss'):
+        old='n.request("logic.'+mode+'Handler.challenge", {\nbossHp: e,'
+        new='n.request("logic.'+mode+'Handler.challenge", {\nmanualRecordMap: window.__require("battleMain").manualRecordMap || {},\nisAuto: window.__require("battleMain").isAuto,\ntickNumber: window.__require("battle.fightHandler").area.timer.tickNumber,\nbossHp: e,'
+        if text.count(old)!=1:raise ValueError('Unexpected boss settlement transport')
+        text=text.replace(old,new,1)
+    for name,roles,ships in (('e','t','n'),('a','n','i')):
+        for field,values in (('attackTeamIndexs',roles),('attackShipIndexs',ships)):
+            old=name+'.openInfo.'+field+' = '+name+'.openInfo.'+field+'.concat('+values+');'
+            new=name+'.openInfo.'+field+' = '+name+'.openInfo.'+field+'.concat('+values+').filter(function(value, index, all) { return all.indexOf(value) === index; });'
+            if text.count(old)!=1:raise ValueError('Unexpected boss roster callback')
+            text=text.replace(old,new,1)
+    return text

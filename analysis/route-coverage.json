@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 165,
-  "unsupported_routes": 177,
+  "implemented_routes": 176,
+  "unsupported_routes": 166,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -953,30 +953,38 @@
     },
     {
       "route": "logic.guildBossHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildBossHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildBossHandler.dmgRank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.guildBossHandler.openInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
       "device_verified": false
     },
     {
@@ -2093,16 +2101,20 @@
     },
     {
       "route": "logic.tailHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tail.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.tailHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tail.py"
+      ],
       "device_verified": false
     },
     {
@@ -2708,37 +2720,47 @@
     },
     {
       "route": "logic.worldBossHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worldBossHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worldBossHandler.dmgRank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worldBossHandler.inspire",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.worldBossHandler.openInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
       "device_verified": false
     },
     {

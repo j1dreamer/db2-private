@@ -36,6 +36,16 @@ if(input.mode==='clientTeam'){
  const p=input.player;process.stdout.write(JSON.stringify(F.buildBattleTeam(p.id,(input.shipIndices||[]).map(i=>p.bag.items[i]),input.indices.map(i=>p.team.roles[i]))));process.exit(0);
 }
 const main=load('battleMain'),fight=load('battle.fightHandler');
+if(input.mode==='boss'){
+ if(!['TAIL','BOSS','GUILD_BOSS'].includes(input.bossType))throw Error('Unknown boss mode');
+ main.BOSS_CONFIG=input.config;main.manualRecordMap=input.manualRecordMap||{};main.setSeed(input.seed);
+ let outcome;
+ if(input.bossType==='TAIL')outcome=main.tailBattleInstant(input.team,input.defender,!!input.auto);
+ else if(input.bossType==='BOSS')outcome=main.bossBattleInstant(input.team,input.defender,!!input.auto);
+ else outcome=main.guildeBossBattleInstant(input.team,input.defender,!!input.auto);
+ const boss=fight.area.getEntityBy({teamId:2,idx:0})[0];
+ process.stdout.write(JSON.stringify({...outcome,bossHp:boss?boss.hp:0,tickNumber:fight.area.timer.tickNumber,damageMap:main.damageMap}));process.exit(0);
+}
 if(input.mode==='bestOfThree'){
  const rounds=[];let wins=0,losses=0;
  for(const pair of input.pairs){

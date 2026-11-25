@@ -64,7 +64,7 @@ def delta(before,after,route,temp=None):
             else:result[key]=after[key]
     return result
 
-DAILY_COUNTERS=('buyActionPointTimes','buySkillPointTimes','buyCoinTimes','buyMapType5Times','shipUpgradeLevelTimes','buyChallengeTimesTimes','buy3v3ChallengeTimesTimes','worshipStatue3v3Times')
+DAILY_COUNTERS=('buyActionPointTimes','buySkillPointTimes','buyCoinTimes','buyMapType5Times','shipUpgradeLevelTimes','buyChallengeTimesTimes','buy3v3ChallengeTimesTimes','worshipStatue3v3Times','tailChallengeTimesTimes')
 def refresh_time(player,now=None):
     now=int(time.time()*1000) if now is None else now;changed=False
     today=datetime.datetime.fromtimestamp(now/1000,datetime.timezone(datetime.timedelta(hours=7))).date().isoformat()
