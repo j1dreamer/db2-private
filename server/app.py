@@ -3,7 +3,7 @@ from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -124,6 +124,8 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                     elif kind==3:
                         if not acked:raise ValueError('Missing handshake ACK')
                         await ws.send_bytes(package(3))
+                        if uid and ws in selected_players:
+                            store.player(uid);start_notifications()
                     elif kind==4:
                         if not acked:raise ValueError('Missing handshake ACK')
                         ident,route,args=request(body)
@@ -152,6 +154,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 mail_seen[ws]={m['_id'] for m in p['extra']['mails']}
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route.startswith(('logic.','chat.'))and ws not in selected_players:result={'code':500,'msg':'Chưa chọn nhân vật'}
+                        elif route in arena.ROUTES:
+                            try:result=await arena.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in gm.ROUTES:
                             try:result=gm.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}

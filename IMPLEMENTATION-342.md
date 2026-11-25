@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 124 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 218 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 124 luồng đã xác minh trên thiết bị.
-- Đã chạy 109 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Một chuỗi kiểm thử gọi thành công đủ 38 route đội hình; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách.
+- 133 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 209 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 133 luồng đã xác minh trên thiết bị.
+- Đã chạy 115 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Một chuỗi kiểm thử gọi thành công đủ 38 route đội hình; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
 
 ## Phần mới trong nhánh
 
@@ -32,6 +32,8 @@ Dữ liệu nền: hồi thể lực/điểm kỹ năng theo timestamp, ngày se
 
 3 route GM: cấp vật phẩm, thêm tướng, xóa tướng. Web quản trị có cấp/thu hồi quyền theo ID nhân vật; chỉ token quản trị được đổi quyền. Xóa hoàn trang bị riêng lẻ, hủy run đang chờ và phải giữ ít nhất một chiến binh. Client mới xử lý role tombstone, xóa hash/cache và quay về sảnh; APK cũ chưa có bản vá này.
 
+9 route arena: thông tin, ghép đối thủ, đặt/xem phòng thủ, mua lượt, chọn/kết thúc trận và danh sách/chi tiết báo cáo. Seed và hai đội được chụp lúc chọn; kết thúc chạy lại `pkBattleInstant` gốc và dùng damage map tính lại. Đổi hạng và thưởng kỷ lục lấy bảng `arenaAchieveRewards`, phát một lần; quyết toán ngày từ `arenaRewards` vào 21 giờ UTC+7 qua thư. Client mới dùng seed server và phân biệt NPC âm với ID người chơi từ 1; APK cũ không gửi seed đúng cho luồng này.
+
 ## Những phần cần chốt hoặc xác minh tiếp
 
 - Người dùng đã chọn dùng bảng/công thức gốc khi có và định nghĩa, ghi rõ luật riêng cho phần thiếu. Số lượng rơi ải dùng `specifyDropValues`, phù hợp consumer `starSignSmapScene`; thời điểm/xác suất rơi của mọi loại ải chưa xác minh. Cửa hàng tính giá đơn vị nhân số lượng; refresh loại 14 dùng fallback gem do config gốc thiếu. Chu kỳ đồng hành tăng sao đặt lại cấp 1, giữ kỹ năng; chat giới hạn 200 UTF-16 unit/3 giây. Bốn tinh tú cùng thuộc tính mở bộ yếu ở rarity tối thiểu 3, mạnh ở rarity 5. Tự trang bị chọn ô trống/món yếu nhất và không hạ chất lượng; reset hoàn những chi phí có sổ kể từ lúc triển khai, không bịa tài nguyên huấn luyện trước đó. Ghép thuộc tính cơ bản/trang bị/thức tỉnh là luật riêng dùng các giá trị gốc; công thức chiến đấu và tính power lấy từ client. Không coi các lựa chọn này là mã server gốc đã phục hồi.
@@ -39,6 +41,7 @@ Dữ liệu nền: hồi thể lực/điểm kỹ năng theo timestamp, ngày se
 - Combat giờ cần Node.js trên máy chạy server (Termux: `pkg install nodejs`, Windows: Node.js LTS). Thiếu runtime thì route kết thúc trận báo lỗi, không phát thưởng không được kiểm tra. Chưa đóng gói APK mới của nhánh này.
 - Chưa xác nhận luồng phiêu lưu mới trên BlueStacks; headless replay không chứng minh mọi preload/animation/scene đều hoạt động.
 - Thưởng rương có trọng số chọn một mục W và roll độc lập các mục R là luật riêng dùng tham số mô tả gốc. Tự mở tối đa 1.000 rương/lần, bỏ qua rương cần chọn hoặc chưa cấu hình. Nhiệm vụ giữ đồ/đá tính cả đồ đang trang bị; những counter cho chế độ chưa triển khai còn bằng 0. Online nhận tối đa 60 giây mỗi request, giới hạn bằng thời gian phiên đã chọn nhân vật và không được tăng nhanh bởi tốc độ game.
+- Arena riêng mở với 20 NPC dùng stat template `robotData`, ID âm; người mới xếp cuối. Ghép ba đối thủ khác nhau theo khoảng hạng; thắng đổi chỗ khi đối thủ đang có hạng tốt hơn. Không có cooldown giữa trận; 5 lượt/ngày và giá/hạn mức mua theo bảng VIP/client. Chọn trận trừ lượt, cùng tham số dùng lại seed; đổi trận bỏ lượt đã tiêu. Snapshot hết hạn sau 15 phút. Quyết toán một lần theo hạng lúc kiểm tra ngày, không truy lĩnh mọi ngày vắng mặt; heartbeat của phiên đang chơi cũng kiểm tra thư đến hạn.
 
 ## Thứ tự các nhóm tiếp theo
 

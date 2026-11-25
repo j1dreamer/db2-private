@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 124,
-  "unsupported_routes": 218,
+  "implemented_routes": 133,
+  "unsupported_routes": 209,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -325,65 +325,83 @@
     },
     {
       "route": "logic.arenaHandler.buyChallengeTimes",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.arenaHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.arenaHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.arenaHandler.defenseTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.arenaHandler.info",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.arenaHandler.match",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.arenaHandler.report",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.arenaHandler.reportList",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.arenaHandler.setDefenseTeamIndexs",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
       "device_verified": false
     },
     {

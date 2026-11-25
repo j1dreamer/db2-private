@@ -21,6 +21,9 @@ class Store:
         CREATE TABLE IF NOT EXISTS chat_messages(id INTEGER PRIMARY KEY AUTOINCREMENT,player INTEGER REFERENCES players(id),kind INTEGER NOT NULL,scope INTEGER NOT NULL,created INTEGER NOT NULL,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS task_counters(player INTEGER REFERENCES players(id),name TEXT NOT NULL,period TEXT NOT NULL,value INTEGER NOT NULL,PRIMARY KEY(player,name,period));
         CREATE TABLE IF NOT EXISTS task_claims(player INTEGER REFERENCES players(id),task INTEGER NOT NULL,period TEXT NOT NULL,PRIMARY KEY(player,task,period));
+        CREATE TABLE IF NOT EXISTS arena_entries(player INTEGER PRIMARY KEY,rank INTEGER UNIQUE NOT NULL,source TEXT NOT NULL,data TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS pvp_runs(player INTEGER REFERENCES players(id),mode TEXT NOT NULL,data TEXT NOT NULL,expires INTEGER NOT NULL,PRIMARY KEY(player,mode));
+        CREATE TABLE IF NOT EXISTS battle_reports(id TEXT PRIMARY KEY,mode TEXT NOT NULL,attacker INTEGER NOT NULL,defender INTEGER NOT NULL,data TEXT NOT NULL);
         CREATE INDEX IF NOT EXISTS chat_channel ON chat_messages(kind,scope,id);
         CREATE INDEX IF NOT EXISTS chat_sender ON chat_messages(player,id);
         CREATE TABLE IF NOT EXISTS friend_requests(source INTEGER REFERENCES players(id),target INTEGER REFERENCES players(id),created INTEGER NOT NULL,PRIMARY KEY(source,target));
@@ -67,7 +70,9 @@ class Store:
         from .shops import refresh_due
         changed=refresh_due(data)or changed
         from .tasks import refresh as refresh_tasks
-        if refresh_tasks(self,data)or changed:self.save(data)
+        changed=refresh_tasks(self,data)or changed
+        from .arena import refresh as refresh_arena
+        if refresh_arena(self,data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

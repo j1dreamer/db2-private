@@ -65,6 +65,7 @@ def ship_attrs(item):
     row=entity(item['kindId']);value=(100*(item['star']-1)+item['level'])*row['growth'];attrs={'hp':0,'atk':0,'def':0,'mdef':0}
     for key in {1:('hp',),2:('atk',),3:('def','mdef')}[row['attrType']]:attrs[key]=value
     item['attr']=attrs
+    item['power']=round(.1*attrs['hp']+attrs['atk']+attrs['def']+attrs['mdef']+30*item['skillLevel'])
 
 def insert(player,kind,count,extra=None):
     row=entity(kind);bag=player['bag'];limit=row.get('maxNum',-1)

@@ -57,3 +57,13 @@ privateRosterScene.popToHomeScene && privateRosterScene.popToHomeScene();
         if text.count(old)!=1:raise ValueError('Unexpected roster removal implementation')
         text=text.replace(old,new,1)
     return text
+
+def patch_arena_transport(text):
+    changes={
+        'h = d.pkBattleInstant(l.clone(i), l.clone(o)), u = c.ARENA_BACKGROUND_IMG_IDS, p = u[':'h = d.pkBattleInstant(l.clone(i), l.clone(o), e._temp.seed), u = c.ARENA_BACKGROUND_IMG_IDS, p = u[',
+        'return e <= l.CONSTS.ROBOT_COUNT;':'return e < 0; // Private NPC IDs are negative; real player IDs start at 1.'
+    }
+    for old,new in changes.items():
+        if text.count(old)!=1:raise ValueError('Unexpected arena transport implementation')
+        text=text.replace(old,new,1)
+    return text

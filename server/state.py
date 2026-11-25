@@ -64,7 +64,7 @@ def delta(before,after,route,temp=None):
             else:result[key]=after[key]
     return result
 
-DAILY_COUNTERS=('buyActionPointTimes','buySkillPointTimes','buyCoinTimes','buyMapType5Times','shipUpgradeLevelTimes')
+DAILY_COUNTERS=('buyActionPointTimes','buySkillPointTimes','buyCoinTimes','buyMapType5Times','shipUpgradeLevelTimes','buyChallengeTimesTimes')
 def refresh_time(player,now=None):
     now=int(time.time()*1000) if now is None else now;changed=False
     today=datetime.datetime.fromtimestamp(now/1000,datetime.timezone(datetime.timedelta(hours=7))).date().isoformat()
@@ -78,6 +78,7 @@ def refresh_time(player,now=None):
             player['friend']['pointReceiveTimes']=0
             player['smapTimesMap']={};player['point']['dailyNormalUseGemTimes']=0
             player['task']['dailyActivePoint']=0;player['task']['receivedPointMap']['daily']={}
+            player['arena']['remainingChallengeTimes']=5;player['arena']['maxChallengeTimes']=5
     week=datetime.date.fromisoformat(today).isocalendar()[:2];week_key=str(week[0])+'-'+str(week[1])
     if player.get('privateTaskWeek')!=week_key:
         if player.get('privateTaskWeek'):

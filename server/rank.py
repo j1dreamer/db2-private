@@ -39,7 +39,11 @@ def handle(store,account,route,args):
         if kind in ('arena','arena_daily'):score=p['arena'].get('dailyRank' if kind=='arena_daily' else 'rank',0)
         else:score=value(p,kind)
         if score>0:people.append((p,score))
+    if kind=='arena':
+        for row in store.db.execute("SELECT rank,data FROM arena_entries WHERE source='npc'"):
+            p=json.loads(row['data'])
+            if not server or p['serverId']==server:people.append((p,row['rank']))
     people.sort(key=lambda x:((x[1]if kind in ('arena','arena_daily') else -x[1]),x[0]['id']))
-    rows=[{**public(p),'rank':i+1,'value':score} for i,(p,score) in enumerate(people)]
+    rows=[{**public(p),'rank':score if kind in ('arena','arena_daily')else i+1,'value':score} for i,(p,score) in enumerate(people)]
     mine=next((r for r in rows if r['playerId']==own['id']),None)
     return {'code':200,'_temp':{'route':route,'list':rows[begin:end+1],'myRank':mine['rank']if mine else 0,'myValue':mine['value']if mine else 0}}

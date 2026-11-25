@@ -18,7 +18,7 @@ function load(name){
  return cache[name]=mod.exports;
 }
 load('dataApi').init();
-if(input.mode==='constants'){process.stdout.write(JSON.stringify({server:load('serverConfig'),client:load('clientConfig')}));process.exit(0);}
+if(input.mode==='constants'){process.stdout.write(JSON.stringify({server:load('serverConfig'),client:load('clientConfig'),battle:load('battle.consts')}));process.exit(0);}
 if(input.mode==='progression'){
  const cfg=load('serverConfig'),role=cfg.ROLE.FUNS;
  const values={starCosts:Array.from({length:20},(_,i)=>role.getUpgradeCost(i)),awakeCosts:Array.from({length:20},(_,i)=>role.getAwakeCost(i)),maxLevels:Array.from({length:31},(_,i)=>role.getMaxLevel(100,i,0)),soulCosts:{},soulMaxLevels:{},powerFactors:{}};
@@ -36,6 +36,10 @@ if(input.mode==='clientTeam'){
  const p=input.player;process.stdout.write(JSON.stringify(F.buildBattleTeam(p.id,(input.shipIndices||[]).map(i=>p.bag.items[i]),input.indices.map(i=>p.team.roles[i]))));process.exit(0);
 }
 const main=load('battleMain'),fight=load('battle.fightHandler');
+if(input.mode==='pvp'){
+ const outcome=main.pkBattleInstant(input.team,input.defender,input.seed||1);
+ process.stdout.write(JSON.stringify({...outcome,tickNumber:fight.area.timer.tickNumber,damageMap:main.damageMap,attacker:fight.team1,defender:fight.team2}));process.exit(0);
+}
 main.rolesCount=input.team.roles.length;main.isAuto=!!input.auto;main.isInstant=true;main.isShow=false;
 main.battleType=load('battle.consts').BATTLE_TYPE.SMAP;
 const manual=main.genManualSkillInfo(input.team);main.manualShipSkillIds=manual.shipSkillIds;main.manualSkillIds=manual.roleSkillIds;
