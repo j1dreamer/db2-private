@@ -3,7 +3,7 @@
   "sha256": "8653b63259b17b1645d290a4de304a4d4e45f5df66a2cc26f121b4290cf809e1",
   "size": 510997150,
   "stage": "unsigned-private-development-requires-Mac-signing",
-  "base": "https://github.com/j1dreamer/db2-private/releases/download/ios-private-dev-20261125/",
+  "base": null,
   "parts": [
     {
       "file": "part-000.bin",
@@ -112,5 +112,5 @@
     }
   ],
   "published": false,
-  "distribution_status": "upload-blocked-pending-explicit-publication-authorization"
+  "distribution_status": "private-only-user-request; private-GitHub-repo-creation-failed-403"
 }

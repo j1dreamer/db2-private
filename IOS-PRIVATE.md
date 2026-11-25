@@ -4,15 +4,15 @@
 
 ## Tải và cài trên Mac
 
-**Trạng thái phân phối:** IPA đã build và kiểm tra trong workspace. GitHub release đang ở dạng draft, chưa có payload; thao tác tải payload lên bị automatic approval review từ chối vì chưa có ủy quyền rõ ràng cho công khai IPA dẫn xuất trên repo public. Chờ chủ dự án cho phép trước khi tiếp tục upload. Lệnh tải dưới đây chỉ hoạt động sau khi release được hoàn tất.
+**Giữ IPA riêng theo yêu cầu chủ dự án.** Không có payload IPA trên repo public; draft release trống đã được xóa. Tạo repo private qua kết nối GitHub bị từ chối với `403 Resource not accessible by integration`; cần chủ tài khoản tự tạo repo private và cho connector truy cập nếu muốn giao tệp qua GitHub.
 
-Tải source nhánh `route-342`, mở Terminal trong thư mục đó:
+IPA đang được giữ trong workspace: `/workspace/ios-private/DB2-Private-unsigned.ipa` (510.997.150 byte). Nếu tải nguyên tệp qua chat không hoạt động, có 21 phần riêng tại `/workspace/ios-private/release/`, chưa tải lên dịch vụ nào. Công cụ ghép chỉ đọc tệp cục bộ, không có thao tác truyền mạng:
 
 ```sh
-python3 Download-iOS.py
+python3 Assemble-iOS.py --parts THU_MUC_CAC_PHAN --output DB2-Private-unsigned.ipa
 ```
 
-Công cụ tải 21 phần từ [bản phát hành iOS thử nghiệm](https://github.com/j1dreamer/db2-private/releases/tag/ios-private-dev-20261125), kiểm SHA-256 từng phần rồi ghép thành `DB2-Private-unsigned.ipa` (510.997.150 byte). Chạy lại sẽ dùng các phần đã tải đúng. Không ghép thủ công hoặc đổi đuôi ZIP thành IPA.
+Thư mục phần cần có `manifest.json` và `part-000.bin` đến `part-020.bin`; công cụ kiểm checksum từng phần và toàn IPA. Chưa có URL tải các phần này từ GitHub. Không ghép thủ công hoặc đổi đuôi ZIP thành IPA.
 
 SHA-256 toàn IPA: `8653b63259b17b1645d290a4de304a4d4e45f5df66a2cc26f121b4290cf809e1`.
 
