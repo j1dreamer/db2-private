@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 246 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 96 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 246 luồng đã xác minh trên thiết bị.
-- Đã chạy 187 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
+- 257 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 85 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 257 luồng đã xác minh trên thiết bị.
+- Đã chạy 192 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
 
 ## Phần mới trong nhánh
 
@@ -118,3 +118,15 @@ Lịch tuần UTC+7: đăng ký từ Chủ nhật 00:00 đến thứ Tư 00:00; 
 Phần thưởng các mốc đi qua được gửi thư một lần cùng transaction với kết quả. Công việc chạy trễ được xử lý khi mở lại giải; server chỉ chờ tối đa 3 giây trong RPC, phần còn lại chạy nền. DTO chỉ công bố giai đoạn có dữ liệu đã commit. Lỗi worker không tạo kết quả hay phần thưởng, có thể thử lại. Giữ nhà vô địch gần nhất của từng bảng nếu mùa mới không có người chơi; cổ vũ mỗi bảng một lần/ngày, thưởng theo hàm cấp gốc. SQLite giữ mùa, báo cáo, dự đoán, thư và cờ đã trả thưởng; khởi động lại không phát lại.
 
 Bản server 246 dùng được giao thức APK phát triển mốc 228. APK này chưa được chạy trên thiết bị; không có bản iOS đã xây dựng.
+
+## Top 3v3: 11 route và giới hạn tài nguyên client
+
+Trong bundle đã giải mã có handler và bộ chọn ba đội; không có module màn Top 3v3 tương ứng. Vì vậy phần này là API có nghiệp vụ được kiểm thử, **chưa phải giao diện chế độ đã xây xong**. Không bật một màn không tồn tại bằng phản hồi rỗng.
+
+Giữ hằng số nguồn: cấp mở 40, ba đội không trùng tướng/đồng hành, 7 lượt ghép/ngày, tiền 97, bậc tại 0/11/21/31/41/61 điểm, 3 lượt tranh vị trí/ngày, danh sách ghế 1–10 theo bậc, bảo vệ 1 giờ, giá mua lượt và thưởng giờ/chốt mùa. Giá mua theo số thứ tự lượt mua 1–5 qua helper gốc: 50/60/80/100/100 tiền 97; giới hạn 5 lần/ngày là riêng. Không diễn giải phần tử 0 của bảng giá thành lượt miễn phí: helper gốc dùng phép `||`, giá trị 0 sẽ đi vào giá cuối bảng.
+
+Luật riêng: thắng trận ghép +3 điểm và 10 tiền 97, thua -1 điểm (sàn 0) và 5 tiền. Ghép người đã đăng ký cùng mùa có điểm gần nhất, bổ sung đủ 3 lựa chọn bằng trios luyện tập được ghi `privateSparring`, dùng thống kê Robot có sẵn; không giả làm người thật. Đội và seed được lưu trước trận, kiểm tra lại bằng engine best-of-three gốc; không tin `isWin`/map thắng do client gửi. Chỉ trừ lượt khi giao dịch kết quả thành công; run nhận một lần, hết hạn 15 phút. Mỗi người giữ tối đa một ghế; chuyển ghế chỉ được lên hạng cao hơn, thắng thì người cũ rời ghế, không tự được cấp ghế khác. Kiểm tra lại chủ ghế sau thời gian worker chạy.
+
+Chu kỳ riêng dùng ngày đầu 2024-01-01 UTC+7, tổng 18 ngày theo `RESET_DAYS=16`, `DELAY_DAYS=2`; đóng tranh đấu lúc 21:00 ngày hoạt động thứ 16, nghỉ đến đầu chu kỳ tiếp theo. Ghế tích lũy tiền theo **giờ tròn thực sự giữ**, trả thư gộp khi truy cập/chuyển chủ; phần giờ lẻ không trả. Thưởng chốt mùa cho chủ cuối, chống lặp qua SQLite. Mùa mới reset điểm/lượt và ghế, giữ tiền và cờ thưởng bậc đã nhận suốt tài khoản.
+
+Hàm `getFirstReachRewardDesc` nguồn tham chiếu 689–694, nhưng tra trực tiếp mọi bảng entity dùng bởi `inventory.entity` không tìm thấy các ID đó. Giữ tiền 97 lần lượt 500/700/1000/1300/1600/2000; thay phần thiếu bằng vé thường ×1/×2 rồi vé cao cấp ×1/×2/×3/×4. Đây là **thay thế riêng**, không phải phần thưởng gốc được phục hồi. Response ghi các ID thiếu ở `_temp.privateMissingOriginalRewardIds`; vật phẩm trả về đều có model trong client. Mỗi bậc nhận một lần, mở lại SQLite hoặc đổi mùa không cấp lại.

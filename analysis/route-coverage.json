@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 246,
-  "unsupported_routes": 96,
+  "implemented_routes": 257,
+  "unsupported_routes": 85,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -2765,79 +2765,101 @@
     },
     {
       "route": "logic.topArena3v3Handler.buyMatchTimes",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.challengeTop",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.challengeTopNull",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.defenseTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.info",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.match",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.receiveFirstReachReward",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.reportList",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.setDefenseTeamIndexsMap",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
       "device_verified": false
     },
     {
