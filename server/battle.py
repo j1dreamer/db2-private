@@ -3,6 +3,8 @@ import asyncio,json,shutil,subprocess,weakref
 from pathlib import Path
 from .profile import table
 from .state import integer
+from .inventory import active
+from .rules import constants
 WORKER=Path(__file__).with_name('battle_worker.cjs')
 
 def validate_team(player,indices,maximum=5):
@@ -21,18 +23,25 @@ def build_team(player,indices,ship_indices=None):
     ship_data={r['kindId']:r for r in table('ship')};ships=[];bonus={k:0 for k in ('hp','atk','def','mdef')}
     for idx in ship_indices:
         item=player['bag']['items'].get(str(idx))
-        if not item or item['kindId']not in ship_data:raise ValueError('Đồng hành không thuộc nhân vật')
+        if not item or item['kindId']not in ship_data or not active(item):raise ValueError('Đồng hành không thuộc nhân vật')
         row=ship_data[item['kindId']]
         for key in bonus:bonus[key]+=item.get('attr',{}).get(key,0)
         ships.append({'kindId':item['kindId'],'star':item.get('star',1),'level':item.get('level',1),'skill':{'kindId':row['skillId'],'level':item.get('skillLevel',1)}})
     roles=[];role_data={r['kindId']:r for r in table('role')}
+    suit_ids=constants('server.STAR_SIGN.CONSTS.ATTR_NAME_SUIT_SKILL_IDS_MAP');suits={key:0 for key in suit_ids if key not in ('skipHitRate','hitReduceMpRate','ignoreUnDeBuffRate')}
     for idx in indices:
         r=player['team']['roles'][idx];data=dict(r['attr'])
         for key in bonus:data[key]=data.get(key,0)+bonus[key]
         for key in ('skills','awakeSkills'):
             value=r[key];data[key]=list(value.values()) if isinstance(value,dict) else value
         data.update({key:r.get(key,default) for key,default in [('kindId',0),('idx',0),('level',1),('star',1),('awakeLevel',0),('trainLevelMap',{}),('evolveSkillIds',[]),('mp',0)]})
-        data['attr']=dict(r['attr']);data['evolveSkillCount']=len(r.get('evolveSkillIds',[]))
+        suit=r.get('equipments',{}).get('starSignSkillId')
+        if suit:
+            name=next((name for name,ids in suit_ids.items()if suit in ids),None)
+            if name not in suits or suits[name]<suit:
+                data['skills']=list(data['skills'])+[{'kindId':suit,'level':0}]
+                if name in suits:suits[name]=suit
+        data['attr']={**r['attr'],**{key:r['attr'].get(key,0)+value for key,value in bonus.items()}};data['evolveSkillCount']=len(r.get('evolveSkillIds',[]))
         roles.append(data)
     roles.sort(key=lambda r:role_data[r['kindId']]['positionPriority'])
     return {'playerId':player['id'],'roles':roles,'ships':ships,'skills':[]}

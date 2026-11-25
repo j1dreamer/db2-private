@@ -49,12 +49,18 @@ def model(kind,extra=None):
     if typ in ('artifact','fruit'):result.update(star=1,increaseTimes=0)
     elif typ=='ship':
         result.update(level=1,star=1,skillLevel=1,experience=0,nextLevelExp=next(r['shipExp']for r in table('experience')if r['level']==1))
+        ship_attrs(result)
     elif typ=='capsule':result.update(skillInfo=capsule_skills(kind),cacheSkillInfo={})
     elif typ=='starSign':result.update(level=1,attrValue=star_growth(row))
     if 'expireTime'in extra:
         if type(extra['expireTime'])is not int or extra['expireTime']<=0:raise ValueError('Hạn dùng không hợp lệ')
         result['expireTime']=extra['expireTime']
     return result
+
+def ship_attrs(item):
+    row=entity(item['kindId']);value=(100*(item['star']-1)+item['level'])*row['growth'];attrs={'hp':0,'atk':0,'def':0,'mdef':0}
+    for key in {1:('hp',),2:('atk',),3:('def','mdef')}[row['attrType']]:attrs[key]=value
+    item['attr']=attrs
 
 def insert(player,kind,count,extra=None):
     row=entity(kind);bag=player['bag'];limit=row.get('maxNum',-1)
@@ -83,5 +89,6 @@ def repair(player):
         if row['type']not in ('artifact','fruit','ship','capsule','starSign'):continue
         defaults=model(item['kindId'])
         for field,value in defaults.items():item.setdefault(field,value)
+        if row['type']=='ship':ship_attrs(item)
         if row['maxNum']==1 and item['count']>1:
             remaining=item['count']-1;item['count']=1;insert(player,item['kindId'],remaining,{'expireTime':item['expireTime']}if item.get('expireTime') else {})

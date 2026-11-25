@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=9
+SCHEMA_VERSION=10
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -17,7 +17,7 @@ def character(kind_id,idx,star=1):
     attrs.update({key:math.floor(role[key]) for key in ('hit','crit','dodge')})
     attrs.update({key:math.floor(role[key]*growth) for key in ('hpGrowth','atkGrowth','defGrowth','mdefGrowth')})
     equipment={f'evlItem_{i+1}':{'kindId':kind,'level':1} for i,kind in enumerate(role['initEvlItemIds'])}
-    return {'idx':idx,'kindId':kind_id,'level':1,'star':star,'experience':0,'nextLevelExp':exp['roleExp'],'attr':attrs,'initAttr':dict(attrs),'skills':[{'kindId':role['skillIds'][0],'level':1}],'awakeSkills':[],'awakeLevel':0,'awakeRateIncreaseTimes':0,'evolveSkillRateIncreaseTimes':0,'evolveSkillIds':[],'trainLevelMap':{},'trainUnlockMap':{},'skillLevels':{},'equipments':equipment,'power':0}
+    return {'idx':idx,'kindId':kind_id,'level':1,'star':star,'experience':0,'nextLevelExp':exp['roleExp'],'attr':attrs,'initAttr':dict(attrs),'skills':{str(role['skillIds'][0]):{'kindId':role['skillIds'][0],'level':1}},'awakeSkills':{},'awakeLevel':0,'awakeRateIncreaseTimes':0,'evolveSkillRateIncreaseTimes':0,'evolveSkillIds':[],'trainLevelMap':{},'trainUnlockMap':{},'soulLevelMap':{str(i):0 for i in range(1,10)},'skillLevels':{},'equipments':equipment,'power':0}
 def new_profile(pid,account,name,username):
     from .gameplay import point_default
     now=int(time.time()*1000)
@@ -27,6 +27,8 @@ def new_profile(pid,account,name,username):
     grant_starter_tickets(profile)
     from .shops import initialize
     initialize(profile)
+    from .progression import learn_skills,friendships
+    learn_skills(initial);friendships(profile)
     return profile
 
 def grant_starter_tickets(profile):
@@ -64,6 +66,8 @@ def upgrade_profile(data,account):
             template=character(role['kindId'],role['idx'],role.get('star',1))
             fill(role,template)
             if not role.get('skills'):role['skills']=template['skills']
+            for key in ('skills','awakeSkills'):
+                if isinstance(role.get(key),list):role[key]={str(item['kindId']):item for item in role[key]}
         except (KeyError,StopIteration):continue
     grant_starter_tickets(data)
     if not data.get('privateShopStockVersion'):

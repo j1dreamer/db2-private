@@ -9,12 +9,13 @@ from server.rank import ROUTES as RANK
 from server.shops import ROUTES as SHOP
 from server.chat import ROUTES as CHAT
 from server.bag_actions import ROUTES as BAG
+from server.team_actions import ROUTES as TEAM
 ROOT=Path(__file__).resolve().parent.parent
 CORE={'gate.gateHandler.queryEntry','connector.entryHandler.entry','connector.playerHandler.getPlayers','connector.playerHandler.createPlayer','connector.playerHandler.entry','logic.playerHandler.rename','logic.playerHandler.useGiftCode','logic.playerHandler.receiveActivityAward'}
 CORE|={'logic.pointHandler.'+name+suffix for name in ('normal','advanced') for suffix in ('','Ten','Hundred')}
 CORE|={'logic.pointHandler.switchAdvancedPool','logic.pointHandler.selectWishClassId'}
 def update():
-    groups=[(CORE,['tests/test_server.py','tests/test_gameplay.py','tests/test_client_models.py']),(ADVENTURE,['tests/test_adventure.py']),(PLAYER,['tests/test_player_actions.py']),(SOCIAL|MAIL,['tests/test_social_mail.py','tests/test_push.py']),(RANK,['tests/test_rank.py']),(SHOP,['tests/test_shops.py']),(CHAT,['tests/test_chat.py','tests/test_push.py']),(BAG,['tests/test_bag_actions.py'])]
+    groups=[(CORE,['tests/test_server.py','tests/test_gameplay.py','tests/test_client_models.py']),(ADVENTURE,['tests/test_adventure.py']),(PLAYER,['tests/test_player_actions.py']),(SOCIAL|MAIL,['tests/test_social_mail.py','tests/test_push.py']),(RANK,['tests/test_rank.py']),(SHOP,['tests/test_shops.py']),(CHAT,['tests/test_chat.py','tests/test_push.py']),(BAG,['tests/test_bag_actions.py']),(TEAM,['tests/test_team_actions.py'])]
     contracts=json.loads((ROOT/'analysis/route-contracts.json').read_text());implemented=set().union(*(routes for routes,tests in groups))
     rows=[]
     for item in contracts['contracts']:

@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 75 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 267 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 75 luồng đã xác minh trên thiết bị.
-- Đã chạy 87 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc.
+- 113 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 229 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 113 luồng đã xác minh trên thiết bị.
+- Đã chạy 93 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Một chuỗi kiểm thử gọi thành công đủ 38 route đội hình; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc.
 
 ## Phần mới trong nhánh
 
@@ -26,9 +26,11 @@ Dữ liệu nền: hồi thể lực/điểm kỹ năng theo timestamp, ngày se
 
 19 route túi đồ: bán, hợp thành tướng/đá/trang bị/đồng hành, nâng sao và tăng tỷ lệ, cấp/kỹ năng đồng hành, tái tạo/lưu/hợp capsule, nâng/phân giải tinh tú. Vật phẩm riêng lẻ có model và ô túi riêng; capsule có thuộc tính, tinh tú có cấp/giá trị và đồng hành có kinh nghiệm/kỹ năng. Vé/vật phẩm hết hạn không được dùng. Schema 9 sửa các stack riêng lẻ cũ, giữ số dư và các thuộc tính đã có.
 
+38 route đội hình: trang bị/tháo từng món hoặc tự chọn, nâng/tiến hóa chiêu thức, màu/sao/đột phá, kinh nghiệm, kỹ năng thường/thức tỉnh, tu luyện/reset, chiến hồn, duyên phận, tiến hóa kỹ năng và reset chiến binh. Schema 10 đổi kỹ năng thành map theo ID đúng consumer `skillItem`, không mất cấp đã nâng. Chi phí/giới hạn lấy từ hàm gốc qua `tools/extract_progression.py`. Hoàn tài nguyên dùng sổ đầu tư đã lưu, chỉ hoàn một lần. Các instance trang bị giữ nguyên thuộc tính khi tháo/lắp.
+
 ## Những phần cần chốt hoặc xác minh tiếp
 
-- Luật chưa có bằng chứng server gốc được ghi là chính sách riêng dự thảo. Số lượng rơi ải dùng `specifyDropValues`, phù hợp consumer `starSignSmapScene`; thời điểm/xác suất rơi của mọi loại ải chưa xác minh. Cửa hàng tính giá đơn vị nhân số lượng; refresh loại 14 dùng fallback gem do config gốc thiếu. Chu kỳ đồng hành tăng sao đặt lại cấp 1, giữ kỹ năng; chat giới hạn 200 UTF-16 unit/3 giây. Không coi các lựa chọn này là mã server gốc đã phục hồi. Giới hạn/chi phí có literal/function trong client được dùng theo nguồn.
+- Người dùng đã chọn dùng bảng/công thức gốc khi có và định nghĩa, ghi rõ luật riêng cho phần thiếu. Số lượng rơi ải dùng `specifyDropValues`, phù hợp consumer `starSignSmapScene`; thời điểm/xác suất rơi của mọi loại ải chưa xác minh. Cửa hàng tính giá đơn vị nhân số lượng; refresh loại 14 dùng fallback gem do config gốc thiếu. Chu kỳ đồng hành tăng sao đặt lại cấp 1, giữ kỹ năng; chat giới hạn 200 UTF-16 unit/3 giây. Bốn tinh tú cùng thuộc tính mở bộ yếu ở rarity tối thiểu 3, mạnh ở rarity 5. Tự trang bị chọn ô trống/món yếu nhất và không hạ chất lượng; reset hoàn những chi phí có sổ kể từ lúc triển khai, không bịa tài nguyên huấn luyện trước đó. Ghép thuộc tính cơ bản/trang bị/thức tỉnh là luật riêng dùng các giá trị gốc; công thức chiến đấu và tính power lấy từ client. Không coi các lựa chọn này là mã server gốc đã phục hồi.
 - Quảng cáo, nạp tiền, lịch/mùa giải và event có phần cấu hình ở server gốc. Chưa có bằng chứng/chứng từ thì không giả vờ xác nhận thanh toán/quảng cáo thành công.
 - Combat giờ cần Node.js trên máy chạy server (Termux: `pkg install nodejs`, Windows: Node.js LTS). Thiếu runtime thì route kết thúc trận báo lỗi, không phát thưởng không được kiểm tra. Chưa đóng gói APK mới của nhánh này.
 - Chưa xác nhận luồng phiêu lưu mới trên BlueStacks; headless replay không chứng minh mọi preload/animation/scene đều hoạt động.

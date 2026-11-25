@@ -49,6 +49,8 @@ def add_reward(player,reward):
         from .profile import character
         idx=max([int(k) for k in player['team']['roles']]+[0])+1
         player['team']['roles'][str(idx)]=character(entity,idx,int(reward['extra'].get('star',1)))
+        from .progression import learn_skills,recalculate
+        created=player['team']['roles'][str(idx)];learn_skills(created);recalculate(player,created)
         return {str(entity):count}
     from .inventory import insert
     insert(player,entity,count,reward.get('extra',{}))

@@ -2,7 +2,7 @@
 import math,secrets
 from .profile import table
 from .rules import constants
-from .inventory import entity,bag_item,capsule_skills,star_growth
+from .inventory import entity,bag_item,capsule_skills,star_growth,ship_attrs
 from .state import integer,consume,stack_count,snapshot,delta,vip_data
 from .gameplay import add_reward
 NAMES=('sell','composeRole','composeItem','composeArtifact','upgradeStarArtifact','increaseArtifactUpgradeStarSuccessRate','composeFruit','upgradeStarFruit','increaseFruitUpgradeStarSuccessRate','composeShip','addShipExperience','upgradeShip','upgradeShipStar','upgradeShipSkill','resetCapsule','saveResetCapsule','composeCapsule','upgradeStarSign','decomposeStarSign')
@@ -131,7 +131,7 @@ def handle(store,account,route,args):
             typ='artifact'if 'Artifact'in action else 'fruit';item=bag_item(p,args.get('bagIndex'),typ)
             temp.update(artifact_upgrade(p,item,typ,action.startswith('increase')))
         elif 'Ship'in action:
-            item=bag_item(p,args.get('bagIndex'),'ship');ship(p,item,action,args)
+            item=bag_item(p,args.get('bagIndex'),'ship');ship(p,item,action,args);ship_attrs(item)
         elif action in ('resetCapsule','saveResetCapsule'):
             item=bag_item(p,args.get('bagIndex'),'capsule')
             if action=='resetCapsule':

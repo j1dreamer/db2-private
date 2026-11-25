@@ -49,7 +49,8 @@ def delta(before,after,route,temp=None):
         elif key=='team':
             old=before['team']['roles'];new=after['team']['roles']
             roles={k:new.get(k) for k in old.keys()|new.keys() if old.get(k)!=new.get(k)}
-            if roles:result['team']={'roles':roles}
+            extras={key:after['team'][key]for key in ('friendshipAttr','titleAttr')if before['team'].get(key)!=after['team'].get(key)}
+            if roles or extras:result['team']={'roles':roles,**extras}
         elif after[key]!=before.get(key):
             if isinstance(after[key],dict) and isinstance(before.get(key),dict):
                 old=before[key];new=after[key]

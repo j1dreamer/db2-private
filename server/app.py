@@ -3,7 +3,7 @@ from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -151,6 +151,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 if action in ('switchAdvancedPool','selectWishClassId'):result=select_pool(store,uid,action,args)
                                 elif action in mapping:result=draw(store,uid,*mapping[action]);result['_temp']['route']=route
                                 else:raise ValueError('Thao tác pool chưa triển khai')
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in team_actions.ROUTES:
+                            try:result=team_actions.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in bag_actions.ROUTES:
                             try:result=bag_actions.handle(store,uid,route,args)

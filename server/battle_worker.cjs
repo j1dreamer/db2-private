@@ -19,6 +19,22 @@ function load(name){
 }
 load('dataApi').init();
 if(input.mode==='constants'){process.stdout.write(JSON.stringify({server:load('serverConfig'),client:load('clientConfig')}));process.exit(0);}
+if(input.mode==='progression'){
+ const cfg=load('serverConfig'),role=cfg.ROLE.FUNS;
+ const values={starCosts:Array.from({length:20},(_,i)=>role.getUpgradeCost(i)),awakeCosts:Array.from({length:20},(_,i)=>role.getAwakeCost(i)),maxLevels:Array.from({length:31},(_,i)=>role.getMaxLevel(100,i,0)),soulCosts:{},soulMaxLevels:{},powerFactors:{}};
+ for(const sp of [false,true]){values.soulCosts[+sp]={};for(let type=1;type<=9;type++)values.soulCosts[+sp][type]=Array.from({length:10},(_,i)=>role.getSoulCost(type,i+1,sp));}
+ for(let star=1;star<=20;star++)values.soulMaxLevels[star]=Object.fromEntries(Array.from({length:9},(_,i)=>[i+1,role.getSoulMaxLevel(i+1,50,star)]));
+ const base={hp:0,atk:0,def:0,mdef:0};
+ for(const key of new Set([...role.getPower.toString().matchAll(/e\.(\w+)/g)].map(m=>m[1])))values.powerFactors[key]=role.getPower({...base,[key]:1},0,0);
+ process.stdout.write(JSON.stringify(values));process.exit(0);
+}
+if(input.mode==='clientTeam'){
+ const source=fs.readFileSync(path.join(__dirname,'../client/main.decoded.js'),'utf8');
+ const start=source.indexOf('F.buildBattleTeam = function('),end=source.indexOf('F.buildBlessingSkills = function(',start);
+ if(start<0||end<0)throw Error('Missing original team builder');
+ const F={};vm.runInNewContext(source.slice(start,end),{F,t:load('underscore'),o:load('dataApi'),u:load('serverConfig'),l:{clone:x=>JSON.parse(JSON.stringify(x))}});
+ const p=input.player;process.stdout.write(JSON.stringify(F.buildBattleTeam(p.id,(input.shipIndices||[]).map(i=>p.bag.items[i]),input.indices.map(i=>p.team.roles[i]))));process.exit(0);
+}
 const main=load('battleMain'),fight=load('battle.fightHandler');
 main.rolesCount=input.team.roles.length;main.isAuto=!!input.auto;main.isInstant=true;main.isShow=false;
 main.battleType=load('battle.consts').BATTLE_TYPE.SMAP;

@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 75,
-  "unsupported_routes": 267,
+  "implemented_routes": 113,
+  "unsupported_routes": 229,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -2073,268 +2073,344 @@
     },
     {
       "route": "logic.teamHandler.equipAllArtifact",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipAllCapsule",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipAllStarSign",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipAllStone",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipArtifact",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipCapsule",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipStarSign",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipStone",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.evolveAllEquipment",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.evolveEquipment",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.evolveRole",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.evolveRoleSkill",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.increaseAwakeLevelUpgradeSuccessRate",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.increaseEvolveSkillSuccessRate",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.resetRole",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.resetRoleTrain",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.roleBreak",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.soulRole",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.trainRole",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipAllArtifact",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipAllCapsule",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipAllStarSign",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipAllStone",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipArtifact",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipCapsule",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipStarSign",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipStone",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unlockFriendship",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.unlockRoleTrain",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeAllEquipmentMax",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeEquipment",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeEquipmentMax",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeRoleAwakeLevel",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeRoleAwakeSkill",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeRoleSkill",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeRoleStar",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.useExpItem",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamHandler.useExpItemMax",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
       "device_verified": false
     },
     {

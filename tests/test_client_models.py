@@ -34,6 +34,7 @@ class ClientModelTests(unittest.TestCase):
   self.assertFalse(state['daily']['isCanReceiveTaskAward'])
   self.assertFalse(state['quick']['isNeedMark'])
   self.assertFalse(state['quick']['isMarkDailyTask'])
+  self.assertGreater(state['roleScenes'][0]['skillItems'][0]['costCoin'],0)
  def test_version_two_profile_migrates_before_home_generator(self):
   p=self.profile;p['profileSchemaVersion']=2
   for key in ('daily','dailyActivePoint','weeklyActivePoint','receivedPointMap'):p['task'].pop(key)

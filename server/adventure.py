@@ -82,14 +82,8 @@ def add_experience(player,amount,role_amount=0,indices=()):
         level=player['level'];player['actionPoint']+=20 if level<=7 else 30 if level<=11 else 40 if level<=20 else 60 if level<=30 else 80 if level<=40 else 100 if level<=50 else 120
     player['nextLevelExp']=levels[player['level']]['playerExp']
     for idx in indices:
-        role=player['team']['roles'][idx];role['experience']+=role_amount
-        # Recovered ROLE.FUNS.getMaxLevel: player <=10 permits five extra levels.
-        cap=player['level']+5 if player['level']<=10 else 20 if player['level']<20 else player['level']
-        while role['level']<cap and role['experience']>=levels[role['level']]['roleExp']:
-            role['experience']-=levels[role['level']]['roleExp'];role['level']+=1
-            for key,growth in (('hp','hpGrowth'),('atk','atkGrowth'),('def','defGrowth'),('mdef','mdefGrowth')):
-                role['attr'][key]+=role['attr'][growth];role['initAttr'][key]+=role['attr'][growth]
-        role['nextLevelExp']=levels[role['level']]['roleExp']
+        from .progression import role_exp,recalculate
+        role=player['team']['roles'][idx];role_exp(player,role,role_amount);recalculate(player,role)
 
 def begin(store,account,args):
     with store.transaction():
