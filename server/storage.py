@@ -47,6 +47,9 @@ class Store:
         CREATE TABLE IF NOT EXISTS tournament_worship(mode TEXT NOT NULL,theme INTEGER NOT NULL,day TEXT NOT NULL,player INTEGER REFERENCES players(id),level TEXT NOT NULL,champion INTEGER REFERENCES players(id),PRIMARY KEY(mode,theme,day,player,level));
         CREATE TABLE IF NOT EXISTS boss_damage(mode TEXT NOT NULL,day TEXT NOT NULL,scope INTEGER NOT NULL,bracket TEXT NOT NULL,player INTEGER REFERENCES players(id),damage REAL NOT NULL,info TEXT NOT NULL,PRIMARY KEY(mode,day,scope,bracket,player));
         CREATE TABLE IF NOT EXISTS boss_settlements(mode TEXT NOT NULL,day TEXT NOT NULL,scope INTEGER NOT NULL,bracket TEXT NOT NULL,player INTEGER REFERENCES players(id),rank INTEGER NOT NULL,PRIMARY KEY(mode,day,scope,bracket,player));
+        CREATE TABLE IF NOT EXISTS cooperative_teams(id INTEGER PRIMARY KEY AUTOINCREMENT,mode TEXT NOT NULL,day TEXT NOT NULL,status INTEGER NOT NULL,data TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS cooperative_scores(mode TEXT NOT NULL,period TEXT NOT NULL,player INTEGER REFERENCES players(id),score INTEGER NOT NULL,PRIMARY KEY(mode,period,player));
+        CREATE TABLE IF NOT EXISTS cooperative_awards(mode TEXT NOT NULL,period TEXT NOT NULL,team INTEGER NOT NULL,player INTEGER REFERENCES players(id),PRIMARY KEY(mode,period,team,player));
         CREATE TABLE IF NOT EXISTS island_scores(week TEXT NOT NULL,kind TEXT NOT NULL,player INTEGER REFERENCES players(id),score INTEGER NOT NULL,PRIMARY KEY(week,kind,player));
         CREATE TABLE IF NOT EXISTS island_awards(week TEXT NOT NULL,kind TEXT NOT NULL,player INTEGER REFERENCES players(id),PRIMARY KEY(week,kind,player));
         CREATE TABLE IF NOT EXISTS island_sessions(id INTEGER PRIMARY KEY AUTOINCREMENT,owner INTEGER REFERENCES players(id),guard INTEGER REFERENCES players(id),area INTEGER NOT NULL,resource INTEGER NOT NULL,ctime INTEGER NOT NULL,finish INTEGER NOT NULL,active INTEGER NOT NULL,claimed INTEGER NOT NULL,data TEXT NOT NULL);
@@ -131,7 +134,9 @@ class Store:
         from .guild_wars import refresh as refresh_wars
         changed=refresh_wars(self,data)or changed
         from .island import refresh as refresh_island
-        if refresh_island(self,data)or changed:self.save(data)
+        changed=refresh_island(self,data)or changed
+        from .cooperative import refresh as refresh_cooperative
+        if refresh_cooperative(self,data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

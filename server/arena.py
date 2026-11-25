@@ -139,7 +139,8 @@ async def handle(store,account,route,args):
         elif action=='report':
             rid=args.get('id')
             if not isinstance(rid,str):raise ValueError('ID báo cáo không hợp lệ')
-            row=store.db.execute("SELECT *FROM battle_reports WHERE id=?AND(attacker=?OR defender=?OR mode IN ('worshipBattle','doubleBattle'))",(rid,p['id'],p['id'])).fetchone()
+            row=store.db.execute("SELECT *FROM battle_reports WHERE id=?AND(attacker=?OR defender=?OR mode IN ('worshipBattle','doubleBattle','teamBattle','prestigeBattle'))",(rid,p['id'],p['id'])).fetchone()
             if not row:raise ValueError('Báo cáo không thuộc tài khoản')
             temp['report']=json.loads(row['data'])
+            if row['mode']in ('teamBattle','prestigeBattle')and str(p['id'])not in (set(temp['report']['attackTeam']['battleTeamMap'])|set(temp['report']['defenseTeam']['battleTeamMap'])):raise ValueError('Báo cáo không thuộc đội của bạn')
         store.save(p);return delta(before,p,route,temp)

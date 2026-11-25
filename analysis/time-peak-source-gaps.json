@@ -1,0 +1,11 @@
+{
+  "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
+  "maps": 46,
+  "tiles": 3742,
+  "enemy_id_references": 8300,
+  "enemy_ids_found_in_shipped_mob_table": 0,
+  "blessing_table_present": false,
+  "timePeakScene_module_present": false,
+  "map_title_example": "保卫木叶",
+  "note": "Actual decoded data includes old Naruto map text and unresolved enemy references. These cannot be described as a verified playable DB2 Time Peak mode."
+}

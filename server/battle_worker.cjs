@@ -45,6 +45,22 @@ if(input.mode==='clientTeam'){
  const p=input.player;process.stdout.write(JSON.stringify(F.buildBattleTeam(p.id,(input.shipIndices||[]).map(i=>p.bag.items[i]),input.indices.map(i=>p.team.roles[i]),null,input.hpMap,input.mpMap)));process.exit(0);
 }
 const main=load('battleMain'),fight=load('battle.fightHandler');
+if(input.mode==='cooperativeClient'){
+ const src=fs.readFileSync(path.join(__dirname,'../client/main.decoded.js'),'utf8');
+ const F={};const bs=src.indexOf('F.buildBattleTeam = function('),be=src.indexOf('F.buildBlessingSkills = function(',bs);
+ vm.runInNewContext(src.slice(bs,be),{F,t:load('underscore'),o:load('dataApi'),u:load('serverConfig'),l:{clone:x=>JSON.parse(JSON.stringify(x))}});F.getPreLoadInfos=()=>({});
+ const teamMode=input.cooperativeMode==='teamBattle';const name=teamMode?'teamBattleScene':'prestigeBattleScene';
+ const modStart=src.indexOf(name+': [ function(');const start=src.indexOf(teamMode?'onViewTeamChallenge_: function(a) {':'onSelectAttackTeamChallenge_: function(a) {',modStart);
+ const end=src.indexOf(teamMode?'\nonViewTeamClose_:':'\nonCreate_:',start);let method=src.slice(src.indexOf('function(',start),end).replace(/,\s*$/,'');
+ method=method.replace('for (var a, o, d = e._temp.attackTeamInfo,','for (var a = e._temp.seed, o, d = e._temp.attackTeamInfo,').replace('for (var k, f, b = {}, v = {}, S = {}, T = 1, M = {};','for (var k = e._temp.seed, f, b = {}, v = {}, S = {}, T = 1, M = {};');
+ let result;const api={choose:(a,b,cb)=>cb({_temp:{attackTeamInfo:JSON.parse(JSON.stringify(input.attack)),defenseTeamInfo:JSON.parse(JSON.stringify(input.defense)),seed:input.seed}}),challenge:(a,b,isWin,winPlayerIdMap,damageMapMap,seed)=>{result={isWin,winPlayerIdMap,damageMapMap,seed};}};
+ const sink={addLoading(){},removePanel(){},addHintPanel(){throw Error('Client rejected battle');}};
+ const ctx={e:load,t:load('underscore'),n:{clone:x=>JSON.parse(JSON.stringify(x))},r:sink,o:{t:x=>x},console:{log(){}},Date};
+ if(teamMode)Object.assign(ctx,{d:{player:{extra:{teamBattle:{myTeamInfos:[{...input.attack,attackTimes:0}]}}}},v:load('serverConfig').TEAM_BATTLE.CONSTS,u:api,b:F,l:main,s:load('battle.consts'),c:{}});
+ else Object.assign(ctx,{b:load('serverConfig').PRESTIGE_BATTLE.CONSTS,h:api,y:F});
+ vm.runInNewContext('('+method+')',ctx).call({viewTeamPanel:{}},{target:{data:teamMode?{defenderTeamId:input.defense.teamId}:{teamInfo:{...input.attack,attackTimes:0},defenderTeamId:input.defense.teamId}}});
+ if(!result)throw Error('No original cooperative challenge callback');process.stdout.write(JSON.stringify(result));process.exit(0);
+}
 if(input.mode==='expedition'){
  const trace={},useSkill=fight.useSkill;
  fight.useSkill=function(teamId,skillId){if(input.auto){const tick=this.area.timer.tickNumber;(trace[tick]||(trace[tick]=[])).push({teamId,skillId});}return useSkill.call(this,teamId,skillId);};

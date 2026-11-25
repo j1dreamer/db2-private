@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 304,
-  "unsupported_routes": 38,
+  "implemented_routes": 329,
+  "unsupported_routes": 13,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -2053,86 +2053,110 @@
     },
     {
       "route": "logic.prestigeBattleHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.createTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.dissolveTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.getInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.getReadyTeamInfos",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.joinTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.match",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.practice",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.rank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.removeTeamMember",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.setAutoPractice",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
@@ -2335,93 +2359,119 @@
     },
     {
       "route": "logic.teamBattleHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.createTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.dissolveTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.getInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.getReadyTeamInfos",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.joinTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.match",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.practice",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.rank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.refresh",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.removeTeamMember",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.setAutoPractice",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
       "device_verified": false
     },
     {

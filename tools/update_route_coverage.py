@@ -31,6 +31,7 @@ from server.top_arena import ROUTES as TOP_ARENA
 from server.resources import ROUTES as RESOURCES
 from server.guild_wars import ROUTES as GUILD_WARS
 from server.island import ROUTES as ISLAND
+from server.cooperative import ROUTES as COOPERATIVE
 ROOT=Path(__file__).resolve().parent.parent
 CORE={'gate.gateHandler.queryEntry','connector.entryHandler.entry','connector.playerHandler.getPlayers','connector.playerHandler.createPlayer','connector.playerHandler.entry','logic.playerHandler.rename','logic.playerHandler.useGiftCode','logic.playerHandler.receiveActivityAward'}
 CORE|={'logic.pointHandler.'+name+suffix for name in ('normal','advanced') for suffix in ('','Ten','Hundred')}
@@ -49,6 +50,7 @@ def update():
     groups.append((RESOURCES,['tests/test_resources.py']))
     groups.append((GUILD_WARS,['tests/test_guild_wars.py']))
     groups.append((ISLAND,['tests/test_island.py']))
+    groups.append((COOPERATIVE,['tests/test_cooperative.py']))
     contracts=json.loads((ROOT/'analysis/route-contracts.json').read_text());implemented=set().union(*(routes for routes,tests in groups))
     rows=[]
     for item in contracts['contracts']:

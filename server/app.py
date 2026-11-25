@@ -3,7 +3,7 @@ from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless,expedition,commerce,activities,tournaments,top_arena,resources,guild_wars,island
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless,expedition,commerce,activities,tournaments,top_arena,resources,guild_wars,island,cooperative
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -196,6 +196,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in eye.ROUTES:
                             try:result=await eye.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in cooperative.ROUTES:
+                            try:result=await cooperative.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in island.ROUTES:
                             try:result=await island.handle(store,uid,route,args)

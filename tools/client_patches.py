@@ -324,3 +324,30 @@ def patch_island_transport(text):
         if text.count(old)!=1:raise ValueError('Unexpected island transport/formula implementation')
         text=text.replace(old,new,1)
     return text
+
+
+def patch_cooperative_transport(text):
+    # Let original consumers run on their old object, then install authoritative
+    # state, so their local ++/--/array concatenation cannot apply twice.
+    for mode in ('teamBattle','prestigeBattle'):
+        begin=text.index(mode+'Handler: [ function(');end=text.index('cc._RF.pop();',begin)
+        part=text[begin:end]
+        part=part.replace('var t = a.exports, n = e("socket");','var t = a.exports, n = e("socket"), privateCooperativeServer = e("serverMain");',1)
+        import re
+        pattern=r'(\}, function\(([a-z])\) \{\n)([a-z]) && \3\(\2\);'
+        def replace(m):
+            arg,cb=m.group(2),m.group(3)
+            return m.group(1)+'try { '+cb+' && '+cb+'('+arg+'); } finally { if ('+arg+'._temp && '+arg+'._temp.canonicalState) privateCooperativeServer.player.extra.'+mode+' = '+arg+'._temp.canonicalState; }'
+        part,n=re.subn(pattern,replace,part)
+        if n!=(13 if mode=='teamBattle'else 12):raise ValueError('Unexpected cooperative callbacks: '+mode+' '+str(n))
+        text=text[:begin]+part+text[end:]
+    changes={
+        'for (var a, o, d = e._temp.attackTeamInfo,':'for (var a = e._temp.seed, o, d = e._temp.attackTeamInfo,',
+        'for (var k, f, b = {}, v = {}, S = {}, T = 1, M = {};':'for (var k = e._temp.seed, f, b = {}, v = {}, S = {}, T = 1, M = {};',
+        'i = e.guildId == c.player.guildId, r = [];':'i = !!e.guildId && e.guildId == c.player.guildId, r = [];',
+        'i.defenseTimesLabel.string = e.remainingPracticeTimes;':'i.defenseTimesLabel.string = i.data.remainingPracticeTimes;'
+    }
+    for old,new in changes.items():
+        if text.count(old)!=1:raise ValueError('Unexpected cooperative scene anchor: '+old)
+        text=text.replace(old,new,1)
+    return text
