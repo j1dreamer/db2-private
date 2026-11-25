@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=11
+SCHEMA_VERSION=12
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -25,6 +25,7 @@ def new_profile(pid,account,name,username):
     initial=character(100101,1)
     profile={'id':pid,'userId':account,'userName':username,'name':name,'serverId':1,'oldServerId':1,'level':1,'gem':50,'coin':0,'experience':0,'nextLevelExp':exp['playerExp'],'ctime':now,'upgradeTime':now,'power':0,'costGem':0,'signInDays':0,'signInTime':0,'guildId':0,'guildName':'','actionPoint':60,'skillPoint':10,'timesMaxMap':{'actionPoint':61,'skillPoint':10},'nextRecoverTimeMap':{'actionPoint':0,'skillPoint':0},'bag':{'lastIdx':0,'items':{}},'team':{'roles':{'1':initial},'friendshipAttr':{'hp':0,'atk':0,'def':0,'mdef':0},'titleAttr':{}},'vip':{'level':0,'topUpMoney':0,'topUpGem':0,'buyActionPointTimes':0,'buySkillPointTimes':0,'buyCoinTimes':0,'resetSmapTimesTimesMap':{},'buyMapType5Times':0},'shop':{'hideRoleClassIds':[],'hideShipClassIds':[],'refreshTimesMap':{str(i):0 for i in range(1,15)},'goodsMap':{str(i):({'1':{'entityId':20001,'moneyId':101,'count':1,'price':100,'isSaleOut':True,'requireVip':0,'shopType':1,'priority':1},'2':{'entityId':20002,'moneyId':101,'count':1,'price':100,'isSaleOut':True,'requireVip':0,'shopType':1,'priority':2}} if i==1 else {}) for i in range(1,15)}},'task':{'daily':{},'dailyActivePoint':0,'weeklyActivePoint':0,'receivedPointMap':{'daily':{},'weekly':{}},'main':{'1':{'taskId':0,'show':{},'isComplete':False}}},'endless':{'fruitMapPowerUp':0,'pursuitTeamMap':{},'fruitMapUseRolesNo':1,'starSignMapUseRolesNo':1},'smapStarMap':{'1':{'101':{}}},'smapTimesMap':{},'bmapBoxReceivedMap':{},'friendshipUnlockMap':{},'frameIds':[],'titleInfoMap':{},'chatSkinIds':[0],'isHideEqpt':False,'photoInfo':{'photoImgId':1001,'shipImgId':901},'arena':{'rank':0,'challengeCD':0,'remainingChallengeTimes':5},'arena3v3':{'rank':0,'challengeCD':0,'remainingChallengeTimes':5},'friend':{'list':[],'infoMap':{},'point':0,'count':0,'pointReceiveTimes':0},'activity':{'map':{},'scorePointInfoMap':{}},'extra':{'mails':[],'serverTime':now,'serverTimeStr':datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'openDays':1,'goodsList':{},'chat':{'worldList':[],'guildList':[],'allServerList':[]}},'point':point_default(),'profileSchemaVersion':SCHEMA_VERSION,'privateCompatibilityDraft':True}
     profile['vip']['topUpGem']=0;profile['honourPoint']=0;profile['honourReceivedMap']={}
+    profile['adViewTimeMap']={};profile['privateLocalBoosts']={}
     grant_starter_tickets(profile)
     from .shops import initialize
     initialize(profile)

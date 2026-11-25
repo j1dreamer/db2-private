@@ -3,7 +3,7 @@ from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -162,6 +162,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in online.ROUTES:
                             try:result=online.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in local_boosts.ROUTES:
+                            try:result=local_boosts.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route.startswith('logic.pointHandler.'):
                             from .gameplay import draw,select_pool

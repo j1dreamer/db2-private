@@ -36,27 +36,40 @@ def handle(store,account,route,args):
                 elif image not in p.get('chatSkinIds',[0]):raise ValueError('Chưa mở ngoại hình chat này')
                 p['photoInfo']['titleImgId' if action=='setTitleImg' else 'chatImgId']=image
         elif action in ('buyActionPoint','buySkillPoint','buyCoin'):
-            if args.get('isAd'):raise ValueError('Quảng cáo chưa có chứng từ xác nhận')
+            local_boost=args.get('isAd',False)
+            if type(local_boost)is not bool:raise ValueError('Chế độ nhận tài nguyên không hợp lệ')
+            if local_boost:
+                from .local_boosts import consume_boost
+                if action=='buySkillPoint':raise ValueError('Điểm kỹ năng không có lượt hỗ trợ')
+                consume_boost(p,7 if action=='buyActionPoint'else 8);temp['privateLocalReward']=True
             vip=vip_data(p)
             if action=='buyActionPoint':
                 count=p['vip'].get('buyActionPointTimes',0)
-                if count>=vip['buyActionPointTimes']:raise ValueError('Đã hết lượt mua thể lực')
+                if not local_boost and count>=vip['buyActionPointTimes']:raise ValueError('Đã hết lượt mua thể lực')
                 costs=[0,50,50,50,100,100,100,200,200,200,400]
-                consume(p,102,costs[min(count+1,len(costs)-1)]);p['vip']['buyActionPointTimes']=count+1;p['actionPoint']+=120
+                if not local_boost:consume(p,102,costs[min(count+1,len(costs)-1)]);p['vip']['buyActionPointTimes']=count+1
+                p['actionPoint']+=120
             elif action=='buySkillPoint':
                 count=p['vip'].get('buySkillPointTimes',0);costs=constants('server.PLAYER.CONSTS.BUY_SKILL_COST_GEMS')
                 if count>=len(costs)-1:raise ValueError('Đã hết lượt mua điểm kỹ năng')
                 consume(p,102,costs[count+1]);p['vip']['buySkillPointTimes']=count+1;p['skillPoint']+=constants('server.PLAYER.CONSTS.BUY_SKILL_POINT')
             else:
                 count=p['vip'].get('buyCoinTimes',0);costs=[0,10,20,20,20,40,40,40,40,40,100,100,100,100,100,100,100,100,100,100,200]
-                if count>=len(costs)-1:raise ValueError('Đã hết lượt mua vàng')
-                cost=costs[count+1];consume(p,102,cost);roll=secrets.randbelow(1000000)/1000000
+                if not local_boost and count>=len(costs)-1:raise ValueError('Đã hết lượt mua vàng')
+                cost=costs[min(count+1,len(costs)-1)]
+                if not local_boost:consume(p,102,cost)
+                roll=secrets.randbelow(1000000)/1000000
                 ratio=10 if roll<=.001 else 5 if roll<=.011 else 3 if roll<=.061 else 2 if roll<=.211 else 1
-                amount=math.floor((30000+100*p['level'])*cost**.35/2.23)*ratio;p['coin']+=amount;p['vip']['buyCoinTimes']=count+1
-                temp.update({'getCoin':amount,'ratio':ratio,'costGem':cost})
+                amount=math.floor((30000+100*p['level'])*cost**.35/2.23)*ratio;p['coin']+=amount
+                if not local_boost:p['vip']['buyCoinTimes']=count+1
+                temp.update({'getCoin':amount,'ratio':ratio,'costGem':0 if local_boost else cost})
             refresh_time(p)
         elif action=='signIn':
-            if args.get('isAd'):raise ValueError('Quảng cáo chưa có chứng từ xác nhận')
+            local_boost=args.get('isAd',False)
+            if type(local_boost)is not bool:raise ValueError('Chế độ điểm danh không hợp lệ')
+            if local_boost:
+                from .local_boosts import consume_boost
+                consume_boost(p,2);temp['privateLocalReward']=True
             from .gameplay import add_reward
             from .state import nested
             day=p['privateDay']
@@ -66,6 +79,7 @@ def handle(store,account,route,args):
             if not entry:raise ValueError('Đã nhận hết lịch điểm danh hiện tại')
             rewards={}
             multiplier=2 if entry['doubleVip'] and p['vip']['level']>=entry['doubleVip'] else 1
+            if local_boost:multiplier*=2
             for text in entry['dropListDesc'].split(','):
                 raw,count=text.split('x');parts=raw.split('_');extra={}
                 if len(parts)==3:extra[parts[1]]=int(parts[2])

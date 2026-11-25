@@ -79,14 +79,22 @@ def handle(store,account,route,args):
         p=store.player(account)
         if not p:raise ValueError('Chưa có nhân vật')
         before=snapshot(p)
+        local_boost=False
         if route.endswith('receiveTaskAward'):
-            if args.get('isAd'):raise ValueError('Phần thưởng quảng cáo chưa được bật cho nhiệm vụ này')
+            local_boost=args.get('isAd',False)
+            if type(local_boost)is not bool:raise ValueError('Chế độ thưởng nhiệm vụ không hợp lệ')
             tid=integer(args.get('taskId'),'Nhiệm vụ',1);row=next((row for row in table('task')if row['kindId']==tid),None)
             if not row or row['type']not in (1,2,3):raise ValueError('Nhiệm vụ không tồn tại')
             group={1:'main',2:'daily',3:'achievement'}[row['type']];current=p['task'][group].get(str(row['groupId']))
             if not current or current['taskId']!=tid or not current['isComplete']:raise ValueError('Nhiệm vụ chưa hoàn thành hoặc đã nhận')
+            if local_boost:
+                if row['type']!=2:raise ValueError('Lượt hỗ trợ chỉ áp dụng nhiệm vụ hằng ngày')
+                from .local_boosts import consume_boost
+                consume_boost(p,6)
             scope=p['privateDay']if row['type']==2 else '*';store.db.execute('INSERT INTO task_claims VALUES(?,?,?)',(p['id'],tid,scope))
-            rewards=grant(p,description(row['dropListDesc']));points=row.get('activePoint')or 0
+            entries=description(row['dropListDesc'])
+            if local_boost:entries=[{**entry,'count':entry['count']*2}for entry in entries]
+            rewards=grant(p,entries);points=(row.get('activePoint')or 0)*(2 if local_boost else 1)
             p['task']['dailyActivePoint']+=points;p['task']['weeklyActivePoint']+=points;p['task']['achievementPoint']+=row.get('achievementPoint')or 0
         else:
             typ=args.get('type');point=integer(args.get('point'),'Mốc hoạt động',1,100000)
@@ -95,4 +103,4 @@ def handle(store,account,route,args):
             if not reward or p['task'][typ+'ActivePoint']<point or claimed.get(str(point)):raise ValueError('Chưa đạt mốc hoặc đã nhận thưởng')
             rewards=grant(p,description(reward));claimed[str(point)]=True
         refresh(store,p);store.save(p);store.audit('task_reward',{'player':p['id'],'route':route})
-        return delta(before,p,route,{'entityCountMap':rewards})
+        return delta(before,p,route,{'entityCountMap':rewards,'privateLocalReward':local_boost})

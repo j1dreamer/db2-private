@@ -182,7 +182,8 @@ def receive_box(store,account,args):
         return delta(before,p,'logic.smapHandler.receiveBmapAward',{'entityCountMap':entities})
 
 def reset(store,account,args):
-    if args.get('isAd'):raise ValueError('Quảng cáo chưa có chứng từ xác nhận')
+    local_boost=args.get('isAd',False)
+    if type(local_boost)is not bool:raise ValueError('Chế độ đặt lại không hợp lệ')
     with store.transaction():
         p=store.player(account);before=snapshot(p);bmap,smap=map_info(args.get('smapId'))
         check_open(p,bmap,smap)
@@ -190,10 +191,14 @@ def reset(store,account,args):
         maximum,current=limit(p,bmap,smap)
         if current<maximum:raise ValueError('Chỉ đặt lại khi đã hết lượt')
         counters=nested(p['vip'].setdefault('resetSmapTimesTimesMap',{}),bmap['type'],bmap['kindId']);key=str(smap['kindId']);times=counters.get(key,0)
-        if times>=vip_data(p)['resetSmapTimesTimes']:raise ValueError('Đã hết quyền đặt lại hôm nay')
-        costs=constants('server.MAP.CONSTS.RESET_SMAP_COST_GEMS');consume(p,102,costs[min(times+1,len(costs)-1)])
-        counters[key]=times+1;nested(p['smapTimesMap'],bmap['type'],bmap['kindId'])[key]=0;store.save(p)
-        return delta(before,p,'logic.smapHandler.resetSmapTimes')
+        if local_boost:
+            from .local_boosts import consume_boost
+            consume_boost(p,1)
+        else:
+            if times>=vip_data(p)['resetSmapTimesTimes']:raise ValueError('Đã hết quyền đặt lại hôm nay')
+            costs=constants('server.MAP.CONSTS.RESET_SMAP_COST_GEMS');consume(p,102,costs[min(times+1,len(costs)-1)]);counters[key]=times+1
+        nested(p['smapTimesMap'],bmap['type'],bmap['kindId'])[key]=0;store.save(p)
+        return delta(before,p,'logic.smapHandler.resetSmapTimes',{'privateLocalReward':local_boost})
 
 def buy_type5(store,account,args):
     with store.transaction():

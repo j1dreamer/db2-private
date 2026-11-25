@@ -79,6 +79,7 @@ def refresh_time(player,now=None):
             player['smapTimesMap']={};player['point']['dailyNormalUseGemTimes']=0
             player['task']['dailyActivePoint']=0;player['task']['receivedPointMap']['daily']={}
             player['arena']['remainingChallengeTimes']=5;player['arena']['maxChallengeTimes']=5
+            player['adViewTimeMap']={};player['privateLocalBoosts']={}
     week=datetime.date.fromisoformat(today).isocalendar()[:2];week_key=str(week[0])+'-'+str(week[1])
     if player.get('privateTaskWeek')!=week_key:
         if player.get('privateTaskWeek'):

@@ -46,7 +46,12 @@ def star_growth(row):
 
 def model(kind,extra=None):
     row=entity(kind);extra=extra or {};result={'kindId':kind,'count':1};typ=row['type']
-    if typ in ('artifact','fruit'):result.update(star=1,increaseTimes=0)
+    if kind==351:
+        config=extra.get('privateBoxConfig')or {'kindName':'Private reward box','desc':'Private server reward: 1,000 coin.','imgId':351,'color':7,'dropListDesc':'101x1000'}
+        required=('kindName','desc','imgId','color')
+        if not isinstance(config,dict)or any(key not in config for key in required)or not (config.get('dropListDesc')or config.get('rdDropListDesc')):raise ValueError('Cấu hình rương riêng không hợp lệ')
+        result.update({key:config[key]for key in ('kindName','desc','imgId','color','dropListDesc','rdDropListDesc','selectCount')if key in config})
+    elif typ in ('artifact','fruit'):result.update(star=1,increaseTimes=0)
     elif typ=='ship':
         result.update(level=1,star=1,skillLevel=1,experience=0,nextLevelExp=next(r['shipExp']for r in table('experience')if r['level']==1))
         ship_attrs(result)
@@ -71,6 +76,10 @@ def insert(player,kind,count,extra=None):
     row=entity(kind);bag=player['bag'];limit=row.get('maxNum',-1)
     if limit==1 and count>1000:raise ValueError('Quá nhiều vật phẩm riêng lẻ')
     extra=extra or {}
+    if kind==351 and 'id'in extra:
+        config=player['shop'].get('randomBoxList',{}).get(str(extra['id']))
+        if not config:raise ValueError('Mã cấu hình rương riêng không tồn tại')
+        extra={**extra,'privateBoxConfig':config}
     while count:
         existing=next((item for item in bag['items'].values()if item['kindId']==kind and active(item) and item.get('expireTime')==extra.get('expireTime') and (limit<0 or item['count']<limit)),None)
         if existing:
@@ -91,7 +100,7 @@ def repair(player):
     bag=player['bag']
     for key,item in list(bag['items'].items()):
         row=entity(item['kindId'])
-        if row['type']not in ('artifact','fruit','ship','capsule','starSign'):continue
+        if row['type']not in ('artifact','fruit','ship','capsule','starSign')and item['kindId']!=351:continue
         defaults=model(item['kindId'])
         for field,value in defaults.items():item.setdefault(field,value)
         if row['type']=='ship':ship_attrs(item)
