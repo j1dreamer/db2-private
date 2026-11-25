@@ -100,3 +100,15 @@ Công cụ backup dùng SQLite backup API, gồm dữ liệu đã commit trong W
 Repository chứa server, bảng dữ liệu, JavaScript client đã khôi phục, các kiểm thử và công cụ đóng gói. Không chứa database người chơi, token quản trị, khóa ký riêng hoặc APK. Source client và asset trích xuất do người dùng cung cấp; không có tuyên bố cấp lại giấy phép cho các thành phần đó.
 
 Để dùng riêng công cụ tách module bằng AST, cần Node và chạy `npm --prefix tools/js-parser ci` trước. Backend không cần Node hoặc Java; Java chỉ cần khi ký APK.
+
+## Tải APK đã ký trên PC
+
+Windows có Python 3: nhấp đúp **Download-APK.bat** trong thư mục repo. Hoặc chạy:
+
+```sh
+python tools/download_apk.py
+```
+
+Công cụ tải 25 phần từ nhánh `apk-download`, kiểm tra SHA-256 từng phần, ghép thành **DB2-Private-Android-dev.apk** và kiểm tra checksum toàn file. Không build/ký lại APK. Nếu mất mạng, chạy lại để tiếp tục các phần còn thiếu. Cần khoảng 1 GB trống cho phần tải và APK hoàn chỉnh.
+
+Nếu không dùng Python, tải ZIP của nhánh `apk-download`, giải nén và nhấp **join-apk.bat** trên Windows để ghép bằng lệnh có sẵn của hệ điều hành.

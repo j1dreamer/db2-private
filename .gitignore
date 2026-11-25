@@ -10,3 +10,6 @@ node_modules/
 *.db
 *.jks
 *.apk
+.release/
+.db2-apk-parts/
+*.assembling
