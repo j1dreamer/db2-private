@@ -9,7 +9,7 @@ Backend Python + SQLite, web quản trị và công cụ đóng gói client Andr
 - Đã có: đăng ký/đăng nhập tài khoản riêng, session 24 giờ, Pomelo handshake/heartbeat, gate/connector, tạo/chọn nhân vật theo schema dự thảo, đổi giftcode, web quản trị có token, tạo giftcode, cấp gem, pool gacha tùy chỉnh và lưu lịch event.
 - Đã kiểm thử giao thức và SQLite qua mạng loopback.
 - Chưa có: xác minh profile đủ trường để vào sảnh trên thiết bị, toàn bộ 342 route gameplay, tích hợp các event tùy ý vào UI event gốc.
-- APK thử nghiệm đã đổi endpoint và bỏ đường đăng nhập SDK ở JavaScript; chưa kiểm thử trên thiết bị. Mã SDK Java vẫn còn trong gói.
+- Người dùng đã cài APK trên BlueStacks và tới cảnh sảnh; phát hiện lỗi khởi tạo dữ liệu sảnh. Schema 3 sửa lỗi này ở server, cần xác nhận lại trên thiết bị. Mã SDK Java vẫn còn trong gói.
 - Các thao tác chưa triển khai trả lỗi rõ ràng; không giả lập thành công.
 
 ## Chạy
@@ -74,13 +74,13 @@ Sao lưu khi server đã dừng, hoặc dùng SQLite backup API; không sao ché
 
 Linux x86_64, Python 3.12, Node 24 (chỉ dùng cho test codec gốc), Java 21. Chưa chạy trên Termux, Windows, macOS hoặc Android thật. Backend được viết đa nền tảng; đây chưa phải xác nhận mọi nền tảng đã được thử.
 
-21 kiểm thử backend/codec đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
+30 kiểm thử backend/codec/đóng gói và dữ liệu client đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
 
 ## Đối chiếu với JavaScript gốc
 
-Bộ kiểm thử chạy các constructor Player/Bag/Team và các hàm sinh dữ liệu pointScene, roleItem, teamScene, eqptScene, itemItem từ client gốc. Lớp dataApi khởi tạo bằng cả 34 bảng dữ liệu đã trích. Các phụ thuộc giao diện/mạng được stub; các kiểm thử này không dựng màn hình và không xác nhận game vào sảnh trên Android.
+Bộ kiểm thử chạy các constructor Player/Bag/Team và các hàm sinh dữ liệu pointScene, roleItem, teamScene, eqptScene, itemItem, dailyTaskPanel và homeScene cùng các panel mà homeScene gọi từ client gốc. Lớp dataApi khởi tạo bằng cả 34 bảng dữ liệu đã trích. Các phụ thuộc giao diện/mạng được stub; các kiểm thử này không dựng màn hình và không xác nhận game vào sảnh trên Android.
 
-Đã kiểm tra vé biến mất sau khi dùng, số gem/hồn tướng sau hai lượt quay khớp DB, sáu trang bị ban đầu và dữ liệu tình bạn được hàm client chấp nhận. Profile schema 2 bổ sung các trường còn thiếu cho bản phát triển trước, giữ số dư và roster hiện có. Một số trường/giá trị vẫn là dữ liệu khởi tạo dự thảo; cửa hàng và nhiệm vụ chưa triển khai. Hai mục cửa hàng ban đầu được đánh dấu hết hàng để hàm tạo badge trên sảnh không đọc danh sách trống.
+Đã kiểm tra vé biến mất sau khi dùng, số gem/hồn tướng sau hai lượt quay khớp DB, sáu trang bị ban đầu và dữ liệu tình bạn được hàm client chấp nhận. Profile schema 3 bổ sung các trường còn thiếu cho bản phát triển trước, giữ số dư và roster hiện có. Một số trường/giá trị vẫn là dữ liệu khởi tạo dự thảo; cửa hàng và nhiệm vụ chưa triển khai. Hai mục cửa hàng ban đầu được đánh dấu hết hàng để hàm tạo badge trên sảnh không đọc danh sách trống.
 
 Phân tích AST xác định **319 module ở bảng ngoài**. Các thống kê regex trước có lẫn module lồng trong thư viện. Công cụ `tools/split_bundle.py` gọi Node/Acorn chỉ phục vụ phát triển; backend không cần Node.
 
@@ -123,6 +123,12 @@ Sau khi zipalign và ký, phải chạy `python tools/verify_apk.py FILE.apk` b�
 - APK sửa SHA-256: `d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f`.
 - Bản vá chỉ sao chép các vùng byte không đổi và thay những vùng đã sửa/ký; kiểm tra checksum nguồn và đầu ra, giữ nguyên APK cũ.
 - `tools/download_apk.py` hiện tự áp dụng bản vá sau khi tải/ghép APK nền.
-- 27 kiểm thử backend/codec/đóng gói/bản vá đã pass; vẫn cần kiểm thử cài và vào sảnh trên Android/BlueStacks.
+- 30 kiểm thử backend/codec/đóng gói/bản vá và dữ liệu sảnh đã pass; bản sửa schema 3 vẫn cần xác nhận sảnh hiển thị đúng trên Android/BlueStacks.
 
 Bản vá Windows dùng PowerShell có sẵn; không đổi execution policy. Đã chạy thử thuật toán PowerShell trên cùng APK gốc và xác nhận đầu ra khớp SHA-256 bản sửa đã ký. File `Apply-Fix-Python.bat` là lựa chọn thay thế khi có Python.
+
+## Sửa lỗi sảnh đầy icon mặc định (schema 3)
+
+Log trên BlueStacks báo `Cannot read property 'daily' of undefined` trong `dailyTaskPanel.genData`. Server thiếu `task.receivedPointMap`, làm luồng khởi tạo sảnh dừng trước khi ẩn event và cập nhật thông tin người chơi. Hàm tạo dữ liệu `homeScene.genData` còn đọc `activity.scorePointInfoMap` cho event cung hoàng đạo. Schema 3 bổ sung hai cấu trúc này, dữ liệu nhiệm vụ ngày/tuần và bộ đếm điểm danh. Nhân vật schema 2 trở xuống được bổ sung trường khi tải từ SQLite, giữ nguyên tiền, tướng và tiến trình đã có.
+
+Dừng server rồi cập nhật source (hoặc chỉ thay `server/profile.py` từ main), chạy lại `start.bat`/`python start.py`, thoát hẳn game và mở lại. Không cần thay APK hay xóa database. Bộ kiểm thử chạy chính hàm gốc `homeScene.genData`, kiểm tra tên/VIP, các cờ ẩn event và việc nâng cấp nhân vật cũ; không dựng giao diện Cocos.

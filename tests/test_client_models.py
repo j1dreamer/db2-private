@@ -11,8 +11,8 @@ class ClientModelTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.store=Store(Path(self.tmp.name)/'db');self.store.register('tester','password');self.profile=self.store.create_player(1,'Goku')
  def tearDown(self):self.store.db.close();self.tmp.cleanup()
- def client(self,profile,deltas):
-  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True}),text=True,capture_output=True,check=True)
+ def client(self,profile,deltas,check_home=False):
+  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True,'checkHome':check_home}),text=True,capture_output=True,check=True)
   return json.loads(result.stdout)
  def test_initial_profile_constructs_original_models(self):
   state=self.client(self.profile,[])
@@ -22,6 +22,31 @@ class ClientModelTests(unittest.TestCase):
   self.assertEqual(len(state['teamItems'][0]['itemItems']),6)
   self.assertGreater(len(state['friendship']['friendshipItems']),0)
   self.assertEqual(state['teamItems'][0]['classId'],1)
+ def test_home_generator_hides_absent_events_and_reads_daily_state(self):
+  state=self.client(self.profile,[],check_home=True)
+  self.assertEqual(state['home']['playerName'],'Goku')
+  self.assertEqual(state['home']['vip'],0)
+  for key in ('isShowFirstTopUp','isHaveCarnival','isHaveCarnival2','isShowAcePack','isShowDreamActivity'):
+   self.assertFalse(state['home'][key],key)
+  self.assertIsNone(state['home']['starSignPointPanel'])
+  self.assertEqual(state['daily']['receivedPointMap'],{'daily':{},'weekly':{}})
+  self.assertFalse(state['daily']['isCanReceiveTaskAward'])
+ def test_version_two_profile_migrates_before_home_generator(self):
+  p=self.profile;p['profileSchemaVersion']=2
+  for key in ('daily','dailyActivePoint','weeklyActivePoint','receivedPointMap'):p['task'].pop(key)
+  p['activity'].pop('scorePointInfoMap');p.pop('signInDays');p.pop('signInTime')
+  p['gem']=789;self.store.save(p)
+  migrated=self.store.player(1);state=self.client(migrated,[],check_home=True)
+  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],3)
+  self.assertEqual(state['home']['playerName'],'Goku')
+ def test_migration_preserves_existing_task_rewards_and_activity_state(self):
+  p=self.profile;p['profileSchemaVersion']=2
+  p['task']['receivedPointMap']['daily']={'20':True};p['task']['dailyActivePoint']=20
+  p['activity']['scorePointInfoMap']={'custom':{'score':123}}
+  self.store.save(p);migrated=self.store.player(1)
+  self.assertEqual(migrated['task']['receivedPointMap']['daily'],{'20':True})
+  self.assertEqual(migrated['task']['dailyActivePoint'],20)
+  self.assertEqual(migrated['activity']['scorePointInfoMap']['custom']['score'],123)
  def test_consumed_ticket_removed_by_original_client(self):
   p=self.profile;p['bag']={'lastIdx':1,'items':{'1':{'kindId':119,'idx':1,'count':1}}};self.store.save(p)
   response=draw(self.store,1,'normal',1);state=self.client(p,[response]);persisted=self.store.player(1)
