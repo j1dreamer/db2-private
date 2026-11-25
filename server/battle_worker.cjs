@@ -74,8 +74,8 @@ if(input.mode==='bestOfThree'||input.mode==='series'){
  }
  process.stdout.write(JSON.stringify({isWin:wins===needed,rounds}));process.exit(0);
 }
-if(input.mode==='pvp'||input.mode==='practice'){
- const outcome=input.mode==='practice'?main.practiceBattleInstant(input.team,input.defender,input.seed||1):main.pkBattleInstant(input.team,input.defender,input.seed||1);
+if(input.mode==='pvp'||input.mode==='practice'||input.mode==='island'){
+ const outcome=input.mode==='island'?main.islandBattleInstant(input.team,input.defender,input.seed||1):input.mode==='practice'?main.practiceBattleInstant(input.team,input.defender,input.seed||1):main.pkBattleInstant(input.team,input.defender,input.seed||1);
  process.stdout.write(JSON.stringify({...outcome,diedNum:main.diedNum,tickNumber:fight.area.timer.tickNumber,damageMap:main.damageMap,attacker:fight.team1,defender:fight.team2}));process.exit(0);
 }
 main.rolesCount=input.team.roles.length;main.isAuto=!!input.auto;main.isInstant=true;main.isShow=false;

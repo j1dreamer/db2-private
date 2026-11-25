@@ -128,7 +128,9 @@ async def handle(store,account,route,args):
             for key,pid in zip(('smaller','middle','larger'),chosen):
                 other,rank=participant(store,pid);temp[key]={**public(other),'rank':rank,'totalPower':other['power']}
         elif action=='defenseTeam':
-            pid=integer(args.get('playerId'),'Đối thủ',-10000,10**9);other,rank=participant(store,pid);temp['defenseTeam']=raw_team(other)
+            pid=integer(args.get('playerId'),'Đối thủ',-10000,10**9)
+            other,rank=(profile_by_id(store,pid),0)if args.get('isShow')is True and pid>0 else participant(store,pid)
+            temp['defenseTeam']={**public(other),**raw_team(other),'totalPower':sum(r.get('power',0)for r in raw_team(other)['roles']),'rank':rank}
         elif action=='reportList':
             rows=store.db.execute('SELECT * FROM battle_reports WHERE mode=? AND(attacker=?OR defender=?)ORDER BY rowid DESC LIMIT 50',('arena',p['id'],p['id'])).fetchall();logs=[]
             for row in rows:

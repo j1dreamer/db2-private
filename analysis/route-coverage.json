@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 289,
-  "unsupported_routes": 53,
+  "implemented_routes": 304,
+  "unsupported_routes": 38,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -1269,107 +1269,137 @@
     },
     {
       "route": "logic.islandHandler.buyChallengeTimes",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.defenseTeam",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.earlySettlement",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.enemyList",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.help",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.match",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.myIslandList",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.practice",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.report",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.reportList",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.reviveRole",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.setNeedHelp",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.islandHandler.settlement",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
       "device_verified": false
     },
     {

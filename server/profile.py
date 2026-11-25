@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=25
+SCHEMA_VERSION=26
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -54,6 +54,8 @@ def new_profile(pid,account,name,username):
     refresh_resources(None,profile)
     from .guild_wars import refresh as refresh_wars
     refresh_wars(None,profile)
+    from .island import refresh as refresh_island
+    refresh_island(None,profile)
     grant_starter_tickets(profile)
     from .shops import initialize
     initialize(profile)

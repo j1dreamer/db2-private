@@ -313,3 +313,14 @@ def patch_guild_war_transport(text):
         if section.count(old)!=1:raise ValueError('Unexpected guild war attempt callback')
         section=section.replace(old,new,1);text=text[:begin]+section+text[end:]
     return text
+
+
+def patch_island_transport(text):
+    changes={
+        'h = d.islandBattleInstant(l.clone(i), l.clone(o)),':'h = d.islandBattleInstant(l.clone(i), l.clone(o), e._temp.seed),',
+        's = l.ISLAND.FUNS.getAreaId(e.playerId),':'s = l.ISLAND.FUNS.getAreaId(e.playerLevel),'
+    }
+    for old,new in changes.items():
+        if text.count(old)!=1:raise ValueError('Unexpected island transport/formula implementation')
+        text=text.replace(old,new,1)
+    return text
