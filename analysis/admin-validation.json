@@ -1,0 +1,44 @@
+{
+  "backend_full_suite": {
+    "tests": 251,
+    "passed": 251,
+    "failed": 0,
+    "seconds": 296.474
+  },
+  "final_liveops_regression_suite": {
+    "tests": 13,
+    "passed": 13,
+    "failed": 0,
+    "seconds": 4.064
+  },
+  "browser": {
+    "flows": 20,
+    "passed": true,
+    "javascript_errors": [],
+    "viewports": {
+      "desktop": [
+        1440,
+        1000
+      ],
+      "mobile": [
+        390,
+        844
+      ]
+    },
+    "dataset": "isolated temporary SQLite"
+  },
+  "item_catalog": {
+    "definitions": 2845,
+    "mapped_icons": 2845,
+    "unique_pngs": 1083,
+    "source": "authorized Android archive",
+    "png_chunk_crc_verified": true
+  },
+  "system_event_editors": 17,
+  "existing_player_data_backup": true,
+  "existing_inventory_team_and_currency_invariants_preserved": true,
+  "live_vm_service_port": 20003,
+  "authenticated_live_admin_smoke_passed": true,
+  "external_http_preview_configured": false,
+  "native_device_playtest": false
+}

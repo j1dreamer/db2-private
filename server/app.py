@@ -24,6 +24,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     app[web.AppKey('store',Store)]=store
     live={};mail_seen={};selected_players={};notification_lock=asyncio.Lock();notification_task=None
     war_maintenance_task=None
+    liveops_task=None
     # Offline users load durable state on login; stale pre-restart pushes must not
     # be delivered again after that full snapshot.
     store.db.execute('DELETE FROM notifications')
@@ -62,8 +63,13 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                 except (ValueError,sqlite3.IntegrityError)as exc:store.audit('guild_war_maintenance_error',{'mode':mode,'error':str(exc)[:500]})
             start_notifications()
             await asyncio.sleep(30)
+    async def liveops_maintenance():
+        while True:
+            control.tick()
+            await asyncio.sleep(10)
     async def start_war_maintenance(app):
-        nonlocal war_maintenance_task
+        nonlocal war_maintenance_task,liveops_task
+        liveops_task=asyncio.create_task(liveops_maintenance())
         war_maintenance_task=asyncio.create_task(maintain_guild_wars())
     app.on_startup.append(start_war_maintenance)
     async def health(req):return web.json_response({'status':'ok','stage':'protocol-development','playable_verified':False,'build':'route-342-development','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
@@ -85,52 +91,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
         return web.json_response({'code':200})
     async def notice(req):return web.json_response({'title':'DB2 Private','content':'Server thử nghiệm tương thích client.'})
     async def admin_page(req):return web.FileResponse(ROOT/'web/index.html',headers={'Cache-Control':'no-store'})
-    async def admin(req):
-        supplied=req.headers.get('Authorization','')
-        if not hmac.compare_digest(supplied,'Bearer '+token):raise web.HTTPUnauthorized()
-        if req.method=='GET':
-            if req.path=='/admin/catalog':
-                from .gameplay import rows
-                query=req.query.get('q','').casefold()[:80];items={r['kindId']:r for name in ('entity','entityExt') for r in rows(name)}
-                matches=[{'id':r['kindId'],'name':r['kindName'],'type':r['type']} for r in items.values() if query in (str(r['kindId'])+' '+str(r['kindName'])).casefold()]
-                return web.json_response({'items':matches[:50],'total':len(matches)})
-            return web.json_response({'players':[json.loads(r[0]) for r in store.db.execute('SELECT data FROM players')], 'giftcodes':[dict(r) for r in store.db.execute('SELECT * FROM giftcodes')], 'events':[json.loads(r[0]) for r in store.db.execute('SELECT data FROM events')], 'gacha':[{'pool':r['pool'],**json.loads(r['data'])} for r in store.db.execute('SELECT pool,data FROM pool_entries ORDER BY pool,entity')], 'audit':[dict(r) for r in store.db.execute('SELECT * FROM audit ORDER BY id DESC LIMIT 40')]})
-        try:
-            body=await req.json();action=body.get('action')
-            with store.transaction():
-                if action=='giftcode':
-                    code=str(body['code']).strip();gem=int(body['gem']);uses=int(body.get('max_uses',100));expires=int(body.get('expires',time.time()+86400*30))
-                    if not code or len(code)>64 or not 0<=gem<=10**9 or uses<1:raise ValueError('Dữ liệu giftcode không hợp lệ')
-                    store.db.execute('INSERT INTO giftcodes VALUES(?,?,?,?)',(code,gem,expires,uses))
-                elif action=='grant':
-                    pid=int(body['player']);amount=int(body['gem'])
-                    if not 0<amount<=10**9:raise ValueError('Số gem không hợp lệ')
-                    row=store.db.execute('SELECT data FROM players WHERE id=?',(pid,)).fetchone()
-                    if not row:raise ValueError('Không tìm thấy nhân vật')
-                    p=json.loads(row[0]);p['gem']+=amount;store.save(p)
-                elif action=='set_gm':
-                    pid=body.get('player');enabled=body.get('enabled')
-                    if type(pid)is not int or type(enabled)is not bool:raise ValueError('Quyền GM không hợp lệ')
-                    row=store.db.execute('SELECT data FROM players WHERE id=?',(pid,)).fetchone()
-                    if not row:raise ValueError('Không tìm thấy nhân vật')
-                    p=json.loads(row[0]);p['privateGM']=enabled;store.save(p)
-                elif action=='gacha_reset':
-                    pool=int(body['pool'])
-                    if pool not in (102,202,203,204):raise ValueError('Pool không hợp lệ')
-                    body['previous']=[json.loads(r[0]) for r in store.db.execute('SELECT data FROM pool_entries WHERE pool=?',(pool,))]
-                    store.db.execute('DELETE FROM pool_entries WHERE pool=?',(pool,))
-                elif action=='gacha_entry':
-                    from .gameplay import validate_pool_entry
-                    pool,entry=validate_pool_entry(body)
-                    store.db.execute('INSERT INTO pool_entries VALUES(?,?,?) ON CONFLICT(pool,entity) DO UPDATE SET data=excluded.data',(pool,entry['entityId'],json.dumps(entry)))
-                elif action=='event':
-                    event={'id':str(body['id']),'name':str(body['name']),'start':int(body['start']),'end':int(body['end']),'gem':int(body['gem'])}
-                    if not event['id'] or event['end']<=event['start'] or not 0<=event['gem']<=10**9:raise ValueError('Event không hợp lệ')
-                    store.db.execute('INSERT INTO events VALUES(?,?) ON CONFLICT(id) DO UPDATE SET data=excluded.data',(event['id'],json.dumps(event)))
-                else:raise ValueError('Thao tác chưa được hỗ trợ')
-                store.audit(action,body)
-            return web.json_response({'ok':True})
-        except (ValueError,KeyError,TypeError,sqlite3.IntegrityError):return web.json_response({'error':'Dữ liệu không hợp lệ hoặc mã đã tồn tại'},status=400)
+    from .admin import Admin
+    control=Admin(store,token,lambda:set(selected_players.values()),start_notifications)
+    async def admin(req):return await(control.get(req)if req.method=='GET'else control.post(req))
     async def ws_handler(req):
         ws=web.WebSocketResponse(max_msg_size=256*1024);await ws.prepare(req)
         uid=None;handshake=False;acked=False;recent={}
@@ -295,8 +258,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                             try:
                                 p=store.player(uid)
                                 if not p:raise ValueError('Chưa có nhân vật')
-                                p=store.redeem(p['id'],str(args.get('giftCode','')))
-                                result={'code':200,'gem':p['gem'],'_temp':{'route':route}}
+                                from .state import snapshot,delta
+                                before=snapshot(p);p,counts=store.redeem(p['id'],str(args.get('giftCode','')),return_counts=True)
+                                result=delta(before,p,route,{'entityCountMap':counts});result['gem']=p['gem']
                             except (ValueError,sqlite3.IntegrityError):result={'code':500,'msg':'Giftcode không hợp lệ, đã dùng hoặc hết lượt'}
                         else:
                             # Do not pretend unimplemented gameplay succeeded.
@@ -328,7 +292,14 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     app.router.add_post('/user/register',account);app.router.add_post('/user/login',account)
     app.router.add_route('*','/user/serverInfo',servers);app.router.add_get('/notice.json',notice)
     app.router.add_route('*','/admin/api',admin);app.router.add_get('/admin/catalog',admin)
+    for endpoint in ('overview','players','events','calendar','gacha','giftcodes','audit'):app.router.add_get('/admin/'+endpoint,admin)
+    app.router.add_get('/admin/players/{id}',admin);app.router.add_get('/admin/catalog/{id}',admin)
+    async def admin_css(req):return web.FileResponse(ROOT/'web/admin.css')
+    async def admin_js(req):return web.FileResponse(ROOT/'web/admin.js')
+    app.router.add_get('/admin',admin_page);app.router.add_static('/assets/',ROOT/'web/assets');app.router.add_get('/admin.css',admin_css);app.router.add_get('/admin.js',admin_js)
     async def close(app):
+        if liveops_task and not liveops_task.done():
+            liveops_task.cancel();await asyncio.gather(liveops_task,return_exceptions=True)
         if war_maintenance_task and not war_maintenance_task.done():
             war_maintenance_task.cancel();await asyncio.gather(war_maintenance_task,return_exceptions=True)
         if notification_task and not notification_task.done():

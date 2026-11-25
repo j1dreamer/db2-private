@@ -1,6 +1,8 @@
+> **Web quản trị mới:** 8 khu vực, 2.845 item/role có ảnh thật, 17 event hệ thống và lịch sự kiện tùy chỉnh; cùng SQLite/RPC với game. Xem [cách chạy và phạm vi chỉnh sửa](ADMIN.md).
+
 > iOS: đã có **IPA private thử nghiệm chưa ký, giữ riêng theo yêu cầu**; không có payload trên repo public. Xem [ký/cài trên Mac, giao tệp riêng và kết nối Cloud](IOS-PRIVATE.md). Chưa xác minh native trên iPhone hoặc đường iPhone → Cloud. Dữ liệu chung lấy **Android làm chuẩn**.
 
-> Nhánh phát triển `route-342`: **342/342 route**, 236 kiểm thử đã xác minh qua suite và chạy lại nhóm client ([chi tiết](analysis/canonical-validation.json)); không còn route trống. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
+> Nhánh phát triển `route-342`: **342/342 route**, 251 kiểm thử qua ([chi tiết web/server](analysis/admin-validation.json)); không còn route trống. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
 >
 > APK mốc 342 handler: [Client-Route342-Dev-Patch.zip](Client-Route342-Dev-Patch.zip), khoảng 5 MB. Giải nén cạnh **DB2-Private-Android-fixed.apk**, chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. Có bỏ hướng dẫn, Speed 1×–10× cho toàn game và các bản vá giao thức của nhánh; cùng package/chữ ký bản fixed. Đây là APK phát triển có đủ handler, chưa xác minh toàn bộ gameplay trên thiết bị. Time Peak dùng màn điều khiển và luật riêng. Các ZIP cũ bên dưới chỉ dành cho main cũ.
 >

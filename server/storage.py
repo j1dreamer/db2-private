@@ -15,6 +15,8 @@ class Store:
         CREATE TABLE IF NOT EXISTS giftcodes(code TEXT PRIMARY KEY,gem INTEGER NOT NULL CHECK(gem>=0),expires INTEGER NOT NULL,max_uses INTEGER NOT NULL CHECK(max_uses>0));
         CREATE TABLE IF NOT EXISTS redemptions(code TEXT REFERENCES giftcodes(code),player INTEGER REFERENCES players(id),PRIMARY KEY(code,player));
         CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY,data TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS ops_records(key TEXT PRIMARY KEY,data TEXT NOT NULL,version INTEGER NOT NULL,updated INTEGER NOT NULL);
+        CREATE TABLE IF NOT EXISTS event_window_claims(event TEXT REFERENCES events(id),player INTEGER REFERENCES players(id),period TEXT NOT NULL,PRIMARY KEY(event,player,period));
         CREATE TABLE IF NOT EXISTS activity_claims(player INTEGER REFERENCES players(id),name TEXT NOT NULL,period TEXT NOT NULL,idx INTEGER NOT NULL,PRIMARY KEY(player,name,period,idx));
         CREATE TABLE IF NOT EXISTS event_claims(event TEXT REFERENCES events(id),player INTEGER REFERENCES players(id),PRIMARY KEY(event,player));
         CREATE TABLE IF NOT EXISTS pool_entries(pool INTEGER NOT NULL,entity INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(pool,entity));
@@ -154,21 +156,29 @@ class Store:
             self.audit('starter_tickets',{'player':profile['id'],'items':{'119':1,'120':1}})
             from .state import refresh_time
             from .tasks import refresh
-            refresh_time(profile);refresh(self,profile);self.save(profile)
+            refresh_time(profile);refresh(self,profile)
+            from .activities import refresh as refresh_activities
+            refresh_activities(self,profile);self.save(profile)
             return profile
     def save(self,player):self.db.execute('UPDATE players SET data=? WHERE id=?',(json.dumps(player,ensure_ascii=False),player['id']))
-    def redeem(self,player,code):
+    def redeem(self,player,code,return_counts=False):
         with self.transaction():
             row=self.db.execute('SELECT * FROM giftcodes WHERE code=?',(code,)).fetchone()
             if not row or row['expires']<time.time():raise ValueError('Giftcode không tồn tại hoặc hết hạn')
+            from .liveops import record
+            config=record(self,'giftcode:'+code)
+            if not config.get('enabled',True):raise ValueError('Giftcode đã tạm dừng')
             count=self.db.execute('SELECT count(*) FROM redemptions WHERE code=?',(code,)).fetchone()[0]
             if count>=row['max_uses']:raise ValueError('Giftcode đã hết lượt')
             # Load state inside the transaction, never trust a cached client profile.
             data=json.loads(self.db.execute('SELECT data FROM players WHERE id=?',(player,)).fetchone()[0])
             self.db.execute('INSERT INTO redemptions VALUES(?,?)',(code,player))
-            data['gem']+=row['gem'];self.save(data)
+            data['gem']+=row['gem'];counts={'102':row['gem']}if row['gem']else{}
+            from .adventure import grant
+            for kind,n in grant(data,config.get('rewards',[])).items():counts[kind]=counts.get(kind,0)+n
+            self.save(data)
             self.audit('redeem',{'player':player,'code':code,'gem':row['gem']})
-            return data
+            return(data,counts)if return_counts else data
     def notify(self,account,event,data):
         self.db.execute('INSERT INTO notifications(account,event,data) VALUES(?,?,?)',(account,event,json.dumps(data,ensure_ascii=False)))
     def audit(self,action,detail):

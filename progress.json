@@ -4,7 +4,7 @@
   "source_rpc_contracts": 342,
   "implemented_rpc_handlers": 342,
   "profile_schema": 28,
-  "tests_passed": 236,
+  "tests_passed": 251,
   "completed": [
     "All 342 recovered client RPC contracts have business handlers and positive route-group tests",
     "Durable SQLite player state, accounts, gacha, giftcodes, events, guilds, shops, equipment, combat and ranking rules",
@@ -14,7 +14,8 @@
     "Signed Android development APK, tutorial skipped and whole-game Speed 1x-10x",
     "Current canonical-data APK reconstruction verified independently using PowerShell and Python",
     "Android canonical shared data; selectively imported iOS boxes 373/379 and normalized 8 iOS tables plus soul maps; 8 headless full combat comparisons match",
-    "Unsigned private iOS IPA prepared and reconstructed; native bytes preserved; setup/model/live VM RPC checks pass; external iPhone connection and signing remain"
+    "Unsigned private iOS IPA prepared and reconstructed; native bytes preserved; setup/model/live VM RPC checks pass; external iPhone connection and signing remain",
+    "Rebuilt synchronized admin: 8 sections, 2845 real catalog icons/definitions, 17 event editors, durable schedules/rewards, live onSync and browser-tested mutations"
   ],
   "remaining": [
     "Android/BlueStacks rendering and end-to-end device gameplay verification of this new build",
@@ -55,7 +56,15 @@
   "ios_private_models_passed": true,
   "cloud_live_http_and_rpc_verified": true,
   "ios_phone_to_cloud_connection_verified": false,
-  "latest_targeted_tests_passed": 34,
+  "latest_targeted_tests_passed": 13,
   "ios_private_ipa_published": false,
-  "ios_private_ipa_publication_status": "user-requested-private-only; no-payload-uploaded; private-repo-creation-denied-403"
+  "ios_private_ipa_publication_status": "user-requested-private-only; no-payload-uploaded; private-repo-creation-denied-403",
+  "admin_ui_rebuilt": true,
+  "admin_validation_report": "analysis/admin-validation.json",
+  "admin_catalog_items": 2845,
+  "admin_icon_count": 1083,
+  "admin_system_event_editors": 17,
+  "admin_browser_flows_passed": 20,
+  "admin_live_vm_running": true,
+  "admin_http_preview_configured": false
 }

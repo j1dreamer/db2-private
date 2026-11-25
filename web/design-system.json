@@ -1,0 +1,37 @@
+{
+  "skill": {
+    "name": "UI UX Pro Max",
+    "source": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/.claude/skills/ui-ux-pro-max/SKILL.md",
+    "source_commit": "8db36338810d0942567b97ce439affd1619fcf31"
+  },
+  "layout": {
+    "kind": "operations dashboard",
+    "navigation": "fixed desktop sidebar, mobile drawer",
+    "density": 8,
+    "responsive": "desktop tables; mobile calendar agenda",
+    "query_note": "Two design-system searches returned a landing-page pattern, which was unsuitable and discarded. Dashboard layout is an explicit fallback designed for this product; accessibility/form guidance and the matched minimal functional style were applied."
+  },
+  "colors": {
+    "background": "#0d1117",
+    "surface": "#151a22",
+    "border": "#29313d",
+    "text": "#f1f3f7",
+    "muted": "#9ca7b7",
+    "accent": "#f5b950",
+    "success": "#6cd6a4",
+    "error": "#f48d95"
+  },
+  "typography": "system sans serif; monospace IDs; no external font dependency",
+  "interaction": [
+    "visible keyboard focus",
+    "semantic labels",
+    "native modal focus containment and Escape",
+    "inline validation preserving entered data",
+    "loading and duplicate-submit protection",
+    "44px minimum mobile controls",
+    "reduced-motion support",
+    "keep autocomplete and search focus",
+    "optimistic concurrent-edit checks"
+  ],
+  "data_policy": "Same-origin authenticated API, actual server SQLite state, no frontend-only game configuration."
+}
