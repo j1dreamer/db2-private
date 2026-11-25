@@ -6,13 +6,13 @@ from server.gameplay import draw,claim_events,validate_pool_entry,rename_player
 
 class EconomyTests(unittest.TestCase):
  def setUp(self):
-  self.tmp=tempfile.TemporaryDirectory();self.store=Store(Path(self.tmp.name)/'db');self.store.register('tester','password');self.p=self.store.create_player(1,'Goku');self.p['gem']=10000;self.store.save(self.p)
+  self.tmp=tempfile.TemporaryDirectory();self.store=Store(Path(self.tmp.name)/'db');self.store.register('tester','password');self.p=self.store.create_player(1,'Goku');self.p['gem']=10000;self.p['bag']={'lastIdx':0,'items':{}};self.store.save(self.p)
  def tearDown(self):self.store.db.close();self.tmp.cleanup()
  def test_older_profile_upgrades_without_resetting_currency_or_roster(self):
   p=self.store.player(1);p.pop('profileSchemaVersion');p['gem']=777;p.pop('photoInfo');p.pop('friendshipUnlockMap');p['team']['roles']['1']['attr']['hp']=77
   self.store.save(p);restored=self.store.player(1)
   self.assertEqual(restored['gem'],777);self.assertEqual(restored['team']['roles']['1']['attr']['hp'],77);self.assertEqual(len(restored['team']['roles']),1)
-  self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],4)
+  self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],5)
  def test_first_rename_is_free_persistent_and_repeat_is_idempotent(self):
   p=self.store.player(1);p['name']=p['userName'];p['gem']=50;self.store.save(p)
   response=rename_player(self.store,1,'Son Goku')
@@ -33,6 +33,32 @@ class EconomyTests(unittest.TestCase):
     with self.assertRaises(ValueError):rename_player(self.store,1,name)
   self.assertEqual(self.store.player(1)['gem'],before['gem'])
   self.assertEqual(self.store.player(1)['name'],before['name'])
+ def test_new_profile_gets_one_of_each_ticket_once_across_reopen(self):
+  self.store.register('newuser','password');p=self.store.create_player(2,'Newbie')
+  self.assertEqual({x['kindId']:x['count'] for x in p['bag']['items'].values()},{119:1,120:1})
+  self.assertEqual(p['gem'],50)
+  for _ in range(3):self.assertEqual(self.store.player(2)['bag'],p['bag'])
+  other=Store(Path(self.tmp.name)/'db')
+  self.assertEqual(other.player(2)['bag'],p['bag']);other.db.close()
+ def test_old_profile_gift_merges_tickets_without_overwriting_inventory(self):
+  p=self.store.player(1);p['profileSchemaVersion']=4;p.pop('privateStarterTicketsGranted')
+  p['bag']={'lastIdx':0,'items':{'12':{'idx':12,'kindId':119,'count':3},'40':{'idx':40,'kindId':20001,'count':7}}}
+  before_gem=p['gem'];self.store.save(p);migrated=self.store.player(1)
+  self.assertEqual(migrated['bag']['items']['12']['count'],4)
+  self.assertEqual(migrated['bag']['items']['40']['count'],7)
+  self.assertEqual(migrated['bag']['items']['41']['kindId'],120)
+  self.assertEqual(migrated['gem'],before_gem)
+  self.assertEqual(self.store.player(1)['bag'],migrated['bag'])
+ def test_starter_tickets_can_be_spent_and_are_not_regranted(self):
+  self.store.register('newuser','password');self.store.create_player(2,'Newbie')
+  self.assertEqual(draw(self.store,2,'normal',1)['gem'],50)
+  self.assertEqual(draw(self.store,2,'advanced',1)['gem'],50)
+  p=self.store.player(2)
+  self.assertFalse(any(x['kindId'] in (119,120) for x in p['bag']['items'].values()))
+  for mode in ('normal','advanced'):
+   with self.assertRaises(ValueError):draw(self.store,2,mode,1)
+  self.assertEqual(self.store.player(2)['gem'],50)
+  self.assertEqual(self.store.db.execute("SELECT count(*) FROM audit WHERE action='starter_tickets' AND json_extract(detail,'$.player')=?",(p['id'],)).fetchone()[0],1)
  def test_ten_draws_use_admin_pool_and_charge_once(self):
   pool,entry=validate_pool_entry({'pool':102,'entity':101,'weight':1,'count':5})
   self.store.db.execute('INSERT INTO pool_entries VALUES(?,?,?)',(pool,101,json.dumps(entry)))

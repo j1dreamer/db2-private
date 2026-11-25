@@ -16,7 +16,7 @@ class ClientModelTests(unittest.TestCase):
   return json.loads(result.stdout)
  def test_initial_profile_constructs_original_models(self):
   state=self.client(self.profile,[])
-  self.assertTrue(state['roles'][0]['imgId']);self.assertEqual(state['gem'],50);self.assertEqual(state['point']['normalTicketCount'],0);self.assertEqual(state['team']['1']['kindId'],100101)
+  self.assertTrue(state['roles'][0]['imgId']);self.assertEqual(state['gem'],50);self.assertEqual(state['point']['normalTicketCount'],1);self.assertEqual(state['team']['1']['kindId'],100101)
  def test_original_team_generators_accept_equipment_and_friendship(self):
   state=self.client(self.profile,[])
   self.assertEqual(len(state['teamItems'][0]['itemItems']),6)
@@ -39,7 +39,7 @@ class ClientModelTests(unittest.TestCase):
   p['activity'].pop('scorePointInfoMap');p.pop('signInDays');p.pop('signInTime')
   p['gem']=789;self.store.save(p)
   migrated=self.store.player(1);state=self.client(migrated,[],check_home=True)
-  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],4)
+  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],5)
   self.assertEqual(state['home']['playerName'],'Goku')
  def test_migration_preserves_existing_task_rewards_and_activity_state(self):
   p=self.profile;p['profileSchemaVersion']=2
@@ -64,7 +64,7 @@ class ClientModelTests(unittest.TestCase):
   self.assertIn("reading 'actionPoint'",r.stderr)
   p['level']=12;p['gem']=987;p['actionPoint']=44;self.store.save(p)
   migrated=self.store.player(1);state=self.client(migrated,[])
-  self.assertEqual(migrated['profileSchemaVersion'],4)
+  self.assertEqual(migrated['profileSchemaVersion'],5)
   self.assertEqual(state['topBar']['maxActionPoint'],72)
   self.assertEqual(state['topBar']['actionPoint'],44)
   self.assertEqual(state['gem'],987)
@@ -83,13 +83,22 @@ class ClientModelTests(unittest.TestCase):
   self.assertEqual(state['home']['playerName'],'Vegeta')
   self.assertNotEqual(state['home']['playerName'],state['home']['userName'])
   self.assertEqual(state['gem'],50)
+ def test_client_reads_both_starter_tickets_and_consumes_without_gem(self):
+  initial=self.client(self.profile,[])
+  self.assertEqual(initial['point']['normalTicketCount'],1)
+  self.assertEqual(initial['point']['advancedTicketCount'],1)
+  first=draw(self.store,1,'normal',1);second=draw(self.store,1,'advanced',1)
+  state=self.client(self.profile,[first,second])
+  self.assertEqual(state['gem'],50)
+  self.assertEqual(state['point']['normalTicketCount'],0)
+  self.assertEqual(state['point']['advancedTicketCount'],0)
  def test_consumed_ticket_removed_by_original_client(self):
   p=self.profile;p['bag']={'lastIdx':1,'items':{'1':{'kindId':119,'idx':1,'count':1}}};self.store.save(p)
   response=draw(self.store,1,'normal',1);state=self.client(p,[response]);persisted=self.store.player(1)
   self.assertNotIn('1',state['bag']);self.assertEqual(state['point']['normalTicketCount'],0)
   self.assertEqual(sorted(r['kindId'] for r in state['team'].values()),sorted(r['kindId'] for r in persisted['team']['roles'].values()))
  def test_duplicate_soul_reward_and_wallet_match_original_client(self):
-  p=self.profile;p['gem']=1000;self.store.save(p)
+  p=self.profile;p['gem']=1000;p['bag']={'lastIdx':0,'items':{}};self.store.save(p)
   row={'entityId':100101,'count':1,'weight':1,'extra':{'star':1}}
   self.store.db.execute('INSERT INTO pool_entries VALUES(?,?,?)',(102,100101,json.dumps(row)))
   first=draw(self.store,1,'normal',1);second=draw(self.store,1,'normal',1)

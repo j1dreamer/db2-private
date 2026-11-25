@@ -38,11 +38,17 @@ class Store:
         row=self.db.execute('SELECT account FROM sessions WHERE token=? AND expires>?',(token,int(time.time()))).fetchone()
         return row[0] if row else None
     def player(self,account):
+        # Profile migration and its one-time gifts must commit together.
+        if not self.db.in_transaction:
+            with self.transaction():return self.player(account)
         row=self.db.execute('SELECT id,data FROM players WHERE account=?',(account,)).fetchone()
         if not row:return None
         data=json.loads(row['data'])
         from .profile import upgrade_profile
+        had_starter_gift=bool(data.get('privateStarterTicketsGranted'))
         if upgrade_profile(data,account):
+            if not had_starter_gift and data.get('privateStarterTicketsGranted'):
+                self.audit('starter_tickets',{'player':data['id'],'items':{'119':1,'120':1}})
             self.save(data);self.audit('profile_migration',{'player':data['id'],'schema':data['profileSchemaVersion']})
         return data
     def create_player(self,account,name):
@@ -55,6 +61,7 @@ class Store:
             cur=self.db.execute("INSERT INTO players(account,data) VALUES(?,'{}')",(account,))
             profile=new_profile(cur.lastrowid,account,name,username);self.save(profile)
             self.audit('create_player',{'player':profile['id'],'account':account})
+            self.audit('starter_tickets',{'player':profile['id'],'items':{'119':1,'120':1}})
             return profile
     def save(self,player):self.db.execute('UPDATE players SET data=? WHERE id=?',(json.dumps(player,ensure_ascii=False),player['id']))
     def redeem(self,player,code):

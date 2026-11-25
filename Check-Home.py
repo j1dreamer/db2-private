@@ -42,7 +42,7 @@ def main():
                 out['players']=[]
                 for pid,raw in db.execute('SELECT id,data FROM players'):
                     p=json.loads(raw)
-                    out['players'].append({'id':pid,'schema':p.get('profileSchemaVersion'),'missing_fields':missing(p)})
+                    out['players'].append({'id':pid,'schema':p.get('profileSchemaVersion'),'missing_fields':missing(p),'starter_tickets_granted':bool(p.get('privateStarterTicketsGranted')),'ticket_counts':{str(kind):sum(x.get('count',0) for x in p.get('bag',{}).get('items',{}).values() if x.get('kindId')==kind) for kind in (119,120)}})
                 rows=db.execute("SELECT id,created,action,detail FROM audit WHERE action IN ('profile_migration','client_error') ORDER BY id DESC LIMIT 5").fetchall()
                 out['recent_audit']=[]
                 for ident,created,action,detail in rows:

@@ -74,7 +74,7 @@ Sao lưu khi server đã dừng, hoặc dùng SQLite backup API; không sao ché
 
 Linux x86_64, Python 3.12, Node 24 (chỉ dùng cho test codec gốc), Java 21. Chưa chạy trên Termux, Windows, macOS hoặc Android thật. Backend được viết đa nền tảng; đây chưa phải xác nhận mọi nền tảng đã được thử.
 
-39 kiểm thử backend/codec/đóng gói và dữ liệu client đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
+43 kiểm thử backend/codec/đóng gói và dữ liệu client đã pass. Web quản trị đã thử bằng Chrome: đăng nhập, tạo giftcode, lưu mục pool và xem audit.
 
 ## Đối chiếu với JavaScript gốc
 
@@ -123,7 +123,7 @@ Sau khi zipalign và ký, phải chạy `python tools/verify_apk.py FILE.apk` b�
 - APK sửa SHA-256: `d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f`.
 - Bản vá chỉ sao chép các vùng byte không đổi và thay những vùng đã sửa/ký; kiểm tra checksum nguồn và đầu ra, giữ nguyên APK cũ.
 - `tools/download_apk.py` hiện tự áp dụng bản vá sau khi tải/ghép APK nền.
-- 39 kiểm thử backend/codec/đóng gói/bản vá và dữ liệu sảnh đã pass; bản sửa schema 3 vẫn cần xác nhận sảnh hiển thị đúng trên Android/BlueStacks.
+- 43 kiểm thử backend/codec/đóng gói/bản vá và dữ liệu sảnh đã pass; bản sửa schema 3 vẫn cần xác nhận sảnh hiển thị đúng trên Android/BlueStacks.
 
 Bản vá Windows dùng PowerShell có sẵn; không đổi execution policy. Đã chạy thử thuật toán PowerShell trên cùng APK gốc và xác nhận đầu ra khớp SHA-256 bản sửa đã ký. File `Apply-Fix-Python.bat` là lựa chọn thay thế khi có Python.
 
@@ -143,7 +143,7 @@ Bộ kiểm thử còn chạy `quickNode.genData` với các hàm gốc achievem
 
 Thiết bị đã xác nhận code và nhân vật schema 3, sau đó báo `Cannot read property 'actionPoint' of undefined` trong `coinTopNode.update_`. Schema 4 thêm `timesMaxMap` và `nextRecoverTimeMap` cho thể lực/điểm kỹ năng, cùng bộ đếm mua thể lực. Giới hạn thể lực theo hàm gốc `PLAYER.FUNS.getActionPointMax(level) = 60 + level`; trường có sẵn được giữ nguyên khi nâng cấp nhân vật cũ. Mốc hồi phục mặc định bằng 0 (chưa lên lịch); logic tự hồi thể lực phía server vẫn chưa triển khai.
 
-Dừng server, tải và giải nén [Home-Fix.zip](Home-Fix.zip) vào thư mục chứa `start.bat`, ghi đè các file code, chạy server lại rồi mở lại game. Gói tích lũy hiện chứa các file code `server/profile.py`, `server/storage.py`, `server/app.py`, `server/gameplay.py` và `Check-Home.py`, không chứa database. Nhật ký migration ghi schema thực tế. 39 kiểm thử đã pass, bao gồm tái hiện lỗi schema 3, chạy chính lifecycle `coinTopNode.onLoad/update_/tick_` và thao tác mở/đóng bảng hồi thể lực với schema 4, cả nhánh có mốc hồi phục. Chưa xác nhận bản sửa mới trên BlueStacks.
+Dừng server, tải và giải nén [Home-Fix.zip](Home-Fix.zip) vào thư mục chứa `start.bat`, ghi đè các file code, chạy server lại rồi mở lại game. Gói tích lũy hiện chứa các file code `server/profile.py`, `server/storage.py`, `server/app.py`, `server/gameplay.py` và `Check-Home.py`, không chứa database. Nhật ký migration ghi schema thực tế. 43 kiểm thử đã pass, bao gồm tái hiện lỗi schema 3, chạy chính lifecycle `coinTopNode.onLoad/update_/tick_` và thao tác mở/đóng bảng hồi thể lực với schema 4, cả nhánh có mốc hồi phục. Chưa xác nhận bản sửa mới trên BlueStacks.
 
 ## Đặt tên đội trong hướng dẫn
 
@@ -161,3 +161,11 @@ Builder đặt `buildExt.isSkipGuide = true`, khiến hàm gốc `guide.run` b�
 - APK bỏ hướng dẫn: `93a51856da76adaa1e4229cfd2f12f0756af6bdfb92453eb3e517d8802e22209`.
 - Bản client bỏ hướng dẫn không cấp thêm tài nguyên hoặc triển khai các route gameplay còn thiếu. Quay thường vẫn cần 300 gem/lần hoặc vé.
 - `tools/make_apk_patch.py` tạo kế hoạch copy/literal từ payload ZIP nén giữ nguyên; `tools/apply_no_guide.py` áp dụng bản vá có checksum cố định. Thông tin build nằm tại `client/no-guide-build.json`.
+
+## Vé quay khởi đầu (schema 5)
+
+Mỗi nhân vật mới nhận một vé thường (119) và một vé cao cấp (120), giữ gem khởi đầu 50. Nhân vật schema 4 trở xuống được cộng thêm đúng một vé mỗi loại khi tải hồ sơ lần tiếp theo; vé được gộp vào stack hiện có, slot mới tránh trùng chỉ số kể cả khi `lastIdx` cũ thấp hơn chỉ số vật phẩm. Cờ `privateStarterTicketsGranted` lưu cùng profile; tạo/nâng cấp nhân vật và cấp vé nằm trong transaction, có audit `starter_tickets`. Vé đã dùng không được cấp lại khi đăng nhập.
+
+Cập nhật gói `Home-Fix.zip`, mở lại server rồi đăng nhập lại game để lấy dữ liệu túi mới. `Check-Home.py` hiển thị cờ đã cấp và số vé 119/120. Đã kiểm tra các hàm Player/Bag/pointScene gốc thấy cả hai loại vé và nhận delta tiêu vé; quay mỗi loại một lần không trừ gem. Bộ kiểm thử cũng kiểm tra cộng vào nhân vật cũ, giữ vật phẩm khác và không cấp lặp sau mở lại SQLite.
+
+Khi APK fixed cũ còn chạy hướng dẫn, callback quay thành công mới gọi `guideNext1`. Phản hồi thiếu tài nguyên (`code:500`) gỡ loading trong `serverMain.sync` nhưng bỏ qua callback thành công trong `socket._request`, nên bước hướng dẫn chưa hoàn thành và lớp chặn thao tác có thể vẫn còn. Cài APK no-guide đã phát hành để tắt hướng dẫn; cấp vé khởi đầu không thay thế bản vá client. Chưa xác nhận thao tác mới trên thiết bị.
