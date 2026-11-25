@@ -2,8 +2,8 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 273,
-  "unsupported_routes": 69,
+  "implemented_routes": 289,
+  "unsupported_routes": 53,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
@@ -73,58 +73,74 @@
     },
     {
       "route": "logic.activityGuildBattleHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.enter",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.exit",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.openInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.result",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.setDefenseTeamInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.wintTimesRank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
@@ -1408,58 +1424,74 @@
     },
     {
       "route": "logic.newGuildBattleHandler.challenge",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.choose",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.enter",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.exit",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.openInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.result",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.setDefenseTeamInfo",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.winTimesRank",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
       "device_verified": false
     },
     {

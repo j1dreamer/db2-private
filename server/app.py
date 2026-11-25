@@ -3,7 +3,7 @@ from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
 from .protocol import package,packages,request,response,push
-from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless,expedition,commerce,activities,tournaments,top_arena,resources
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions,team_actions,item_actions,tasks,online,gm,arena,local_boosts,arena3v3,guild,tail,bosses,practice,eye,endless,expedition,commerce,activities,tournaments,top_arena,resources,guild_wars
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -14,6 +14,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     app=web.Application(client_max_size=256*1024)
     app[web.AppKey('store',Store)]=store
     live={};mail_seen={};selected_players={};notification_lock=asyncio.Lock();notification_task=None
+    war_maintenance_task=None
     # Offline users load durable state on login; stale pre-restart pushes must not
     # be delivered again after that full snapshot.
     store.db.execute('DELETE FROM notifications')
@@ -45,6 +46,17 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     def start_notifications():
         nonlocal notification_task
         if notification_task is None or notification_task.done():notification_task=asyncio.create_task(flush_notifications())
+    async def maintain_guild_wars():
+        while True:
+            for mode in guild_wars.MODES:
+                try:guild_wars.prepare(store,mode)
+                except (ValueError,sqlite3.IntegrityError)as exc:store.audit('guild_war_maintenance_error',{'mode':mode,'error':str(exc)[:500]})
+            start_notifications()
+            await asyncio.sleep(30)
+    async def start_war_maintenance(app):
+        nonlocal war_maintenance_task
+        war_maintenance_task=asyncio.create_task(maintain_guild_wars())
+    app.on_startup.append(start_war_maintenance)
     async def health(req):return web.json_response({'status':'ok','stage':'protocol-development','playable_verified':False,'build':'route-342-development','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
     async def config(req):return web.json_response({'runScriptInfo':{'script':''},'inReviewPackageInfos':[]})
     async def account(req):
@@ -158,6 +170,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 mail_seen[ws]={m['_id'] for m in p['extra']['mails']}
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route.startswith(('logic.','chat.'))and ws not in selected_players:result={'code':500,'msg':'Chưa chọn nhân vật'}
+                        elif route in guild_wars.ROUTES:
+                            try:result=await guild_wars.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in resources.ROUTES:
                             try:result=await resources.handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
@@ -294,6 +309,8 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     app.router.add_route('*','/user/serverInfo',servers);app.router.add_get('/notice.json',notice)
     app.router.add_route('*','/admin/api',admin);app.router.add_get('/admin/catalog',admin)
     async def close(app):
+        if war_maintenance_task and not war_maintenance_task.done():
+            war_maintenance_task.cancel();await asyncio.gather(war_maintenance_task,return_exceptions=True)
         if notification_task and not notification_task.done():
             notification_task.cancel();await asyncio.gather(notification_task,return_exceptions=True)
         await tournaments.close(store)

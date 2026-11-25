@@ -30,6 +30,10 @@ class Store:
         CREATE TABLE IF NOT EXISTS guilds(id INTEGER PRIMARY KEY,name TEXT UNIQUE NOT NULL,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS guild_members(player INTEGER PRIMARY KEY REFERENCES players(id),guild INTEGER REFERENCES guilds(id),role TEXT NOT NULL,joined INTEGER NOT NULL,contribution INTEGER NOT NULL,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS guild_requests(guild INTEGER REFERENCES guilds(id),player INTEGER REFERENCES players(id),created INTEGER NOT NULL,PRIMARY KEY(guild,player));
+        CREATE TABLE IF NOT EXISTS guild_war_days(mode TEXT NOT NULL,day TEXT NOT NULL,PRIMARY KEY(mode,day));
+        CREATE TABLE IF NOT EXISTS guild_war_rooms(mode TEXT NOT NULL,day TEXT NOT NULL,room INTEGER NOT NULL,guild1 INTEGER NOT NULL,guild2 INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(mode,day,room));
+        CREATE TABLE IF NOT EXISTS guild_war_history(mode TEXT NOT NULL,guild INTEGER NOT NULL,wins INTEGER NOT NULL,losses INTEGER NOT NULL,PRIMARY KEY(mode,guild));
+        CREATE TABLE IF NOT EXISTS guild_war_awards(mode TEXT NOT NULL,day TEXT NOT NULL,player INTEGER REFERENCES players(id),PRIMARY KEY(mode,day,player));
         CREATE TABLE IF NOT EXISTS resource_rooms(day TEXT NOT NULL,level TEXT NOT NULL,data TEXT NOT NULL,PRIMARY KEY(day,level));
         CREATE TABLE IF NOT EXISTS resource_registrations(day TEXT NOT NULL,player INTEGER REFERENCES players(id),level TEXT NOT NULL,PRIMARY KEY(day,player));
         CREATE TABLE IF NOT EXISTS resource_awards(day TEXT NOT NULL,level TEXT NOT NULL,player INTEGER REFERENCES players(id),kind TEXT NOT NULL,PRIMARY KEY(day,level,player,kind));
@@ -119,7 +123,9 @@ class Store:
         from .top_arena import refresh as refresh_top
         changed=refresh_top(data)or changed
         from .resources import refresh as refresh_resources
-        if refresh_resources(self,data)or changed:self.save(data)
+        changed=refresh_resources(self,data)or changed
+        from .guild_wars import refresh as refresh_wars
+        if refresh_wars(self,data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

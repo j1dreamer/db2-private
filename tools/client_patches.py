@@ -301,3 +301,15 @@ def patch_tournament_controls(text,module=None):
             if text.count(old)!=1:raise ValueError('Unexpected tournament control implementation')
             text=text.replace(old,new,1)
     return text
+
+def patch_guild_war_transport(text):
+    for mode,alias in (('newGuildBattle','b'),('activityGuildBattle','v')):
+        begin=text.index(alias+'.choose(this.statusData.opts.defenderId, this.data.selectIdxs, this.data.selectShipIdxs, function(e) {')
+        end=text.index('\nbreak;',begin);section=text[begin:end];old='d.pkBattleInstant(l.clone(i), l.clone(o))'
+        if section.count(old)!=1:raise ValueError('Unexpected guild war replay')
+        section=section.replace(old,'d.pkBattleInstant(l.clone(i), l.clone(o), e._temp.seed)',1)
+        old=alias+'.challenge(r.statusData.opts.defenderId, d.diedNum, function() {\nm.player.extra.'+mode+'.battleInfo.attackTimes--;'
+        new=alias+'.challenge(r.statusData.opts.defenderId, d.diedNum, function(e) {\nm.player.extra.'+mode+'.battleInfo.attackTimes = e._temp.attackTimes;'
+        if section.count(old)!=1:raise ValueError('Unexpected guild war attempt callback')
+        section=section.replace(old,new,1);text=text[:begin]+section+text[end:]
+    return text

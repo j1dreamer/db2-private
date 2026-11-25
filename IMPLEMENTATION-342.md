@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 273 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 69 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 273 luồng đã xác minh trên thiết bị.
-- Đã chạy 200 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
+- 289 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 53 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 289 luồng đã xác minh trên thiết bị.
+- Đã chạy 207 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc. Các chuỗi kiểm thử gọi thành công đủ 38 route đội hình và 12 route arena 3v3; bảng chi phí và input combat được đối chiếu trực tiếp với hàm gốc. Nhiệm vụ dùng counter/claim SQL; quyền GM cần token quản trị và client xóa role/hash/cache đúng cách. Arena được kiểm tra với engine PvP gốc, lưu báo cáo, cập nhật hạng và chống gửi lại trận.
 
 ## Phần mới trong nhánh
 
@@ -150,3 +150,17 @@ Push dùng đúng sự kiện `onAllServerBattle` gốc để cập nhật map, 
 Đối chiếu callback vào các chế độ cũng sửa `_temp.openInfo/playerInfoMap` cho boss và Worship, `_temp.infos` cho Double, các trường rank/hourCoin/receiveCoin cho arena 3v3. Arena 3v3 kiểm tra đủ 15 tướng theo điều kiện vào sảnh thật. Giao diện chọn hạng Double có enum rõ ràng; cặp miễn đấu không còn gửi yêu cầu xem báo cáo rỗng. Các kiểm thử chạy chính callback Cocos nguồn và bộ dựng đội nguồn với trường hợp HP còn lại thấp hơn phần HP đồng hành cộng thêm.
 
 Từ phần chiến trường này cần APK mới có bản vá seed/HP-map/timestamp; APK checkpoint 228 không có các bản vá đó.
+
+## Bang chiến 5 mức HP và biến thể hoạt động: 16 route
+
+`NEW_GUILD_BATTLE` cung cấp giờ chuẩn bị 16:00, bắt đầu 19:00, kéo dài 180 phút, tối thiểu 5 thành viên, hạn lượt theo chức vụ và bốn bảng thưởng thắng/thua. Giao diện lặp **5 mức HP** mỗi vị trí. Điểm ban đầu trưởng bang/phó/thành viên là 50/20/10, đúng bằng 5 lần điểm trừ mỗi mức 10/4/2; server sử dụng quan hệ đó.
+
+Luật chốt và ghép riêng: lấy thành viên gia nhập trước 16:00, giữ vai trò và danh sách cho ngày; ghép các bang thật theo tổng power đội đã chọn gần nhất, không tạo bang NPC. Số lẻ được miễn đấu; giao diện gốc có thông báo rõ sẽ gửi thưởng thắng sau khi kết thúc nếu không có đối thủ. Danh hiệu/điểm lịch sử không phát sinh một trận giả. Chỉnh đội trong 16:00–19:00; phòng thủ mặc định tối đa 5 tướng đầu tiên và không có đồng hành. Khi khóa mở trận, lưu snapshot đầy đủ để thay đồ sau đó không sửa đội phòng thủ của trận đã chốt.
+
+Server giữ lượt 4/4/2 cho trưởng/phó/thành viên tại lúc chốt. Chọn đội dùng một lượt; cùng run/đội/vị trí chưa đổi trả lại seed cũ, không trừ thêm. Đổi hoặc bỏ lượt không hoàn. Mỗi trận dùng PvP gốc và seed server; `diedNum` được đối chiếu trực tiếp với engine. Biến này tính 5 trừ vị trí sống, **kể cả ô không xếp tướng**. Thắng thì hạ số mức HP bằng số vị trí sống, tối đa HP còn lại; thua không hạ. Đội một tướng còn sống chỉ hạ một mức. Từ 0 mức đã mất đến 5 là hết HP, điểm giảm đúng trọng số chức vụ. Không tin số sống gửi lên; run nhận một lần, thời hạn 15 phút và không quá giờ đóng. Nếu vị trí đã đổi khi worker chạy, kết quả cũ không được ghi thưởng.
+
+Thưởng mỗi lần tấn công và thưởng bang cuối phiên dùng bảng gốc; gửi thư một lần cùng cờ SQLite. Thắng bang theo điểm còn lại, hòa chọn ID bang nhỏ hơn (luật riêng). Lưu lịch sử thắng/thua và kết quả phiên trước; người gia nhập sau lúc chốt không nhận suất của người cũ. Thành viên rời bang vẫn có thể rút giao diện an toàn; lượt còn lại không chuyển sang bang khác. Chỉ người đã vào màn trận nhận push `onNewGuildBattle` từng vị trí, vì callback gốc giả định đã có đầy đủ map. Các đợt chuẩn bị/mở/đóng gửi `onSync` dữ liệu đúng chế độ; vòng kiểm tra nền 30 giây xử lý lịch khi server chạy, các đợt đã tạo cũng được chốt lại sau khởi động. Đây là lịch server riêng đã định nghĩa, không khẳng định khôi phục được mọi trường hợp server gốc khi máy tắt.
+
+Biến thể `activityGuildBattle` có 8 RPC và nhánh chọn đội trong bundle, nhưng **không có scene, hằng số riêng hoặc callback push riêng**. API dùng cùng bộ luật 5 mức HP, lịch riêng Chủ nhật 16:00–22:00 và lịch sử độc lập. Không bật một sự kiện có màn không tồn tại. Route hạng giữ đúng tên sai chính tả gốc `wintTimesRank`. Phần này được tính ở mức API nghiệp vụ, không phải giao diện hoạt động đã được xây lại.
+
+Bản vá selector cho cả hai nhánh truyền seed server và dùng số lượt còn lại chuẩn từ response, tránh phép `--` thủ công trừ lần thứ hai sau delta. Cần APK có bản vá bang chiến này khi sử dụng chế độ mới.
