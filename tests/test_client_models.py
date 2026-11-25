@@ -31,6 +31,8 @@ class ClientModelTests(unittest.TestCase):
   self.assertIsNone(state['home']['starSignPointPanel'])
   self.assertEqual(state['daily']['receivedPointMap'],{'daily':{},'weekly':{}})
   self.assertFalse(state['daily']['isCanReceiveTaskAward'])
+  self.assertFalse(state['quick']['isNeedMark'])
+  self.assertFalse(state['quick']['isMarkDailyTask'])
  def test_version_two_profile_migrates_before_home_generator(self):
   p=self.profile;p['profileSchemaVersion']=2
   for key in ('daily','dailyActivePoint','weeklyActivePoint','receivedPointMap'):p['task'].pop(key)

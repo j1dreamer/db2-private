@@ -16,7 +16,7 @@ const cache={rulePanel:{},shipScene:{},teamHandler:{},soundComponent:{},roleScen
  resource:{},soundApi:{},itemItem:{},roleItem:{},skillItem:{},pointHandler:{},clientConfig:{}};
 // Dependencies used only by renderer callbacks or networking in these generators.
 // Missing methods deliberately stay undefined: calling a stub fails the check.
-const callbackOnly = new Set(["allServerBattleHandler", "arena3v3Handler", "arenaHandler", "arenaScene", "bagHandler", "bagScene", "baseView", "bmapScene", "buildExt", "canUseRolesPanel", "coinTopNode", "cryptoApi", "dailyBmapScene", "data", "dial2Panel", "dialPanel", "doubleBattleHandler", "dreamActivityPanel", "dreamExtActivityPanel", "eyeHandler", "friendHandler", "guide", "guideNode", "guildHandler", "guildScene", "helper", "http", "i18n", "idfaPanel", "mailHandler", "md5", "moment", "newGuildBattleHandler", "playerHandler", "pointHandler", "prestigeBattleHandler", "rankHandler", "rankPanel", "renamePanel", "resource", "roleScene", "rulePanel", "sceneManager", "serverMain", "settingPanel", "shipScene", "shopHandler", "skillInfoPanel", "skillItem", "socket", "soundApi", "soundComponent", "stringUtil", "strongGoalMorePanel", "teamBattleHandler", "teamHandler", "topUpPanel", "util", "viewBattleTeamPanel", "worldBossHandler", "worshipBattleHandler"]);
+const callbackOnly = new Set(["allServerBattleHandler", "arena3v3Handler", "arenaHandler", "arenaScene", "bagHandler", "bagScene", "baseView", "bmapScene", "buildExt", "canUseRolesPanel", "coinTopNode", "cryptoApi", "dailyBmapScene", "data", "dial2Panel", "dialPanel", "doubleBattleHandler", "dreamActivityPanel", "dreamExtActivityPanel", "eyeHandler", "friendHandler", "guide", "guideNode", "guildHandler", "guildScene", "helper", "http", "i18n", "idfaPanel", "mailHandler", "md5", "moment", "newGuildBattleHandler", "playerHandler", "pointHandler", "prestigeBattleHandler", "rankHandler", "rankPanel", "renamePanel", "resource", "roleScene", "rulePanel", "sceneManager", "serverMain", "settingPanel", "shipScene", "shopHandler", "skillInfoPanel", "skillItem", "socket", "soundApi", "soundComponent", "stringUtil", "strongGoalMorePanel", "teamBattleHandler", "teamHandler", "topUpPanel", "util", "viewBattleTeamPanel", "worldBossHandler", "worshipBattleHandler", "upgradeShowPanel"]);
 for(const name of callbackOnly)if(!(name in cache))cache[name]=function(){};
 const frames=[];
 const cc={_RF:{push(mod){frames.push(mod)},pop(){frames.pop()}},Class:def=>{const cls=function(){};Object.assign(cls.prototype,def);Object.assign(cls,def.statics||{});frames.at(-1).exports=cls;return cls;},Component:{},Node:{},Sprite:{},Label:{},SpriteFrame:{},ProgressBar:{},Layout:{},RichText:{}};
@@ -38,13 +38,19 @@ const snapshots=[];
 for(const delta of input.deltas||[]){player.update(delta);snapshots.push({gem:player.gem,bag:JSON.parse(JSON.stringify(player.bag.items)),team:JSON.parse(JSON.stringify(player.team.roles))});}
 let teamItems,friendship;
 if(input.checkTeam){delete cache.roleItem;load('roleItem');delete cache.itemItem;load('itemItem');friendship=load('teamScene').genFriendshipData();teamItems=Object.values(player.team.roles).map(r=>load('teamScene').genTeamItemData(r));}
+let quick;
 let home;
 if(input.checkHome){
  for(const name of ['itemItem','roleItem'])delete cache[name];
  home=load('homeScene').genData();
+ for(const name of ['shipScene','skillItem','skillInfoPanel'])delete cache[name];
+ load('shipScene');load('skillItem');
+ // sceneManager caches the real team item generator output before loading scenes.
+ cache.sceneManager.teamData={teamItemMap:Object.fromEntries(Object.values(player.team.roles).map(r=>[r.idx,load('teamScene').genTeamItemData(r)]))};
+ quick=load('quickNode').genData();
 }
 const daily=load('dailyTaskPanel').genData();
 let point;
 if(input.checkPoint)point=load('pointScene').genData();
 let roles;if(input.checkRoles){if(!cache.roleItem.genData){delete cache.roleItem;load('roleItem');}roles=Object.values(player.team.roles).map(r=>load('roleItem').genData(r));}
-player.destroy();process.stdout.write(JSON.stringify({snapshots,home,daily,point,roles,teamItems,friendship,gem:player.gem,bag:player.bag.items,team:player.team.roles}));
+player.destroy();process.stdout.write(JSON.stringify({snapshots,quick,home,daily,point,roles,teamItems,friendship,gem:player.gem,bag:player.bag.items,team:player.team.roles}));

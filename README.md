@@ -132,3 +132,9 @@ Bản vá Windows dùng PowerShell có sẵn; không đổi execution policy. Đ
 Log trên BlueStacks báo `Cannot read property 'daily' of undefined` trong `dailyTaskPanel.genData`. Server thiếu `task.receivedPointMap`, làm luồng khởi tạo sảnh dừng trước khi ẩn event và cập nhật thông tin người chơi. Hàm tạo dữ liệu `homeScene.genData` còn đọc `activity.scorePointInfoMap` cho event cung hoàng đạo. Schema 3 bổ sung hai cấu trúc này, dữ liệu nhiệm vụ ngày/tuần và bộ đếm điểm danh. Nhân vật schema 2 trở xuống được bổ sung trường khi tải từ SQLite, giữ nguyên tiền, tướng và tiến trình đã có.
 
 Dừng server rồi cập nhật source (hoặc chỉ thay `server/profile.py` từ main), chạy lại `start.bat`/`python start.py`, thoát hẳn game và mở lại. Không cần thay APK hay xóa database. Bộ kiểm thử chạy chính hàm gốc `homeScene.genData`, kiểm tra tên/VIP, các cờ ẩn event và việc nâng cấp nhân vật cũ; không dựng giao diện Cocos.
+
+## Chẩn đoán khi vẫn đơ sau cập nhật
+
+Trong thư mục chứa `start.bat`, chạy `python Check-Home.py` khi server đang mở. Công cụ chỉ đọc mã nguồn, các trường schema cần thiết trong SQLite, năm dòng audit liên quan gần nhất và `/health`; không xuất mật khẩu, token hoặc toàn bộ hồ sơ nhân vật. Nếu chạy server với `--data`, truyền cùng thư mục đó cho công cụ. Kết quả cho biết bản code schema nào, dữ liệu nhân vật còn thiếu trường nào và đường dẫn đang kiểm tra. Công cụ không nâng cấp hoặc ghi database.
+
+Bộ kiểm thử còn chạy `quickNode.genData` với các hàm gốc achievement/ship/skill và cache team tạo bằng hàm gốc. Đây là luồng gây lỗi `daily` trong log thiết bị; với schema 3, cả homeScene và quickNode tạo dữ liệu thành công. Vẫn cần dữ liệu chẩn đoán từ máy chạy game để xác định lỗi sau cập nhật.
