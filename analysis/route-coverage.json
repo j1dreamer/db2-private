@@ -2,15 +2,18 @@
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
   "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 31,
-  "unsupported_routes": 311,
+  "implemented_routes": 75,
+  "unsupported_routes": 267,
   "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
       "route": "chat.chatHandler.getGuildLast",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_chat.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
@@ -385,135 +388,173 @@
     },
     {
       "route": "logic.bagHandler.addShipExperience",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeArtifact",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeCapsule",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeFruit",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeItem",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeRole",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeShip",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.decomposeStarSign",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.increaseArtifactUpgradeStarSuccessRate",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.increaseFruitUpgradeStarSuccessRate",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.resetCapsule",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.saveResetCapsule",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.sell",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeShip",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeShipSkill",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeShipStar",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeStarArtifact",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeStarFruit",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeStarSign",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
       "device_verified": false
     },
     {
@@ -700,100 +741,142 @@
     },
     {
       "route": "logic.friendHandler.acceptAddFriend",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.exchangeTicket",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.findTarget",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.giveAndReceiveGiftAll",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.giveGift",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.giveGiftAll",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.myFriendList",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.receiveGift",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.receiveGiftAll",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.recommendList",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.refuseAddFriend",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.removeFriend",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.requestAddFriend",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.friendHandler.requestAddFriendList",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
@@ -1078,37 +1161,52 @@
     },
     {
       "route": "logic.mailHandler.read",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.mailHandler.receive",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.mailHandler.receiveAll",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.mailHandler.removeAllRead",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.mailHandler.send",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
@@ -1365,9 +1463,12 @@
     },
     {
       "route": "logic.playerHandler.sendChat",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_chat.py",
+        "tests/test_push.py"
+      ],
       "device_verified": false
     },
     {
@@ -1707,30 +1808,38 @@
     },
     {
       "route": "logic.rankHandler.arenaTop50",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_rank.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.rankHandler.top50",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_rank.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.shopHandler.buy",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_shops.py"
+      ],
       "device_verified": false
     },
     {
       "route": "logic.shopHandler.refresh",
-      "implemented": false,
-      "status": "not-implemented",
-      "test_groups": [],
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_shops.py"
+      ],
       "device_verified": false
     },
     {

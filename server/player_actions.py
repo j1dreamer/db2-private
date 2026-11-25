@@ -22,7 +22,7 @@ def handle(store,account,route,args):
                 if image not in owned:raise ValueError('Chưa sở hữu chiến binh có ảnh này')
                 p['photoInfo']['photoImgId']=image
             elif action=='setShipImg':
-                owned={900,901};ships={r['kindId']:r for r in table('ship')}
+                owned={900,901}|set(p.get('frameIds',[]));ships={r['kindId']:r for r in table('ship')}
                 owned|={r.get('imgId',r['kindId']) for r in ships.values() if any(x['kindId']==r['kindId'] for x in p['bag']['items'].values())}
                 if image not in owned:raise ValueError('Chưa sở hữu ảnh đồng hành')
                 p['photoInfo']['shipImgId']=image

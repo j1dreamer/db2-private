@@ -11,8 +11,8 @@ Với từng route: đối chiếu request thật từ JavaScript; xác thực t
 ## Tiến độ hiện tại
 
 - Đã trích đủ 342 hợp đồng request: `analysis/route-contracts.json`. Công cụ Acorn giải quyết cả hai route có tên đi qua biến cục bộ, không chỉ các chuỗi truyền trực tiếp vào request.
-- 31 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 311 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route.
-- Đã chạy 60 kiểm thử tổng thể. Các kiểm thử mới gồm engine gốc chạy không renderer, phát lại trận thắng với cùng seed/lịch sử kỹ năng, ghi tiến độ/thưởng một lần, đội hình không hợp lệ, thiếu thể lực, càn quét, rương sao, mua lượt và các thao tác nhân vật.
+- 75 route có xử lý trong nhánh và được các bộ kiểm thử nhóm bao phủ. Còn 267 route chưa triển khai. Xem `analysis/route-coverage.json` để biết từng route. Đây là độ phủ xử lý phía server, chưa phải 75 luồng đã xác minh trên thiết bị.
+- Đã chạy 87 kiểm thử tổng thể. Các kiểm thử gồm engine gốc/phát lại trận, ghi thưởng một lần, túi đồ và tiền tệ có transaction, quyền sở hữu, hết hạn vật phẩm, thông báo thư/bạn bè/chat giữa hai WebSocket và codec Pomelo gốc.
 
 ## Phần mới trong nhánh
 
@@ -22,18 +22,21 @@ Chín route nhân vật: ảnh tướng/đồng hành/danh hiệu/chat, ẩn tra
 
 Dữ liệu nền: hồi thể lực/điểm kỹ năng theo timestamp, ngày server UTC+7, reset hạn mức hằng ngày, kỹ năng đầu tiên của tướng, dữ liệu nền cần cho màn xếp đội. Combat worker dùng các module battle gốc; phần renderer được thay bằng event sink, không thay công thức gây sát thương hay RNG.
 
+14 route bạn bè, 5 thư, 2 bảng xếp hạng, 2 cửa hàng và 2 chat: dữ liệu SQLite, quyền người gửi/nhận, giới hạn ngày, chống nhận đính kèm lặp; xếp hạng từ tiến độ đã lưu; stock theo nhóm/trọng số/bảng giá và lịch UTC+7. Push dùng codec Pomelo gốc, chỉ gửi sau khi chọn nhân vật. Thư và các delta khác không ghi đè toàn bộ `extra.chat`.
+
+19 route túi đồ: bán, hợp thành tướng/đá/trang bị/đồng hành, nâng sao và tăng tỷ lệ, cấp/kỹ năng đồng hành, tái tạo/lưu/hợp capsule, nâng/phân giải tinh tú. Vật phẩm riêng lẻ có model và ô túi riêng; capsule có thuộc tính, tinh tú có cấp/giá trị và đồng hành có kinh nghiệm/kỹ năng. Vé/vật phẩm hết hạn không được dùng. Schema 9 sửa các stack riêng lẻ cũ, giữ số dư và các thuộc tính đã có.
+
 ## Những phần cần chốt hoặc xác minh tiếp
 
-- Người dùng đang được hỏi có cho phép luật riêng ở những phần không có bằng chứng server gốc hay không. Quy tắc rơi vật phẩm ải đang là **quy tắc riêng dự thảo**: mỗi ID vật phẩm được liệt kê có value dương cấp 1 đơn vị; tiền tệ dùng value trong bảng. Không coi đây là công thức rơi gốc. Giới hạn/chi phí có literal/function trong client được dùng đúng nguồn đó.
+- Luật chưa có bằng chứng server gốc được ghi là chính sách riêng dự thảo. Số lượng rơi ải dùng `specifyDropValues`, phù hợp consumer `starSignSmapScene`; thời điểm/xác suất rơi của mọi loại ải chưa xác minh. Cửa hàng tính giá đơn vị nhân số lượng; refresh loại 14 dùng fallback gem do config gốc thiếu. Chu kỳ đồng hành tăng sao đặt lại cấp 1, giữ kỹ năng; chat giới hạn 200 UTF-16 unit/3 giây. Không coi các lựa chọn này là mã server gốc đã phục hồi. Giới hạn/chi phí có literal/function trong client được dùng theo nguồn.
 - Quảng cáo, nạp tiền, lịch/mùa giải và event có phần cấu hình ở server gốc. Chưa có bằng chứng/chứng từ thì không giả vờ xác nhận thanh toán/quảng cáo thành công.
 - Combat giờ cần Node.js trên máy chạy server (Termux: `pkg install nodejs`, Windows: Node.js LTS). Thiếu runtime thì route kết thúc trận báo lỗi, không phát thưởng không được kiểm tra. Chưa đóng gói APK mới của nhánh này.
 - Chưa xác nhận luồng phiêu lưu mới trên BlueStacks; headless replay không chứng minh mọi preload/animation/scene đều hoạt động.
 
 ## Thứ tự các nhóm tiếp theo
 
-1. Hòm thư, bạn bè, bảng xếp hạng, cửa hàng và các thao tác túi.
-2. Nâng tướng/kỹ năng/trang bị, nhiệm vụ và điều kiện mở khóa.
-3. Các chế độ chiến đấu cá nhân: arena/3v3, luyện tập, viễn chinh, boss, endless, đảo, timePeak.
-4. Bang hội, đội nhiều người, chiến trường/liên server, lịch event và các RPC quản trị.
+1. Nâng tướng/kỹ năng/trang bị, nhiệm vụ và điều kiện mở khóa.
+2. Các chế độ chiến đấu cá nhân: arena/3v3, luyện tập, viễn chinh, boss, endless, đảo, timePeak.
+3. Bang hội, đội nhiều người, chiến trường/liên server, lịch event và các RPC quản trị.
 
 Mỗi nhóm chỉ nâng trạng thái khi có xử lý và kiểm thử; không thay con số mục tiêu 342.

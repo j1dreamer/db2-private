@@ -60,11 +60,12 @@ def consume_attempt(player,bmap,smap,count=1):
     refresh_time(player)
 
 def reward_plan(smap):
-    # Explicit private rule for unobserved server drop algorithm: positive listed
-    # non-currency IDs grant one unit; listed currencies use the shipped value.
+    # starSignSmapScene renders these table values as item counts. Use the same
+    # table quantity interpretation here; normal-map drop timing remains a
+    # private-server rule because its original backend was not supplied.
     result=[]
     for entity,value in zip(smap.get('specifyDropEntityIds') or [],smap.get('specifyDropValues') or []):
-        if entity and value>0:result.append({'entityId':entity,'count':int(value) if entity in (101,102) else 1,'extra':{}})
+        if entity and value>0:result.append({'entityId':entity,'count':int(value),'extra':{}})
     return result
 
 def grant(player,rewards):

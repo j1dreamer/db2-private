@@ -11,5 +11,5 @@ if(input.operation==='request') {
 }else{
  const packet=p.Package.decode(Uint8Array.from(Buffer.from(input.data,'base64')));
  const msg=p.Message.decode(packet.body);
- process.stdout.write(JSON.stringify({type:packet.type,id:msg.id,body:JSON.parse(p.strdecode(msg.body))}));
+ process.stdout.write(JSON.stringify({type:packet.type,id:msg.id,...(msg.route?{route:msg.route}:{}),body:JSON.parse(p.strdecode(msg.body))}));
 }

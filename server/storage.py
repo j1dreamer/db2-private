@@ -17,6 +17,13 @@ class Store:
         CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS event_claims(event TEXT REFERENCES events(id),player INTEGER REFERENCES players(id),PRIMARY KEY(event,player));
         CREATE TABLE IF NOT EXISTS pool_entries(pool INTEGER NOT NULL,entity INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(pool,entity));
+        CREATE TABLE IF NOT EXISTS notifications(id INTEGER PRIMARY KEY AUTOINCREMENT,account INTEGER REFERENCES accounts(id),event TEXT NOT NULL,data TEXT NOT NULL);
+        CREATE TABLE IF NOT EXISTS chat_messages(id INTEGER PRIMARY KEY AUTOINCREMENT,player INTEGER REFERENCES players(id),kind INTEGER NOT NULL,scope INTEGER NOT NULL,created INTEGER NOT NULL,data TEXT NOT NULL);
+        CREATE INDEX IF NOT EXISTS chat_channel ON chat_messages(kind,scope,id);
+        CREATE INDEX IF NOT EXISTS chat_sender ON chat_messages(player,id);
+        CREATE TABLE IF NOT EXISTS friend_requests(source INTEGER REFERENCES players(id),target INTEGER REFERENCES players(id),created INTEGER NOT NULL,PRIMARY KEY(source,target));
+        CREATE TABLE IF NOT EXISTS friend_links(a INTEGER REFERENCES players(id),b INTEGER REFERENCES players(id),PRIMARY KEY(a,b));
+        CREATE TABLE IF NOT EXISTS friend_gifts(source INTEGER REFERENCES players(id),target INTEGER REFERENCES players(id),day TEXT NOT NULL,received INTEGER NOT NULL,PRIMARY KEY(source,target,day));
         CREATE TABLE IF NOT EXISTS adventure_runs(player INTEGER PRIMARY KEY REFERENCES players(id),data TEXT NOT NULL,expires INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS audit(id INTEGER PRIMARY KEY,created INTEGER NOT NULL,action TEXT NOT NULL,detail TEXT NOT NULL);
         ''')
@@ -52,7 +59,11 @@ class Store:
                 self.audit('starter_tickets',{'player':data['id'],'items':{'119':1,'120':1}})
             self.save(data);self.audit('profile_migration',{'player':data['id'],'schema':data['profileSchemaVersion']})
         from .state import refresh_time
-        if refresh_time(data):self.save(data)
+        changed=refresh_time(data)
+        from .social import refresh as refresh_friend
+        changed=refresh_friend(self,data)or changed
+        from .shops import refresh_due
+        if refresh_due(data)or changed:self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile
@@ -79,4 +90,6 @@ class Store:
             data['gem']+=row['gem'];self.save(data)
             self.audit('redeem',{'player':player,'code':code,'gem':row['gem']})
             return data
+    def notify(self,account,event,data):
+        self.db.execute('INSERT INTO notifications(account,event,data) VALUES(?,?,?)',(account,event,json.dumps(data,ensure_ascii=False)))
     def audit(self,action,detail):self.db.execute('INSERT INTO audit(created,action,detail) VALUES(?,?,?)',(int(time.time()),action,json.dumps(detail,ensure_ascii=False)))

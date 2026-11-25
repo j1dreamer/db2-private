@@ -9,9 +9,12 @@ def integer(value,label,low=0,high=10**9):
 def vip_data(player):
     return next(r for r in table('vip') if r['level']==player['vip']['level'])
 
-def stack_count(player,kind):return sum(x['count'] for x in player['bag']['items'].values() if x['kindId']==kind)
+def stack_count(player,kind):
+    from .inventory import active
+    return sum(x['count'] for x in player['bag']['items'].values() if x['kindId']==kind and active(x))
 
 def consume(player,kind,count):
+    from .inventory import active
     integer(count,'Số lượng',0)
     if count==0:return
     if kind in (101,102):
@@ -24,7 +27,7 @@ def consume(player,kind,count):
     remaining=count
     for key in list(player['bag']['items']):
         item=player['bag']['items'][key]
-        if item['kindId']!=kind:continue
+        if item['kindId']!=kind or not active(item):continue
         n=min(remaining,item['count']);item['count']-=n;remaining-=n
         if not item['count']:del player['bag']['items'][key]
         if not remaining:return
@@ -47,7 +50,17 @@ def delta(before,after,route,temp=None):
             old=before['team']['roles'];new=after['team']['roles']
             roles={k:new.get(k) for k in old.keys()|new.keys() if old.get(k)!=new.get(k)}
             if roles:result['team']={'roles':roles}
-        elif after[key]!=before.get(key):result[key]=after[key]
+        elif after[key]!=before.get(key):
+            if isinstance(after[key],dict) and isinstance(before.get(key),dict):
+                old=before[key];new=after[key]
+                result[key]={k:new.get(k) for k in old.keys()|new.keys() if old.get(k)!=new.get(k)}
+                # These four client models merge one extra level. Missing map
+                # entries require explicit tombstones rather than omission.
+                if key in ('vip','shop','task','activity'):
+                    for field in result[key]:
+                        if isinstance(old.get(field),dict) and isinstance(new.get(field),dict):
+                            result[key][field]={k:new[field].get(k) for k in old[field].keys()|new[field].keys() if old[field].get(k)!=new[field].get(k)}
+            else:result[key]=after[key]
     return result
 
 DAILY_COUNTERS=('buyActionPointTimes','buySkillPointTimes','buyCoinTimes','buyMapType5Times','shipUpgradeLevelTimes')
@@ -60,6 +73,8 @@ def refresh_time(player,now=None):
         if prior:
             for key in DAILY_COUNTERS:player['vip'][key]=0
             player['vip']['resetSmapTimesTimesMap']={}
+            player['shop']['refreshTimesMap']={str(kind):0 for kind in range(1,15)}
+            player['friend']['pointReceiveTimes']=0
             player['smapTimesMap']={};player['point']['dailyNormalUseGemTimes']=0
     for key in ('actionPoint','skillPoint'):
         maximum=player['timesMaxMap'][key];next_time=player['nextRecoverTimeMap'].get(key,0)

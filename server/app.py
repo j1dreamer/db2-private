@@ -2,8 +2,8 @@ import argparse,asyncio,json,os,secrets,hmac,sqlite3,time,gzip,base64
 from pathlib import Path
 from aiohttp import web,WSMsgType
 from .storage import Store
-from .protocol import package,packages,request,response
-from . import adventure,player_actions
+from .protocol import package,packages,request,response,push
+from . import adventure,player_actions,social,mail,rank,shops,chat,bag_actions
 ROOT=Path(__file__).resolve().parent.parent
 
 def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
@@ -11,6 +11,38 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     store=Store(data_dir/'game.sqlite3');token=admin_token or secrets.token_urlsafe(32)
     app=web.Application(client_max_size=256*1024)
     app[web.AppKey('store',Store)]=store
+    live={};mail_seen={};selected_players={};notification_lock=asyncio.Lock();notification_task=None
+    # Offline users load durable state on login; stale pre-restart pushes must not
+    # be delivered again after that full snapshot.
+    store.db.execute('DELETE FROM notifications')
+    def annotate_online(value):
+        online=set(selected_players.values())
+        def walk(node):
+            if isinstance(node,dict):
+                if 'playerId'in node and 'isOnline'in node:node['isOnline']=node['playerId']in online
+                for item in node.values():walk(item)
+            elif isinstance(node,list):
+                for item in node:walk(item)
+        walk(value)
+    async def flush_notifications():
+        async with notification_lock:
+            while True:
+                rows=store.db.execute('SELECT * FROM notifications ORDER BY id LIMIT 100').fetchall()
+                if not rows:return
+                for row in rows:
+                    body=json.loads(row['data']);annotate_online(body)
+                    for peer in list(live.get(row['account'],())):
+                        if peer.closed or peer not in mail_seen:continue
+                        if row['event']=='onNewMail':
+                            mid=body['mail']['_id'];seen=mail_seen.setdefault(peer,set())
+                            if mid in seen:continue
+                            seen.add(mid)
+                        try:await asyncio.wait_for(peer.send_bytes(push(row['event'],body)),timeout=3)
+                        except (ConnectionError,RuntimeError,asyncio.TimeoutError):pass
+                    store.db.execute('DELETE FROM notifications WHERE id=?',(row['id'],))
+    def start_notifications():
+        nonlocal notification_task
+        if notification_task is None or notification_task.done():notification_task=asyncio.create_task(flush_notifications())
     async def health(req):return web.json_response({'status':'ok','stage':'protocol-development','playable_verified':False})
     async def config(req):return web.json_response({'runScriptInfo':{'script':''},'inReviewPackageInfos':[]})
     async def account(req):
@@ -95,7 +127,9 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                             await ws.send_bytes(encoded);continue
                         if route=='gate.gateHandler.queryEntry':result={'code':200,'host':public_host,'port':game_port}
                         elif route=='connector.entryHandler.entry':
+                            if uid in live:live[uid].discard(ws)
                             uid=store.account(args.get('token','')) if args.get('serverId')==1 else None;result={'code':200 if uid else 500,'msg':'' if uid else 'Phiên đăng nhập không hợp lệ'}
+                            if uid:live.setdefault(uid,set()).add(ws)
                         elif not uid:result={'code':500,'msg':'Chưa đăng nhập'}
                         elif route=='connector.playerHandler.getPlayers':
                             p=store.player(uid);result={'code':200,'players':[{'id':p['id'],'oldServerId':1,'name':p['name']}] if p else []}
@@ -103,8 +137,11 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                             try:
                                 p=store.create_player(uid,args.get('name','')) if route.endswith('createPlayer') else store.player(uid)
                                 if not p or (route.endswith('.entry') and args.get('playerId')!=p['id']):raise ValueError('Không tìm thấy nhân vật')
+                                p['atime']=int(time.time()*1000);store.save(p);selected_players[ws]=p['id']
+                                chat.load(store,p)
                                 packed=base64.b64encode(gzip.compress(json.dumps(p,ensure_ascii=False).encode())).decode()
                                 result={'code':200,'player':packed}
+                                mail_seen[ws]={m['_id'] for m in p['extra']['mails']}
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route.startswith('logic.pointHandler.'):
                             from .gameplay import draw,select_pool
@@ -114,6 +151,21 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                 if action in ('switchAdvancedPool','selectWishClassId'):result=select_pool(store,uid,action,args)
                                 elif action in mapping:result=draw(store,uid,*mapping[action]);result['_temp']['route']=route
                                 else:raise ValueError('Thao tác pool chưa triển khai')
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in bag_actions.ROUTES:
+                            try:result=bag_actions.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in chat.ROUTES:
+                            try:result=chat.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in shops.ROUTES:
+                            try:result=shops.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in rank.ROUTES:
+                            try:result=rank.handle(store,uid,route,args)
+                            except ValueError as exc:result={'code':500,'msg':str(exc)}
+                        elif route in social.ROUTES or route in mail.ROUTES:
+                            try:result=(social if route in social.ROUTES else mail).handle(store,uid,route,args)
                             except ValueError as exc:result={'code':500,'msg':str(exc)}
                         elif route in player_actions.ROUTES:
                             try:result=player_actions.handle(store,uid,route,args)
@@ -141,11 +193,18 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                             result={'code':500,'msg':'Route đang được triển khai: '+route}
                             store.audit('unsupported_route',{'route':route,'account':uid})
                         if ident:
+                            annotate_online(result)
                             encoded=response(ident,result);recent[ident]=(body,encoded)
                             if len(recent)>256:del recent[next(iter(recent))]
                             await ws.send_bytes(encoded)
+                            start_notifications()
                     else:raise ValueError('Unknown package')
             except (ValueError,KeyError,IndexError,UnicodeError):await ws.close(code=1002,message=b'Invalid Pomelo packet')
+        if uid in live:live[uid].discard(ws)
+        mail_seen.pop(ws,None);selected_players.pop(ws,None)
+        if uid:
+            p=store.player(uid)
+            if p:p['atime']=int(time.time()*1000);store.save(p)
         return ws
     async def root(req):
         if req.headers.get('Upgrade','').lower()=='websocket':return await ws_handler(req)
@@ -156,7 +215,10 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     app.router.add_post('/user/register',account);app.router.add_post('/user/login',account)
     app.router.add_route('*','/user/serverInfo',servers);app.router.add_get('/notice.json',notice)
     app.router.add_route('*','/admin/api',admin);app.router.add_get('/admin/catalog',admin)
-    async def close(app):store.db.close()
+    async def close(app):
+        if notification_task and not notification_task.done():
+            notification_task.cancel();await asyncio.gather(notification_task,return_exceptions=True)
+        store.db.close()
     app.on_cleanup.append(close)
     return app
 

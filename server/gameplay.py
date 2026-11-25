@@ -39,19 +39,19 @@ def add_reward(player,reward):
     role=next((r for r in rows('role') if r['kindId']==entity),None)
     if role:
         if count!=1:raise ValueError('Multiple role reward not supported')
-        owned=next((r for r in player['team']['roles'].values() if r['kindId']==entity),None)
+        owned=next((r for r in player['team']['roles'].values() if next(x['classId']for x in rows('role')if x['kindId']==r['kindId'])==role['classId']),None)
         if owned:
             soul=next(r for r in rows('soul') if r['classId']==role['classId'])
-            # Explicit private-server duplicate conversion policy, configurable later.
-            return add_reward(player,{'entityId':soul['kindId'],'count':10,'extra':{}})
+            from .rules import constants
+            equivalents=constants('server.ROLE.CONSTS.EQUIVALENT_SOULS');star=int(reward.get('extra',{}).get('star',1))
+            quantity=equivalents[star] if 0<=star<len(equivalents) else 0
+            return add_reward(player,{'entityId':soul['kindId'],'count':quantity,'extra':{}}) if quantity else {}
         from .profile import character
         idx=max([int(k) for k in player['team']['roles']]+[0])+1
         player['team']['roles'][str(idx)]=character(entity,idx,int(reward['extra'].get('star',1)))
         return {str(entity):count}
-    bag=player['bag'];existing=next((r for r in bag['items'].values() if r['kindId']==entity),None)
-    if existing:existing['count']+=count
-    else:
-        bag['lastIdx']+=1;idx=bag['lastIdx'];bag['items'][str(idx)]={'idx':idx,'kindId':entity,'count':count}
+    from .inventory import insert
+    insert(player,entity,count,reward.get('extra',{}))
     return {str(entity):count}
 
 def point_default():return {'normalTimes':0,'advancedTimes':0,'dailyNormalUseGemTimes':0,'selectAdvancedIdx':0,'advancedLuck':0,'advancedLuckClassId':1,'advancedSpecialInfo':None}
@@ -63,15 +63,10 @@ def draw(store,account,mode,count):
         if not player:raise ValueError('Chưa có nhân vật')
         before_items=json.loads(json.dumps(player['bag']['items']));before_roles=set(player['team']['roles'])
         point=player.setdefault('point',point_default());ticket=119 if mode=='normal' else 120
-        items=player['bag']['items'];available=sum(x['count'] for x in items.values() if x['kindId']==ticket)
+        from .state import stack_count,consume
+        items=player['bag']['items'];available=stack_count(player,ticket)
         if available>=count:
-            remaining=count
-            for idx in list(items):
-                item=items[idx]
-                if item['kindId']!=ticket:continue
-                used=min(remaining,item['count']);item['count']-=used;remaining-=used
-                if not item['count']:del items[idx]
-                if not remaining:break
+            consume(player,ticket,count)
         elif mode=='normal':
             cost=300 if count==1 else 2700*(count//10)
             if player['gem']<cost:raise ValueError('Không đủ gem hoặc vé')
