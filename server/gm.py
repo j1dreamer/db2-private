@@ -19,6 +19,9 @@ def handle(store,account,route,args):
             key=str(role['idx']);del p['team']['roles'][key]
             p.get('privateRoleBases',{}).pop(key,None);p.get('privateRoleInvestments',{}).pop(key,None)
             store.db.execute('DELETE FROM adventure_runs WHERE player=?',(p['id'],))
+            store.db.execute('DELETE FROM pvp_runs WHERE player=?',(p['id'],))
+            if len(p['team']['roles'])<3:
+                store.db.execute('DELETE FROM multi_ladder WHERE player=?',(p['id'],));p['arena3v3'].update(rank=0,defenseTeamIndexsMap={},defenseShipIndexsMap={})
         else:
             kind=integer(args.get('kindId'),'Vật phẩm',1);row=entity(kind);count=1 if action=='addRole'else integer(args.get('itemCount'),'Số lượng',1,10**6)
             if action=='addRole':

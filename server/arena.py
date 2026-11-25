@@ -27,6 +27,7 @@ def seed_ladder(store):
 def ensure(store,p):
     if p['level']<constants('server.ARENA.CONSTS.REQUIRED_LEVEL'):raise ValueError('武道会 cần đội cấp 10')
     seed_ladder(store);entry=store.db.execute('SELECT rank FROM arena_entries WHERE player=?',(p['id'],)).fetchone()
+    p['vip'].setdefault('buyChallengeTimesTimes',0)
     if not entry:
         rank=store.db.execute('SELECT max(rank)FROM arena_entries').fetchone()[0]+1
         store.db.execute('INSERT INTO arena_entries VALUES(?,?,?,?)',(p['id'],rank,'player','{}'));p['arena'].update(rank=rank,topRank=rank)
@@ -136,7 +137,7 @@ async def handle(store,account,route,args):
         elif action=='report':
             rid=args.get('id')
             if not isinstance(rid,str):raise ValueError('ID báo cáo không hợp lệ')
-            row=store.db.execute('SELECT *FROM battle_reports WHERE id=?AND mode=?AND(attacker=?OR defender=?)',(rid,'arena',p['id'],p['id'])).fetchone()
+            row=store.db.execute('SELECT *FROM battle_reports WHERE id=?AND(attacker=?OR defender=?)',(rid,p['id'],p['id'])).fetchone()
             if not row:raise ValueError('Báo cáo không thuộc tài khoản')
             temp['report']=json.loads(row['data'])
         store.save(p);return delta(before,p,route,temp)

@@ -67,3 +67,11 @@ def patch_arena_transport(text):
         if text.count(old)!=1:raise ValueError('Unexpected arena transport implementation')
         text=text.replace(old,new,1)
     return text
+
+def patch_arena3v3_transport(text):
+    old='''p.choose(this.statusData.opts.defenderId, this.data.selectIdxsMap, this.data.selectShipIdxsMap, function(e) {
+var n, o, h = e._temp.attackTeam'''
+    new='''p.choose(this.statusData.opts.defenderId, this.data.selectIdxsMap, this.data.selectShipIdxsMap, function(e) {
+var n = e._temp.seed, o, h = e._temp.attackTeam'''
+    if text.count(old)!=1:raise ValueError('Unexpected arena3v3 transport implementation')
+    return text.replace(old,new,1)

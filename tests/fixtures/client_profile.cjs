@@ -17,8 +17,10 @@ const cache={rulePanel:{},shipScene:{},teamHandler:{},soundComponent:{},roleScen
 // Dependencies used only by renderer callbacks or networking in these generators.
 // Missing methods deliberately stay undefined: calling a stub fails the check.
 const callbackOnly = new Set(["allServerBattleHandler", "arena3v3Handler", "arenaHandler", "arenaScene", "bagHandler", "bagScene", "baseView", "bmapScene", "buildExt", "canUseRolesPanel", "coinTopNode", "cryptoApi", "dailyBmapScene", "data", "dial2Panel", "dialPanel", "doubleBattleHandler", "dreamActivityPanel", "dreamExtActivityPanel", "eyeHandler", "friendHandler", "guide", "guideNode", "guildHandler", "guildScene", "helper", "http", "i18n", "idfaPanel", "mailHandler", "md5", "moment", "newGuildBattleHandler", "playerHandler", "pointHandler", "prestigeBattleHandler", "rankHandler", "rankPanel", "renamePanel", "resource", "roleScene", "rulePanel", "sceneManager", "serverMain", "settingPanel", "shipScene", "shopHandler", "skillInfoPanel", "skillItem", "socket", "soundApi", "soundComponent", "stringUtil", "strongGoalMorePanel", "teamBattleHandler", "teamHandler", "topUpPanel", "util", "viewBattleTeamPanel", "worldBossHandler", "worshipBattleHandler", "upgradeShowPanel"]);
+callbackOnly.add('battlefieldRankPanel');callbackOnly.add('worshipRankPanel');
 for(const name of callbackOnly)if(!(name in cache))cache[name]=function(){};
 const frames=[];
+cache.selectBattleRolesScene={TYPE:{ARENA_3V3_DEFENSE_TEAM:7}};
 const cc={_RF:{push(mod){frames.push(mod)},pop(){frames.pop()}},Class:def=>{const cls=function(){};Object.assign(cls.prototype,def);Object.assign(cls,def.statics||{});frames.at(-1).exports=cls;return cls;},Component:{},Node:{},Sprite:{},Label:{},SpriteFrame:{},ProgressBar:{},Layout:{},RichText:{}};
 const context={cc,window:{},console:{log(...args){process.stderr.write(args.join(' ')+'\n');},warn(...args){process.stderr.write(args.join(' ')+'\n');}},Date,Uint8Array,storage:{getItem(){return null;},setItem(){}},setInterval:()=>1,clearInterval(){}};
 context.require=name=>load(name);
@@ -91,7 +93,8 @@ if(input.checkGameplay){
  }
 }
 const daily=load('dailyTaskPanel').genData();
+let arenaThree;if(input.checkArena3v3){delete cache.roleItem;delete cache.shipItem;load('roleItem');load('shipItem');arenaThree=load('arena3v3Scene').genData();}
 let point;
 if(input.checkPoint)point=load('pointScene').genData();
 let roles;if(input.checkRoles){if(!cache.roleItem.genData){delete cache.roleItem;load('roleItem');}roles=Object.values(player.team.roles).map(r=>load('roleItem').genData(r));}
-player.destroy();process.stdout.write(JSON.stringify({snapshots,roleScenes,effects,topBar,quick,home,daily,point,roles,teamItems,friendship,rosterNavigationCount,rosterCachedIds:Object.keys(cache.sceneManager.teamData?.roleSceneMap||{}),gem:player.gem,bag:player.bag.items,team:player.team.roles}));
+player.destroy();process.stdout.write(JSON.stringify({snapshots,roleScenes,effects,topBar,quick,home,daily,point,roles,teamItems,friendship,arenaThree,rosterNavigationCount,rosterCachedIds:Object.keys(cache.sceneManager.teamData?.roleSceneMap||{}),gem:player.gem,bag:player.bag.items,team:player.team.roles}));
