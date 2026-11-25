@@ -37,12 +37,12 @@ Chi tiết: `compatibility-tests.json` và `wire-tests.json`. Sáu trận robot 
 
 Đọc `assets/resources/config.json`, giải UUID đến 34 file native data `.bin`, kiểm gzip rồi parse JSON và metadata đuôi 64 ký tự. Có 26 bảng giống Android; 8 bảng khác: `vip`, `artifact`, `entity`, `task`, `entityExt`, `buff`, `fightSkill`, `role`. Tất cả header của tám bảng vẫn có cùng tập cột; khác biệt nằm ở record/giá trị.
 
-- `role`: cả 1.760 record có ít nhất một khác biệt, gồm tăng trưởng chỉ số, một số chỉ số đầu và group.
+- `role`: so JSON thô thấy 1.760 record khác. Sau khi tách số lẻ gần bằng nhau (tolerance `1e-9`), 960 record có thay đổi `group`, 800 record chỉ còn khác cách biểu diễn số. Các chênh lệch `hpGrowth`, `atkGrowth`, chỉ số đầu... rất nhỏ; không được diễn giải toàn bộ 1.760 record là thay đổi cân bằng chỉ số. Vẫn cần chú ý các phép floor/round khi quyết định bỏ qua sai số.
 - `fightSkill`: 82 record thay đổi, có `atkPer`, `initVal`, `valGrowth`, `buffIds`, cùng nội dung hiển thị.
 - `buff`: 29 record chung thay đổi và thêm 9 ID bên iOS; không chỉ khác tên/ảnh.
 - `vip`: 13 ngưỡng gem nạp khác; `task`: 4 mô tả thưởng khác; `artifact`: 2 record; `entity`: 2 record; `entityExt`: các extension/ID cũng khác.
 
-Chạy lại với các bảng iOS thật: model sảnh/quay và sáu trận robot vẫn qua. Thêm hai ca với skill 105501, cùng raw đội/seed nhưng dùng hai bộ dữ liệu: kết quả combat không đồng nhất. Ví dụ seed 777: sát thương của tướng 105501 phía tấn công là 99.711 ở Android và 107.971 ở iOS; hai bên vẫn cùng thắng nên chỉ so cờ `isWin` sẽ bỏ sót sai khác. Xem `table-comparison.json`, `table-differences.json` và `changed-skill-combat-comparison.json`.
+Chạy lại với các bảng iOS thật: model sảnh/quay và sáu trận robot vẫn qua. Thêm hai ca với skill 105501, cùng raw đội/seed nhưng dùng hai bộ dữ liệu: kết quả combat không đồng nhất. Ví dụ seed 777: sát thương của tướng 105501 phía tấn công là 99.711 ở Android và 107.971 ở iOS; hai bên vẫn cùng thắng nên chỉ so cờ `isWin` sẽ bỏ sót sai khác. Xem `table-comparison.json`, `table-differences.json`, danh sách đầy đủ đã tách sai số số lẻ `table-differences-classified.json` và `changed-skill-combat-comparison.json`.
 
 Vì vậy, codec và request tương thích không đồng nghĩa combat/cân bằng tương thích. Cần chọn bộ dữ liệu canonical và đồng bộ cả client/backend, hoặc thiết kế realm/adapter phiên bản cùng migration. Chưa tự đổi bảng Android, iOS hay dữ liệu người chơi. Cũng chưa gọi bản server Android hiện tại là backend iOS hoàn chỉnh.
 
