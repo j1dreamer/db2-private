@@ -1,0 +1,240 @@
+[
+  {
+    "name": "data/stoneData",
+    "input": "DB2-GD/assets/assets/resources/native/0a/0a903e43-c43b-4bf9-a138-289e615b4576.bin",
+    "records": 45,
+    "json_md5": "b9edf08b73ad4ca5e7ed7c6856cdb2b3",
+    "sha256": "baabc045379d44733ad9bd55c47cac098ea890479365214c5a03123386167bc4"
+  },
+  {
+    "name": "data/vipData",
+    "input": "DB2-GD/assets/assets/resources/native/0c/0c03b369-6aca-4e11-aca4-26ca9ac00c87.bin",
+    "records": 18,
+    "json_md5": "365e8219d4261ac0c2dbb48b4da285aa",
+    "sha256": "5e5ba50e26228a9e0364e5224f8de7707e2225554c0d383bd6cad981e0da03d0"
+  },
+  {
+    "name": "data/soulData",
+    "input": "DB2-GD/assets/assets/resources/native/14/14e99198-b3ba-4050-a7a4-8872f2ef8144.bin",
+    "records": 89,
+    "json_md5": "1641e8d30c25bbc4872fea83ce5ac80b",
+    "sha256": "894772cd0776096e551ce62472d9d0d1c6564854c82f6a7925ededb0e8025c49"
+  },
+  {
+    "name": "data/arenaAchieveRewardsData",
+    "input": "DB2-GD/assets/assets/resources/native/15/151d1b05-d891-4c54-ae34-f6451d3895ab.bin",
+    "records": 1652,
+    "json_md5": "75cf83a0bdde88e86978c9e942ebd434",
+    "sha256": "816b1f60b07ec3618d3e8be2af4cc70c80985034b3bedc1d74bc2b36d161f452"
+  },
+  {
+    "name": "data/artifactData",
+    "input": "DB2-GD/assets/assets/resources/native/22/22a11ba0-9d13-4889-9f70-5b497b16932a.bin",
+    "records": 118,
+    "json_md5": "2eb0d76649b3072b51d0426e672c3f05",
+    "sha256": "a6a425152356594b6074b6ec3a84f85d8f52daf6359ee80649ba4dad6bbd66a7"
+  },
+  {
+    "name": "data/islandRewardsData",
+    "input": "DB2-GD/assets/assets/resources/native/28/284f1742-16e5-4924-b31d-3e8e6d7dade2.bin",
+    "records": 8,
+    "json_md5": "10ebec69352ac8dac934f32b751efd01",
+    "sha256": "27e265316447b9a2ab6d82cc8276c04c24db8f3541ae13c72af19d5a6bc76653"
+  },
+  {
+    "name": "data/robotData",
+    "input": "DB2-GD/assets/assets/resources/native/2c/2cea2522-8915-429f-ad4a-81955535a089.bin",
+    "records": 235,
+    "json_md5": "137b6418169baf056fefb271f32bec54",
+    "sha256": "63cc779f9d89c298f27f3b21f61733bdfe2882c31f24c0f8046f1e2a38326960"
+  },
+  {
+    "name": "data/entityData",
+    "input": "DB2-GD/assets/assets/resources/native/2c/2cf6e170-9b63-46ba-b21a-91d57377c522.bin",
+    "records": 2819,
+    "json_md5": "24d14d2467c28b96a864b62aa0fe34d6",
+    "sha256": "c41271e49a9de5a7d23b978c490b8e00f9d1004da5d75d5083bccabc4bf544da"
+  },
+  {
+    "name": "data/costData",
+    "input": "DB2-GD/assets/assets/resources/native/2f/2fc7271c-1bb0-45bb-8446-bf6f1d6aefc4.bin",
+    "records": 501,
+    "json_md5": "53929e8bda56e8a9755c05d3a488dd5b",
+    "sha256": "6cbd11a53234a2586aa350f2267fb33e4cdec25e6c9ef75677c830d86efeccfb"
+  },
+  {
+    "name": "data/mathData",
+    "input": "DB2-GD/assets/assets/resources/native/32/323e958e-0a81-4c24-95dd-fd8e9aef73a0.bin",
+    "records": 1001,
+    "json_md5": "7629ffcc69090bce32798d43a8d6b8ba",
+    "sha256": "5b408da6344e7d1603f591cb3a25fdb7ff1d757db90af937f71a078f789c15a6"
+  },
+  {
+    "name": "data/timePeakSmapData",
+    "input": "DB2-GD/assets/assets/resources/native/3d/3d04fcce-11e5-4d46-be12-847de9cc86dc.bin",
+    "records": 3743,
+    "json_md5": "21c9e8f7ee6136a4c917f1adcfe6fe89",
+    "sha256": "6196c17c91ab6d1746aefb2816c36665fa3188d36a803b55fa188aab6f5b4769"
+  },
+  {
+    "name": "data/experienceData",
+    "input": "DB2-GD/assets/assets/resources/native/3d/3d79d3f6-66b5-4025-8792-c382e4a66094.bin",
+    "records": 1003,
+    "json_md5": "2904734f4f465fda07ce285f39987fc8",
+    "sha256": "6c532789dbc3376b8e561ad5547c9da4952c501da1d55b5dbc3f0349f83ca5bd"
+  },
+  {
+    "name": "data/smapData",
+    "input": "DB2-GD/assets/assets/resources/native/47/47895d6c-ab10-40c3-b5a7-774c15a675b5.bin",
+    "records": 11600,
+    "json_md5": "65da01d62472709038b6c0c8660e227f",
+    "sha256": "6bcb0e7837ef1112ae8143381dc72de608e343708798f8fb32a43cfff2ebc20d"
+  },
+  {
+    "name": "data/shipData",
+    "input": "DB2-GD/assets/assets/resources/native/51/51f7cb6c-a1f4-48a5-adb1-c66be84966cc.bin",
+    "records": 20,
+    "json_md5": "fe0cdadc41675b6762b2fcd9d3da2077",
+    "sha256": "ee195626ad54c35a573c2207c4b674d2e173a36169dcad43ed1fac0fd1a6dbb1"
+  },
+  {
+    "name": "data/signInData",
+    "input": "DB2-GD/assets/assets/resources/native/7e/7efa99ea-b3b2-428f-9e81-f1ad1287937d.bin",
+    "records": 1237,
+    "json_md5": "2440ef5176456e81db061abe1bf2439b",
+    "sha256": "6aa30378d4357c99e13cdeee1ec505ee456b0ce5f504949ff3cf3033cac9140a"
+  },
+  {
+    "name": "data/taskData",
+    "input": "DB2-GD/assets/assets/resources/native/7f/7f2372b0-6397-4c15-826c-e89908c10370.bin",
+    "records": 513,
+    "json_md5": "d0549851e8f4afd1a29b45a9fc028cca",
+    "sha256": "7ae8ce005a110a6021dde023111cc0af86f6ea2aa7269db1458b22af6f9f15db"
+  },
+  {
+    "name": "data/bmapData",
+    "input": "DB2-GD/assets/assets/resources/native/83/8308b416-9a11-4718-bf3f-3780ae5cf8c3.bin",
+    "records": 118,
+    "json_md5": "2a3d7b5232a869748788c9f90cb0f668",
+    "sha256": "e9f10d32be279fa44787d2d65eb584d31b8efe04d2dcd0c422cc2888f1df22e3"
+  },
+  {
+    "name": "data/entityExtData",
+    "input": "DB2-GD/assets/assets/resources/native/84/848f88c5-70fc-49ea-868d-02fbe978822f.bin",
+    "records": 26,
+    "json_md5": "133d1ffd24e5c28804b15e5bae7032ee",
+    "sha256": "b222978e2ecd1a13be3b4183916c259891ccfec64bc3d7c3c16c6c2507416eee"
+  },
+  {
+    "name": "data/mobSData",
+    "input": "DB2-GD/assets/assets/resources/native/86/86792a8d-23c9-4468-9f62-08f4c4a2028c.bin",
+    "records": 97,
+    "json_md5": "867bb9382cabe653fb1b6f1b6a759849",
+    "sha256": "2fcdb1828db29baf0023fb7367c09b10f7c6e28319354b8d896df5ebda7f3afd"
+  },
+  {
+    "name": "data/buffData",
+    "input": "DB2-GD/assets/assets/resources/native/8a/8a6d7ced-f08d-44b2-b555-8406385a6446.bin",
+    "records": 1861,
+    "json_md5": "68dfe7336dc6505e8940097f822a14b5",
+    "sha256": "e4a22dfb7031abbb72b7f67920150698fe542affafa397a3e8dd6817d7c5efad"
+  },
+  {
+    "name": "data/gmData",
+    "input": "DB2-GD/assets/assets/resources/native/95/95dde027-a5e3-4ccd-b1a3-d87f1cb89b39.bin",
+    "records": 7,
+    "json_md5": "6d4e2f13cf92beedadd4d92e11663c7f",
+    "sha256": "b8d1cbb6de1af01b614b48d1cfde12f8b53ecb441683da1b0a9d8218cd73b094"
+  },
+  {
+    "name": "data/arenaRewardsData",
+    "input": "DB2-GD/assets/assets/resources/native/9d/9daf9d41-c703-486e-a645-0c59c5263e66.bin",
+    "records": 30,
+    "json_md5": "739b0f25d6e7886af5a7058fc196c79e",
+    "sha256": "21c558e5dc3b87492cd897e37457a4f8a7e296b71e8b247fc73b9b3db696e12f"
+  },
+  {
+    "name": "data/friendshipData",
+    "input": "DB2-GD/assets/assets/resources/native/a0/a0e584a4-20bc-4244-b5b9-8e569ab85dc4.bin",
+    "records": 65,
+    "json_md5": "443dccd0868b0e69877e5da44c60c50b",
+    "sha256": "2986e69265c7984fb669e776e1c1468172bd8cb6ee9f3e84b86ac20983d48989"
+  },
+  {
+    "name": "data/mobExtData",
+    "input": "DB2-GD/assets/assets/resources/native/a3/a315e43d-b4c0-49b3-8c7b-7277686f0707.bin",
+    "records": 70001,
+    "json_md5": "b09f1eb95da66910ad7b92cf56cfbf9d",
+    "sha256": "e8947a9947fb48f7e06527ba204a13861427d5bbb431d3eb4af4ce1a11d9d3dc"
+  },
+  {
+    "name": "data/fruitData",
+    "input": "DB2-GD/assets/assets/resources/native/a6/a630d0d0-4fc4-4237-9ea0-f088c2ee9ec3.bin",
+    "records": 36,
+    "json_md5": "5fe7f247950d370d3a5cc54d4eba17e2",
+    "sha256": "cc9a19683b6567f88f20fbbf44127be5eb91427fe9e485994c05554a46366f8d"
+  },
+  {
+    "name": "data/timePeakBmapData",
+    "input": "DB2-GD/assets/assets/resources/native/a9/a9503b64-82ba-434c-bf68-90654fb139f4.bin",
+    "records": 47,
+    "json_md5": "d4832fa8bc708e0c676a1757c93523e6",
+    "sha256": "3d72e6ee001c5caa747de5a364df9c8d6d76b203f238469c97a4924d599a3259"
+  },
+  {
+    "name": "data/shopData",
+    "input": "DB2-GD/assets/assets/resources/native/b0/b0619184-648b-461f-a763-c48dfb14af80.bin",
+    "records": 296,
+    "json_md5": "ab589ec8cb143642679152ab5c538f22",
+    "sha256": "f79b3701627cbe4e0c88459f491e88696ec9bd635c8a0d013d81e2621e3f591d"
+  },
+  {
+    "name": "data/evolutionItemData",
+    "input": "DB2-GD/assets/assets/resources/native/b3/b30f3a5c-a2d0-4bb1-9ad1-61e5a598fc3b.bin",
+    "records": 121,
+    "json_md5": "68b98bd0ce1ef76bd91d8075a4f3a97a",
+    "sha256": "d2d74d3c89eb0b2e34761fdd5a8401b8468c5db04806d2ce8e1a030da6cd48b8"
+  },
+  {
+    "name": "data/fightSkillData",
+    "input": "DB2-GD/assets/assets/resources/native/c6/c6f8eb72-52e1-4b88-a1c7-497e754a4c7e.bin",
+    "records": 766,
+    "json_md5": "bca698bb5671d927ada2fe763b2fc58b",
+    "sha256": "f37dfa37b711d99bce63cec2a72f0bc11fbd3eaa8978865a43a2e8bf46545979"
+  },
+  {
+    "name": "data/fruitMapRewardsData",
+    "input": "DB2-GD/assets/assets/resources/native/c8/c89d7a91-3346-4832-85c3-79946416e466.bin",
+    "records": 9,
+    "json_md5": "e6a8a9cffc8513feb29c8e762c836d81",
+    "sha256": "5d28420b011879d25ea6220abac64b8192b0ac6bf3f252993ae7581f6e70a5e2"
+  },
+  {
+    "name": "data/dropData",
+    "input": "DB2-GD/assets/assets/resources/native/cb/cb258631-20d9-411f-b715-e6a60abc5c6f.bin",
+    "records": 450,
+    "json_md5": "0ace95fb85ccc8e142a698078c471f9e",
+    "sha256": "7a2682138b7933d7ec2c29cc6b06e6ae52aab0955de571443ccaaa0c1c4f8c76"
+  },
+  {
+    "name": "data/roleData",
+    "input": "DB2-GD/assets/assets/resources/native/d1/d1998cb3-47dc-43b0-b64c-14b540d3a502.bin",
+    "records": 1761,
+    "json_md5": "1199627ed6e2b613245311750aa05a01",
+    "sha256": "12acf5834cec0ed22cc7fa2b1ed0251c78ec2c82637f4980b9dca8833b10a30f"
+  },
+  {
+    "name": "data/plotData",
+    "input": "DB2-GD/assets/assets/resources/native/d6/d6e0bad0-1e1d-45f7-af6e-a510e44c3943.bin",
+    "records": 396,
+    "json_md5": "da842563d03877bf22b4938d95473d36",
+    "sha256": "0a358a8af46c91f874993c45657e769b2b664ce008986eda1cc4c3d0162863dd"
+  },
+  {
+    "name": "data/mobData",
+    "input": "DB2-GD/assets/assets/resources/native/d7/d750f6e4-e369-4665-a2e7-7d8f9db88aaa.bin",
+    "records": 46010,
+    "json_md5": "da26bca94b257f01f3f52db0e7e07edf",
+    "sha256": "c51690a0bfd55542415fcd6693208ea745f730d4993a648c28243d1ed8383471"
+  }
+]

@@ -1,0 +1,12 @@
+.venv/
+data/
+__pycache__/
+artifacts/
+*.keystore
+backups/
+node_modules/
+.env
+*.sqlite3*
+*.db
+*.jks
+*.apk

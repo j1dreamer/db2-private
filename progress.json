@@ -1,0 +1,43 @@
+{
+  "completed": [
+    "launcher",
+    "admin web",
+    "SQLite persistence",
+    "account auth",
+    "Pomelo gate/connector",
+    "create/entry draft profile",
+    "giftcode redemption",
+    "34 shipped tables",
+    "signed development APK localhost",
+    "normal/advanced gacha 1/10/100",
+    "admin pool overrides",
+    "atomic event claims",
+    "runtime endpoint selector",
+    "separate dev package",
+    "authenticated client-error audit",
+    "AST module extraction (319 outer modules)",
+    "profile schema 2 additive migration",
+    "starter role equipment and friendship model shape",
+    "portable runtime doctor",
+    "consistent SQLite WAL backup CLI"
+  ],
+  "verified": [
+    "15 backend and original-JS-codec tests",
+    "browser admin login/giftcode/gacha save",
+    "XXTEA independent roundtrip",
+    "patched bundle syntax",
+    "APK v1/v2/v3 signing and alignment",
+    "20 tests including recovered client dataApi, Player, Bag, Team, pointScene, roleItem, eqptScene, teamScene generators",
+    "21 tests including active-WAL backup and no-overwrite guarantee",
+    "Linux runtime doctor all checks pass"
+  ],
+  "remaining": [
+    "Android device install/login/home compatibility",
+    "original event UI mapping",
+    "complete gameplay routes",
+    "gacha pity and wishlist probability",
+    "private release signing",
+    "cross-platform runtime testing"
+  ],
+  "current_blocker": "No Android device/emulator is connected; cannot verify APK installation or original home scene. Awaiting user device information."
+}

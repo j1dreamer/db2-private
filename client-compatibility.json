@@ -1,0 +1,24 @@
+{
+  "method": "Acorn AST of outer Browserify module table",
+  "outer_modules": 319,
+  "note": "Previous regex counts included nested bundles and were not a count of top-level game modules.",
+  "model_tests": "Recovered model and data-generator code; UI callbacks and network dependencies stubbed. Android rendering not tested.",
+  "fixtures": {
+    "client_underscore.js": "5aa4f9c56ee14f8b201fa53baac3b9d66f61fbab374361fd494cae9d6591c078",
+    "client_dataApi.js": "3b1fbf12ceaff819d551d55c9a136a91ff31510b11b0ddff606a2ba08d3a4a16",
+    "client_protocol.js": "b200a4b319c629c21b476f3c2ee1ced4e6c91269b4e00bb9925658cc3e52032d",
+    "client_underscore.string.js": "bbfb974c7ed29b4c7548216674d813c6ef8ed17336291db441bbef37944eff0b",
+    "client_team.js": "349ae77610aa17eeca2f0456bc3ece4b68023b2580be83e1223d7081ce836b78",
+    "client_emitter.js": "dea203c387234c1657fc416866bcc727ddf72105899968984bbbc10e3b1ce6d7",
+    "client_itemItem.js": "9198849f4a15b3ffe1ba0842ed8a0014881d180a5f1f560a372f72beff73eb5c",
+    "client_pointScene.js": "54d02f0f9f0f0aa83016ae2ec2e8348b65d709cbd36980e1acbcc3c6b4f47c12",
+    "client_teamScene.js": "c3bc119d8256b3b1338b20fbf77f97a9d12b8f1fb673cb7215e8d94023e45bb4",
+    "client_roleItem.js": "b5f48eaee78fc42bf1cfbb984f26402a1353daa483f68066d47d22914ff12ed8",
+    "client_battle.consts.js": "154133c10002f15bed4a580fe959ba7abddfcad5a91986c97db0994be8313e26",
+    "client_serverConfig.js": "9842d505ce8b83e31d5a573cb861387773cb7312d3bf2907112eb99418f47c06",
+    "client_bag.js": "63bcf37676ff351aeda2dca5057e4a45aba7d8d3756912b81dc10e4363b9bcc4",
+    "client_eqptScene.js": "e890137fe9eeaa9e2ae2ec7b87bc6612cc9eeb1e9b98e3776348d7f872c8e5c3",
+    "client_player.js": "37370fe7f440a01095f33c9965f5932f9c92368d6725cf31b32c3c98625fb7f6",
+    "client_clientConfig.js": "b68ec80ae2b711b3162226237c63e35b9eb08143c21ed9c0bdf9d899aa881f86"
+  }
+}

@@ -1,0 +1,43 @@
+"""Initial profile inferred from client constructors and shipped data tables.
+This is a compatibility draft; entering every original UI has not been verified.
+"""
+import json,time,datetime,math
+from functools import lru_cache
+from pathlib import Path
+TABLES=Path(__file__).resolve().parent.parent/'tables'
+@lru_cache(None)
+def table(name):
+    rows=json.loads((TABLES/(name+'Data.json')).read_text());return [dict(zip(rows[0],r)) for r in rows[1:]]
+def character(kind_id,idx,star=1):
+    role=next(r for r in table('role') if r['kindId']==kind_id)
+    exp=next(r for r in table('experience') if r['level']==1)
+    growth=1+.25*(star-1)  # serverConfig.ROLE.CONSTS.STAR_GROWTH
+    attrs={key:math.floor(role[field]+math.floor(role[growth_field]*growth)) for key,field,growth_field in [('hp','initHp','hpGrowth'),('atk','initAtk','atkGrowth'),('def','initDef','defGrowth'),('mdef','initMdef','mdefGrowth')]}
+    attrs.update({key:math.floor(role[key]) for key in ('hit','crit','dodge')})
+    attrs.update({key:math.floor(role[key]*growth) for key in ('hpGrowth','atkGrowth','defGrowth','mdefGrowth')})
+    equipment={f'evlItem_{i+1}':{'kindId':kind,'level':1} for i,kind in enumerate(role['initEvlItemIds'])}
+    return {'idx':idx,'kindId':kind_id,'level':1,'star':star,'experience':0,'nextLevelExp':exp['roleExp'],'attr':attrs,'initAttr':dict(attrs),'skills':[],'awakeSkills':[],'awakeLevel':0,'awakeRateIncreaseTimes':0,'trainLevelMap':{},'trainUnlockMap':{},'skillLevels':{},'equipments':equipment,'power':0}
+def new_profile(pid,account,name,username):
+    from .gameplay import point_default
+    now=int(time.time()*1000)
+    exp=next(r for r in table('experience') if r['level']==1)
+    initial=character(100101,1)
+    return {'id':pid,'userId':account,'userName':username,'name':name,'serverId':1,'oldServerId':1,'level':1,'gem':50,'coin':0,'experience':0,'nextLevelExp':exp['playerExp'],'ctime':now,'upgradeTime':now,'power':0,'costGem':0,'guildId':0,'guildName':'','actionPoint':60,'skillPoint':10,'bag':{'lastIdx':0,'items':{}},'team':{'roles':{'1':initial},'friendshipAttr':{'hp':0,'atk':0,'def':0,'mdef':0},'titleAttr':{}},'vip':{'level':0,'topUpMoney':0,'topUpGem':0},'shop':{'hideRoleClassIds':[],'hideShipClassIds':[],'refreshTimesMap':{str(i):0 for i in range(1,15)},'goodsMap':{str(i):({'1':{'entityId':20001,'moneyId':101,'count':1,'price':100,'isSaleOut':True,'requireVip':0,'shopType':1,'priority':1},'2':{'entityId':20002,'moneyId':101,'count':1,'price':100,'isSaleOut':True,'requireVip':0,'shopType':1,'priority':2}} if i==1 else {}) for i in range(1,15)}},'task':{'main':{'1':{'taskId':0,'show':{},'isComplete':False}}},'friendshipUnlockMap':{},'photoInfo':{'photoImgId':1001,'shipImgId':901},'arena':{'rank':0,'challengeCD':0,'remainingChallengeTimes':5},'arena3v3':{'rank':0,'challengeCD':0,'remainingChallengeTimes':5},'friend':{'list':[],'infoMap':{},'point':0,'count':0,'pointReceiveTimes':0},'activity':{'map':{}},'extra':{'mails':[],'serverTime':now,'serverTimeStr':datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'),'openDays':1,'goodsList':{},'chat':{'worldList':[],'guildList':[],'allServerList':[]}},'point':point_default(),'profileSchemaVersion':2,'privateCompatibilityDraft':True}
+
+def upgrade_profile(data,account):
+    """Add missing fields from older development schemas without resetting balances."""
+    if data.get('profileSchemaVersion',0)>=2:return False
+    base=new_profile(data['id'],account,data.get('name','Player'),data.get('userName',''))
+    def fill(target,defaults):
+        for key,value in defaults.items():
+            if key not in target:
+                target[key]=json.loads(json.dumps(value))
+            elif isinstance(value,dict) and isinstance(target[key],dict):
+                # Existing rosters must never gain the template's starter role.
+                if key!='roles':fill(target[key],value)
+    fill(data,base)
+    for role in data.get('team',{}).get('roles',{}).values():
+        try:fill(role,character(role['kindId'],role['idx'],role.get('star',1)))
+        except (KeyError,StopIteration):continue
+    data['profileSchemaVersion']=2
+    return True
