@@ -1,5 +1,7 @@
 # DB2 Private — bản phát triển
 
+> **Sửa lỗi cài đặt Android 11+**: APK `v0.1.0-dev` cũ đã nén `resources.arsc`, có thể bị hệ thống từ chối dù chữ ký hợp lệ. Dùng [APK-Install-Fix.zip](APK-Install-Fix.zip), giải nén cạnh APK cũ, chạy `Apply-Fix.bat` với Python 3 rồi cài **DB2-Private-Android-fixed.apk**. Bản vá khoảng 1,5 MB; không cần tải lại toàn bộ APK.
+
 Backend Python + SQLite, web quản trị và công cụ đóng gói client Android từ bộ file người dùng cung cấp. iOS chưa nằm trong bản này.
 
 ## Trạng thái thực tế
@@ -112,3 +114,13 @@ python tools/download_apk.py
 Công cụ tải 25 phần từ nhánh `apk-download`, kiểm tra SHA-256 từng phần, ghép thành **DB2-Private-Android-dev.apk** và kiểm tra checksum toàn file. Không build/ký lại APK. Nếu mất mạng, chạy lại để tiếp tục các phần còn thiếu. Cần khoảng 1 GB trống cho phần tải và APK hoàn chỉnh.
 
 Nếu không dùng Python, tải ZIP của nhánh `apk-download`, giải nén và nhấp **join-apk.bat** trên Windows để ghép bằng lệnh có sẵn của hệ điều hành.
+
+## Kiểm tra khả năng cài APK
+
+Sau khi zipalign và ký, phải chạy `python tools/verify_apk.py FILE.apk` bên cạnh kiểm tra chữ ký. Android 11+ với target SDK 30+ yêu cầu `resources.arsc` không nén và căn lề 4 byte; kiểm tra chữ ký riêng lẻ không phát hiện lỗi này. Đây là lỗi đóng gói đã được sửa trong builder và kiểm tra CI.
+
+- APK cũ SHA-256: `a198837ccae5a3ad662d2489c4e1748016aebe77359e84f4bc4734c5f389f430`.
+- APK sửa SHA-256: `d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f`.
+- Bản vá chỉ sao chép các vùng byte không đổi và thay những vùng đã sửa/ký; kiểm tra checksum nguồn và đầu ra, giữ nguyên APK cũ.
+- `tools/download_apk.py` hiện tự áp dụng bản vá sau khi tải/ghép APK nền.
+- 27 kiểm thử backend/codec/đóng gói/bản vá đã pass; vẫn cần kiểm thử cài và vào sảnh trên Android/BlueStacks.

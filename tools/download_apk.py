@@ -11,10 +11,17 @@ def sha(path):
     with path.open('rb') as f:
         for chunk in iter(lambda:f.read(1024*1024),b''):digest.update(chunk)
     return digest.hexdigest()
+def finish(output):
+    from apply_apk_fix import apply_fix
+    fixed=output.with_name('DB2-Private-Android-fixed.apk')
+    patch=Path(__file__).resolve().parent.parent/'APK-Install-Fix.zip'
+    apply_fix(output,fixed,patch)
+    print('Install this file in BlueStacks:',fixed)
 def download(output):
     output=Path(output).resolve();output.parent.mkdir(parents=True,exist_ok=True)
     if output.exists():
-        if sha(output)==SHA256:print('APK already verified:',output);return
+        if sha(output)==SHA256:
+            print('Original APK already verified:',output);finish(output);return
         raise ValueError('Existing output has a different checksum. Move it before retrying.')
     with urllib.request.urlopen(BASE+'manifest.json',timeout=60) as r:manifest=json.load(r)
     if manifest.get('sha256')!=SHA256 or manifest.get('size')!=SIZE or len(manifest.get('parts',[]))!=25:raise ValueError('Unexpected APK manifest')
@@ -43,6 +50,6 @@ def download(output):
             with (cache/Path(part['file']).name).open('rb') as source:
                 for chunk in iter(lambda:source.read(1024*1024),b''):dest.write(chunk)
     if sha(temporary)!=SHA256:raise ValueError('Final APK checksum mismatch')
-    os.replace(temporary,output);print('APK complete and SHA-256 verified:',output)
+    os.replace(temporary,output);print('APK complete and SHA-256 verified:',output);finish(output)
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--output',default=FILENAME);args=parser.parse_args();download(args.output)

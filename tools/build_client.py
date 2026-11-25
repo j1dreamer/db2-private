@@ -57,7 +57,9 @@ def build(source,bundle,out,server,keep_package=False):
                 old='com.dp2.web.apk'.encode('utf-16le');new=app_package.encode('utf-16le')
                 if old not in data:raise ValueError('Unexpected Android manifest string encoding')
                 data=data.replace(old,new)
-            zout.writestr(name,data)
+            # Android 11+ rejects compressed resources.arsc for target SDK >= 30.
+            compression=zipfile.ZIP_STORED if name=='resources.arsc' else zipfile.ZIP_DEFLATED
+            zout.writestr(name,data,compress_type=compression)
     report={'stage':'development-client-not-device-tested','server':server,'source_sha256':file_hash(source),'patched_bundle_sha256':hashlib.sha256(text.encode()).hexdigest(),'apk_sha256':file_hash(out),'package':app_package,'sdk_login':'local-account','hot_update':False,'server_script_execution':False}
     out.with_suffix('.json').write_text(json.dumps(report,indent=2));out.with_suffix('.patched.js').write_text(text)
     print(json.dumps(report,indent=2))

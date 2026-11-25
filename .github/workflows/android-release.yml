@@ -36,6 +36,8 @@ jobs:
         run: python tools/build_client.py --source .release/original.zip --bundle client/main.decoded.js --output .release/unsigned/DB2-Private-Android-dev.apk
       - name: Sign and verify APK
         run: java -jar vendor/uber-apk-signer.jar -a .release/unsigned/DB2-Private-Android-dev.apk -o .release/signed
+      - name: Verify Android 11 resource packaging
+        run: python tools/verify_apk.py .release/signed/DB2-Private-Android-dev-aligned-debugSigned.apk
       - name: Prepare release files
         run: |
           mkdir -p .release/publish
