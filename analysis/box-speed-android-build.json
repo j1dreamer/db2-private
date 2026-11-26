@@ -1,0 +1,64 @@
+{
+  "stage": "development-client-not-device-tested",
+  "server": "http://127.0.0.1:20003",
+  "source_sha256": "027cbdae200848d67103a2dd3e3520f4ea42215d1d37e8efb74305d8f655d069",
+  "patched_bundle_sha256": "6a826389cef61e2c5d64d9842b1e82361a28fa068e9281325fc7869051ce2159",
+  "apk_sha256": "7a40e289e298828e8491dfdb82c00e30ae624b37a186f3216520c5f91090c003",
+  "package": "com.dp2.web.dev",
+  "sdk_login": "local-account",
+  "tutorial": false,
+  "speed_range": [
+    1,
+    10
+  ],
+  "response_error_recovery": true,
+  "hot_update": false,
+  "server_script_execution": false,
+  "canonical_data": {
+    "baseline": "eng-sp-sss",
+    "canonical_sha256": "c4e0fe0e36a548b872c9d47c34c8fdc02145e7abc56476ef46e3277dcf23eb69",
+    "overridden_tables": [
+      "entityExt"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "6452b8c239ded9dc54d55a5c804174720dd9af28306206fd702a084f99d5524b",
+    "native_modified": false,
+    "startup_config_paths": [
+      "ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP",
+      "ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "build_ext_flags": [
+      "isNoRemoveHideData",
+      "isShowCenterAndroid",
+      "isShowCenterIOS",
+      "isShowTimeLabel",
+      "moneyTicketId"
+    ],
+    "provenance": "tables/canonical-policy.json",
+    "gameplay_modules": {
+      "baseline": "eng-sp-sss",
+      "ported_modules": [],
+      "retained_gameplay": "original ENG modules",
+      "private_patches": "VIP/sync/GM/transport/VI/speed; explicitly authored"
+    }
+  },
+  "apk_bytes": 525062849,
+  "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953",
+  "verified_signature_schemes": [
+    1,
+    2,
+    3
+  ],
+  "native_device_tested": false,
+  "box_quantity_controls": true,
+  "speed_button": {
+    "width": 84,
+    "height": 30,
+    "draggable": true,
+    "saved_position": true,
+    "tap_applies_immediately": true
+  }
+}

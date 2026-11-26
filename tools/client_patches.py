@@ -415,3 +415,28 @@ def patch_eng_ui_repairs(text):
     module_replace('serverMain','this.player.update(e);','this.player.update(e);\nwindow.DB2PrivateGM && window.DB2PrivateGM.refresh();')
     module_replace('serverMain','if (e.level) {','if (e.level && !(e._temp && /(?:gmHandler\\.setPlayer|admin\\.sync)$/.test(e._temp.route || ""))) {')
     return text
+
+def patch_box_quantities(text):
+    def replace(name,old,new,expected=1):
+        nonlocal text
+        start=text.index(name+': [ function(');end=text.index('cc._RF.pop();',start);part=text[start:end]
+        if part.count(old)!=expected:raise ValueError('Unexpected '+name+' box quantity anchor: '+old[:45])
+        text=text[:start]+part.replace(old,new)+text[end:]
+    replace('rewardPanel','h.scrollviewFadeIn(this.scrollView.node);','h.scrollviewFadeIn(this.scrollView.node);\nwindow.DB2PrivateBox && window.DB2PrivateBox.attach(this);')
+    replace('rewardPanel','this.useCountlabel.string = this.data.useCount || 1;','this.useCountlabel.string = this.data.useCount || 1;\nwindow.DB2PrivateBox && window.DB2PrivateBox.refresh(this);',2)
+    replace('rewardPanel','} else this.selectBagIdxs = t.without(this.selectBagIdxs, n.idx);','} else this.selectBagIdxs = t.without(this.selectBagIdxs, n.idx);\nwindow.DB2PrivateBox && window.DB2PrivateBox.refresh(this);')
+    replace('rewardPanel','b.idx = Number(f);','b.privateRewardCount = y.count;\nb.idx = Number(f);')
+    replace('rewardPanel','v.idx = Number(f);','v.privateRewardCount = y.count;\nv.idx = Number(f);')
+    replace('rewardPanel','return {\ntitle: e,\nitemItems: r,\ncb: n\n};','for (var privateRewardIdx = 0; privateRewardIdx < r.length; privateRewardIdx++) r[privateRewardIdx].privateRewardCount = s[privateRewardIdx].count;\nreturn {\ntitle: e,\nitemItems: r,\ncb: n\n};')
+    replace('rewardPanel','if (!r) return null;','if (!r) return null;\nvar privateBoxName = r.kindName || o.findEntityById(r.kindId).kindName;')
+    replace('rewardPanel','a.selectCount = h, a.count = r.count,','a.selectCount = h, a.count = r.count, a.boxName = privateBoxName,')
+    replace('bagScene','i.addRewardPanel(s, r);','i.addRewardPanel(s, r, null, t.name, false, { bagIndex: t._item.idx, count: t.count, selectCount: n.selectCount || 0, isExchange: !!n.isExchange });')
+    replace('baseView','g.addRewardPanel = function(a, t, n, i, r) {','g.addRewardPanel = function(a, t, n, i, r, privateBoxInfo) {')
+    replace('baseView','c.boxName = i;','c.boxName = i;\nc.privateBoxInfo = privateBoxInfo;')
+    replace('baseView','var r = e("rewardPanel").genData2(a);','var r = e("rewardPanel").genData2(a);\nif (!r) { this.removePanel(n); this.addHintPanel("Rương đã hết hoặc không còn trong túi."); return; }')
+    replace('rewardEffectPanel','u.getChildByName("role_item").getComponent("roleItem").update_(m);','u.getChildByName("role_item").getComponent("roleItem").update_(m);\nu.data = { privateRewardCount: h.count };')
+    replace('rewardEffectPanel','g.getComponent("itemItem").update_(p);','g.getComponent("itemItem").update_(p);\ng.data = { privateRewardCount: h.count };')
+    replace('rewardEffectPanel','l.instance && l.instance.node.active && this.scheduleOnce(function() {','window.DB2PrivateBox && window.DB2PrivateBox.attachEffect(this);\nl.instance && l.instance.node.active && this.scheduleOnce(function() {')
+    replace('exchangeBoxPanel','count: a[u] || 0,','count: a[u] || 0,\nprivateRewardCount: c[u].count,')
+    replace('exchangeBoxPanel','r.replaceLabel(this.descRichText, [ o, a.canUseCount ]);','r.replaceLabel(this.descRichText, [ o, a.canUseCount ]);\nwindow.DB2PrivateBox && window.DB2PrivateBox.attachExchange(this);')
+    return text

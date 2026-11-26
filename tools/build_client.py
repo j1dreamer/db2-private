@@ -83,11 +83,12 @@ def patch_client(text,source,server):
     text=patch_private_sdk(text)
     text=patch(text,'this.skipMove = !1;','this.skipMove = cc.sys.localStorage.getItem("db2.private.fastSummon") !== "0";')
     text=patch(text,'onSkip_: function() {\nthis.skipMove = !this.skipMove;','onSkip_: function() {\nthis.skipMove = !this.skipMove;\ncc.sys.localStorage.setItem("db2.private.fastSummon", this.skipMove ? "1" : "0");')
-    from tools.client_patches import patch_eng_ui_repairs
-    text=patch_eng_ui_repairs(text)
+    from tools.client_patches import patch_eng_ui_repairs,patch_box_quantities
+    text=patch_box_quantities(patch_eng_ui_repairs(text))
     settings=(Path(__file__).parent/'private_settings.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_runtime.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_gm.js').read_text()
+    settings+='\n'+(Path(__file__).parent/'private_box.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_time_peak.js').read_text()
     settings+='\nwindow.DB2_PRIVATE_VI='+json.dumps(json.loads((Path(__file__).resolve().parents[1]/'tables/localization/vi.merged.json').read_text()),ensure_ascii=False,separators=(',',':'))+';\n'
     settings+=(Path(__file__).parent/'private_locale.js').read_text()

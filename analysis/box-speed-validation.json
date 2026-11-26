@@ -1,0 +1,57 @@
+{
+  "build": "eng-sp-sss-box-speed-v3",
+  "baseline": "eng-sp-sss",
+  "schema": 30,
+  "full_tests": {
+    "passed": true,
+    "count": 273,
+    "seconds": 329.922
+  },
+  "targeted_box_tests_after_final_count_label_change": {
+    "passed": true,
+    "count": 7
+  },
+  "runtime_adapter_tests": {
+    "passed": true,
+    "count": 5
+  },
+  "checks": [
+    "SP chest per-box reward quantities",
+    "batch opening clamps to owned chest count",
+    "new role + duplicate-to-souls conversion",
+    "transaction rollback on invalid quantity/choice",
+    "trailing-comma chest description",
+    "configured chest content kept separate",
+    "owned preview to selection; unowned preview no open action",
+    "depleted preview closes safely",
+    "explicit cancel X does not submit open",
+    "original item quantity hidden under multiplied quantity",
+    "compact speed, tap/drag distinction, bounds, saved normalized position"
+  ],
+  "artifacts": {
+    "baseline": "eng-sp-sss",
+    "build": "eng-sp-sss-box-speed-v3",
+    "android": {
+      "file": "DB2-ENG-SPSSS-BoxSpeed.apk",
+      "bytes": 525062849,
+      "sha256": "7a40e289e298828e8491dfdb82c00e30ae624b37a186f3216520c5f91090c003"
+    },
+    "ios": {
+      "file": "DB2-ENG-SPSSS-BoxSpeed-unsigned.ipa",
+      "bytes": 511241949,
+      "sha256": "ea9ad655d0b2f38a924cc9c7c907d58787c5c09c25676e13515b7e74d8b2945c"
+    },
+    "patch_sha256": "155e83c29aaec04679d2dde9f741b6d1b8321967a50bc3a2d25c330abf0b8290"
+  },
+  "native_android_play_tested": false,
+  "native_ios_play_tested": false,
+  "signed_ipa": false,
+  "inherited_baseline_validation": "analysis/eng-gm-validation.json",
+  "public_download_verification": "pending",
+  "canonical_validation": "analysis/box-speed-canonical-validation.json",
+  "android_non_signature_entries_changed": [
+    "assets/assets/main/index.jsc"
+  ],
+  "built_bundle_new_controls_verified": true,
+  "canonical_passed": true
+}

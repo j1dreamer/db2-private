@@ -84,8 +84,10 @@ def insert(player,kind,count,extra=None):
         config=player['shop'].get('randomBoxList',{}).get(str(extra['id']))
         if not config:raise ValueError('Mã cấu hình rương riêng không tồn tại')
         extra={**extra,'privateBoxConfig':config}
+    box_fields=('kindName','desc','imgId','color','dropListDesc','rdDropListDesc','selectCount')
+    box_model=model(kind,extra)if kind==351 else None
     while count:
-        existing=next((item for item in bag['items'].values()if item['kindId']==kind and active(item) and item.get('expireTime')==extra.get('expireTime') and (limit<0 or item['count']<limit)),None)
+        existing=next((item for item in bag['items'].values()if item['kindId']==kind and active(item) and item.get('expireTime')==extra.get('expireTime') and (box_model is None or all(item.get(k)==box_model.get(k)for k in box_fields)) and (limit<0 or item['count']<limit)),None)
         if existing:
             amount=count if limit<0 else min(count,limit-existing['count']);existing['count']+=amount;count-=amount
         else:

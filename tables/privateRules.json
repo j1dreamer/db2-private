@@ -68,5 +68,10 @@
     "id": "gm-controls",
     "source": "private-server-implementation",
     "description": "Bảng GM chọn đồ/tướng theo tên/ID, chỉnh cấp người chơi/tướng, VIP và tài nguyên là mã dự án viết; quyền được kiểm tại mỗi RPC và có thể thu hồi trực tiếp."
+  },
+  {
+    "id": "box-quantity-speed-controls",
+    "source": "private-server-implementation",
+    "description": "Nút số lượng rương, số thưởng theo lượt mở, nút đóng và Speed nhỏ/kéo/lưu vị trí là mã dự án viết thêm. Tướng trùng vẫn đổi hồn theo bảng ENG; server sửa mở nhiều bản sao trong một giao dịch, không thay pool thưởng gốc."
   }
 ]

@@ -13,6 +13,7 @@ def description(text):
     if isinstance(text,list):return text
     result=[]
     for part in text.split(','):
+        if not part.strip():continue
         match=re.fullmatch(r'(\d+)(?:_([A-Za-z][A-Za-z0-9]*)_(\d+))?x(\d+)',part.strip())
         if not match:raise ValueError('Cấu hình phần thưởng không hợp lệ')
         kind,field,value,count=match.groups();extra={field:int(value)}if field else {}
@@ -36,6 +37,27 @@ def box_config(item):
         if key in item:extra[key]=item[key]
     return extra
 
+def grant_box_rewards(player,rewards):
+    """A batch role reward gives one new role and converts further copies as usual."""
+    from .profile import table
+    result={}
+    def merge(values):
+        for key,value in values.items():result[key]=result.get(key,0)+value
+    for reward in rewards:
+        row=entity(reward['entityId']);count=integer(reward['count'],'Số lượng thưởng',1,10**6)
+        if row['type']!='role':merge(grant(player,[reward]));continue
+        star=integer(reward.get('extra',{}).get('star',1),'Sao tướng',1,20)
+        first=grant(player,[{**reward,'count':1}]);key=str(reward['entityId'])
+        if key in first:first[key+'_star_'+str(star)]=first.pop(key)
+        merge(first)
+        if count>1:
+            equivalents=constants('server.ROLE.CONSTS.EQUIVALENT_SOULS');quantity=equivalents[star]if star<len(equivalents)else 0
+            if quantity:
+                soul=next((r for r in table('soul')if r['classId']==row['classId']),None)
+                if soul is None:raise ValueError('Tướng không có cấu hình quy đổi hồn')
+                merge(grant(player,[{'entityId':soul['kindId'],'count':quantity*(count-1),'extra':{}}]))
+    return result
+
 def use(player,item,count):
     row=entity(item['kindId']);extra=box_config(item)
     if row['type']=='box':
@@ -43,7 +65,7 @@ def use(player,item,count):
         if not extra.get('dropListDesc')and not extra.get('rdDropListDesc'):raise ValueError('Rương chưa có cấu hình phần thưởng')
         rewards=[]
         for _ in range(count):rewards.extend(description(extra.get('dropListDesc'))+random_description(extra['rdDropListDesc'])if extra.get('rdDropListDesc')else description(extra.get('dropListDesc')))
-        take_index(player,item['idx'],count);return grant(player,rewards)
+        take_index(player,item['idx'],count);return grant_box_rewards(player,rewards)
     if row['type']=='consumables':
         if extra.get('roleExp'):raise ValueError('Hãy chọn chiến binh để dùng vật phẩm kinh nghiệm')
         if extra.get('dropClassId'):
@@ -113,7 +135,8 @@ def handle(store,account,route,args):
                         counts[int(index)]=integer(count,'Số lượng thưởng',0,amount)
                     if sum(counts.values())!=amount:raise ValueError('Tổng phần thưởng không khớp số rương')
                 chosen=[{**choices[index],'count':choices[index]['count']*count}for index,count in counts.items()if count]
-                take_index(p,item['idx'],amount);rewards=grant(p,chosen)
+                take_index(p,item['idx'],amount);rewards=grant_box_rewards(p,chosen)
+                temp.update(boxOpenedCount=amount,boxRemainingCount=p['bag']['items'].get(str(item['idx']),{}).get('count',0))
         if rewards:temp['entityCountMap']=rewards
         store.save(p);store.audit(action,{'player':p['id'],'item':before['bag']['items'].get(str(args.get('bagIndex')),{}).get('kindId'),'count':args.get('itemCount',0)})
         return delta(before,p,route,temp)

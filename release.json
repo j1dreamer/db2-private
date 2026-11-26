@@ -1,27 +1,27 @@
 {
-  "version": "2.0.0-dev",
+  "version": "3.0.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-v2-dev",
+  "tag": "eng-sp-sss-v3-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
   "implementation_commit": null,
   "distribution": "full-clients-via-verified-public-download-helper",
-  "fresh_install": true,
+  "fresh_install": false,
   "bundled_player_database": false,
   "native_playable_verified": false,
   "android": {
-    "file": "DB2-ENG-SPSSS-GM.apk",
-    "bytes": 525058753,
-    "sha256": "4fbfe8eeb3e2d7b9b3bc66dbc24bad7d06ced98e7d4d594a284a5034c1e4c66c",
+    "file": "DB2-ENG-SPSSS-BoxSpeed.apk",
+    "bytes": 525062849,
+    "sha256": "7a40e289e298828e8491dfdb82c00e30ae624b37a186f3216520c5f91090c003",
     "package": "com.dp2.web.dev",
     "signed": true,
     "signing_identity": "development",
     "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953"
   },
   "ios": {
-    "file": "DB2-ENG-SPSSS-GM-unsigned.ipa",
-    "bytes": 511239717,
-    "sha256": "88dc13d681e502e26181d3ae0009190347e4661d91101c960075d584493b1897",
+    "file": "DB2-ENG-SPSSS-BoxSpeed-unsigned.ipa",
+    "bytes": 511241949,
+    "sha256": "ea9ad655d0b2f38a924cc9c7c907d58787c5c09c25676e13515b7e74d8b2945c",
     "bundle_id": "com.j1dreamer.db2.private",
     "signed": false,
     "publication_authorized": true
@@ -29,7 +29,7 @@
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
     "port": 20003,
-    "build": "eng-sp-sss-gm-v2",
+    "build": "eng-sp-sss-box-speed-v3",
     "profile_schema": 30,
     "routes": 342,
     "private_gm_routes": 3
@@ -43,7 +43,7 @@
   },
   "release_asset_upload_status": "draft: cloud-upload-401-and-actions-account-billing-lock",
   "ios_transport": {
-    "commit": "db70c80675d075de90d9d5cbb7fa5dd410442858",
-    "manifest_sha256": "bc5c2361d892ee6897127d51c78d771652e7a2b5b93c27788f04d40c9e80613f"
+    "commit": "d1f16be33ea6040a04d5143728044970866da1d5",
+    "manifest_sha256": "73e6a746ac1059a380ebb27f1ec0216401785c677fdff3120b911426d5434117"
   }
 }

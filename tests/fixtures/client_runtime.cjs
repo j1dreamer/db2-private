@@ -31,14 +31,21 @@ class Node {
  addComponent(Type){return new Type();}
  on(event,callback){this.events[event]=callback;}
 }
-Node.EventType={TOUCH_END:'touch'};
+Node.EventType={TOUCH_END:'touch',TOUCH_START:'start',TOUCH_MOVE:'move',TOUCH_CANCEL:'cancel'};
 context.cc.Node=Node;context.cc.Graphics=class {roundRect(){}fill(){}};context.cc.Label=class {};
 context.cc.color=()=>({});const canvas=new Node('canvas');canvas.width=1280;canvas.height=720;
 context.cc.Canvas.instance={node:canvas};runtime.mount();runtime.mount();assert.equal(canvas.children.length,1);
-const button=canvas.getChildByName('DB2PrivateSpeed');assert.equal(button.width,130);assert.equal(button.height,42);
+const button=canvas.getChildByName('DB2PrivateSpeed');assert.equal(button.width,84);assert.equal(button.height,30);
 button.events.touch();assert.equal(runtime.getSpeed(),1);runtime.setSpeed(10);
 scheduler.setTimeScale(3);assert.equal(scale,10);runtime.setSpeed(2);assert.equal(scale,6);
 scheduler.setTimeScale(0);assert.equal(scale,0);scheduler.setTimeScale(1);assert.equal(scale,2);
+const event=(x,y)=>({getLocation:()=>({x,y}),stopPropagation(){}});
+const beforeRate=runtime.getSpeed(),beforeX=button.x,beforeY=button.y;
+button.events.start(event(0,0));button.events.move(event(-100,-40));button.events.touch(event(-100,-40));
+assert.equal(button.x,beforeX-100);assert.equal(button.y,beforeY-40);assert.equal(runtime.getSpeed(),beforeRate);assert(saved['db2.private.speedPosition.v1']);
+button.events.start(event(0,0));button.events.move(event(100000,100000));button.events.cancel(event(100000,100000));assert.equal(runtime.getSpeed(),beforeRate);
+assert(button.x+button.width/2<=canvas.width/2-8);assert(button.y+button.height/2<=canvas.height/2-8);
+const nextCanvas=new Node('canvas');nextCanvas.width=800;nextCanvas.height=400;context.cc.Canvas.instance={node:nextCanvas};events.scene();const moved=nextCanvas.getChildByName('DB2PrivateSpeed');assert(moved);assert(moved.x+moved.width/2<=nextCanvas.width/2-8);assert(moved.y+moved.height/2<=nextCanvas.height/2-8);
 assert.throws(()=>runtime.setSpeed(11));assert.throws(()=>runtime.setSpeed(0));assert.throws(()=>runtime.setSpeed(1.5));
 if(input.socket){
  const pending=[];const pomelo={request:(route,msg,cb)=>pending.push({route,cb}),on(){},off(){},disconnect(){}};
