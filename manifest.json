@@ -1,0 +1,134 @@
+{
+  "file": "LongChiDao-VI-iOS-unsigned.ipa",
+  "bytes": 511256922,
+  "sha256": "30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd",
+  "publication_authorized": true,
+  "transport_only": true,
+  "parts": [
+    {
+      "file": "parts/part-000.bin",
+      "bytes": 20971520,
+      "sha256": "698eadaf2b1aa514c21fb919afbc7e26c09dc14abda3fd416fce986213e96b6e"
+    },
+    {
+      "file": "parts/part-001.bin",
+      "bytes": 20971520,
+      "sha256": "43a994bc909e8decc1ebebb57faf2d59621ccf82d8b654b7e8d2ac6ca8dfa5a2"
+    },
+    {
+      "file": "parts/part-002.bin",
+      "bytes": 20971520,
+      "sha256": "2273ce7a602dc6a2d7324c48c6a3ccc1485912d113edce217149a89cbf870080"
+    },
+    {
+      "file": "parts/part-003.bin",
+      "bytes": 20971520,
+      "sha256": "e0378e738e0a8ebba7073e64f24b84d5b7c66673137c1e6ca6b81d80b0de1e23"
+    },
+    {
+      "file": "parts/part-004.bin",
+      "bytes": 20971520,
+      "sha256": "7d5f087cc770fccb03dc7f6307037d07f75e97d6ca5d2279bf450d1af7d5285e"
+    },
+    {
+      "file": "parts/part-005.bin",
+      "bytes": 20971520,
+      "sha256": "8c730de4c0c82c87779acc10565e787d1bc7416f13cd9a74e4e596385e54627f"
+    },
+    {
+      "file": "parts/part-006.bin",
+      "bytes": 20971520,
+      "sha256": "2f2c58ce46c6fce5154f4d3e78c37d054e1a450a00af4c0b73b545b6515b6652"
+    },
+    {
+      "file": "parts/part-007.bin",
+      "bytes": 20971520,
+      "sha256": "e84b7e54dd583ae7acd40d869d8dfec30bd6e6dbf63da3caccb02d48b4870dc3"
+    },
+    {
+      "file": "parts/part-008.bin",
+      "bytes": 20971520,
+      "sha256": "155c9821e26ccd6ce38840b953f14111973dd62853c04209412286d237a5ff39"
+    },
+    {
+      "file": "parts/part-009.bin",
+      "bytes": 20971520,
+      "sha256": "7b43da88e9e9342b98e5f938d2d003971ee28c9b1861ea31ac5c0eec7239887f"
+    },
+    {
+      "file": "parts/part-010.bin",
+      "bytes": 20971520,
+      "sha256": "21f81b893e227ef607c83ee855ab24df08341201c559b9a160f2b75577847993"
+    },
+    {
+      "file": "parts/part-011.bin",
+      "bytes": 20971520,
+      "sha256": "64b88ddbca8996bd94a67a109e138173072a79e7678ac9bb382f4674275837a4"
+    },
+    {
+      "file": "parts/part-012.bin",
+      "bytes": 20971520,
+      "sha256": "00f74c7d734351d3680275d6ca9b3d8a80cd499309d3ef9787f6db1a0e8f1585"
+    },
+    {
+      "file": "parts/part-013.bin",
+      "bytes": 20971520,
+      "sha256": "980be5701c57d71316b22987a403fdd264fadad63ae68edbea36ba1f156c8cce"
+    },
+    {
+      "file": "parts/part-014.bin",
+      "bytes": 20971520,
+      "sha256": "4c6a4da41a4536a5d974bddb2e2790162f89246f61bed3fad1e4bdb1b2db0aa1"
+    },
+    {
+      "file": "parts/part-015.bin",
+      "bytes": 20971520,
+      "sha256": "5cd1dd47c330c4100e96b0f6f7a9b643bc08e2ca4b925072abe5ea5405639d81"
+    },
+    {
+      "file": "parts/part-016.bin",
+      "bytes": 20971520,
+      "sha256": "524b463de5734eda4588c82ed7b8e04c9bb0cbcb131806558a854575b48b63fa"
+    },
+    {
+      "file": "parts/part-017.bin",
+      "bytes": 20971520,
+      "sha256": "d7a04d7ceddf763c5c2fb2d722bb8135ef1dd265f1ed76b5bae87d7acad5c3a4"
+    },
+    {
+      "file": "parts/part-018.bin",
+      "bytes": 20971520,
+      "sha256": "92df091a1a9789c17fe34562b6f0ec68bbb2cc15185570539f62a3e089410517"
+    },
+    {
+      "file": "parts/part-019.bin",
+      "bytes": 20971520,
+      "sha256": "9c7f28d910156d21b9a119934981374fd094e7cc87eabf8320fc566bdc53d3d1"
+    },
+    {
+      "file": "parts/part-020.bin",
+      "bytes": 20971520,
+      "sha256": "c48f5da46028aa4121aa93c9a38dc140bbd8b59235df27881a577fe8e0946412"
+    },
+    {
+      "file": "parts/part-021.bin",
+      "bytes": 20971520,
+      "sha256": "def1ff5376bfc050483154eddac78a69fba8eff2a0f32517c6369df31fb5d9bf"
+    },
+    {
+      "file": "parts/part-022.bin",
+      "bytes": 20971520,
+      "sha256": "dc1b2d0e3a148fae0b7d009212c022cca233a871eb484f9d69852e4669f0faef"
+    },
+    {
+      "file": "parts/part-023.bin",
+      "bytes": 20971520,
+      "sha256": "5c6d9fd24f2157f355002d01804f14b9fe4fe20c56c0fc3b588c792d6f2651c0"
+    },
+    {
+      "file": "parts/part-024.bin",
+      "bytes": 7940442,
+      "sha256": "2649d71b63c8d655f8bedc613f668509826ffaed1933e9083fc13cdc481aef72"
+    }
+  ]
+}
