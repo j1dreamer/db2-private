@@ -1,17 +1,15 @@
-# IPA Long Chi Đảo VI — giữ riêng, chưa ký
+# IPA Long Chi Đảo VI — bản đầy đủ, chưa ký
 
 Bản hiện tại **DB2-LongChiDao-VI-unsigned.ipa** dùng dữ liệu Long Chi Đảo #17327, 20 module gameplay chuyển vào khung ENG/iOS, tiếng Việt ENG + phần bổ sung và Speed 1–10×. Backend phải cập nhật cùng bộ luật. Xem [nguồn và phạm vi chuyển bản](LONG-CHI-DAO.md).
 
-## Tệp và cách cài
+## Tải và cài
 
-Theo yêu cầu chủ dự án, **không có payload IPA trong repo public**. Tệp riêng nằm tại `/workspace/ios-private/DB2-LongChiDao-VI-unsigned.ipa`.
+Chủ dự án đã cho phép **công khai IPA cùng APK** cho release này, thay lựa chọn giữ riêng trước đó. Tải nguyên tệp [LongChiDao-VI-iOS-unsigned.ipa](https://github.com/j1dreamer/db2-private/releases/download/longzhidao-v1.0.0-dev/LongChiDao-VI-iOS-unsigned.ipa).
 
-- Dung lượng: 511256922 byte.
+- Dung lượng: 511.256.922 byte, khoảng 488 MiB.
 - SHA-256: `30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd`.
 - Bundle ID: `com.j1dreamer.db2.private`.
-- Chưa ký, chưa kiểm chạy native iPhone. Các phần IPA cũ trong `/workspace/ios-private/release/` thuộc bản trước, không ghép chúng để lấy bản Long Chi Đảo này.
-
-Tải qua đường riêng được hỗ trợ của workspace. Nếu chat không tải được tệp lớn, cần một nơi nhận riêng có quyền truy cập đã cấu hình; không có URL public thay thế được tạo. Việc tạo repo private qua connector ở lượt trước bị từ chối quyền 403; chủ tài khoản có thể tự tạo và cấp quyền nếu muốn dùng phương án đó.
+- **Chưa ký, chưa kiểm chạy native iPhone.** Không dùng các phần IPA cũ để ghép bản này.
 
 Trên Mac, dùng công cụ ký như Sideloadly với tài khoản Apple của chính bạn:
 

@@ -308,7 +308,7 @@
   ],
   "retained_implementation": "ENG client resource/language/native shell; verified gameplay module ports; existing private backend for server-only rules",
   "private_rules_document": "tables/privateRules.json",
-  "native_platform_resources": "Keep original Android/iOS native executables, SDK resources and signing identity; IPA remains private and unsigned until owner signs",
+  "native_platform_resources": "Keep original Android/iOS native executables and SDK resources. Android retains development signing identity; unsigned IPA publication authorized by owner for the new full-file release.",
   "profile_migration_required": true,
   "migration": "Preserve accounts, currencies, inventory and existing VIP grants; refresh derived combat state once with snapshot backup."
 }

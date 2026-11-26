@@ -69,10 +69,11 @@
   "ios": {
     "ipa_sha256": "30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd",
     "ipa_bytes": 511256922,
-    "private_ipa_published": false,
     "signed": false,
     "native_bytes_preserved": true,
-    "native_device_tested": false
+    "native_device_tested": false,
+    "publication_authorized": true,
+    "distribution": "github-full-file-release"
   },
   "private_backend_rules": "tables/privateRules.json",
   "source_policy": "tables/canonical-policy.json",

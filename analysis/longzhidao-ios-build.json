@@ -153,5 +153,6 @@
   "signed_ipa_built": false,
   "native_ios_execution_tested": false,
   "decoded_bundle_sha256": "3bd0c6f4e4025d125e860d82d7d71e365eee210c3946af86f489b8ee1ced001d",
-  "private_ipa_published": false
+  "publication_authorized": true,
+  "distribution": "github-full-file-release"
 }

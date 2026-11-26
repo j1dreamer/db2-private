@@ -62,6 +62,6 @@
   {
     "id": "platform",
     "source": "private-server-implementation",
-    "description": "Chọn server, bỏ hướng dẫn, nút speed x1–x10, phục hồi callback và sửa giao thức là các bản vá dự án. APK ký phát triển; IPA riêng phải được ký hợp lệ trên Mac."
+    "description": "Chọn server, bỏ hướng dẫn, nút speed x1–x10, phục hồi callback và sửa giao thức là các bản vá dự án. APK ký phát triển; IPA phát hành chưa ký, phải được ký hợp lệ trên Mac."
   }
 ]

@@ -14,7 +14,7 @@ def sha(path):
 def finish(output):
     from apply_apk_fix import apply_fix
     fixed=output.with_name('DB2-Private-Android-fixed.apk')
-    patch=Path(__file__).resolve().parent.parent/'APK-Install-Fix.zip'
+    patch=Path(__file__).resolve().parent/'legacy/APK-Install-Fix.zip'
     apply_fix(output,fixed,patch)
     print('Verified base APK for Client-LongChiDao-VI-Patch.zip:',fixed)
     print('Apply the current client patch, then install DB2-LongChiDao-VI.apk with the matching server.')

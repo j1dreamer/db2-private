@@ -1,0 +1,1 @@
+Legacy base-APK reconstruction input retained only for the historical developer downloader. The new `long-chi-dao` release distributes the complete signed APK; ordinary installs do not use this directory.

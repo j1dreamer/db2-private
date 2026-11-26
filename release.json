@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0-dev",
+  "branch": "long-chi-dao",
+  "tag": "longzhidao-v1.0.0-dev",
+  "repository": "j1dreamer/db2-private",
+  "gameplay_baseline": "longzhidao-17327",
+  "implementation_commit": "81bfd992483a005a3e76cc977e3ba4b9bcff0337",
+  "distribution": "full-files-no-legacy-patches-required",
+  "fresh_install": true,
+  "bundled_player_database": false,
+  "native_playable_verified": false,
+  "android": {
+    "file": "LongChiDao-VI-Android.apk",
+    "bytes": 525087425,
+    "sha256": "bea64b41319ebba5a84529f644661b13bea85aceed8f775703b642daf686b0ec",
+    "package": "com.dp2.web.dev",
+    "signed": true,
+    "signing_identity": "development",
+    "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953"
+  },
+  "ios": {
+    "file": "LongChiDao-VI-iOS-unsigned.ipa",
+    "bytes": 511256922,
+    "sha256": "30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd",
+    "bundle_id": "com.j1dreamer.db2.private",
+    "signed": false,
+    "publication_authorized": true
+  },
+  "server": {
+    "file": "LongChiDao-Server.zip",
+    "port": 20003,
+    "build": "longzhidao-17327-vi",
+    "profile_schema": 29,
+    "routes": 342
+  }
+}

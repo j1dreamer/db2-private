@@ -27,11 +27,15 @@ Ví dụ: shop nguồn có ID 140004/140005 với `minCount` lớn hơn `maxCoun
 
 Trước lần chuyển bộ luật trên database cũ, server tạo snapshot SQLite và kiểm integrity. Profile schema 29 giữ gem, coin, túi, VIP thủ công, tướng/cấp/sao/thức tỉnh; chỉ tính lại chỉ số chiến đấu theo dữ liệu đã chọn.
 
-## Cập nhật
+## Cài mới từ release
 
-1. Dừng server; giải nén source nhánh `route-342` vào thư mục mới và chép `data` từ bản cũ sang. Giữ bản cũ làm backup. Cần Python và Node.js LTS, chạy `start.bat`.
-2. Giải nén `Client-LongChiDao-VI-Patch.zip`, chép `DB2-Private-Android-fixed.apk` vào cùng thư mục; chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. APK kết quả cùng chữ ký/package, có Speed 1–10× và bỏ hướng dẫn. Không gỡ app/xóa data.
-3. IPA Long Chi Đảo VI giữ riêng, **chưa ký**. Không có IPA trong repo/ZIP public. Ký hợp lệ bằng Mac rồi cài; giữ native Mach-O gốc. Xem `IOS-PRIVATE.md`.
-4. Kiểm tra `/health`: build `longzhidao-17327-vi`, schema 29, handler 342/342.
+Nhánh `long-chi-dao` dùng nguyên tệp APK/IPA và source server tại [release longzhidao-v1.0.0-dev](https://github.com/j1dreamer/db2-private/releases/tag/longzhidao-v1.0.0-dev). Chủ dự án đã cho phép công khai IPA cùng APK ở bản phát hành này.
+
+1. Dừng server cũ, giải nén `LongChiDao-Server.zip` vào thư mục mới. Không chép `data` cũ sang. Cần Python + Node.js LTS; chạy `start.bat` để tạo database trắng.
+2. Cài trực tiếp `LongChiDao-VI-Android.apk`, hoặc đặt cạnh `Install-Android.bat` và chạy công cụ cài BlueStacks/ADB. Không cần APK fixed hoặc ghép bản vá.
+3. IPA `LongChiDao-VI-iOS-unsigned.ipa` đầy đủ **chưa ký**; ký hợp lệ bằng Mac rồi cài. Xem `IOS-PRIVATE.md` (tên tài liệu giữ từ giai đoạn trước).
+4. Kiểm `/health`: build `longzhidao-17327-vi`, schema 29, handler 342/342. Đăng ký tài khoản game mới.
+
+Bản APK/IPA dùng lại bộ byte đã kiểm tra ở commit nền `81bfd99`; đây là thay đổi cách phân phối và chạy mới, không phải một bộ gameplay khác.
 
 Bằng chứng bản dựng/kiểm thử: `analysis/longzhidao-validation.json`, `analysis/longzhidao-android-build.json`, `analysis/longzhidao-ios-build.json`, `analysis/longzhidao-canonical-validation.json`. Kiểm tra headless không thay thế việc cài và chơi trực tiếp trên Android/iPhone.

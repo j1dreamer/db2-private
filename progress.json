@@ -1,6 +1,6 @@
 {
   "stage": "longzhidao-vi-built-native-verification-pending",
-  "branch": "route-342",
+  "branch": "long-chi-dao",
   "source_rpc_contracts": 342,
   "implemented_rpc_handlers": 342,
   "profile_schema": 29,
@@ -10,8 +10,8 @@
     "Long Chi Dao X7 #17327: 34 tables, 22 startup flags, 13 config paths, 20 differing gameplay modules ported",
     "Retain ENG/iOS shell and 3 compatibility IDs with explicit provenance",
     "ENG Vietnamese 8466 entries plus 498 authored entries including 6 overrides; 8958 final keys",
-    "Signed Android patch with deferred Speed 1x-10x; Python and PowerShell full reconstruction verified",
-    "Private unsigned IPA; original native bytes preserved; actual embedded tables/constants and 8 full combat cases match server",
+    "Full signed Android APK with deferred Speed 1x-10x; Python and PowerShell full reconstruction verified",
+    "Unsigned IPA; original native bytes preserved; actual embedded tables/constants and 8 full combat cases match server",
     "Admin 9 sections, 2905 item/role definitions, 1084 icons, 17 system event editors, per-item and per-translation source labels",
     "SQLite snapshot and schema29 migration preserve live account balances/inventory/VIP/role identity; derive combat stats once"
   ],
@@ -23,7 +23,6 @@
   "playable_verified": false,
   "ios_ipa_obtained": true,
   "apk_sha256": "bea64b41319ebba5a84529f644661b13bea85aceed8f775703b642daf686b0ec",
-  "patch_zip_sha256": "2f0b4b640391fc2bcd9bed25391cee966385162d4f25527625f4cd6df71d16f2",
   "documentation": "IMPLEMENTATION-342.md",
   "note": "Backend implementation and missing server-only rules are authored project code with provenance. Handler coverage and headless verification do not establish complete native gameplay.",
   "ios_binary_inspected": true,
@@ -49,8 +48,7 @@
   "cloud_live_http_and_rpc_verified": true,
   "ios_phone_to_cloud_connection_verified": false,
   "latest_targeted_tests_passed": 21,
-  "ios_private_ipa_published": false,
-  "ios_private_ipa_publication_status": "user-requested-private-only; no-payload-uploaded; private-repo-creation-denied-403",
+  "ios_private_ipa_publication_status": "owner-authorized-publication-in-new-full-file-release",
   "admin_ui_rebuilt": true,
   "admin_validation_report": "analysis/longzhidao-validation.json",
   "admin_catalog_items": 2905,
@@ -62,7 +60,6 @@
   "admin_catalog_definitions": 2905,
   "admin_unique_icons": 1084,
   "release_validation": "analysis/longzhidao-validation.json",
-  "private_ipa_published": false,
   "localization": {
     "source_eng_entries": 8466,
     "authored_entries": 498,
@@ -84,5 +81,9 @@
     "ios_combat_data_compatible": false,
     "ios_combat_counterexamples_detected": 2,
     "ios_private_models_passed": true
-  }
+  },
+  "distribution": "full-files-github-release",
+  "release_tag": "longzhidao-v1.0.0-dev",
+  "fresh_install": true,
+  "ios_ipa_publication_authorized": true
 }
