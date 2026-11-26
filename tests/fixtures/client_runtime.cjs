@@ -1,10 +1,26 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
 const input=JSON.parse(fs.readFileSync(0,'utf8'));let scale=1,removed=0,reports=[],hints=[];const saved={};
+let ready=!input.delayedScheduler, activeScheduler;const events={};
+if(input.delayedScheduler)saved['db2.private.gameSpeed']='7';
 const scheduler={setTimeScale(v){scale=v;},getTimeScale(){return scale;}};
+activeScheduler=scheduler;
 const modules={baseView:{removeLoading(){removed++;},addHintPanel(s){hints.push(s);}},helper:{sendError(s){reports.push(s);}},battleScene:{instance:null}};
-const context={window:{__require:n=>modules[n]},cc:{sys:{localStorage:{getItem:k=>saved[k],setItem:(k,v)=>saved[k]=v}},director:{getScheduler:()=>scheduler,on(){}},Director:{EVENT_AFTER_SCENE_LAUNCH:'scene'},Canvas:{instance:null}},console:{error(){}},Date,isFinite};
+const context={window:{__require:n=>modules[n]},cc:{sys:{localStorage:{getItem:k=>saved[k],setItem:(k,v)=>saved[k]=v}},director:{getScheduler:()=>ready?activeScheduler:null,on(name,cb){events[name]=cb;}},Director:{EVENT_AFTER_SCENE_LAUNCH:'scene'},Canvas:{instance:null}},console:{error(){}},Date,isFinite};
 vm.runInNewContext(fs.readFileSync(__dirname+'/../../tools/private_runtime.js','utf8'),context);
 const runtime=context.window.DB2PrivateRuntime;
+if(input.delayedScheduler){
+ assert.equal(scale,1);assert.equal(runtime.getSpeed(),7);
+ runtime.setSpeed(4);events.scene();assert.equal(scale,1);
+ ready=true;events.scene();assert.equal(scale,4);
+ events.scene();assert.equal(scale,4); // no duplicate multiplication/wrapping
+ activeScheduler.setTimeScale(3);assert.equal(scale,10);
+ let replacementScale=0;
+ activeScheduler={setTimeScale(v){replacementScale=v;},getTimeScale(){return replacementScale;}};
+ events.scene();assert.equal(replacementScale,0); // preserve paused replacement
+ activeScheduler.setTimeScale(1);assert.equal(replacementScale,4);
+ activeScheduler=scheduler;events.scene();runtime.setSpeed(1);
+ scheduler.setTimeScale(1);assert.equal(scale,1);
+}
 for(let n=1;n<=10;n++){runtime.setSpeed(n);assert.equal(scale,n);}
 class Node {
  constructor(name){this.name=name||'';this.children=[];this.events={};}

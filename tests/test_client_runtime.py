@@ -4,6 +4,9 @@ from tools.client_patches import patch_response_boundary,patch_private_sdk
 
 @unittest.skipUnless(shutil.which('node'),'Node needed for recovered client checks')
 class RuntimeTests(unittest.TestCase):
+ def test_native_bundle_loads_before_director_scheduler_and_binds_on_scene_launch(self):
+  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_runtime.cjs')],input=json.dumps({'delayedScheduler':True}),text=True,capture_output=True,check=True)
+  self.assertEqual(json.loads(result.stdout)['scale'],2)
  def test_engine_rate_one_to_ten_pause_and_invalid_values(self):
   result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_runtime.cjs')],input='{}',text=True,capture_output=True,check=True)
   self.assertEqual(json.loads(result.stdout)['scale'],2)

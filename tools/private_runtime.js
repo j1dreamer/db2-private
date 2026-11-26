@@ -7,16 +7,31 @@
     }
     var saved = Number(cc.sys.localStorage.getItem(key));
     var rate = valid(saved) ? saved : 1;
-    var scheduler = cc.director.getScheduler();
-    var setEngineScale = scheduler.setTimeScale;
-    var base = scheduler.getTimeScale ? scheduler.getTimeScale() : 1;
+    // Native bundle scripts load before Director.init creates its scheduler.
+    // Bind lazily, then retry on scene launch; never abort bundle evaluation.
+    var scheduler = null, setEngineScale = null, wrappedScale = null;
+    var base = 1;
     var label = null;
-    function apply() { setEngineScale.call(scheduler, Math.min(base * rate, 10)); }
-    scheduler.setTimeScale = function (value) {
-        base = Number(value);
+    function bindScheduler() {
+        var current = cc.director.getScheduler();
+        if (!current || typeof current.setTimeScale !== 'function') return false;
+        if (current === scheduler) return true;
+        if (scheduler && scheduler.setTimeScale === wrappedScale) scheduler.setTimeScale = setEngineScale;
+        scheduler = current;
+        setEngineScale = current.setTimeScale;
+        base = current.getTimeScale ? Number(current.getTimeScale()) : 1;
         if (!isFinite(base) || base < 0) base = 1;
-        apply();
-    };
+        wrappedScale = function (value) {
+            base = Number(value);
+            if (!isFinite(base) || base < 0) base = 1;
+            apply();
+        };
+        current.setTimeScale = wrappedScale;
+        return true;
+    }
+    function apply() {
+        if (bindScheduler()) setEngineScale.call(scheduler, Math.min(base * rate, 10));
+    }
     var api = window.DB2PrivateRuntime = {
         getSpeed: function () { return rate; },
         setSpeed: function (value) {
