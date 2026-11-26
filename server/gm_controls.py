@@ -6,6 +6,7 @@ from .progression import recalculate,learn_skills,max_level,friendships
 def set_player(p,values):
     allowed={'level','vipLevel','gem','coin','actionPoint','skillPoint'}
     if not isinstance(values,dict)or not values or set(values)-allowed:raise ValueError('Chỉ chỉnh cấp, VIP và tài nguyên được liệt kê')
+    previous_level=p['level']
     for key,value in values.items():
         if key=='level':
             p['level']=integer(value,'Cấp người chơi',1,100);p['experience']=0
@@ -16,6 +17,7 @@ def set_player(p,values):
             p['vip']['topUpGem']=levels[level-1]['nextLevelTopUpGem']if level else 0
             p['privateVIPGrant']=True;p['timesMaxMap']['skillPoint']=5+levels[level]['increaseSkillPointMax']
         else:p[key]=integer(value,key,0,10**9)
+    if p['level']<previous_level and any(r['level']>max_level(p,r)for r in p['team']['roles'].values()):raise ValueError('Hạ cấp tướng trước khi hạ cấp người chơi')
     for role in p['team']['roles'].values():recalculate(p,role)
     friendships(p)
 

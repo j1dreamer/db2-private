@@ -62,5 +62,8 @@
     "Termux/Tailscale device validation"
   ],
   "source_policy": "tables/canonical-policy.json",
-  "private_rules": "tables/privateRules.json"
+  "private_rules": "tables/privateRules.json",
+  "complete_client_public_downloads_verified": true,
+  "download_validation": "analysis/client-download-validation.json",
+  "targeted_gm_checks_after_final_server_validation": 4
 }

@@ -1,26 +1,24 @@
 {
   "passed": true,
-  "method": "Fresh public HTTPS downloads in isolated RAM filesystem; no preexisting APK/IPA or client cache",
-  "android_parts": 25,
-  "ios_parts": 25,
+  "baseline": "eng-sp-sss",
+  "fresh_public_downloads": true,
+  "manual_joining_required": false,
+  "old_client_required": false,
   "android": {
-    "bytes": 525087425,
-    "sha256": "bea64b41319ebba5a84529f644661b13bea85aceed8f775703b642daf686b0ec",
-    "complete_file_verified": true
+    "file": "DB2-ENG-SPSSS-GM.apk",
+    "bytes": 525058753,
+    "sha256": "4fbfe8eeb3e2d7b9b3bc66dbc24bad7d06ced98e7d4d594a284a5034c1e4c66c"
   },
   "ios": {
-    "bytes": 511256922,
-    "sha256": "30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd",
-    "complete_file_verified": true,
-    "signed": false
+    "file": "DB2-ENG-SPSSS-GM-unsigned.ipa",
+    "bytes": 511239717,
+    "sha256": "88dc13d681e502e26181d3ae0009190347e4661d91101c960075d584493b1897"
   },
-  "second_run_skipped_both_verified_outputs": true,
-  "windows_native_batch_execution_tested": false,
-  "native_gameplay_tested": false,
-  "download_zip_sha256": "6dda22488e64148b2de71e658f15652483a120a6155d55f791a641db9cbc37fd",
-  "requirements": [
-    "Python 3.10+",
-    "about 2.2 GB free for both outputs and cache"
-  ],
-  "manual_joining_required": false
+  "verified_cached_outputs_skipped_on_second_run": true,
+  "transport_parts_verified": {
+    "android": 25,
+    "ios": 25
+  },
+  "download_zip_sha256": "ca29675b7253daa0f15405f53ece14384d77612447ae4ef716bf037241a8c403",
+  "windows_native_execution_tested": false
 }

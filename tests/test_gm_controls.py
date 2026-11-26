@@ -27,12 +27,12 @@ class GMControlsTests(unittest.TestCase):
   p=self.store.player(1);p['privateGM']=False;self.store.save(p)
   with self.assertRaises(ValueError):self.call('catalog',{})
  def test_set_levels_vip_and_resources_are_durable_without_attesting_payments(self):
-  self.enable();result=self.call('setPlayer',{'values':{'level':99,'vipLevel':16,'gem':777}});self.assertEqual(result['level'],99)
+  self.enable();result=self.call('setPlayer',{'values':{'level':99,'vipLevel':16,'gem':777},'playerId':2});self.assertEqual(result['level'],99)
   self.call('setRole',{'teamIndex':1,'values':{'level':50}});p=self.store.player(1)
   self.assertEqual(p['team']['roles']['1']['level'],50);self.assertEqual(p['vip']['level'],16);self.assertEqual(p['vip']['topUpMoney'],0);self.assertEqual(p['timesMaxMap']['actionPoint'],159);self.assertEqual(p['gem'],777)
   self.assertEqual(self.store.player(2)['level'],1)
   self.assertEqual(len(p['extra']['goodsList']),6);self.assertTrue(p['team']['roles']['1']['power']>0)
-  for action,args in [('setPlayer',{'values':{'level':101}}),('setPlayer',{'values':{'vipLevel':17}}),('setPlayer',{'values':{'privateGM':True}}),('setRole',{'teamIndex':999,'values':{'level':5}})]:
+  for action,args in [('setPlayer',{'values':{'level':1}}),('setPlayer',{'values':{'level':101}}),('setPlayer',{'values':{'vipLevel':17}}),('setPlayer',{'values':{'privateGM':True}}),('setRole',{'teamIndex':999,'values':{'level':5}})]:
    before=copy.deepcopy(self.store.player(1))
    with self.assertRaises(ValueError):self.call(action,args)
    after=self.store.player(1);self.assertEqual(after['level'],before['level']);self.assertEqual(after['gem'],before['gem']);self.assertEqual(after['team'],before['team'])
