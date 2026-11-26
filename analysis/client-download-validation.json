@@ -1,25 +1,25 @@
 {
   "passed": true,
-  "build": "eng-sp-sss-box-speed-v3",
+  "build": "eng-sp-sss-box-info-v4",
   "baseline": "eng-sp-sss",
   "fresh_public_downloads": true,
   "manual_joining_required": false,
   "old_client_required": false,
   "android": {
-    "file": "DB2-ENG-SPSSS-BoxSpeed.apk",
+    "file": "DB2-ENG-SPSSS-BoxInfo.apk",
     "bytes": 525062849,
-    "sha256": "7a40e289e298828e8491dfdb82c00e30ae624b37a186f3216520c5f91090c003"
+    "sha256": "20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47"
   },
   "ios": {
-    "file": "DB2-ENG-SPSSS-BoxSpeed-unsigned.ipa",
-    "bytes": 511241949,
-    "sha256": "ea9ad655d0b2f38a924cc9c7c907d58787c5c09c25676e13515b7e74d8b2945c"
+    "file": "DB2-ENG-SPSSS-BoxInfo-unsigned.ipa",
+    "bytes": 511242249,
+    "sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b"
   },
   "verified_cached_outputs_skipped_on_second_run": true,
   "transport_parts_verified": {
     "android": 25,
     "ios": 25
   },
-  "download_zip_sha256": "5193213e5ab11411f831e4634941db055b12024547e5c1eeb0c62422748a4628",
+  "download_zip_sha256": "a8857744618c6c55266f14e9b380d18b813c04ffac6563258a4def384860775d",
   "windows_native_execution_tested": false
 }

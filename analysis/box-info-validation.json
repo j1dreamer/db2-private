@@ -46,7 +46,7 @@
   },
   "native_android_play_tested": false,
   "native_ios_play_tested": false,
-  "public_download_verification": "pending",
+  "public_download_verification": "passed: both complete files SHA-256 matched; second run skipped verified outputs",
   "actual_packaged_jsc_verified": {
     "android": {
       "description_helper_embedded": true,
@@ -56,5 +56,6 @@
       "description_helper_embedded": true,
       "both_item_generators_patched": true
     }
-  }
+  },
+  "download_validation": "analysis/client-download-validation.json"
 }
