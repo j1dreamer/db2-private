@@ -1,7 +1,7 @@
 {
-  "file": "DB2-ENG-SPSSS-BoxSpeed-unsigned.ipa",
-  "bytes": 511241949,
-  "sha256": "ea9ad655d0b2f38a924cc9c7c907d58787c5c09c25676e13515b7e74d8b2945c",
+  "file": "DB2-ENG-SPSSS-BoxInfo-unsigned.ipa",
+  "bytes": 511242249,
+  "sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
   "publication_authorized": true,
   "transport_only": true,
   "baseline": "eng-sp-sss",
@@ -124,12 +124,12 @@
     {
       "file": "parts/part-023.bin",
       "bytes": 20971520,
-      "sha256": "6016e6741c61bba0930ca75df6b990905f14ebf21f567fbecc6d46fab9aa75d0"
+      "sha256": "5fbefcdb7eebec5eedbc6ca994a73491865b97246869978ddc31d9bef9462103"
     },
     {
       "file": "parts/part-024.bin",
-      "bytes": 7925469,
-      "sha256": "54dafade8a4c3c21a8b2eb5cb7bbd69dfcc022b5a512c9e99d97705a847f4a87"
+      "bytes": 7925769,
+      "sha256": "2f2eba72bc727595a4082c5c2dfe495848c799cff30cade78fde26ca79343c02"
     }
   ]
 }
