@@ -1,9 +1,10 @@
 {
-  "file": "LongChiDao-VI-iOS-unsigned.ipa",
-  "bytes": 511256922,
-  "sha256": "30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd",
+  "file": "DB2-ENG-SPSSS-GM-unsigned.ipa",
+  "bytes": 511239717,
+  "sha256": "88dc13d681e502e26181d3ae0009190347e4661d91101c960075d584493b1897",
   "publication_authorized": true,
   "transport_only": true,
+  "baseline": "eng-sp-sss",
   "parts": [
     {
       "file": "parts/part-000.bin",
@@ -123,12 +124,12 @@
     {
       "file": "parts/part-023.bin",
       "bytes": 20971520,
-      "sha256": "5c6d9fd24f2157f355002d01804f14b9fe4fe20c56c0fc3b588c792d6f2651c0"
+      "sha256": "c9da1760a121108c82518a55d382b911a6ae7dfd27cabc16004c18d2b5e90386"
     },
     {
       "file": "parts/part-024.bin",
-      "bytes": 7940442,
-      "sha256": "2649d71b63c8d655f8bedc613f668509826ffaed1933e9083fc13cdc481aef72"
+      "bytes": 7923237,
+      "sha256": "52a6086a92649f4eb28cfbc87a766f2a40bdcfacabe7a709fd3951c24ffe3fac"
     }
   ]
 }

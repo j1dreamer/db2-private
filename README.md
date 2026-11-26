@@ -1,3 +1,1 @@
-Internal release transfer files for the owner-authorized public Long Chi Dao IPA.
-Download complete APK/IPA/server files from https://github.com/j1dreamer/db2-private/releases/tag/longzhidao-v1.0.0-dev instead.
-No manual concatenation is required for end users.
+Internal transfer data for owner-authorized complete IPA downloads. Use Download-Clients.zip from the eng-sp-sss branch to create complete files automatically. No manual joining needed. Previous versions remain pinned by commit.
