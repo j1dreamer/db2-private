@@ -32,7 +32,15 @@
     "build": "eng-sp-sss-box-info-v4",
     "profile_schema": 30,
     "routes": 342,
-    "private_gm_routes": 3
+    "private_gm_routes": 3,
+    "termux": {
+      "setup": "Setup-Termux.sh",
+      "start": "Start-Termux.sh",
+      "guide": "TERMUX.md",
+      "requires_root": false,
+      "tailscale_app_required_for_remote_clients": true,
+      "native_device_verified": false
+    }
   },
   "download_helper": {
     "file": "Download-Clients.zip",

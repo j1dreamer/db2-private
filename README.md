@@ -51,7 +51,7 @@ Ký IPA trên Mac bằng tài khoản/chứng chỉ của bạn rồi cài. Ch�
 python3 start.py --bind IP_TAILSCALE --public-host IP_TAILSCALE
 ```
 
-Termux cần `pkg install python nodejs`. Tailscale phải cấu hình riêng trên các thiết bị; không có tunnel hoạt động sẵn trong gói.
+Android chạy server: xem [hướng dẫn Termux + Tailscale](TERMUX.md). Trong thư mục source ở home Termux, chạy `bash Setup-Termux.sh`, sau đó `bash Start-Termux.sh`. Script lắng nghe cổng 20003 và quảng bá host theo địa chỉ client dùng. Cài/bật ứng dụng Tailscale riêng trên Android chạy server và các máy chơi; chưa có tunnel được cấu hình sẵn trong gói.
 
 ## Kiểm tra và nguồn
 

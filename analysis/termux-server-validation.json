@@ -1,0 +1,34 @@
+{
+  "android": {
+    "server_selector_in_actual_artifact": true,
+    "endpoint_saved_on_device": true,
+    "http_tailscale_ipv4_supported": true
+  },
+  "ios": {
+    "server_selector_in_actual_artifact": true,
+    "endpoint_saved_on_device": true,
+    "http_tailscale_ipv4_supported": true
+  },
+  "setup_shell_syntax_valid": true,
+  "start_shell_syntax_valid": true,
+  "gate_auto_host_websocket_test_passed": true,
+  "dependencies": [
+    "Python",
+    "aiohttp",
+    "SQLite",
+    "Node.js"
+  ],
+  "termux_native_execution_tested": false,
+  "tailscale_device_end_to_end_tested": false,
+  "guide": "TERMUX.md",
+  "data_directory": "data",
+  "default_port": 20003,
+  "bind": "0.0.0.0",
+  "public_host": "auto",
+  "gate_auto_host_websocket_tests": {
+    "passed": true,
+    "count": 2
+  },
+  "server_gameplay_changed": false,
+  "new_apk_ipa_install_required_for_termux": false
+}
