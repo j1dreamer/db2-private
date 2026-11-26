@@ -1,0 +1,18 @@
+{
+  "local_mock_http_only": true,
+  "actual_tailscale_host_scanned_from_cloud": false,
+  "authenticated_requests": false,
+  "tests": [
+    {
+      "redirect_case": false,
+      "passed": true
+    },
+    {
+      "redirect_case": true,
+      "passed": true
+    }
+  ],
+  "only_root_get_requests_sent": true,
+  "redirects_not_followed": true,
+  "python_syntax": "3.8+"
+}

@@ -50,3 +50,24 @@ kiểm tra phiên bản repository iSH; không tự đổi repository hệ thố
 Phiên bản công cụ mới gửi `cver=6` nhất quán trên các POST `/user/`, lấy từ phiên bản login đọc được trong APK. APK cũ chỉ gửi trường này lúc login, không gửi lúc đăng ký. Thay đổi này kiểm tra trường hợp backend đòi phiên bản ở cả đăng ký/serverInfo; chưa chứng minh server cũ chấp nhận phiên bản 6. Nếu vẫn báo client cũ, cần bản client được server hỗ trợ hoặc source backend để đối chiếu, không đoán tăng số phiên bản.
 
 Đối chiếu bổ sung bytecode `classes4.dex`: lớp `org.cocos2dx.javascript.DevId` tham chiếu `Settings.Secure.getString` với khóa `android_id`. Bản công cụ đầu gửi `device` rỗng; bản mới tạo một mã cài đặt riêng, lưu tại `.legacy-gm-installation-id`, dùng nhất quán cho đăng ký/login/relogin. Đây không phải Android ID native và không mạo nhận thiết bị đang có trên server. Nếu có Android ID thật của chính bạn, `--device` vẫn nhận giá trị đó. Mã cài đặt công cụ có thể không được backend chấp nhận; chưa xác minh đây là nguyên nhân thông báo client cũ. Không xóa mã này giữa các lần chạy để giả làm thiết bị mới.
+
+## Tìm dịch vụ để khôi phục máy chủ
+
+Công cụ `tools/check_legacy_host.py` dùng thư viện chuẩn Python, kiểm tra đúng một
+IPv4 và 11 cổng cố định: 22, 80, 443, 3000, 3389, 5000, 8000, 8022, 8080,
+8443, 20003. Chạy trên iPhone đang vào tailnet:
+
+```sh
+python3 check-host.py --host IP-TAILSCALE
+```
+
+Công cụ chỉ nối TCP, đọc banner ở 22/8022, và GET `/` trên các cổng web để đọc mã
+HTTP/tiêu đề/header. Không thử đăng nhập, không theo redirect, không bỏ kiểm tra
+chứng chỉ TLS, không gọi API quản trị hoặc GM. Kết quả cổng mở không chứng minh
+đó là trang quản trị hay cấp quyền truy cập. Cổng không tới được cũng có thể do
+ACL/firewall, không đủ để kết luận dịch vụ đã tắt.
+
+Nếu nhận diện được SSH/web quản trị, dùng khóa/tài khoản hoặc quy trình khôi phục
+chính thức của dịch vụ. Với VPS, có thể cần console/tài khoản nhà cung cấp; với
+Android/Windows, cần quyền trên máy chạy server hoặc bản sao lưu. Có mặt trong
+Tailscale không tự cấp quyền quản trị hệ điều hành hoặc game.
