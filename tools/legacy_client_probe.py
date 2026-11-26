@@ -1,11 +1,11 @@
 """Register normally and test ONE +100 item GM call on your own legacy server.
-Requires Python 3.11+ and aiohttp. No privilege grants, invite guessing, or automatic GM retries.
+Requires Python 3.8+ and aiohttp. No privilege grants, invite guessing, or automatic GM retries.
 """
 import argparse,asyncio,base64,getpass,json,os,secrets,struct,sys,time,zlib
 from pathlib import Path
 from urllib.parse import urlsplit,urlunsplit
 import aiohttp
-if sys.version_info < (3,11):raise SystemExit('This checker requires Python 3.11 or newer.')
+if sys.version_info < (3,8):raise SystemExit('This checker requires Python 3.8 or newer.')
 
 def pack(kind,body=b''):
     return bytes([kind])+len(body).to_bytes(3,'big')+body
@@ -71,15 +71,16 @@ class Pomelo:
         route_header=struct.pack('>H',code)if code is not None else bytes([len(name)])+name
         data=bytes([1 if code is not None else 0])+varint(rid)+route_header+json.dumps(args,separators=(',',':')).encode()
         await self.ws.send_bytes(pack(4,data))
-        async with asyncio.timeout(20):
-            while True:
-                kind,body=await self.frame()
-                if kind==5:raise RuntimeError('Server disconnected this account')
-                if kind!=4:continue
-                response_id,_,raw=message(body)
-                if response_id!=rid:continue
-                if route in (self.protos.get('server')or{}):raise RuntimeError('Server response requires protobuf for '+route)
-                return json.loads(raw)
+        return await asyncio.wait_for(self.response(rid,route),timeout=20)
+    async def response(self,rid,route):
+        while True:
+            kind,body=await self.frame()
+            if kind==5:raise RuntimeError('Server disconnected this account')
+            if kind!=4:continue
+            response_id,_,raw=message(body)
+            if response_id!=rid:continue
+            if route in (self.protos.get('server')or{}):raise RuntimeError('Server response requires protobuf for '+route)
+            return json.loads(raw)
 
 def check(result,stage):
     if result.get('code')!=200:raise RuntimeError(stage+': '+str(result.get('msg',result.get('code','unknown response'))))
@@ -131,6 +132,22 @@ async def login_player(session,base,credentials,create):
     except BaseException:
         await conn.close();raise
 
+async def check_connection(server):
+    base=server.rstrip('/')
+    async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=12),trust_env=True)as session:
+        try:
+            async with session.get(base+'/health',allow_redirects=False)as response:
+                if response.status==200:
+                    try:data=await response.json(content_type=None)
+                    except (ValueError,aiohttp.ClientError):data={}
+                    if isinstance(data,dict)and data.get('status')=='ok':print('HEALTH OK: server reachable.')
+                    else:print('HTTP 200: HTTP endpoint reachable; game login not yet verified.')
+                elif response.status==404:print('HTTP 404: HTTP endpoint reachable; this old server may not have /health.')
+                else:raise RuntimeError('HTTP '+str(response.status)+': server reachability is not confirmed; check Tailscale and the server.')
+        except (aiohttp.ClientError,asyncio.TimeoutError)as error:
+            raise RuntimeError('Cannot reach server. Check Tailscale, the server IP/port and whether the server is running.')from error
+    print('Read-only check. No account created and no GM request sent.')
+
 async def run(args,out,report):
     base=args.server.rstrip('/');parsed=urlsplit(base)
     if parsed.scheme not in ('http','https')or not parsed.hostname or parsed.path or parsed.query or parsed.fragment or parsed.username:raise ValueError('Use http://HOST:PORT, with no credentials or path')
@@ -157,8 +174,11 @@ async def run(args,out,report):
         finally:await conn.close()
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--server');parser.add_argument('--kind-id',type=int,default=119,help='Default: normal summon ticket 119 from the ENG client');parser.add_argument('--device',default='',help='Your own Android ID if this backend requires it');parser.add_argument('--output',type=Path);args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--server');parser.add_argument('--check-only',action='store_true',help='Read-only connectivity check: no account or GM changes');parser.add_argument('--kind-id',type=int,default=119,help='Default: normal summon ticket 119 from the ENG client');parser.add_argument('--device',default='',help='Your own Android ID if this backend requires it');parser.add_argument('--output',type=Path);args=parser.parse_args()
     if not args.server:args.server=input('Server URL (for example http://100.x.x.x:20003): ').strip()
+    if args.check_only:
+        try:asyncio.run(check_connection(args.server));return 0
+        except Exception as error:print('STOPPED:',str(error));return 1
     args.invite=getpass.getpass('Invite code if required (Enter if none): ')
     if args.kind_id<1:parser.error('kind-id must be positive')
     out=args.output or Path(__file__).resolve().parent/('gm-test-'+time.strftime('%Y%m%d-%H%M%S')+'-'+secrets.token_hex(2));out.mkdir(parents=True,exist_ok=False);os.chmod(out,0o700);report={};status=1

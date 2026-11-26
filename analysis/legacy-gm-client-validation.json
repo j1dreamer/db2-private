@@ -22,5 +22,23 @@
   "requires_authenticated_game_session": true,
   "automatic_privilege_elevation": false,
   "credentials_in_public_package": false,
-  "cloud_private_server_reachability": "failed: no configured VPN capability; proxied HTTP returned upstream connection failure"
+  "cloud_private_server_reachability": "failed: no configured VPN capability; proxied HTTP returned upstream connection failure",
+  "python_syntax_compatibility": "3.8+",
+  "python311_only_timeout_removed": true,
+  "iphone_ish_native_tested": false,
+  "ish_dependency_catalog_checked": {
+    "repository": "Alpine v3.14 community x86",
+    "package": "py3-aiohttp",
+    "version": "3.7.4-r2"
+  },
+  "readonly_check_only_supported": true,
+  "readonly_check_only_tests_passed": {
+    "http_statuses": [
+      200,
+      404,
+      503
+    ],
+    "only_get_health_sent": true,
+    "accounts_or_gm_requests_sent": false
+  }
 }

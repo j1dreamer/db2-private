@@ -63,4 +63,4 @@ Nhánh có đủ 342 handler hợp đồng gốc, cộng 3 RPC GM riêng (`catal
 
 ## Công cụ kiểm tra server APK cũ
 
-[Legacy-GM-Test.zip](Legacy-GM-Test.zip) là client chẩn đoán riêng, không thay server đang chạy. Chạy từ máy có Tailscale tới server cũ; cần Python 3.11+. Công cụ đăng ký theo luồng bình thường, chỉ thử một lệnh cấp 100 vé thường (119), đăng nhập lại và kiểm số lượng bền vững. Không tự cấp quyền GM; nếu bị từ chối quyền/mã mời thì dừng. Tài khoản/mật khẩu sinh trên máy chạy tool, không được đóng gói trong ZIP. Kết quả kiểm thử hiện tại chỉ trên backend cục bộ: [báo cáo](analysis/legacy-gm-client-validation.json).
+[Legacy-GM-Test.zip](Legacy-GM-Test.zip) là client chẩn đoán riêng, không thay server đang chạy. Chạy từ máy có Tailscale tới server cũ; cần Python 3.8+. Trên iPhone xem [iSH](IPHONE-GM.md). Công cụ đăng ký theo luồng bình thường, chỉ thử một lệnh cấp 100 vé thường (119), đăng nhập lại và kiểm số lượng bền vững. Không tự cấp quyền GM; nếu bị từ chối quyền/mã mời thì dừng. Tài khoản/mật khẩu sinh trên máy chạy tool, không được đóng gói trong ZIP. Kết quả kiểm thử hiện tại chỉ trên backend cục bộ: [báo cáo](analysis/legacy-gm-client-validation.json).
