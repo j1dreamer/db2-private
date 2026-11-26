@@ -40,5 +40,12 @@
     ],
     "only_get_health_sent": true,
     "accounts_or_gm_requests_sent": false
+  },
+  "client_version_metadata": {
+    "value": 6,
+    "source": "supplied APK serverMain.login cver:6",
+    "sent_on_user_post_routes": true,
+    "registration_requires_version_guard_fixture_passed": true,
+    "actual_old_server_acceptance_verified": false
   }
 }

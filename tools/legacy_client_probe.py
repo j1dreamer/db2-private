@@ -6,6 +6,7 @@ from pathlib import Path
 from urllib.parse import urlsplit,urlunsplit
 import aiohttp
 if sys.version_info < (3,8):raise SystemExit('This checker requires Python 3.8 or newer.')
+CLIENT_VERSION=6  # Verified in the supplied APK's serverMain.login, not a guessed newer version.
 
 def pack(kind,body=b''):
     return bytes([kind])+len(body).to_bytes(3,'big')+body
@@ -104,12 +105,14 @@ def item_count(player,kind):
     return sum(int(item.get('count',0))for item in items if int(item.get('kindId',0))==kind)
 
 async def post(session,base,path,fields):
-    async with session.post(base+path,data=fields,allow_redirects=False)as response:
+    form=dict(fields)
+    if path.startswith('/user/'):form.setdefault('cver',str(CLIENT_VERSION))
+    async with session.post(base+path,data=form,allow_redirects=False)as response:
         if response.status!=200:raise RuntimeError(path+': HTTP '+str(response.status))
         return await response.json(content_type=None)
 
 async def login_player(session,base,credentials,create):
-    common={'name':credentials['username'],'password':credentials['password'],'device':credentials.get('device',''),'cver':'6','serverId':'9999'}
+    common={'name':credentials['username'],'password':credentials['password'],'device':credentials.get('device',''),'cver':str(CLIENT_VERSION),'serverId':'9999'}
     info=check(await post(session,base,'/user/serverInfo',{'userName':common['name']}),'server info')
     servers=info.get('serverList')or[]
     if not servers:raise RuntimeError('Server list is empty')
@@ -154,7 +157,7 @@ async def run(args,out,report):
     username='gm'+secrets.token_hex(3);password=secrets.token_urlsafe(18)
     credentials={'server':base,'username':username,'password':password,'device':args.device}
     path=out/'ACCOUNT-PRIVATE.json';path.write_text(json.dumps(credentials,indent=2)+'\n');os.chmod(path,0o600)
-    report.update(server=base,account=username,kind_id=args.kind_id,grant_count=100,registration_succeeded=False,gm_request_sent=False,persistence_verified=False)
+    report.update(server=base,account=username,kind_id=args.kind_id,grant_count=100,client_version=CLIENT_VERSION,registration_succeeded=False,gm_request_sent=False,persistence_verified=False)
     async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=25),trust_env=True)as session:
         registration_name=username+('#'+args.invite if args.invite else'')
         result=await post(session,base,'/user/register',{'name':registration_name,'password':password,'from':'mmx','channel':'Android','accountId':registration_name,'device':args.device})

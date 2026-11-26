@@ -46,3 +46,5 @@ catalog Alpine v3.14 x86 và chạy thử luồng đầy đủ trên backend Lin
 trường hợp cho phép/từ chối GM. **Chưa thử native trên iPhone và chưa kiểm tra server
 Tailscale cũ.** Nếu apk không tìm thấy gói hoặc lỗi phụ thuộc, gửi nguyên lỗi để
 kiểm tra phiên bản repository iSH; không tự đổi repository hệ thống theo suy đoán.
+
+Phiên bản công cụ mới gửi `cver=6` nhất quán trên các POST `/user/`, lấy từ phiên bản login đọc được trong APK. APK cũ chỉ gửi trường này lúc login, không gửi lúc đăng ký. Thay đổi này kiểm tra trường hợp backend đòi phiên bản ở cả đăng ký/serverInfo; chưa chứng minh server cũ chấp nhận phiên bản 6. Nếu vẫn báo client cũ, cần bản client được server hỗ trợ hoặc source backend để đối chiếu, không đoán tăng số phiên bản.
