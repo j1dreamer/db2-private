@@ -430,6 +430,8 @@ def patch_box_quantities(text):
     replace('rewardPanel','return {\ntitle: e,\nitemItems: r,\ncb: n\n};','for (var privateRewardIdx = 0; privateRewardIdx < r.length; privateRewardIdx++) r[privateRewardIdx].privateRewardCount = s[privateRewardIdx].count;\nreturn {\ntitle: e,\nitemItems: r,\ncb: n\n};')
     replace('rewardPanel','if (!r) return null;','if (!r) return null;\nvar privateBoxName = r.kindName || o.findEntityById(r.kindId).kindName;')
     replace('rewardPanel','a.selectCount = h, a.count = r.count,','a.selectCount = h, a.count = r.count, a.boxName = privateBoxName,')
+    for item_module in ('itemItem','itemItem2'):
+        replace(item_module,'var g = u.extra && u.extra.selectCount, p = null;', 'if (u.type == o.CONSTS.ENTITY_TYPE.BOX && window.DB2PrivateBox) { u = r.clone(u); u.desc = window.DB2PrivateBox.describe(u.extra, u.desc); }\nvar g = u.extra && u.extra.selectCount, p = null;')
     replace('bagScene','i.addRewardPanel(s, r);','i.addRewardPanel(s, r, null, t.name, false, { bagIndex: t._item.idx, count: t.count, selectCount: n.selectCount || 0, isExchange: !!n.isExchange });')
     replace('baseView','g.addRewardPanel = function(a, t, n, i, r) {','g.addRewardPanel = function(a, t, n, i, r, privateBoxInfo) {')
     replace('baseView','c.boxName = i;','c.boxName = i;\nc.privateBoxInfo = privateBoxInfo;')

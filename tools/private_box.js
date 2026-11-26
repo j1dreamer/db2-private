@@ -31,7 +31,20 @@
         var old=view.node.getChildByName('DB2BoxTools');if(old){old.active=false;if(old.removeFromParent)old.removeFromParent();else old.parent=null;old.destroy();}var root=new cc.Node('DB2BoxTools');root.parent=view.node;root.zIndex=30000;
         var size=dimensions(view);button(root,'×',size.w/2-33,size.h/2-33,42,closeAction);return {root:root,size:size};
     }
+    function description(extra,original) {
+        extra=extra||{};
+        var fixed=extra.dropListDesc||'',random=extra.rdDropListDesc||'',select=Number(extra.selectCount)||0;
+        var rule=!fixed&&!random?'Chưa có cấu hình thưởng để xác định nội dung rương.':select?'Mở 1 rương: chọn '+select+' loại phần thưởng.':random?'Mở 1 rương: nhận thưởng ngẫu nhiên theo cấu hình rương.':'Mở 1 rương: nhận toàn bộ phần thưởng liệt kê.';
+        if(fixed&&random&&!select)rule='Mở 1 rương: nhận phần thưởng cố định và phần thưởng ngẫu nhiên theo cấu hình.';
+        var counts=[],parts=String(select?fixed:fixed||random).split(',');
+        parts.forEach(function(part){var m=part.trim().match(/x(\d+)(?:_[WR][\d.]+)?$/);if(m&&counts.indexOf(Number(m[1]))<0)counts.push(Number(m[1]));});
+        if(counts.length===1)rule+=' Mỗi '+(select?'lựa chọn':'ô thưởng')+' có ×'+counts[0]+'.';
+        else if(counts.length>1)rule+=' Số lượng từng phần thưởng ghi ×N trên mỗi ô.';
+        if(random&&!select)rule+=' Các ô ngẫu nhiên là khả năng nhận, không đảm bảo nhận tất cả.';
+        return rule+(original?'\n'+original:'');
+    }
     var api=window.DB2PrivateBox={
+        describe:description,
         attach:function(view) {
             var ui=tools(view,function(){close(view);}),data=view.data,box=data.privateBoxInfo;
             view._db2BoxInfo=null;view._db2BoxOpen=null;

@@ -37,6 +37,7 @@ const frames=[];
 cache.selectBattleRolesScene={TYPE:{ARENA_3V3_DEFENSE_TEAM:7}};
 const cc={_RF:{push(mod){frames.push(mod)},pop(){frames.pop()}},Class:def=>{const cls=function(){};Object.assign(cls.prototype,def);Object.assign(cls,def.statics||{});frames.at(-1).exports=cls;return cls;},Component:{},Node:{},Sprite:{},Label:{},SpriteFrame:{},ProgressBar:{},Layout:{},RichText:{}};
 const context={cc,window:{},console:{log(...args){process.stderr.write(args.join(' ')+'\n');},warn(...args){process.stderr.write(args.join(' ')+'\n');}},Date,Uint8Array,storage:{getItem(){return null;},setItem(){}},setInterval:()=>1,clearInterval(){}};
+if(input.boxDescriptions){vm.runInNewContext(fs.readFileSync(__dirname+'/../../tools/private_box.js','utf8'),context);cache.helper.clone=cache.util.clone;}
 if(input.sourceBundle)cache.helper.floatStrip=value=>parseFloat(value.toPrecision(12));
 context.sp={Skeleton:{}};
 context.require=name=>load(name);
@@ -146,6 +147,7 @@ let boxViews;
 if(input.checkBoxes){
  cc.ScrollView={};for(const name of ['itemItem','roleItem']){delete cache[name];load(name);}
  const panel=load('rewardPanel'),box=panel.genData2(input.boxIndex);boxViews={selection:box};
+ if(input.boxDescriptions){delete cache.itemItem2;boxViews.descriptions=['itemItem','itemItem2'].map(name=>load(name).genData(player.bag.getItemByIdx(input.boxIndex),true)._data.desc);boxViews.allDescriptions=(input.boxModels||[]).map(item=>load('itemItem').genData(item,true)._data.desc);}
  const original=player.bag.getItemByIdx(input.boxIndex);const cfg=original.dropListDesc||cache.dataApi.findEntityById(original.kindId).extra.dropListDesc;
  boxViews.preview=panel.genData('preview',cache.serverConfig.DROP.FUNS.getDropListByDesc(cfg));
  if(input.boxResult)boxViews.result=load('rewardEffectPanel').genData(input.boxResult._temp.entityCountMap);

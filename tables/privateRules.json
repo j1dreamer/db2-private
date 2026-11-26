@@ -72,6 +72,6 @@
   {
     "id": "box-quantity-speed-controls",
     "source": "private-server-implementation",
-    "description": "Nút số lượng rương, số thưởng theo lượt mở, nút đóng và Speed nhỏ/kéo/lưu vị trí là mã dự án viết thêm. Tướng trùng vẫn đổi hồn theo bảng ENG; server sửa mở nhiều bản sao trong một giao dịch, không thay pool thưởng gốc."
+    "description": "Nút số lượng rương, số thưởng theo lượt mở, nút đóng và Speed nhỏ/kéo/lưu vị trí là mã dự án viết thêm. Tướng trùng vẫn đổi hồn theo bảng ENG; server sửa mở nhiều bản sao trong một giao dịch, không thay pool thưởng gốc. Mô tả rương được dự án tạo từ cấu hình client (chọn/toàn bộ/ngẫu nhiên, số lượng), giữ mô tả gốc; không tự bịa tỷ lệ nhận."
   }
 ]

@@ -45,3 +45,11 @@ class BoxQuantityTests(unittest.TestCase):
  def test_box_controls_counts_close_and_preview_use_renderer_adapter(self):
   r=subprocess.run(['node',str(ROOT/'tests/fixtures/private_box_ui.cjs')],capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr);self.assertTrue(all(json.loads(r.stdout).values()))
   source=patch_box_quantities((ROOT/'client/main.decoded.js').read_text());r=subprocess.run(['node',str(ROOT/'tests/fixtures/box_preview_guard.cjs')],input=json.dumps({'source':source}),capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr);self.assertTrue(all(json.loads(r.stdout).values()))
+
+ def test_all_box_descriptions_use_actual_config_and_sp_sixty_is_visible(self):
+  idx=self.give(351,1,self.custom('50570x60,50590x60'));source=Path(self.tmp.name)/'described-client.js';source.write_text(patch_box_quantities((ROOT/'client/main.decoded.js').read_text()))
+  from server.inventory import entities,model
+  models=[model(kind)for kind,row in entities().items()if row['type']=='box']
+  payload={'profile':self.store.player(1),'sourceBundle':str(source),'checkBoxes':True,'checkTeam':True,'boxIndex':idx,'boxDescriptions':True,'boxModels':models}
+  r=subprocess.run(['node',str(ROOT/'tests/fixtures/client_profile.cjs')],input=json.dumps(payload),text=True,capture_output=True);self.assertEqual(r.returncode,0,r.stderr)
+  data=json.loads(r.stdout)['boxViews'];self.assertEqual(len(data['allDescriptions']),54);self.assertTrue(all('Mở 1 rương:'in text for text in data['allDescriptions']));self.assertTrue(all('Mỗi lựa chọn có ×60'in text for text in data['descriptions']));self.assertEqual([r['privateRewardCount']for r in data['selection']['itemItems']],[60,60])

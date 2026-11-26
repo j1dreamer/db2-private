@@ -1,0 +1,60 @@
+{
+  "build": "eng-sp-sss-box-info-v4",
+  "baseline": "eng-sp-sss",
+  "profile_schema": 30,
+  "inherited_full_suite": "analysis/box-speed-validation.json",
+  "targeted_current_box_and_runtime_tests": {
+    "passed": true,
+    "count": 13,
+    "seconds": 6.2
+  },
+  "actual_client_generators_checked": [
+    "itemItem",
+    "itemItem2",
+    "rewardPanel"
+  ],
+  "all_box_definitions_described": 54,
+  "dynamic_private_box_config_checked": true,
+  "sp_fragment_example": {
+    "per_box": 60,
+    "one_box_preview_quantity": 60,
+    "does_not_override_actual_rewards": true
+  },
+  "description_rules": [
+    "select N reward types",
+    "all fixed rewards",
+    "random possible rewards",
+    "mixed fixed plus random",
+    "missing config explicitly identified",
+    "original description retained below generated description"
+  ],
+  "source_policy": "authored UI descriptions derived from client configuration; not original ENG text",
+  "artifacts": {
+    "baseline": "eng-sp-sss",
+    "build": "eng-sp-sss-box-info-v4",
+    "android": {
+      "file": "DB2-ENG-SPSSS-BoxInfo.apk",
+      "bytes": 525062849,
+      "sha256": "20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47"
+    },
+    "ios": {
+      "file": "DB2-ENG-SPSSS-BoxInfo-unsigned.ipa",
+      "bytes": 511242249,
+      "sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b"
+    },
+    "patch_sha256": "dee7233a2ad07523b1aeaaed867917588b30ae4585117f7ae38a608dcf866b55"
+  },
+  "native_android_play_tested": false,
+  "native_ios_play_tested": false,
+  "public_download_verification": "pending",
+  "actual_packaged_jsc_verified": {
+    "android": {
+      "description_helper_embedded": true,
+      "both_item_generators_patched": true
+    },
+    "ios": {
+      "description_helper_embedded": true,
+      "both_item_generators_patched": true
+    }
+  }
+}

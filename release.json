@@ -1,7 +1,7 @@
 {
-  "version": "3.0.0-dev",
+  "version": "4.0.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-v3-dev",
+  "tag": "eng-sp-sss-v4-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
   "implementation_commit": null,
@@ -10,18 +10,18 @@
   "bundled_player_database": false,
   "native_playable_verified": false,
   "android": {
-    "file": "DB2-ENG-SPSSS-BoxSpeed.apk",
+    "file": "DB2-ENG-SPSSS-BoxInfo.apk",
     "bytes": 525062849,
-    "sha256": "7a40e289e298828e8491dfdb82c00e30ae624b37a186f3216520c5f91090c003",
+    "sha256": "20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47",
     "package": "com.dp2.web.dev",
     "signed": true,
     "signing_identity": "development",
     "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953"
   },
   "ios": {
-    "file": "DB2-ENG-SPSSS-BoxSpeed-unsigned.ipa",
-    "bytes": 511241949,
-    "sha256": "ea9ad655d0b2f38a924cc9c7c907d58787c5c09c25676e13515b7e74d8b2945c",
+    "file": "DB2-ENG-SPSSS-BoxInfo-unsigned.ipa",
+    "bytes": 511242249,
+    "sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
     "bundle_id": "com.j1dreamer.db2.private",
     "signed": false,
     "publication_authorized": true
@@ -29,7 +29,7 @@
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
     "port": 20003,
-    "build": "eng-sp-sss-box-speed-v3",
+    "build": "eng-sp-sss-box-info-v4",
     "profile_schema": 30,
     "routes": 342,
     "private_gm_routes": 3
@@ -43,7 +43,7 @@
   },
   "release_asset_upload_status": "draft: cloud-upload-401-and-actions-account-billing-lock",
   "ios_transport": {
-    "commit": "d1f16be33ea6040a04d5143728044970866da1d5",
-    "manifest_sha256": "73e6a746ac1059a380ebb27f1ec0216401785c677fdff3120b911426d5434117"
+    "commit": "63d1537f2d4e8d0c9f7eb19a76911251da3a4907",
+    "manifest_sha256": "680b31b9219ab931c73dc2d1b3cbc673d9ee91a7a3a06a645001440c88f75012"
   }
 }

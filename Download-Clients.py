@@ -1,19 +1,19 @@
-"""Download the complete, checksum-pinned DB2 ENG SSS/SP + GM + BoxSpeed APK/IPA without chat downloads.
+"""Download the complete, checksum-pinned DB2 ENG SSS/SP + GM + BoxInfo APK/IPA without chat downloads.
 Standard-library only. Public HTTPS inputs; no login, token, Git, Java or old APK needed.
 """
 import argparse,bisect,concurrent.futures,contextlib,hashlib,json,os,re,sys,time,urllib.error,urllib.request,zipfile
 from pathlib import Path
 RAW='https://raw.githubusercontent.com/j1dreamer/db2-private/'
 ANDROID_REF='f193ded34731bfbb63074301cd582f032a8f9107'
-IOS_REF='d1f16be33ea6040a04d5143728044970866da1d5'
+IOS_REF='63d1537f2d4e8d0c9f7eb19a76911251da3a4907'
 ANDROID_MANIFEST='058c91565e0caee080ff4e2f50606c615eef8af6baa75c8ad7df0b3480805ec2'
-IOS_MANIFEST='73e6a746ac1059a380ebb27f1ec0216401785c677fdff3120b911426d5434117'
+IOS_MANIFEST='680b31b9219ab931c73dc2d1b3cbc673d9ee91a7a3a06a645001440c88f75012'
 BASE_SHA='a198837ccae5a3ad662d2489c4e1748016aebe77359e84f4bc4734c5f389f430'
 FIXED_SHA='d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f'
-APK_SHA='7a40e289e298828e8491dfdb82c00e30ae624b37a186f3216520c5f91090c003'
-IPA_SHA='ea9ad655d0b2f38a924cc9c7c907d58787c5c09c25676e13515b7e74d8b2945c'
+APK_SHA='20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47'
+IPA_SHA='c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b'
 APK_SIZE=525062849
-IPA_SIZE=511241949
+IPA_SIZE=511242249
 CHUNK=1024*1024
 
 def sha(path):
@@ -114,11 +114,11 @@ def finish(temporary,output,size,digest):
     os.replace(temporary,output);print('COMPLETE:',output,flush=True)
 
 def android(output,cache,workers):
-    target=output/'DB2-ENG-SPSSS-BoxSpeed.apk'
+    target=output/'DB2-ENG-SPSSS-BoxInfo.apk'
     if ready(target,APK_SIZE,APK_SHA):return target
     paths=parts(cache/'android',ANDROID_REF,ANDROID_MANIFEST,524284609,BASE_SHA,'APK',workers)
     fix=fetch(RAW+'eac27239410d1251638431eb35e798dc00d89ba7/tools/legacy/APK-Install-Fix.zip',cache/'packaging.zip','7a6a3f74d7260a1024645808f5692d87bab238fb118c939897dd042f0c197e75')
-    client=fetch(RAW+'eng-sp-sss/Client-ENG-SPSSS-BoxSpeed-Patch.zip',cache/'client.zip','155e83c29aaec04679d2dde9f741b6d1b8321967a50bc3a2d25c330abf0b8290')
+    client=fetch(RAW+'eng-sp-sss/Client-ENG-SPSSS-BoxInfo-Patch.zip',cache/'client.zip','dee7233a2ad07523b1aeaaed867917588b30ae4585117f7ae38a608dcf866b55')
     first,lit1=load_patch(fix,BASE_SHA,FIXED_SHA);second,lit2=load_patch(client,FIXED_SHA,APK_SHA)
     if first['old_size']!=524284609 or first['new_size']!=second['old_size']or second['new_size']!=APK_SIZE:raise ValueError('Unexpected reconstruction sizes')
     temporary=target.with_name(target.name+'.downloading');print('APK: creating complete signed file...',flush=True)
@@ -131,7 +131,7 @@ def android(output,cache,workers):
     finish(temporary,target,APK_SIZE,APK_SHA);return target
 
 def ios(output,cache,workers):
-    target=output/'DB2-ENG-SPSSS-BoxSpeed-unsigned.ipa'
+    target=output/'DB2-ENG-SPSSS-BoxInfo-unsigned.ipa'
     if ready(target,IPA_SIZE,IPA_SHA):return target
     paths=parts(cache/'ios',IOS_REF,IOS_MANIFEST,IPA_SIZE,IPA_SHA,'IPA',workers)
     temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned file...',flush=True)
@@ -144,7 +144,7 @@ def ios(output,cache,workers):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--only',choices=('both','apk','ipa'),default='both');parser.add_argument('--output',type=Path,default=Path(__file__).resolve().parent);parser.add_argument('--workers',type=int,choices=range(1,9),default=4);args=parser.parse_args()
     output=args.output.expanduser().resolve();output.mkdir(parents=True,exist_ok=True);cache=output/'.longzhidao-download-cache'
-    print('DB2 ENG SSS/SP + GM VI - complete clients, Box quantities + draggable Speed 1x-10x. IPA is unsigned.',flush=True)
+    print('DB2 ENG SSS/SP + GM VI - complete clients, Box quantities/descriptions + draggable Speed 1x-10x. IPA is unsigned.',flush=True)
     print('Output:',output,'\nKeep this window open. Run again to reuse verified downloads.',flush=True)
     files=[]
     if args.only in('both','apk'):files.append(android(output,cache,args.workers))

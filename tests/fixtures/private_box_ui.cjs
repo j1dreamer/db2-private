@@ -18,4 +18,9 @@ view.canSelect=false;view.data={privateBoxInfo:{bagIndex:7,count:4,selectCount:1
 view.data={privateBoxInfo:{bagIndex:8,count:3,selectCount:1,isExchange:true}};api.attach(view);button('Chọn phần thưởng & mở').click();assert.deepEqual(calls.at(-1),['exchange',8]);
 view.data={privateBoxInfo:{count:1,selectCount:1}};api.attach(view);assert(!all().some(n=>n.children.some(c=>c.components.some(l=>l instanceof Label&&l.string==='Chọn phần thưởng & mở'))));
 let touched=0;api.attachEffect({node:root,roleItemNodeMap:{0:role},onTouch_(){touched++;}});button('×').click();assert.equal(touched,1);
-console.log(JSON.stringify({perBoxCount:true,tenBoxTotal:true,openTen:true,clampToOwned:true,explicitCancel:true,previewToSelection:true,exchangePreview:true,rewardClose:true}));
+assert(api.describe({selectCount:1,dropListDesc:'50570x60,50590x60'},'Mô tả gốc').includes('Mỗi lựa chọn có ×60'));
+assert(api.describe({dropListDesc:'101x100,102x50'}).includes('nhận toàn bộ'));
+assert(api.describe({rdDropListDesc:'101x100_W1,102x50_W2'}).includes('không đảm bảo nhận tất cả'));
+assert(api.describe({dropListDesc:'101x100',rdDropListDesc:'102x50_R0.5'}).includes('cố định và phần thưởng ngẫu nhiên'));
+assert(api.describe({}).includes('Chưa có cấu hình'));
+console.log(JSON.stringify({descriptionsFromActualConfig:true,perBoxCount:true,tenBoxTotal:true,openTen:true,clampToOwned:true,explicitCancel:true,previewToSelection:true,exchangePreview:true,rewardClose:true}));

@@ -1,0 +1,87 @@
+{
+  "stage": "unsigned-private-ios-development-not-device-tested",
+  "source_sha256": "de3072e9ee041d809c7e0a0f7979d35e0ef14dbb066171e56e27846faa456261",
+  "ipa_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+  "ipa_bytes": 511242249,
+  "bundle_id": "com.j1dreamer.db2.private",
+  "native_executable_sha256": "c925457ac1964ade6ddfde7e316091468f678cf7421bcdc3dec7fafacc0ec314",
+  "all_preserved_entries_verified": 17261,
+  "modified_entries": [
+    "Payload/dragonball.app/Info.plist",
+    "Payload/dragonball.app/assets/main/index.jsc"
+  ],
+  "removed_signature_provision_entries": [
+    "Payload/dragonball.app/embedded.mobileprovision",
+    "Payload/dragonball.app/_CodeSignature/",
+    "Payload/dragonball.app/_CodeSignature/CodeResources"
+  ],
+  "native_libraries_modified": false,
+  "original_ats": {
+    "NSAllowsArbitraryLoads": true
+  },
+  "canonical_data": {
+    "baseline": "eng-sp-sss",
+    "canonical_sha256": "c4e0fe0e36a548b872c9d47c34c8fdc02145e7abc56476ef46e3277dcf23eb69",
+    "overridden_tables": [
+      "artifact",
+      "buff",
+      "entity",
+      "entityExt",
+      "fightSkill",
+      "role",
+      "task",
+      "vip"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "a8500ee1be13f74ef7ee806c7c84e5ffa888db832caccd816c16d089e7f98f2d",
+    "native_modified": false,
+    "startup_config_paths": [
+      "ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP",
+      "ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "build_ext_flags": [
+      "isNoRemoveHideData",
+      "isShowCenterAndroid",
+      "isShowCenterIOS",
+      "isShowTimeLabel",
+      "moneyTicketId"
+    ],
+    "provenance": "tables/canonical-policy.json",
+    "gameplay_modules": {
+      "baseline": "eng-sp-sss",
+      "ported_modules": [],
+      "retained_gameplay": "original ENG modules",
+      "private_patches": "VIP/sync/GM/transport/VI/speed; explicitly authored"
+    }
+  },
+  "shared_bundle": {
+    "shared_gameplay_baseline": "android",
+    "module_count": 319,
+    "shared_modules": 317,
+    "ios_modules_preserved": [
+      "resource",
+      "language"
+    ],
+    "script_uuid_mismatches": 0,
+    "serialized_property_mismatches": 0,
+    "android_resource_keys_verified_in_ios": 4011,
+    "native_execution_tested": false
+  },
+  "default_server": "http://db2-server.invalid:20003",
+  "editable_server": true,
+  "unconfigured_first_launch_skips_network": true,
+  "tutorial": false,
+  "speed_range": [
+    1,
+    10
+  ],
+  "sdk_login": "local-account",
+  "private_transport_patches": true,
+  "requires_resigning": true,
+  "signed_ipa_built": false,
+  "native_ios_execution_tested": false,
+  "decoded_bundle_sha256": "0f51896ba38b6150610f0de9640e9fcdc43e664c36001fcba4f212c9dcd08dea"
+}

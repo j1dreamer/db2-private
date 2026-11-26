@@ -1,7 +1,7 @@
 {
   "stage": "eng-box-quantity-speed-repair-native-verification-pending",
   "branch": "eng-sp-sss",
-  "build": "eng-sp-sss-box-speed-v3",
+  "build": "eng-sp-sss-box-info-v4",
   "profile_schema": 30,
   "source_rpc_contracts": 342,
   "implemented_rpc_handlers": 342,
@@ -12,13 +12,14 @@
   "baseline": "eng-sp-sss",
   "rarity": "unchanged original S/SS/SSS/SP role groups",
   "long_gameplay_ports_active": false,
-  "android_sha256": "7a40e289e298828e8491dfdb82c00e30ae624b37a186f3216520c5f91090c003",
-  "ios_sha256": "ea9ad655d0b2f38a924cc9c7c907d58787c5c09c25676e13515b7e74d8b2945c",
+  "android_sha256": "20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47",
+  "ios_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
   "ios_signed": false,
-  "validation_report": "analysis/box-speed-validation.json",
+  "validation_report": "analysis/box-info-validation.json",
   "remaining": [
     "Native BlueStacks replay of user-reported screens",
     "Legitimate iOS signing and native iPhone gameplay",
     "Termux/Tailscale device validation"
-  ]
+  ],
+  "targeted_box_runtime_tests_passed": 13
 }
