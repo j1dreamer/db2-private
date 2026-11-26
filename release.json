@@ -32,5 +32,13 @@
     "build": "longzhidao-17327-vi",
     "profile_schema": 29,
     "routes": 342
-  }
+  },
+  "download_helper": {
+    "file": "Download-Clients.zip",
+    "python": "3.10+",
+    "old_client_required": false,
+    "manual_joining_required": false,
+    "full_file_checksums_required": true
+  },
+  "release_asset_upload_status": "draft: cloud-upload-401-and-actions-account-billing-lock"
 }

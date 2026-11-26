@@ -29,7 +29,7 @@ Trước lần chuyển bộ luật trên database cũ, server tạo snapshot SQ
 
 ## Cài mới từ release
 
-Nhánh `long-chi-dao` dùng nguyên tệp APK/IPA và source server tại [release longzhidao-v1.0.0-dev](https://github.com/j1dreamer/db2-private/releases/tag/longzhidao-v1.0.0-dev). Chủ dự án đã cho phép công khai IPA cùng APK ở bản phát hành này.
+Nhánh `long-chi-dao` dùng nguyên tệp APK/IPA và source server qua [hướng dẫn tải hiện tại](README.md); release `longzhidao-v1.0.0-dev` đang chờ hoàn tất upload. Bộ tải nhỏ tự tạo APK/IPA đầy đủ từ các byte công khai đã được kiểm hash. Chủ dự án đã cho phép công khai IPA cùng APK ở bản phát hành này.
 
 1. Dừng server cũ, giải nén `LongChiDao-Server.zip` vào thư mục mới. Không chép `data` cũ sang. Cần Python + Node.js LTS; chạy `start.bat` để tạo database trắng.
 2. Cài trực tiếp `LongChiDao-VI-Android.apk`, hoặc đặt cạnh `Install-Android.bat` và chạy công cụ cài BlueStacks/ADB. Không cần APK fixed hoặc ghép bản vá.

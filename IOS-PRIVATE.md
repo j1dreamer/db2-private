@@ -4,7 +4,7 @@ Bản hiện tại **DB2-LongChiDao-VI-unsigned.ipa** dùng dữ liệu Long Chi
 
 ## Tải và cài
 
-Chủ dự án đã cho phép **công khai IPA cùng APK** cho release này, thay lựa chọn giữ riêng trước đó. Tải nguyên tệp [LongChiDao-VI-iOS-unsigned.ipa](https://github.com/j1dreamer/db2-private/releases/download/longzhidao-v1.0.0-dev/LongChiDao-VI-iOS-unsigned.ipa).
+Chủ dự án đã cho phép **công khai IPA cùng APK** cho release này, thay lựa chọn giữ riêng trước đó. Release hiện chưa có IPA đính kèm do upload Cloud/Actions bị chặn. Dùng [Download-Clients.zip](Download-Clients.zip), giải nén rồi chạy `python3 Download-Clients.py --only ipa` trên Mac; Windows mở `Download-Clients.bat`. Công cụ tự tạo IPA đầy đủ, kiểm SHA-256 và không cần ghép tay.
 
 - Dung lượng: 511.256.922 byte, khoảng 488 MiB.
 - SHA-256: `30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd`.

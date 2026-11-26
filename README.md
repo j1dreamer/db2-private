@@ -2,9 +2,13 @@
 
 Nhánh **`long-chi-dao`** là bộ tải mới riêng. Không cần APK fixed, bản vá ZIP hoặc dữ liệu của nhánh cũ.
 
-**[TẢI APK + IPA + SOURCE SERVER](https://github.com/j1dreamer/db2-private/releases/tag/longzhidao-v1.0.0-dev)**
+**Tải qua chat hiện không dùng được với APK/IPA lớn.** Dùng [Download-Clients.zip](Download-Clients.zip): giải nén vào thư mục mới, cài Python 3.10+ rồi mở `Download-Clients.bat`. Công cụ tự tải và tạo APK/IPA nguyên tệp, kiểm SHA-256, không cần APK cũ hoặc ghép tay. File kết quả nằm cạnh BAT. Cần khoảng 2,2 GB trống gồm cache; chạy lại sẽ dùng phần đã tải đúng.
 
-| Tệp trên trang release | Cách dùng |
+GitHub release hiện vẫn là **draft**, chưa có APK/IPA đính kèm: upload từ Cloud trả HTTP 401 và GitHub Actions báo khóa Billing. Bộ tải tự động ở trên dùng các byte đã được chủ dự án cho phép công khai, hoạt động độc lập với Actions. Chủ dự án có thể upload hai file kết quả lên Google Drive rồi bổ sung link vào release.
+
+**Source server tải ngay:** [ZIP nhánh long-chi-dao](https://github.com/j1dreamer/db2-private/archive/refs/heads/long-chi-dao.zip). Release `longzhidao-v1.0.0-dev` đang chờ hoàn tất tải tệp lên.
+
+| Tệp kết quả / dự kiến trên release | Cách dùng |
 | --- | --- |
 | `LongChiDao-Server.zip` | Source server + web quản trị + công cụ cài Android, không có tài khoản/data/token cũ |
 | `LongChiDao-VI-Android.apk` | APK đầy đủ đã ký phát triển, cài trực tiếp, không ghép file |
@@ -14,8 +18,8 @@ Nhánh **`long-chi-dao`** là bộ tải mới riêng. Không cần APK fixed, b
 ## Chạy mới trên Windows + BlueStacks
 
 1. Cài **Python 3.10+** và **Node.js LTS**. Nếu server cũ đang chạy, dừng bằng Ctrl+C để tránh trùng cổng 20003.
-2. Giải nén `LongChiDao-Server.zip` vào thư mục mới, ví dụ `D:\Games\LongChiDao`. **Không chép thư mục `data` cũ sang.**
-3. Trong thư mục `LongChiDao-Server`, mở `start.bat`. Lần đầu cần mạng để cài aiohttp. Server tự tạo database trắng và token quản trị riêng tại `data/`.
+2. Giải nén `LongChiDao-Server.zip` hoặc ZIP source GitHub ở trên vào thư mục mới, ví dụ `D:\Games\LongChiDao`. **Không chép thư mục `data` cũ sang.**
+3. Trong thư mục chứa source vừa giải nén, mở `start.bat`. Lần đầu cần mạng để cài aiohttp. Server tự tạo database trắng và token quản trị riêng tại `data/`.
 4. Đặt `LongChiDao-VI-Android.apk` vừa tải cạnh `Install-Android.bat`. Mở BlueStacks, bật Android Debug Bridge rồi chạy `Install-Android.bat`.
 5. Công cụ hỏi địa chỉ ADB, mặc định `127.0.0.1:6610`; dùng đúng địa chỉ BlueStacks đang hiện. Sau khi cài, công cụ nối cổng game vào server trên laptop.
 6. Mở game, chọn server `http://127.0.0.1:20003`, **đăng ký tài khoản mới** rồi chơi thử. Nếu game còn lưu tài khoản/server từ lần cài trước, đăng xuất và nhập lại thông tin mới.
@@ -26,7 +30,7 @@ APK dùng cùng package/chữ ký phát triển trước, nên Android có thể
 
 ## iPhone / Mac
 
-Tải `LongChiDao-VI-iOS-unsigned.ipa` từ **cùng release**, ký bằng công cụ/chứng chỉ hợp lệ của bạn trên Mac rồi cài qua cáp. Không thể cài IPA chưa ký chỉ bằng cách mở trong Safari. [Hướng dẫn ký và kết nối](IOS-PRIVATE.md).
+Tạo `LongChiDao-VI-iOS-unsigned.ipa` bằng bộ tải tự động ở trên (Mac: `python3 Download-Clients.py --only ipa`), ký bằng công cụ/chứng chỉ hợp lệ của bạn trên Mac rồi cài qua cáp. Không thể cài IPA chưa ký chỉ bằng cách mở trong Safari. [Hướng dẫn ký và kết nối](IOS-PRIVATE.md).
 
 Server laptop và iPhone có thể dùng Tailscale cùng tailnet. Ví dụ chạy server với IP Tailscale thật của laptop:
 

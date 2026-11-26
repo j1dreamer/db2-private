@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "method": "Fresh public HTTPS downloads in isolated RAM filesystem; no preexisting APK/IPA or client cache",
+  "android_parts": 25,
+  "ios_parts": 25,
+  "android": {
+    "bytes": 525087425,
+    "sha256": "bea64b41319ebba5a84529f644661b13bea85aceed8f775703b642daf686b0ec",
+    "complete_file_verified": true
+  },
+  "ios": {
+    "bytes": 511256922,
+    "sha256": "30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd",
+    "complete_file_verified": true,
+    "signed": false
+  },
+  "second_run_skipped_both_verified_outputs": true,
+  "windows_native_batch_execution_tested": false,
+  "native_gameplay_tested": false,
+  "download_zip_sha256": "6dda22488e64148b2de71e658f15652483a120a6155d55f791a641db9cbc37fd",
+  "requirements": [
+    "Python 3.10+",
+    "about 2.2 GB free for both outputs and cache"
+  ],
+  "manual_joining_required": false
+}

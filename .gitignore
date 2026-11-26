@@ -16,3 +16,5 @@ node_modules/
 .db2-apk-parts/
 *.assembling
 *.applying
+
+.longzhidao-download-cache/
