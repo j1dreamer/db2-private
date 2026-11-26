@@ -16,7 +16,8 @@ def finish(output):
     fixed=output.with_name('DB2-Private-Android-fixed.apk')
     patch=Path(__file__).resolve().parent.parent/'APK-Install-Fix.zip'
     apply_fix(output,fixed,patch)
-    print('Install this file in BlueStacks:',fixed)
+    print('Verified base APK for Client-LongChiDao-VI-Patch.zip:',fixed)
+    print('Apply the current client patch, then install DB2-LongChiDao-VI.apk with the matching server.')
 def download(output):
     output=Path(output).resolve();output.parent.mkdir(parents=True,exist_ok=True)
     if output.exists():

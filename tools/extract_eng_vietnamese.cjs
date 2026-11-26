@@ -1,0 +1,6 @@
+// Extract only the literal Vietnamese dictionary from the original ENG bundle.
+const fs=require('fs'),acorn=require('./js-parser/node_modules/acorn');
+const [input,output]=process.argv.slice(2),src=fs.readFileSync(input,'utf8'),ast=acorn.parse(src,{ecmaVersion:2020});
+const props=ast.body[0].expression.right.arguments[0].properties,mod=props.find(p=>(p.key.name??p.key.value)==='language');if(!mod)throw Error('Missing language module');let vietnamese;
+function walk(n){if(!n||typeof n!=='object')return;if(n.type==='Property'&&(n.key.name??n.key.value)==='vi'&&n.value.type==='ObjectExpression'){let out={};for(const p of n.value.properties){if(p.type!=='Property'||p.value.type!=='Literal'||typeof p.value.value!=='string')throw Error('Non-literal translation');out[p.key.name??p.key.value]=p.value.value;}vietnamese=out;}for(let[k,v]of Object.entries(n)){if(['start','end','raw'].includes(k))continue;if(Array.isArray(v))v.forEach(walk);else if(v&&typeof v==='object')walk(v);}}
+walk(mod.value);if(!vietnamese)throw Error('Missing original Vietnamese dictionary');fs.writeFileSync(output,JSON.stringify(vietnamese,null,2)+'\n');console.log('Recovered original ENG Vietnamese entries:',Object.keys(vietnamese).length);

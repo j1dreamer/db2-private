@@ -36,6 +36,10 @@ window.DB2PrivateSettings = function () {
         button(panel,'Đóng',130,150,-125,function(){panel.destroy();});
     });
     trigger.name='DB2PrivateServerButton';trigger.zIndex=31000;
+    var sourceButton=button(canvas,'Nguồn và luật',160,-canvas.width/2+280,-canvas.height/2+40,function(){
+        window.__require('baseView').addMessageBox('Dữ liệu và luật client: Long Chi Đảo (X7 17327).\nTiếng Việt: dùng lại bản ENG và bổ sung bản dịch mới.\nLuật chỉ có ở server gốc: bản server mình tự định nghĩa, có ghi nhãn riêng.\nXem mục Nguồn và bản dịch trong web quản trị để biết chi tiết.',function(){});
+    });
+    sourceButton.name='DB2PrivateSourceButton';sourceButton.zIndex=31000;
     var endpoint=cc.sys.localStorage.getItem('db2.private.server')||window.DB2_PRIVATE_DEFAULT_SERVER;
     if (/\.invalid(?::|\/|$)/.test(endpoint)) trigger.emit(cc.Node.EventType.TOUCH_END);
 };

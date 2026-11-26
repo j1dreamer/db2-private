@@ -9,3 +9,10 @@
 .player-link{border:0;background:none;padding:0;text-align:left;color:inherit}.player-link:hover strong{color:var(--amber)}.stat-label{gap:8px;align-items:flex-start;min-height:28px}.reward-labels{display:grid;grid-template-columns:minmax(0,1fr) 80px 57px 32px;gap:8px;font-size:11px;color:var(--dim);margin-bottom:7px}.reward-star:disabled{color:#667184;opacity:.55}.player-link:focus-visible{border-radius:5px}@media(max-width:760px){.reward-labels{grid-template-columns:minmax(0,1fr) 65px 51px 32px;gap:5px}.player-link{min-height:44px}}
 
 .check{min-height:44px}@media(pointer:coarse){nav a{min-height:44px}.btn,.icon-button{min-height:44px}}
+/* Source attribution is part of the administrator's data review workflow. */
+[data-route="provenance"] .stats-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:20px}
+[data-route="provenance"] .stat-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;display:grid;gap:10px;min-width:0}
+[data-route="provenance"] .stat-card strong{font-size:24px;color:var(--amber)}
+[data-route="provenance"] .stat-card small,[data-route="provenance"] .stat-card span{color:var(--muted);font-size:12px}
+[data-route="provenance"] code{overflow-wrap:anywhere;word-break:break-word}
+@media(max-width:700px){[data-route="provenance"] .stats-grid{grid-template-columns:1fr}}

@@ -1,26 +1,29 @@
-> **Web quản trị mới:** 8 khu vực, 2.845 item/role có ảnh thật, 17 event hệ thống và lịch sự kiện tùy chỉnh; cùng SQLite/RPC với game. Xem [cách chạy và phạm vi chỉnh sửa](ADMIN.md).
+> **Web quản trị mới:** 9 khu vực, 2.905 item/role có ảnh thật, 17 event hệ thống và lịch sự kiện tùy chỉnh; cùng SQLite/RPC với game. Xem [cách chạy và phạm vi chỉnh sửa](ADMIN.md).
 
-> iOS: đã có **IPA private thử nghiệm chưa ký, giữ riêng theo yêu cầu**; không có payload trên repo public. Xem [ký/cài trên Mac, giao tệp riêng và kết nối Cloud](IOS-PRIVATE.md). Chưa xác minh native trên iPhone hoặc đường iPhone → Cloud. Dữ liệu chung lấy **Android làm chuẩn**.
+> **Bản Long Chi Đảo Việt hóa (26/11/2026):** server, APK và IPA dùng chung 34 bảng theo **龙之岛-1W免费版, X7 #17327** cùng các override khởi động đã đọc từ client. Giữ 3 ID tương thích cũ có ghi nguồn riêng. Backend Python là mã dự án viết để tương thích giao thức, không phải source server gốc ENG/Long Chi Đảo. Xem [chi tiết chuyển bản và cập nhật](LONG-CHI-DAO.md), mục **Nguồn và bản dịch** trên web quản trị và [bảng nguồn](tables/canonical-policy.json).
 
-> Nhánh phát triển `route-342`: **342/342 route**, 251 kiểm thử qua ([chi tiết web/server](analysis/admin-validation.json)); không còn route trống. Chưa xác minh bản mới trên thiết bị. Xem [IMPLEMENTATION-342.md](IMPLEMENTATION-342.md) cho phạm vi và luật riêng.
->
-> **APK sửa lỗi kẹt màn nền khi bật Speed (26/11/2026):** tải [Client-Route342-Speed-BootFix.zip](Client-Route342-Speed-BootFix.zip), khoảng 5 MB. Giải nén vào thư mục mới, chép **DB2-Private-Android-fixed.apk** cũ vào đó, chạy `Apply-Dev.bat` rồi `Install-Dev.bat`. Tạo **DB2-Private-route342-speed-bootfix.apk**, cùng package/chữ ký để cài đè. Có Speed 1×–10× cho cả giao diện, bỏ hướng dẫn và các bản vá route-342. Không cần đổi server/data. Đã sửa lỗi `setTimeScale of null` bằng cách chờ scheduler khởi tạo; 31 kiểm thử client/đóng gói qua, xác minh ghép APK bằng Python và PowerShell. Chưa kiểm thử lại trên BlueStacks thực. Gói `Client-Route342-Dev-Patch.zip` cũng đã thay bằng cùng bản sửa; các gói Speed cũ bên dưới chỉ để tham khảo lịch sử.
->
+> **APK mới:** tải [Client-LongChiDao-VI-Patch.zip](Client-LongChiDao-VI-Patch.zip), khoảng 5,1 MB. Giải nén vào thư mục mới, chép **DB2-Private-Android-fixed.apk** cũ vào đó, chạy `Apply-Dev.bat`, sau đó `Install-Dev.bat`. Tạo **DB2-LongChiDao-VI.apk**, cùng package/chữ ký để cài đè. Có tiếng Việt mặc định, nguồn luật, bỏ hướng dẫn, Speed 1×–10× và bản sửa scheduler khởi động. Cần cập nhật **cả server lẫn APK** cho cùng bộ luật; không gỡ game hoặc xóa data.
+
+> **Tiếng Việt:** dùng lại 8.466 mục có sẵn trong ENG, bổ sung 498 mục mới, sáu mục được sửa lại; có 8.958 khóa sau ghép. Giữ nguyên từ điển gốc trong `tables/localization/vi.eng.json`, bản dịch bổ sung ở `vi.authored.json`; nguồn từng khóa ở `vi.provenance.json`. Tên/mô tả 2.905 vật phẩm đều có tiếng Việt. Ảnh UI và prefab gốc ENG được giữ để tương thích; không tuyên bố mọi chữ vẽ sẵn trong ảnh đã được Việt hóa.
+
+> **IPA:** đã dựng bản **Long Chi Đảo VI riêng, chưa ký**, không có payload trong repo public. Dùng cùng dữ liệu/gameplay, từ điển VI và speed đã sửa; giữ native Mach-O/SDK/tài nguyên iOS gốc. Cần chủ máy ký hợp lệ và cài trên Mac. Xem [hướng dẫn iOS](IOS-PRIVATE.md). Chưa xác minh native Android/iPhone cho bản này.
+
+> Nhánh `route-342` vẫn có **342/342 handler**; Time Peak và các luật server-only tiếp tục có nhãn luật riêng, xem [phạm vi triển khai](IMPLEMENTATION-342.md) và [quy tắc có ghi nguồn](tables/privateRules.json).
+
 > Server phải dùng [source nhánh route-342](https://github.com/j1dreamer/db2-private/archive/refs/heads/route-342.zip), có Python và **Node.js LTS** (`pkg install nodejs` trên Termux). Dừng server cũ, giải nén source vào thư mục mới, chép thư mục `data` từ bản cũ sang rồi chạy `start.bat`; giữ lại thư mục cũ làm bản sao lưu. `Check-Home.py` → `running_health` sẽ hiển thị build, schema và số route để phát hiện đang chạy nhầm server cũ.
 
 # DB2 Private — bản phát triển
 
 > **Sửa lỗi cài đặt Android 11+**: APK `v0.1.0-dev` cũ đã nén `resources.arsc`, có thể bị hệ thống từ chối dù chữ ký hợp lệ. Dùng [APK-Install-Fix.zip](APK-Install-Fix.zip), giải nén cạnh APK cũ, nhấp đúp `Apply-Fix.bat` trên Windows rồi cài **DB2-Private-Android-fixed.apk**. Bản vá khoảng 1,5 MB; không cần tải lại toàn bộ APK.
 
-Backend Python + SQLite, web quản trị và công cụ đóng gói client Android từ bộ file người dùng cung cấp. iOS chưa nằm trong bản này.
+Backend Python + SQLite, web quản trị và công cụ cập nhật APK/IPA từ các client đã được cung cấp hoặc tải theo yêu cầu. IPA dẫn xuất luôn giữ riêng.
 
 ## Trạng thái thực tế
 
-- Nhánh hiện tại có 217 route nghiệp vụ/182 kiểm thử và profile schema 20; danh sách chi tiết ở `analysis/route-coverage.json`. Backend có đăng nhập/session/Pomelo, SQLite, web quản trị, giftcode/gacha, ải, túi/đội hình, nhiệm vụ, bạn bè/chat/thư, arena, bang, boss và đặc huấn.
-- Đã kiểm thử giao thức và SQLite qua mạng loopback.
-- Còn 125 route chưa triển khai; chưa xác minh các luồng mới trên BlueStacks, chưa tích hợp mọi event vào UI gốc.
-- Người dùng đã vào sảnh/quay trên bản fixed cũ. APK phát triển mới bỏ hướng dẫn, có Speed 1×–10× và vá giao thức; mã SDK native vẫn trong gói nhưng JS không gửi telemetry/thanh toán native. Kết quả chơi trên APK mới vẫn cần kiểm tra thực tế.
-- Các thao tác chưa triển khai trả lỗi rõ ràng; không giả lập thành công.
+- Nhánh hiện tại có 342/342 handler và profile schema 29; dữ liệu/công thức đọc được theo Long Chi Đảo #17327, bộ giao diện và Việt ngữ giữ nền ENG/iOS. Chi tiết nguồn ở `tables/canonical-policy.json` và `tables/privateRules.json`.
+- Backend đã kiểm thử giao thức, lưu SQLite, replay chiến đấu và cập nhật quản trị qua loopback. Các luật server không có trong client được định nghĩa riêng và ghi nhãn.
+- Người dùng đã vào sảnh/quay trên bản fixed cũ. Bản Long Chi Đảo mới cần kiểm tra cài đặt và chơi thực tế trên BlueStacks/iPhone; chưa tuyên bố chơi hoàn chỉnh.
+- Web quản trị có 9 khu vực, 2.905 định nghĩa item/role và 17 bộ chỉnh event hệ thống; dùng cùng SQLite/RPC với game.
 
 ## Chạy
 
@@ -121,7 +124,7 @@ Windows có Python 3: nhấp đúp **Download-APK.bat** trong thư mục repo. H
 python tools/download_apk.py
 ```
 
-Công cụ tải 25 phần từ nhánh `apk-download`, kiểm tra SHA-256 từng phần, ghép thành **DB2-Private-Android-dev.apk** và kiểm tra checksum toàn file. Không build/ký lại APK. Nếu mất mạng, chạy lại để tiếp tục các phần còn thiếu. Cần khoảng 1 GB trống cho phần tải và APK hoàn chỉnh.
+Công cụ tải 25 phần từ nhánh `apk-download`, kiểm tra SHA-256 từng phần, ghép APK nền rồi áp dụng bản sửa cài đặt để tạo **DB2-Private-Android-fixed.apk**. Dùng file fixed này làm đầu vào cho **Client-LongChiDao-VI-Patch.zip** ở đầu tài liệu; file nền chưa có bộ luật Long Chi Đảo mới. Không build/ký lại APK. Nếu mất mạng, chạy lại để tiếp tục các phần còn thiếu. Cần khoảng 1 GB trống cho phần tải và APK hoàn chỉnh.
 
 Nếu không dùng Python, tải ZIP của nhánh `apk-download`, giải nén và nhấp **join-apk.bat** trên Windows để ghép bằng lệnh có sẵn của hệ điều hành.
 

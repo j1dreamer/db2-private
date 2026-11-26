@@ -1,7 +1,7 @@
 """Repackage the authorized extracted Android client; no Android source compilation.
 Input: ZIP containing DB2-GD/ from the user's Drive archive.
 """
-import argparse,zipfile,json,struct,gzip,hashlib,re
+import argparse,zipfile,json,struct,gzip,hashlib,re,subprocess,tempfile
 from pathlib import Path
 KEY=b'e962577e-f57c-49'
 MASK=0xffffffff
@@ -29,8 +29,13 @@ def patch_client(text,source,server):
     url=urlsplit(server)
     if url.scheme not in ('http','https') or not url.hostname or url.path not in ('','/') or url.username or url.password or url.query or url.fragment:raise ValueError('Use http(s)://HOST:PORT with no path, userinfo or query')
     server=server.rstrip('/');port=url.port or (443 if url.scheme=='https'else 80)
+    with tempfile.TemporaryDirectory()as work:
+        root=Path(__file__).resolve().parents[1];base=Path(work)/'base.js';base.write_text(text)
+        subprocess.run(['node',str(root/'tools/merge_longzhidao.cjs'),str(base),str(root/'client/longzhidao.decoded.js'),str(Path(work)/'merged.js'),str(Path(work)/'report.json')],capture_output=True,text=True,check=True)
+        text=(Path(work)/'merged.js').read_text();gameplay_report=json.loads((Path(work)/'report.json').read_text())
     from tools.client_data import overlay,patch_bundle
     data_script,data_report=overlay(source)
+    data_report['gameplay_modules']=gameplay_report
     text=patch_bundle(text,data_script)
     # Resolve endpoints from a saved setting on every launch, with the build argument as default.
     start='c.init = function() {\nif (!o.isDev) {'
@@ -40,6 +45,13 @@ def patch_client(text,source,server):
     text=patch(text,'var script = data.runScriptInfo.script;','var script = ""; // Private client: disable downloaded script execution.')
     text=patch(text,'eval(data.msg.body);','console.warn("Remote code execution disabled in private client");')
     text=patch(text,'b.instance || (b.instance = this);\np.spThemeClassId', 'b.instance || (b.instance = this);\nwindow.DB2PrivateSettings && window.DB2PrivateSettings();\np.spThemeClassId')
+    text=patch(text,'c.initLanguage = "en";','c.initLanguage = "vi";')
+    text=patch(text,'c.setLanguage(n);','c.setLanguage(n);\nwindow.DB2PrivateLocale && window.DB2PrivateLocale.apply();')
+    text=patch(text,'t.include([ "zh", "zh-tw", "es", "id", "th" ], e)','t.include([ "zh", "zh-tw", "es", "id", "th", "vi" ], e)')
+    begin=text.index('languagePanel: [ function(');end=text.index('cc._RF.pop();',begin)
+    part=text[begin:end];start=part.index('onYes_: function() {');stop=part.index('\nonClose_: function()',start)
+    part=part[:start]+'onYes_: function() {\nwindow.DB2PrivateLocale.choose(this.data.selectLanguage);\n},'+part[stop:]
+    text=text[:begin]+part+text[end:]
     try:from tools.client_patches import patch_response_boundary,patch_adventure_transport,patch_roster_removal,patch_arena_transport,patch_arena3v3_transport,patch_guild_membership,patch_private_sdk
     except ModuleNotFoundError:from client_patches import patch_response_boundary,patch_adventure_transport,patch_roster_removal,patch_arena_transport,patch_arena3v3_transport,patch_guild_membership,patch_private_sdk
     try:from tools.client_patches import patch_tail_transport,patch_boss_transport,patch_practice_transport,patch_eye_transport
@@ -77,6 +89,8 @@ def patch_client(text,source,server):
     settings=(Path(__file__).parent/'private_settings.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_runtime.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_time_peak.js').read_text()
+    settings+='\nwindow.DB2_PRIVATE_VI='+json.dumps(json.loads((Path(__file__).resolve().parents[1]/'tables/localization/vi.merged.json').read_text()),ensure_ascii=False,separators=(',',':'))+';\n'
+    settings+=(Path(__file__).parent/'private_locale.js').read_text()
     text='window.DB2_PRIVATE_DEFAULT_SERVER='+json.dumps(server)+';\n'+settings+'\n'+text
     text=patch(text,'msg: a,\nplayerId: t.player ? t.player.id : 0','msg: a,\ntoken: t.token || \"\",\nplayerId: t.player ? t.player.id : 0')
     return text,data_report

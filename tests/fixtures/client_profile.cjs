@@ -1,6 +1,13 @@
 // Execute only recovered model constructors/data generators; no Cocos renderer.
 const fs=require('fs'),vm=require('vm'),crypto=require('crypto');
 const input=JSON.parse(fs.readFileSync(0,'utf8'));
+let sourceModules={};
+if(input.sourceBundle){
+ const acorn=require('../../tools/js-parser/node_modules/acorn'),src=fs.readFileSync(input.sourceBundle,'utf8'),ast=acorn.parse(src,{ecmaVersion:2020});
+ const mod=ast.body.map(n=>n.expression?.right?.arguments?.[0]).find(n=>n?.type==='ObjectExpression'&&n.properties.length>100);
+ if(!mod)throw Error('Missing source module table');
+ for(const p of mod.properties)sourceModules[String(p.key.name??p.key.value)]=src.slice(p.start,p.end)+',\n';
+}
 const NativeDate=globalThis.Date;
 const Date=input.now===undefined?NativeDate:class extends NativeDate{
  constructor(...args){super(...(args.length?args:[input.now]));}
@@ -30,11 +37,12 @@ const frames=[];
 cache.selectBattleRolesScene={TYPE:{ARENA_3V3_DEFENSE_TEAM:7}};
 const cc={_RF:{push(mod){frames.push(mod)},pop(){frames.pop()}},Class:def=>{const cls=function(){};Object.assign(cls.prototype,def);Object.assign(cls,def.statics||{});frames.at(-1).exports=cls;return cls;},Component:{},Node:{},Sprite:{},Label:{},SpriteFrame:{},ProgressBar:{},Layout:{},RichText:{}};
 const context={cc,window:{},console:{log(...args){process.stderr.write(args.join(' ')+'\n');},warn(...args){process.stderr.write(args.join(' ')+'\n');}},Date,Uint8Array,storage:{getItem(){return null;},setItem(){}},setInterval:()=>1,clearInterval(){}};
+if(input.sourceBundle)cache.helper.floatStrip=value=>parseFloat(value.toPrecision(12));
 context.sp={Skeleton:{}};
 context.require=name=>load(name);
 function load(name){
  if(name in cache)return cache[name];
- const source=input.moduleOverrides?.[name]||fs.readFileSync(__dirname+'/client_'+name+'.js','utf8');
+ const source=input.moduleOverrides?.[name]||sourceModules[name]||fs.readFileSync(__dirname+'/client_'+name+'.js','utf8');
  const begin=source.indexOf('function('),end=source.lastIndexOf('}, {');
  if(end<0)throw Error('Bad module '+name);
  const mod={exports:{}};cache[name]=mod.exports;
@@ -44,6 +52,7 @@ function load(name){
 // Initialize the recovered data layer with the shipped tables as the client does.
 cache.data={};for(const file of fs.readdirSync(__dirname+'/../../tables').filter(x=>x.endsWith('Data.json'))){cache.data[file.slice(0,-9)]=JSON.parse(fs.readFileSync(__dirname+'/../../tables/'+file,'utf8'));}
 delete cache.dataApi;load('dataApi').init();delete cache.serverConfig;cache.cryptoApi={};load('serverConfig');delete cache.clientConfig;load('clientConfig');
+if(input.startupRules){for(const [key,value]of Object.entries(input.startupRules.config)){let parts=key.split('.'),o=cache.serverConfig;for(const p of parts.slice(0,-1))o=o[p];o[parts.at(-1)]=JSON.parse(JSON.stringify(value));}Object.assign(cache.buildExt,input.startupRules.flags);}
 const Player=load('player');const player=server.player=new Player(input.profile);
 let rosterNavigationCount=0;
 if(input.prepareRosterCache){cache.sceneManager.teamData={teamItemMap:Object.fromEntries(Object.keys(player.team.roles).map(key=>[key,{}])),roleSceneMap:Object.fromEntries(Object.keys(player.team.roles).map(key=>[key,{}]))};cache.sceneManager.popToHomeScene=()=>{rosterNavigationCount++;};}

@@ -20,7 +20,10 @@ def stock(player,kind):
     result={}
     for group,rows in groups.items():
         row=rows[0] if len(rows)==1 else choose(rows) if sum(r['weight'] for r in rows)>0 else secrets.choice(rows)
-        amount=row['minCount']+secrets.randbelow(row['maxCount']-row['minCount']+1)
+        # Long Chi Dao rows 140004/140005 ship minCount > maxCount.
+        # Private fallback, disclosed in provenance: use the declared minimum.
+        low=row['minCount'];high=max(low,row['maxCount'])
+        amount=low+secrets.randbelow(high-low+1)
         result[str(row['kindId'])]={'entityId':row['entityId'],'moneyId':row['requireEntityId'],'count':amount,'price':row['price']*amount,'isSaleOut':False,'requireVip':row['requireVip'],'shopType':kind,'priority':row['priority'],'isUnlimit':bool(row['isUnlimit'])}
     return result
 

@@ -1,0 +1,157 @@
+{
+  "stage": "unsigned-private-ios-development-not-device-tested",
+  "source_sha256": "de3072e9ee041d809c7e0a0f7979d35e0ef14dbb066171e56e27846faa456261",
+  "ipa_sha256": "30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd",
+  "ipa_bytes": 511256922,
+  "bundle_id": "com.j1dreamer.db2.private",
+  "native_executable_sha256": "c925457ac1964ade6ddfde7e316091468f678cf7421bcdc3dec7fafacc0ec314",
+  "all_preserved_entries_verified": 17261,
+  "modified_entries": [
+    "Payload/dragonball.app/Info.plist",
+    "Payload/dragonball.app/assets/main/index.jsc"
+  ],
+  "removed_signature_provision_entries": [
+    "Payload/dragonball.app/embedded.mobileprovision",
+    "Payload/dragonball.app/_CodeSignature/",
+    "Payload/dragonball.app/_CodeSignature/CodeResources"
+  ],
+  "native_libraries_modified": false,
+  "original_ats": {
+    "NSAllowsArbitraryLoads": true
+  },
+  "canonical_data": {
+    "baseline": "longzhidao-17327",
+    "canonical_sha256": "c2d43f1557f53ccb87a63c32f7c7ace368f4c91f2126d40051572eeb1e25feb1",
+    "overridden_tables": [
+      "arenaAchieveRewards",
+      "arenaRewards",
+      "artifact",
+      "buff",
+      "entity",
+      "entityExt",
+      "fightSkill",
+      "role",
+      "shop",
+      "signIn",
+      "task",
+      "vip"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "9396ddab895ff53e1e9406ab7711a0236ed52645c5b34586d287dffc1404e08f",
+    "native_modified": false,
+    "startup_config_paths": [
+      "ACTIVITY.CONSTS.CARD_DAILY_REWARD_LIST_DESCS",
+      "ACTIVITY.CONSTS.CARD_DAYS",
+      "ACTIVITY.CONSTS.CARD_NAMES",
+      "ACTIVITY.CONSTS.CARD_REWARD_LIST_DESCS",
+      "ACTIVITY.CONSTS.CARD_TITLES",
+      "EQUIPMENTS.CONSTS.ARTIFACT_ITEM_TYPES",
+      "EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES",
+      "GUILD_BOSS.CONSTS.RANK_REWARD_BETWEENS",
+      "GUILD_BOSS.CONSTS.RANK_REWARD_DROP_LIST_MAPS",
+      "PLAYER.CONSTS.SEND_ALL_SERVER_NEED_VIP",
+      "ROLE.CONSTS.EVOLVE_SKILL_NO_LEVEL_MAP",
+      "ROLE.CONSTS.MAX_AWAKE_LEVEL",
+      "ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP",
+      "ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP",
+      "TASK.CONSTS.ACTIVE_REWARD_MAP"
+    ],
+    "build_ext_flags": [
+      "dailyNormalGemPointTimes",
+      "hideTrainTypeIds",
+      "isCanSkipGuide",
+      "isHidePackageInfo",
+      "isHideResetTrain",
+      "isHideRoleReset",
+      "isNoModifyNotice",
+      "isNoRemoveHideData",
+      "isPayDialNew",
+      "isShowAllFristTopUp",
+      "isShowBtDiscount",
+      "isShowTicketCards",
+      "isShowTicketShop",
+      "isShowX16",
+      "maxSpeedUPLevel",
+      "moneyTicketId",
+      "scorePointShowHundredBt",
+      "sendChatDelay",
+      "sendChatNoSame",
+      "spTaskActiveOneCostGem",
+      "speed3Scale",
+      "speedUPLevel3NeedVip"
+    ],
+    "provenance": "tables/canonical-policy.json",
+    "gameplay_modules": {
+      "baseline": "longzhidao-17327",
+      "ported_modules": [
+        "acePackPanel",
+        "activityPanel",
+        "bagScene",
+        "dial2Panel",
+        "diyGiftPack2Panel",
+        "diyGiftPackPanel",
+        "dreamExtActivityPanel",
+        "firstTopUpPanel",
+        "homeScene",
+        "itemItem",
+        "itemItem2",
+        "roleScene",
+        "rulePanel",
+        "serverConfig",
+        "shopScene",
+        "skillInfoPanel",
+        "spActivityPanel",
+        "starSignPointPanel",
+        "taskActiveTopUpPanel",
+        "triggerTopUpPanel"
+      ],
+      "preserved_shell_modules": [
+        "buildExt",
+        "resource",
+        "language",
+        "sdkApi",
+        "serverMain",
+        "settingPanel",
+        "soundApi"
+      ],
+      "target_serialized_property_supersets_preserved": [
+        "shopScene",
+        "acePackPanel"
+      ],
+      "script_uuid_mismatches": 0,
+      "missing_serialized_properties": 0,
+      "native_device_tested": false
+    }
+  },
+  "shared_bundle": {
+    "shared_gameplay_baseline": "android",
+    "module_count": 319,
+    "shared_modules": 317,
+    "ios_modules_preserved": [
+      "resource",
+      "language"
+    ],
+    "script_uuid_mismatches": 0,
+    "serialized_property_mismatches": 0,
+    "android_resource_keys_verified_in_ios": 4011,
+    "native_execution_tested": false
+  },
+  "default_server": "http://db2-server.invalid:20003",
+  "editable_server": true,
+  "unconfigured_first_launch_skips_network": true,
+  "tutorial": false,
+  "speed_range": [
+    1,
+    10
+  ],
+  "sdk_login": "local-account",
+  "private_transport_patches": true,
+  "requires_resigning": true,
+  "signed_ipa_built": false,
+  "native_ios_execution_tested": false,
+  "decoded_bundle_sha256": "3bd0c6f4e4025d125e860d82d7d71e365eee210c3946af86f489b8ee1ced001d",
+  "private_ipa_published": false
+}

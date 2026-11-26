@@ -2,7 +2,7 @@
   "stage": "development-not-device-verified",
   "implemented_routes": 342,
   "target_routes": 342,
-  "apk_sha256": "f92c19a7517fdfd523a0156db394b6266ace6aefb9759d443600e484df660f10",
+  "apk_sha256": "bea64b41319ebba5a84529f644661b13bea85aceed8f775703b642daf686b0ec",
   "old_apk_sha256": "d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f",
   "resources": {
     "resources_compression": "stored",
@@ -17,52 +17,22 @@
   ],
   "server_branch": "route-342",
   "new_original_routes_complete": false,
+  "all_route_handlers_implemented": true,
+  "private_time_peak_adapter": true,
+  "apk_filename": "DB2-LongChiDao-VI.apk",
+  "runtime_scheduler_binding": "lazy-after-director-init",
+  "baseline": "longzhidao-17327",
+  "profile_schema": 29,
+  "translation_original_eng": 8466,
+  "translation_authored": 498,
+  "translation_overrides": 6,
+  "translation_final": 8958,
+  "source_map": "tables/canonical-policy.json",
+  "translation_map": "tables/localization/vi.provenance.json",
   "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953",
   "verified_signature_schemes": [
     1,
     2,
     3
-  ],
-  "powershell_full_reconstruction_verified": true,
-  "python_full_reconstruction_verified": true,
-  "bundle_sha256": "822833d18c43c16040eb8e38ac33099e7fb740b748f6cc59d47b800f228ca7a2",
-  "changed_non_signature_entries": [
-    "assets/assets/main/index.jsc"
-  ],
-  "arm64_native_elf_machine": 183,
-  "native_libraries_unchanged": {
-    "lib/armeabi-v7a/libcocos2djs.so": "3f0861ad84473a56548336f7208e3af8336d18104a71d64cdc9d94ecf675465b",
-    "lib/arm64-v8a/libcocos2djs.so": "6350c8631c3c323ed43721351c71261cd31a1c2edc56daaf735248dbd39c175e"
-  },
-  "all_route_handlers_implemented": true,
-  "private_time_peak_adapter": true,
-  "profile_schema": 28,
-  "patch_zip_sha256": "6bd9ab1743c5757ce82898f2d08ec9e9b34a05a44d215da4be6bc1394057d482",
-  "native_library_sha256": {
-    "lib/arm64-v8a/libcocos2djs.so": "6350c8631c3c323ed43721351c71261cd31a1c2edc56daaf735248dbd39c175e"
-  },
-  "manifest_unchanged_from_fixed_apk": true,
-  "canonical_data": {
-    "baseline": "android",
-    "canonical_sha256": "c436403350a1fc1236eeb6b1d2320c54f4af965e3da93d97ff4fbcace1ccb079",
-    "overridden_tables": [
-      "entityExt"
-    ],
-    "soul_maps": [
-      "SOUL_TYPE_ATTR_ITEM_MAP",
-      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
-    ],
-    "overlay_sha256": "3f83e1978a0a8a512750f833d2279b05dea28a82ad3b9a87c448460a5a77771b",
-    "native_modified": false
-  },
-  "apk_filename": "DB2-Private-route342-speed-bootfix.apk",
-  "runtime_scheduler_binding": "lazy-after-director-init",
-  "fix": "Defer scheduler binding until Director.init has created it; retry on scene launch.",
-  "reported_error": "Uncaught TypeError: Cannot read property 'setTimeScale' of null",
-  "previous_error_reproduced": true,
-  "native_engine_lifecycle_verified": "Cocos Director constructor sets _scheduler=null; EVENT_ENGINE_INITED triggers init and creates Scheduler.",
-  "focused_tests_passed": 31,
-  "focused_tests_seconds": 28.015,
-  "patch_zip_bytes": 5043911,
-  "native_device_playtest": false
+  ]
 }

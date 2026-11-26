@@ -69,6 +69,23 @@ class Store:
         CREATE TABLE IF NOT EXISTS adventure_runs(player INTEGER PRIMARY KEY REFERENCES players(id),data TEXT NOT NULL,expires INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS audit(id INTEGER PRIMARY KEY,created INTEGER NOT NULL,action TEXT NOT NULL,detail TEXT NOT NULL);
         ''')
+        self.prepare_rules_baseline(path)
+    def prepare_rules_baseline(self,path):
+        """Snapshot existing committed SQLite state before the one-time rules switch."""
+        from pathlib import Path
+        baseline='longzhidao-17327'
+        row=self.db.execute("SELECT data FROM ops_records WHERE key='rules-baseline'").fetchone()
+        if row and json.loads(row[0]).get('baseline')==baseline:return
+        backup=None
+        if str(path)!=':memory:' and self.db.execute('SELECT count(*)FROM players').fetchone()[0]:
+            folder=Path(path).resolve().parent/'backups';folder.mkdir(parents=True,exist_ok=True)
+            backup=folder/('before-longzhidao-'+time.strftime('%Y%m%d-%H%M%S')+'-'+secrets.token_hex(3)+'.sqlite3')
+            target=sqlite3.connect(backup)
+            try:
+                self.db.backup(target)
+                if target.execute('PRAGMA integrity_check').fetchone()[0]!='ok':raise ValueError('Sao lưu dữ liệu trước khi chuyển luật thất bại')
+            finally:target.close()
+        self.db.execute("INSERT OR REPLACE INTO ops_records VALUES('rules-baseline',?,1,?)",(json.dumps({'baseline':baseline,'backup':str(backup)if backup else None}),int(time.time())))
     @contextmanager
     def transaction(self):
         self.db.execute('BEGIN IMMEDIATE')

@@ -16,6 +16,7 @@ REPO=Path(__file__).resolve().parents[1]
 parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--ios-archive',type=Path,required=True)
 parser.add_argument('--android-archive',type=Path,required=True)
+parser.add_argument('--patched-ios-archive',type=Path,help='Verify modules from the actual built private IPA, including Long Chi Dao gameplay ports')
 parser.add_argument('--work-dir',type=Path,required=True)
 parser.add_argument('--output',type=Path,required=True)
 args=parser.parse_args();ROOT=args.work_dir.resolve();ROOT.mkdir(parents=True,exist_ok=True)
@@ -26,9 +27,21 @@ with zipfile.ZipFile(args.ios_archive)as z:
  if len(names)!=1:raise ValueError('Expected exactly one iOS main JSC')
  (decoded/'index.js').write_bytes(gunzip(decrypt(z.read(names[0]))))
 subprocess.run(['node',str(REPO/'tools/split_bundle.cjs'),str(decoded/'index.js'),str(modules)],check=True,capture_output=True)
+engine_modules=modules
+embedded_script=None
+if args.patched_ios_archive:
+ with zipfile.ZipFile(args.patched_ios_archive)as z:
+  names=[n for n in z.namelist()if n.startswith('Payload/')and n.endswith('.app/assets/main/index.jsc')]
+  if len(names)!=1:raise ValueError('Expected one patched iOS main JSC')
+  patched=gunzip(decrypt(z.read(names[0])));(ROOT/'patched-ios.js').write_bytes(patched)
+ subprocess.run(['node',str(REPO/'tools/extract_client_overlay.cjs'),str(ROOT/'patched-ios.js'),str(ROOT/'embedded-overlay.js')],check=True,capture_output=True)
+ embedded_script=(ROOT/'embedded-overlay.js').read_text()
+ engine_modules=ROOT/'patched-modules'
+ subprocess.run(['node',str(REPO/'tools/split_bundle.cjs'),str(ROOT/'patched-ios.js'),str(engine_modules)],check=True,capture_output=True)
 engine=ROOT/'engine';server=engine/'server';target=server/'battle_modules';target.mkdir(parents=True,exist_ok=True)
 extract(args.ios_archive,engine/'tables')
-for p in (REPO/'server/battle_modules').glob('*.js'):shutil.copyfile(modules/p.name,target/p.name)
+shutil.copyfile(REPO/'tables/longzhidaoOverrides.json',engine/'tables/longzhidaoOverrides.json')
+for p in (REPO/'server/battle_modules').glob('*.js'):shutil.copyfile(engine_modules/p.name,target/p.name)
 shutil.copyfile(REPO/'server/battle_worker.cjs',server/'battle_worker.cjs')
 
 def run_node(script,payload):
@@ -45,10 +58,13 @@ def compare(a,b,prefix=''):
 script,iosreport=overlay(args.ios_archive);androidscript,androidreport=overlay(args.android_archive)
 canonical_tables,maps,digest=canonical()
 result={'canonical_sha256':digest,'android':androidreport,'ios':iosreport,'native_execution_tested':False,'cases':[]}
+result['actual_private_ipa_modules_verified']=bool(args.patched_ios_archive)
 # Actual iOS modules load actual iOS tables, then the same generated overlay that
 # is injected at logoScene's verified initialization boundary.
 base=(ROOT/'engine/server/battle_worker.cjs').read_text()
-base=base.replace("load('dataApi').init();",'context.window={};vm.runInNewContext('+json.dumps(script)+',context);context.window.DB2PrivateData.applyRaw(cache.data);\nload(\'dataApi\').init();context.window.DB2PrivateData.applyConfig(load(\'serverConfig\'));')
+base=base.replace("load('dataApi').init();",'context.window={};vm.runInNewContext('+json.dumps(embedded_script or script)+',context);context.window.DB2PrivateData.applyRaw(cache.data);\nload(\'dataApi\').init();context.window.DB2PrivateData.applyConfig(load(\'serverConfig\'));context.window.DB2PrivateData.applyBuildExt(cache.buildExt);')
+if embedded_script:
+ base=base.replace("const longRules=JSON.parse(fs.readFileSync(path.join(__dirname,'../tables/longzhidaoOverrides.json'),'utf8'));","const longRules={flags:{},config:{}}; // Verify only rules shipped inside the IPA")
 worker=ROOT/'engine/server/canonical_worker.cjs';worker.write_text(base)
 originalconst=run_node(REPO/'server/battle_worker.cjs',{'mode':'constants'});iosconst=run_node(worker,{'mode':'constants'});result['constant_differences']=compare(originalconst,iosconst)
 for mode in ('pvp','practice','island'):
@@ -75,7 +91,7 @@ result['ios_data_only_jsc']={'sha256':hashlib.sha256(jsc).hexdigest(),'decoded_s
 check='const fs=require("fs"),vm=require("vm"),i=JSON.parse(fs.readFileSync(0,"utf8")),c={window:{}};vm.runInNewContext(i.script,c);c.window.DB2PrivateData.applyRaw(i.tables);process.stdout.write(JSON.stringify(i.tables));'
 from tools.extract_tables import read_tables
 shipped={n:o for n,o,*_ in read_tables(args.ios_archive)}
-p=subprocess.run(['node','-e',check],input=json.dumps({'script':script,'tables':shipped}),capture_output=True,text=True,check=True)
+p=subprocess.run(['node','-e',check],input=json.dumps({'script':embedded_script or script,'tables':shipped}),capture_output=True,text=True,check=True)
 result['normalized_table_differences']=compare(canonical_tables,json.loads(p.stdout));result['all_34_normalized_tables_equal']=not result['normalized_table_differences']
 result['passed']=not result['constant_differences']and result['all_34_normalized_tables_equal']and all(c['identical_full_result']for c in result['cases'])
 args.output.write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2));assert result['passed']

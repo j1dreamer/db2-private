@@ -1,6 +1,6 @@
 # DB2 Operations
 
-Web quản trị mới chạy **trong cùng tiến trình Python và cùng SQLite với game**. Có 8 khu vực: tổng quan, người chơi, kho vật phẩm, gacha/vòng quay, giftcode, sự kiện, lịch và nhật ký. UI dùng hướng dẫn [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/.claude/skills/ui-ux-pro-max/SKILL.md); token thiết kế và ghi chú về bố cục nằm ở `web/design-system.json`.
+Web quản trị mới chạy **trong cùng tiến trình Python và cùng SQLite với game**. Có 9 khu vực: tổng quan, người chơi, kho vật phẩm, gacha/vòng quay, giftcode, sự kiện, lịch, nhật ký, nguồn và bản dịch. UI dùng hướng dẫn [UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill/blob/main/.claude/skills/ui-ux-pro-max/SKILL.md); token thiết kế và ghi chú về bố cục nằm ở `web/design-system.json`.
 
 ## Chạy và cập nhật
 
@@ -10,12 +10,18 @@ Trên chính máy chạy server, mở `http://127.0.0.1:20003/` hoặc `/admin`.
 
 Trong máy ảo cuộc chat, server dùng `/workspace/db2-live` ở cổng `20003`; dữ liệu cũ đã được sao lưu trong thư mục `backups/` trước khi cập nhật. Địa chỉ `localhost` của máy ảo không phải địa chỉ truy cập từ máy cá nhân. Cấu hình Cloud hiện chưa có HTTP preview cho cổng này; để mở web từ Codex Cloud, vào **Edit Environment → HTTP Previews**, thêm **20003** và chọn **Apply to this chat** khi có tùy chọn đó. Dùng URL được môi trường cung cấp sau khi áp dụng. Không có URL public tự tạo trong bản cập nhật này.
 
+## Nguồn Long Chi Đảo và bản dịch
+
+Bản hiện tại dùng dữ liệu Long Chi Đảo X7 #17327 và tiếng Việt ENG làm nền. Mục **Nguồn và bản dịch** phân biệt dữ liệu client Trung, định nghĩa giữ tương thích ENG/iOS, mã backend tự viết và luật riêng. Chi tiết mỗi item có nguồn tên/mô tả Việt; các mục mới không được gán là bản dịch gốc ENG. 8.466 mục Việt ENG + 498 mục bổ sung tạo 8.958 khóa (sáu mục được sửa).
+
+Khi mở database cũ lần đầu bằng bản này, server sao lưu SQLite vào `backups/before-longzhidao-*.sqlite3` trước khi chuyển. Schema 29 giữ tiền, túi, đội hình và VIP đã cấp; tính lại thuộc tính chiến đấu theo luật mới. Giữ cả source/data cũ để có thể quay lại cùng một phiên bản.
+
 ## Chức năng
 
 | Mục | Thao tác thực sự được server hỗ trợ |
 | --- | --- |
 | Tổng quan | Người chơi/online, event mở, gacha 24 giờ, hoạt động 7 ngày, người chơi gần đây, lỗi client |
-| Kho vật phẩm | 2.845 định nghĩa; tìm tên/ID không cần gõ đúng dấu tiếng Việt; lọc loại/phẩm màu; ảnh, stack, giá gốc và toàn bộ thông số |
+| Kho vật phẩm | 2.905 định nghĩa; tìm tên/ID không cần gõ đúng dấu tiếng Việt; lọc loại/phẩm màu; ảnh, stack, giá gốc và toàn bộ thông số |
 | Người chơi | Hồ sơ, đội hình, từng ô túi và thuộc tính instance; đặt gem/coin/thể lực/điểm kỹ năng; cấp vật phẩm/tướng; cấp/thu hồi GM; thư hệ thống một người hoặc toàn server |
 | Gacha | 4 pool, chỉnh ID/số lượng/sao/trọng số, tỉ lệ tính từ tổng trọng số, xóa dòng và phục hồi bảng gốc |
 | Vòng quay | Bảng 8 ô và trọng số dùng bởi năm vòng quay và hai chế độ quay điểm |
@@ -60,7 +66,7 @@ Sự kiện tùy chỉnh dùng DTO `activity.map` mà màn Event hiện có đ�
 
 ## Ảnh và kiểm tra
 
-Ảnh lấy từ **archive Android đã được chủ dự án cung cấp/cho phép sử dụng**. Không lấy payload IPA riêng. Decoder `Image::initWithImageData` trong ARM64 cho thấy AES-128-CBC ở prefix ảnh; công cụ tái lập kiểm SHA native trước khi đọc key/IV từ binary và kiểm CRC mọi chunk PNG sau giải mã. Có 1.083 PNG riêng ánh xạ đủ 2.845 item/role.
+Ảnh lấy từ **archive Android đã được chủ dự án cung cấp/cho phép sử dụng**. Không lấy payload IPA riêng. Decoder `Image::initWithImageData` trong ARM64 cho thấy AES-128-CBC ở prefix ảnh; công cụ tái lập kiểm SHA native trước khi đọc key/IV từ binary và kiểm CRC mọi chunk PNG sau giải mã. Có 1.084 PNG riêng ánh xạ đủ 2.905 item/role.
 
 Ảnh đã đi kèm source để máy chạy server không cần thư viện crypto. Chỉ khi tái lập asset mới cần `cryptography`:
 
@@ -69,7 +75,7 @@ python -m pip install cryptography
 python -m tools.extract_admin_icons ORIGINAL_ANDROID_ARCHIVE.zip
 ```
 
-Kiểm thử backend và client generator (251 test qua; 13 test LiveOps được chạy lại sau các kiểm tra cuối):
+Kiểm thử backend và client generator (bộ 260 ca, xem kết quả bản phát hành trong analysis/longzhidao-validation.json):
 
 ```sh
 python -m unittest discover -s tests
@@ -81,8 +87,10 @@ Kiểm thử trình duyệt tái lập với database tạm riêng (cần Node +
 python -m tools.check_admin_browser
 ```
 
-Công cụ tự tạo dữ liệu QA trong thư mục tạm, mở cổng loopback ngẫu nhiên, chạy 20 luồng thực và đóng/xóa database tạm sau khi xong. Không kết nối database đang chạy. Ảnh nằm ở `artifacts/admin-browser/`.
+Công cụ tự tạo dữ liệu QA trong thư mục tạm, mở cổng loopback ngẫu nhiên, chạy 22 luồng thực và đóng/xóa database tạm sau khi xong. Không kết nối database đang chạy. Ảnh nằm ở `artifacts/admin-browser/`.
 
-Bằng chứng: `analysis/admin-validation.json`, `analysis/admin-browser-tests.json`, `analysis/admin-icons.json`. Browser QA dùng database thử nghiệm riêng; không seed demo vào database đang chạy của người dùng. Các kiểm tra này không thay thế kiểm thử native Android/iPhone.
+Bằng chứng: `analysis/longzhidao-validation.json`, `analysis/admin-browser-tests.json`, `analysis/admin-icons.json`. Browser QA dùng database thử nghiệm riêng; không seed demo vào database đang chạy của người dùng. Các kiểm tra này không thay thế kiểm thử native Android/iPhone.
 
 ![Web quản trị desktop — database QA riêng](docs/admin-preview.png)
+
+![Nguồn dữ liệu và bản dịch — database QA riêng](docs/admin-provenance.png)

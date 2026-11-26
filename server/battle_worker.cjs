@@ -23,6 +23,14 @@ function load(name){
  return cache[name]=mod.exports;
 }
 load('dataApi').init();
+// Source-verified Long Chi Dao startup overrides are shared with native clients.
+const longRules=JSON.parse(fs.readFileSync(path.join(__dirname,'../tables/longzhidaoOverrides.json'),'utf8'));
+Object.assign(cache.buildExt,longRules.flags);
+for(const [key,value]of Object.entries(longRules.config)){
+ const parts=key.split('.');let target=load('serverConfig');
+ for(const part of parts.slice(0,-1))target=target[part];
+ target[parts.at(-1)]=JSON.parse(JSON.stringify(value));
+}
 if(input.mode==='constants'){process.stdout.write(JSON.stringify({server:load('serverConfig'),client:load('clientConfig'),battle:load('battle.consts')}));process.exit(0);}
 if(input.mode==='progression'){
  const cfg=load('serverConfig'),role=cfg.ROLE.FUNS;

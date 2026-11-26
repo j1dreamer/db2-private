@@ -4,6 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 from aiohttp import web
 from . import liveops
+from . import provenance
 from .inventory import entities
 from .state import delta,snapshot,integer
 ROOT=Path(__file__).resolve().parents[1]
@@ -19,6 +20,8 @@ def search_key(value):return ''.join(c for c in unicodedata.normalize('NFKD',str
 
 def item_view(row,detail=False):
  k=row['kindId'];label=labels().get(str(k),{});out={'id':k,'name':label.get('name',row['kindName']),'originalName':row['kindName'],'description':label.get('description',row.get('desc','')),'type':row['type'],'color':row.get('color',0),'image':images().get(str(k)),'imgId':row.get('imgId'),'price':row.get('price',0),'maxStack':row.get('maxNum',-1)}
+ out['dataSource']=provenance.item_source(k);out['translationSource']={'name':label.get('nameSource','source-text-untranslated'),'description':label.get('descriptionSource','source-text-untranslated')}
+ if row['type']=='role':out['grade']={2:'S',3:'SS',4:'SSS',5:'SP'}.get(row.get('group'),'')
  if detail:out['definition']=row
  return out
 
@@ -88,6 +91,7 @@ class Admin:
    for slot,r in p['bag']['items'].items():bag.append({**item_view(entities()[r['kindId']]),'slot':slot,'count':r['count'],'instance':r})
    for slot,r in p['team']['roles'].items():team.append({**item_view(entities()[r['kindId']]),'slot':slot,'count':1,'instance':r})
    return {'player':self.player_summary(p,self.online_ids()),'bag':bag,'team':team,'profile':p}
+  if path=='/admin/provenance':return provenance.summary()
   if path=='/admin/events':return {'events':[self.event_view(e)for e in liveops.custom_events(s)if not e.get('deleted')],'templates':self.templates(),'version':liveops.revision(s)}
   if path=='/admin/calendar':return {'items':liveops.calendar(s,int(req.query['start']),int(req.query['end'])),'timezone':'Asia/Ho_Chi_Minh'}
   if path=='/admin/gacha':return self.gacha()

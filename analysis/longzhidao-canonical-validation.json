@@ -1,0 +1,283 @@
+{
+  "canonical_sha256": "c2d43f1557f53ccb87a63c32f7c7ace368f4c91f2126d40051572eeb1e25feb1",
+  "android": {
+    "baseline": "longzhidao-17327",
+    "canonical_sha256": "c2d43f1557f53ccb87a63c32f7c7ace368f4c91f2126d40051572eeb1e25feb1",
+    "overridden_tables": [
+      "arenaAchieveRewards",
+      "arenaRewards",
+      "entityExt",
+      "shop",
+      "signIn",
+      "task",
+      "vip"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "05c1da3c13d8a01d8729b4e5169bd193a792e8756086c562fa13c143b80de5a0",
+    "native_modified": false,
+    "startup_config_paths": [
+      "ACTIVITY.CONSTS.CARD_DAILY_REWARD_LIST_DESCS",
+      "ACTIVITY.CONSTS.CARD_DAYS",
+      "ACTIVITY.CONSTS.CARD_NAMES",
+      "ACTIVITY.CONSTS.CARD_REWARD_LIST_DESCS",
+      "ACTIVITY.CONSTS.CARD_TITLES",
+      "EQUIPMENTS.CONSTS.ARTIFACT_ITEM_TYPES",
+      "EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES",
+      "GUILD_BOSS.CONSTS.RANK_REWARD_BETWEENS",
+      "GUILD_BOSS.CONSTS.RANK_REWARD_DROP_LIST_MAPS",
+      "PLAYER.CONSTS.SEND_ALL_SERVER_NEED_VIP",
+      "ROLE.CONSTS.EVOLVE_SKILL_NO_LEVEL_MAP",
+      "ROLE.CONSTS.MAX_AWAKE_LEVEL",
+      "ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP",
+      "ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP",
+      "TASK.CONSTS.ACTIVE_REWARD_MAP"
+    ],
+    "build_ext_flags": [
+      "dailyNormalGemPointTimes",
+      "hideTrainTypeIds",
+      "isCanSkipGuide",
+      "isHidePackageInfo",
+      "isHideResetTrain",
+      "isHideRoleReset",
+      "isNoModifyNotice",
+      "isNoRemoveHideData",
+      "isPayDialNew",
+      "isShowAllFristTopUp",
+      "isShowBtDiscount",
+      "isShowTicketCards",
+      "isShowTicketShop",
+      "isShowX16",
+      "maxSpeedUPLevel",
+      "moneyTicketId",
+      "scorePointShowHundredBt",
+      "sendChatDelay",
+      "sendChatNoSame",
+      "spTaskActiveOneCostGem",
+      "speed3Scale",
+      "speedUPLevel3NeedVip"
+    ],
+    "provenance": "tables/canonical-policy.json"
+  },
+  "ios": {
+    "baseline": "longzhidao-17327",
+    "canonical_sha256": "c2d43f1557f53ccb87a63c32f7c7ace368f4c91f2126d40051572eeb1e25feb1",
+    "overridden_tables": [
+      "arenaAchieveRewards",
+      "arenaRewards",
+      "artifact",
+      "buff",
+      "entity",
+      "entityExt",
+      "fightSkill",
+      "role",
+      "shop",
+      "signIn",
+      "task",
+      "vip"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "9396ddab895ff53e1e9406ab7711a0236ed52645c5b34586d287dffc1404e08f",
+    "native_modified": false,
+    "startup_config_paths": [
+      "ACTIVITY.CONSTS.CARD_DAILY_REWARD_LIST_DESCS",
+      "ACTIVITY.CONSTS.CARD_DAYS",
+      "ACTIVITY.CONSTS.CARD_NAMES",
+      "ACTIVITY.CONSTS.CARD_REWARD_LIST_DESCS",
+      "ACTIVITY.CONSTS.CARD_TITLES",
+      "EQUIPMENTS.CONSTS.ARTIFACT_ITEM_TYPES",
+      "EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES",
+      "GUILD_BOSS.CONSTS.RANK_REWARD_BETWEENS",
+      "GUILD_BOSS.CONSTS.RANK_REWARD_DROP_LIST_MAPS",
+      "PLAYER.CONSTS.SEND_ALL_SERVER_NEED_VIP",
+      "ROLE.CONSTS.EVOLVE_SKILL_NO_LEVEL_MAP",
+      "ROLE.CONSTS.MAX_AWAKE_LEVEL",
+      "ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP",
+      "ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP",
+      "TASK.CONSTS.ACTIVE_REWARD_MAP"
+    ],
+    "build_ext_flags": [
+      "dailyNormalGemPointTimes",
+      "hideTrainTypeIds",
+      "isCanSkipGuide",
+      "isHidePackageInfo",
+      "isHideResetTrain",
+      "isHideRoleReset",
+      "isNoModifyNotice",
+      "isNoRemoveHideData",
+      "isPayDialNew",
+      "isShowAllFristTopUp",
+      "isShowBtDiscount",
+      "isShowTicketCards",
+      "isShowTicketShop",
+      "isShowX16",
+      "maxSpeedUPLevel",
+      "moneyTicketId",
+      "scorePointShowHundredBt",
+      "sendChatDelay",
+      "sendChatNoSame",
+      "spTaskActiveOneCostGem",
+      "speed3Scale",
+      "speedUPLevel3NeedVip"
+    ],
+    "provenance": "tables/canonical-policy.json"
+  },
+  "native_execution_tested": false,
+  "cases": [
+    {
+      "mode": "pvp",
+      "seed": 1,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "pvp",
+      "seed": 777,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "practice",
+      "seed": 1,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "practice",
+      "seed": 777,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "island",
+      "seed": 1,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "island",
+      "seed": 777,
+      "identical_full_result": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "pvp",
+      "seed": 1,
+      "changed_skill": 105501,
+      "identical_full_result": true,
+      "difference_paths": [],
+      "android_damage": {
+        "1": {
+          "1": {
+            "type": "role",
+            "entityId": 1,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 105501,
+            "damage": 99711
+          }
+        },
+        "2": {
+          "2": {
+            "type": "role",
+            "entityId": 2,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 100101,
+            "damage": 63302
+          }
+        }
+      },
+      "ios_canonical_damage": {
+        "1": {
+          "1": {
+            "type": "role",
+            "entityId": 1,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 105501,
+            "damage": 99711
+          }
+        },
+        "2": {
+          "2": {
+            "type": "role",
+            "entityId": 2,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 100101,
+            "damage": 63302
+          }
+        }
+      }
+    },
+    {
+      "mode": "pvp",
+      "seed": 777,
+      "changed_skill": 105501,
+      "identical_full_result": true,
+      "difference_paths": [],
+      "android_damage": {
+        "1": {
+          "1": {
+            "type": "role",
+            "entityId": 1,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 105501,
+            "damage": 99711
+          }
+        },
+        "2": {
+          "2": {
+            "type": "role",
+            "entityId": 2,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 100101,
+            "damage": 63302
+          }
+        }
+      },
+      "ios_canonical_damage": {
+        "1": {
+          "1": {
+            "type": "role",
+            "entityId": 1,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 105501,
+            "damage": 99711
+          }
+        },
+        "2": {
+          "2": {
+            "type": "role",
+            "entityId": 2,
+            "star": 3,
+            "trainLevelMap": {},
+            "kindId": 100101,
+            "damage": 63302
+          }
+        }
+      }
+    }
+  ],
+  "actual_private_ipa_modules_verified": true,
+  "constant_differences": [],
+  "ios_data_only_jsc": {
+    "sha256": "219b6e07a8db4bd9846cc7447a26c5bfab8cffec826a9b647f4fc3ebf1b5da4c",
+    "decoded_sha256": "9b92a0825506a3914b0da60e8046fd87ed139b1f0e444d8f30d0a29782934c5c",
+    "bytes": 2072344,
+    "private_server_endpoint_patched": false,
+    "signed_ipa_built": false
+  },
+  "normalized_table_differences": [],
+  "all_34_normalized_tables_equal": true,
+  "passed": true
+}

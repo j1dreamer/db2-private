@@ -1,29 +1,38 @@
-# IPA private thử nghiệm và server Cloud
+# IPA Long Chi Đảo VI — giữ riêng, chưa ký
 
-Đã tạo IPA **chưa ký**, dùng gameplay chuẩn Android và các bản vá private đã có. Chưa xác minh chạy native trên iPhone. Đây không phải IPA đã ký cài trực tiếp từ trình duyệt.
+Bản hiện tại **DB2-LongChiDao-VI-unsigned.ipa** dùng dữ liệu Long Chi Đảo #17327, 20 module gameplay chuyển vào khung ENG/iOS, tiếng Việt ENG + phần bổ sung và Speed 1–10×. Backend phải cập nhật cùng bộ luật. Xem [nguồn và phạm vi chuyển bản](LONG-CHI-DAO.md).
 
-## Tải và cài trên Mac
+## Tệp và cách cài
 
-**Giữ IPA riêng theo yêu cầu chủ dự án.** Không có payload IPA trên repo public; draft release trống đã được xóa. Tạo repo private qua kết nối GitHub bị từ chối với `403 Resource not accessible by integration`; cần chủ tài khoản tự tạo repo private và cho connector truy cập nếu muốn giao tệp qua GitHub.
+Theo yêu cầu chủ dự án, **không có payload IPA trong repo public**. Tệp riêng nằm tại `/workspace/ios-private/DB2-LongChiDao-VI-unsigned.ipa`.
 
-IPA đang được giữ trong workspace: `/workspace/ios-private/DB2-Private-unsigned.ipa` (510.997.150 byte). Nếu tải nguyên tệp qua chat không hoạt động, có 21 phần riêng tại `/workspace/ios-private/release/`, chưa tải lên dịch vụ nào. Công cụ ghép chỉ đọc tệp cục bộ, không có thao tác truyền mạng:
+- Dung lượng: 511256922 byte.
+- SHA-256: `30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd`.
+- Bundle ID: `com.j1dreamer.db2.private`.
+- Chưa ký, chưa kiểm chạy native iPhone. Các phần IPA cũ trong `/workspace/ios-private/release/` thuộc bản trước, không ghép chúng để lấy bản Long Chi Đảo này.
+
+Tải qua đường riêng được hỗ trợ của workspace. Nếu chat không tải được tệp lớn, cần một nơi nhận riêng có quyền truy cập đã cấu hình; không có URL public thay thế được tạo. Việc tạo repo private qua connector ở lượt trước bị từ chối quyền 403; chủ tài khoản có thể tự tạo và cấp quyền nếu muốn dùng phương án đó.
+
+Trên Mac, dùng công cụ ký như Sideloadly với tài khoản Apple của chính bạn:
+
+1. Cắm iPhone, mở khóa và chọn tin cậy Mac.
+2. Chọn IPA mới trong công cụ ký, đăng nhập Apple ngay trên Mac rồi ký/cài. Không gửi mật khẩu hoặc chứng chỉ lên chat/repo.
+3. Bật Trust Developer/Developer Mode khi iOS yêu cầu.
+4. Mở game, nhập endpoint server có thể truy cập thực sự rồi khởi động lại.
+
+Chỉ cắm cáp không tạo chữ ký. Nếu dùng chứng chỉ riêng, provisioning phải hợp lệ cho bundle mới và ký cả framework/dylib liên quan. Gói thử nghiệm đã gỡ profile và chữ ký tài nguyên cũ.
+
+## Kiểm tra bản dựng
+
+Chỉ sửa `Info.plist` và `assets/main/index.jsc`; 17.261 mục giữ lại đã so byte với nguồn. Native Mach-O và thư viện giữ nguyên. Bộ 34 bảng/hằng đã đối chiếu với server; 8 ca chiến đấu headless cho cùng kết quả. Các kiểm tra này không xác nhận hiển thị, cảm ứng hoặc mạng native trên iPhone.
+
+Báo cáo hiện tại: [build IPA](analysis/longzhidao-ios-build.json), [dữ liệu và chiến đấu](analysis/longzhidao-canonical-validation.json), [tổng kiểm thử](analysis/longzhidao-validation.json). Các báo cáo trong `analysis/ios/` mô tả giai đoạn kiểm tra/bản dựng trước.
+
+Tái lập từ IPA gốc riêng của chủ dự án, cần Python + Node/Acorn:
 
 ```sh
-python3 Assemble-iOS.py --parts THU_MUC_CAC_PHAN --output DB2-Private-unsigned.ipa
+python3 -m tools.build_ios_client ORIGINAL_IOS.ipa artifacts/DB2-LongChiDao-VI-unsigned.ipa
 ```
-
-Thư mục phần cần có `manifest.json` và `part-000.bin` đến `part-020.bin`; công cụ kiểm checksum từng phần và toàn IPA. Chưa có URL tải các phần này từ GitHub. Không ghép thủ công hoặc đổi đuôi ZIP thành IPA.
-
-SHA-256 toàn IPA: `8653b63259b17b1645d290a4de304a4d4e45f5df66a2cc26f121b4290cf809e1`.
-
-Mac cắm cáp có thể ký/cài IPA với công cụ như Sideloadly, dùng tài khoản Apple của chính bạn trên Mac:
-
-1. Cắm iPhone, mở khóa và chọn tin cậy Mac khi được hỏi.
-2. Mở công cụ ký trên Mac, chọn iPhone và IPA vừa tải; đăng nhập tài khoản Apple ngay trong công cụ đó rồi ký/cài. Không gửi mật khẩu, khóa riêng hoặc chứng chỉ ký lên repo/chat.
-3. Làm theo yêu cầu Trust Developer/Developer Mode của iOS nếu xuất hiện.
-4. Mở **DB2 Private Dev**. Lần đầu có bảng nhập server; lưu địa chỉ thực và khởi động lại. Tài khoản game tạo trên server riêng.
-
-Chỉ cắm dây không tự tạo chữ ký. Nếu dùng Xcode/chứng chỉ riêng, cần provisioning profile hợp lệ cho bundle `com.j1dreamer.db2.private` và ký cả các dylib/framework liên quan. Profile và chữ ký tài nguyên cũ đã được gỡ khỏi gói thử nghiệm.
 
 ## Server trên máy ảo của cuộc chat
 
@@ -52,19 +61,3 @@ Môi trường hiện chỉ khai báo portal SSH, chưa có đường SSH đã x
 5. Khi đường truyền đã kiểm tra thành công, nhập `http://IP-TAILSCALE-CUA-MAC:CONG-CHUYEN-TIEP` trong bảng server của game.
 
 **HTTP Previews** ở cổng `20003` có thể giúp mở web quản trị cho chủ môi trường; URL có đăng nhập của preview không thay thế kết nối mạng của native game. Chưa xác minh iPhone kết nối tới server này qua mạng ngoài máy ảo.
-
-## Những gì đã thay đổi và kiểm tra
-
-- Hai mục sửa trong IPA: `Info.plist` và `assets/main/index.jsc`. 17.261 mục còn lại được đọc lại và so byte với IPA gốc; native không đổi.
-- 317 module gameplay dùng chuẩn Android đã chọn, hai module `resource`/`language` giữ bản iOS. Cùng danh mục 319 module, UUID script và cấu trúc thuộc tính Cocos đều được kiểm tra; 4.011 khóa tài nguyên Android có cùng ánh xạ ở iOS.
-- Có chọn server HTTP/HTTPS, đăng nhập nội bộ, bản vá transport private, bỏ hướng dẫn và Speed 1–10. Khi chưa cấu hình endpoint thật, đi tới bảng chọn server mà không gọi địa chỉ mẫu `.invalid`.
-- [Báo cáo build](analysis/ios/private-client-build.json), [kiểm tra khởi động JS](analysis/ios/private-client-setup-tests.json), [model thực từ IPA mới](analysis/ios/private-client-model-tests.json), [server đang chạy trên VM](analysis/ios/private-live-server-tests.json).
-- Cần ký và kiểm thử trên iPhone để xác nhận hiển thị, cảm ứng, mạng native và toàn bộ gameplay. Chưa tuyên bố chơi hoàn chỉnh trên thiết bị.
-
-Tái lập IPA từ archive gốc của chủ dự án:
-
-```sh
-python3 -m tools.build_ios_client ORIGINAL_IOS.ipa artifacts/DB2-Private-unsigned.ipa
-```
-
-Quá trình build dùng Node.js/Acorn, Cocos bundle Android trong repo và các bảng chuẩn; không cần khóa ký Apple.

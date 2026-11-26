@@ -12,7 +12,9 @@ class EconomyTests(unittest.TestCase):
  def test_older_profile_upgrades_without_resetting_currency_or_roster(self):
   p=self.store.player(1);p.pop('profileSchemaVersion');p['gem']=777;p.pop('photoInfo');p.pop('friendshipUnlockMap');p['team']['roles']['1']['attr']['hp']=77
   self.store.save(p);restored=self.store.player(1)
-  self.assertEqual(restored['gem'],777);self.assertEqual(restored['team']['roles']['1']['attr']['hp'],77);self.assertEqual(len(restored['team']['roles']),1)
+  self.assertEqual(restored['gem'],777);self.assertEqual(len(restored['team']['roles']),1)
+  for key in ('kindId','level','star','awakeLevel'):self.assertEqual(restored['team']['roles']['1'][key],p['team']['roles']['1'][key])
+  self.assertGreater(restored['team']['roles']['1']['attr']['hp'],77);self.assertEqual(restored['privateRulesBaseline'],'longzhidao-17327')
   self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],SCHEMA_VERSION)
  def test_first_rename_is_free_persistent_and_repeat_is_idempotent(self):
   p=self.store.player(1);p['name']=p['userName'];p['gem']=50;self.store.save(p)

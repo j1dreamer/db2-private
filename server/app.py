@@ -72,7 +72,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
         liveops_task=asyncio.create_task(liveops_maintenance())
         war_maintenance_task=asyncio.create_task(maintain_guild_wars())
     app.on_startup.append(start_war_maintenance)
-    async def health(req):return web.json_response({'status':'ok','stage':'protocol-development','playable_verified':False,'build':'route-342-development','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
+    async def health(req):return web.json_response({'status':'ok','stage':'protocol-development','playable_verified':False,'build':'longzhidao-17327-vi','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
     async def config(req):return web.json_response({'runScriptInfo':{'script':''},'inReviewPackageInfos':[]})
     async def account(req):
         fields=await req.post();name=fields.get('name','');password=fields.get('password','')
@@ -292,7 +292,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     app.router.add_post('/user/register',account);app.router.add_post('/user/login',account)
     app.router.add_route('*','/user/serverInfo',servers);app.router.add_get('/notice.json',notice)
     app.router.add_route('*','/admin/api',admin);app.router.add_get('/admin/catalog',admin)
-    for endpoint in ('overview','players','events','calendar','gacha','giftcodes','audit'):app.router.add_get('/admin/'+endpoint,admin)
+    for endpoint in ('overview','players','events','calendar','gacha','giftcodes','audit','provenance'):app.router.add_get('/admin/'+endpoint,admin)
     app.router.add_get('/admin/players/{id}',admin);app.router.add_get('/admin/catalog/{id}',admin)
     async def admin_css(req):return web.FileResponse(ROOT/'web/admin.css')
     async def admin_js(req):return web.FileResponse(ROOT/'web/admin.js')

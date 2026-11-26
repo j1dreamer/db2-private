@@ -40,7 +40,8 @@ class ItemActionTests(unittest.TestCase):
  def test_description_preserves_role_extra_and_exp_is_not_a_bag_currency(self):
   self.assertEqual(description('100101_star_3x1'),[{'entityId':100101,'count':1,'extra':{'star':3}}])
   p=self.store.player(1);add_reward(p,{'entityId':100,'count':100,'extra':{}});self.assertGreater(p['level'],1);self.assertEqual(stack_count(p,100),0)
-  add_reward(p,{'entityId':98,'count':10,'extra':{}});self.assertEqual(p['vip']['level'],1);self.assertEqual(p['vip']['topUpMoney'],0)
+  add_reward(p,{'entityId':98,'count':10,'extra':{}});self.assertEqual(p['vip']['level'],0)
+  add_reward(p,{'entityId':98,'count':590,'extra':{}});self.assertEqual(p['vip']['level'],1);self.assertEqual(p['vip']['topUpMoney'],0)
  def test_configurable_box_has_safe_model_and_known_server_description(self):
   key=self.grant(351);p=self.store.player(1);self.assertTrue(p['bag']['items'][key]['kindName']);self.assertEqual(self.call('useItem',{'bagIndex':key,'itemCount':1})['_temp']['entityCountMap'],{'101':1000})
   p=self.store.player(1)

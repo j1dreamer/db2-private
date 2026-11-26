@@ -232,6 +232,14 @@ def patch_activity_callbacks(text,module=None):
     for name,changes in groups.items():
         if module is not None and name!=module:continue
         for old,new in changes.items():
+            if text.count(old)==0:
+                lzd={
+                    'S.fillTaskActive(a.activityName, function() {':('S.fillTaskActive(t.activityName, function() {','S.fillTaskActive(t.activityName, 2, function() {'),
+                    'curPoint: he,\nmaxPoint: ue':('curPoint: de,\nmaxPoint: pe','activityName: i.name,\ncurPoint: de,\nmaxPoint: pe'),
+                    'k.fillLoginTopUp(function() {':('g.fillLoginTopUp(function() {','g.fillLoginTopUp(t.activityName, function() {'),
+                    'd.ACTIVITY.FUNS.getBuySpActiveCostGem(ue - he)':('d.ACTIVITY.FUNS.getBuySpActiveCostGem(pe - de)','d.ACTIVITY.FUNS.getBuyReachValCostGem(pe - de, 50)'),
+                    'd.ACTIVITY.FUNS.getBuySpActiveCostGem(a.maxPoint - a.curPoint)':('d.ACTIVITY.FUNS.getBuySpActiveCostGem(t.maxPoint - t.curPoint)','d.ACTIVITY.FUNS.getBuyReachValCostGem(t.maxPoint - t.curPoint, 50)')}
+                old,new=lzd.get(old,(old,new))
             if text.count(old)!=1:raise ValueError('Unexpected activity callback implementation')
             text=text.replace(old,new,1)
     return text
@@ -321,6 +329,8 @@ def patch_island_transport(text):
         's = l.ISLAND.FUNS.getAreaId(e.playerId),':'s = l.ISLAND.FUNS.getAreaId(e.playerLevel),'
     }
     for old,new in changes.items():
+        if old=='s = l.ISLAND.FUNS.getAreaId(e.playerId),' and text.count(old)==0:
+            old,new='r = l.ISLAND.FUNS.getAreaId(e.playerId),','r = l.ISLAND.FUNS.getAreaId(e.playerLevel),'
         if text.count(old)!=1:raise ValueError('Unexpected island transport/formula implementation')
         text=text.replace(old,new,1)
     return text
