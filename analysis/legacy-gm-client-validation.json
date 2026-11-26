@@ -47,5 +47,18 @@
     "sent_on_user_post_routes": true,
     "registration_requires_version_guard_fixture_passed": true,
     "actual_old_server_acceptance_verified": false
+  },
+  "device_metadata": {
+    "apk_sha256": "279b8c2f5f00eecc2b710c06e14cf9e7f1494365ae4358099084bd6d44ee1a41",
+    "native_dex": "classes4.dex",
+    "class": "org.cocos2dx.javascript.DevId",
+    "secure_setting": "android_id",
+    "native_method_executed": false,
+    "checker_initial_value_was_empty": true,
+    "checker_now_uses_own_persistent_installation_id": true,
+    "checker_claims_native_android_id": false,
+    "same_id_across_runs_tested": true,
+    "version_and_device_guard_local_fixture_passed": true,
+    "actual_old_backend_acceptance_verified": false
   }
 }

@@ -1,7 +1,7 @@
 """Register normally and test ONE +100 item GM call on your own legacy server.
 Requires Python 3.8+ and aiohttp. No privilege grants, invite guessing, or automatic GM retries.
 """
-import argparse,asyncio,base64,getpass,json,os,secrets,struct,sys,time,zlib
+import argparse,asyncio,base64,getpass,json,os,re,secrets,struct,sys,time,zlib
 from pathlib import Path
 from urllib.parse import urlsplit,urlunsplit
 import aiohttp
@@ -151,16 +151,31 @@ async def check_connection(server):
             raise RuntimeError('Cannot reach server. Check Tailscale, the server IP/port and whether the server is running.')from error
     print('Read-only check. No account created and no GM request sent.')
 
+def installation_device(directory):
+    # An ID for this checker installation, not a claimed native Android hardware ID.
+    # Keep it across runs so this tool does not pretend to be a new device each time.
+    path=directory/'.legacy-gm-installation-id'
+    try:
+        fd=os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
+    except FileExistsError:pass
+    else:
+        with os.fdopen(fd,'w')as output:output.write(secrets.token_hex(8)+'\n')
+    value=path.read_text().strip()
+    if not re.fullmatch('[0-9a-fA-F]{8,64}',value):raise RuntimeError('Stored checker installation ID is invalid; inspect '+str(path))
+    return value
+
 async def run(args,out,report):
     base=args.server.rstrip('/');parsed=urlsplit(base)
     if parsed.scheme not in ('http','https')or not parsed.hostname or parsed.path or parsed.query or parsed.fragment or parsed.username:raise ValueError('Use http://HOST:PORT, with no credentials or path')
     username='gm'+secrets.token_hex(3);password=secrets.token_urlsafe(18)
-    credentials={'server':base,'username':username,'password':password,'device':args.device}
+    device=args.device or installation_device(Path(__file__).resolve().parent)
+    if not re.fullmatch('[0-9a-fA-F]{8,64}',device):raise ValueError('Device ID must match the APK format: 8 to 64 hexadecimal characters')
+    credentials={'server':base,'username':username,'password':password,'device':device}
     path=out/'ACCOUNT-PRIVATE.json';path.write_text(json.dumps(credentials,indent=2)+'\n');os.chmod(path,0o600)
-    report.update(server=base,account=username,kind_id=args.kind_id,grant_count=100,client_version=CLIENT_VERSION,registration_succeeded=False,gm_request_sent=False,persistence_verified=False)
+    report.update(server=base,account=username,kind_id=args.kind_id,grant_count=100,client_version=CLIENT_VERSION,device_present=True,device_source='provided'if args.device else'checker-installation-id',registration_succeeded=False,gm_request_sent=False,persistence_verified=False)
     async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=25),trust_env=True)as session:
         registration_name=username+('#'+args.invite if args.invite else'')
-        result=await post(session,base,'/user/register',{'name':registration_name,'password':password,'from':'mmx','channel':'Android','accountId':registration_name,'device':args.device})
+        result=await post(session,base,'/user/register',{'name':registration_name,'password':password,'from':'mmx','channel':'Android','accountId':registration_name,'device':device})
         check(result,'registration');report['registration_succeeded']=True
         conn,before=await login_player(session,base,credentials,True)
         try:
