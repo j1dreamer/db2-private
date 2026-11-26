@@ -1,0 +1,26 @@
+{
+  "local_test_backend_only": true,
+  "old_tailscale_server_contacted": false,
+  "scenarios": [
+    {
+      "scenario": "server denies GM",
+      "passed": true,
+      "gm_calls": 1,
+      "persistent_inventory_difference": null,
+      "error_expected": true
+    },
+    {
+      "scenario": "server permits GM",
+      "passed": true,
+      "gm_calls": 1,
+      "persistent_inventory_difference": 100,
+      "error_expected": false
+    }
+  ],
+  "default_kind_id": 119,
+  "default_count": 100,
+  "requires_authenticated_game_session": true,
+  "automatic_privilege_elevation": false,
+  "credentials_in_public_package": false,
+  "cloud_private_server_reachability": "failed: no configured VPN capability; proxied HTTP returned upstream connection failure"
+}

@@ -60,3 +60,7 @@ Nguồn từng bảng và bản dịch: [canonical-policy](tables/canonical-poli
 Báo cáo hiện tại: [analysis/box-info-validation.json](analysis/box-info-validation.json); kiểm chứng bản trước ở `analysis/eng-gm-validation.json`. Các báo cáo Long Chi Đảo là lịch sử. Các kiểm tra model/UI adapter/headless không thay thế chơi thực tế đầy đủ trên Android/iPhone.
 
 Nhánh có đủ 342 handler hợp đồng gốc, cộng 3 RPC GM riêng (`catalog`, `setPlayer`, `setRole`). Chưa tuyên bố mọi tính năng gốc hoặc toàn bộ gameplay native đã được kiểm chứng. Github release upload từ Cloud và Actions vẫn bị chặn; bộ tải GitHub ở trên hoạt động độc lập, không cần đăng nhập.
+
+## Công cụ kiểm tra server APK cũ
+
+[Legacy-GM-Test.zip](Legacy-GM-Test.zip) là client chẩn đoán riêng, không thay server đang chạy. Chạy từ máy có Tailscale tới server cũ; cần Python 3.11+. Công cụ đăng ký theo luồng bình thường, chỉ thử một lệnh cấp 100 vé thường (119), đăng nhập lại và kiểm số lượng bền vững. Không tự cấp quyền GM; nếu bị từ chối quyền/mã mời thì dừng. Tài khoản/mật khẩu sinh trên máy chạy tool, không được đóng gói trong ZIP. Kết quả kiểm thử hiện tại chỉ trên backend cục bộ: [báo cáo](analysis/legacy-gm-client-validation.json).
