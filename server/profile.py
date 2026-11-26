@@ -4,7 +4,7 @@ This is a compatibility draft; entering every original UI has not been verified.
 import json,time,datetime,math
 from functools import lru_cache
 from pathlib import Path
-SCHEMA_VERSION=29
+SCHEMA_VERSION=30
 TABLES=Path(__file__).resolve().parent.parent/'tables'
 @lru_cache(None)
 def table(name):
@@ -65,7 +65,8 @@ def new_profile(pid,account,name,username):
     initialize(profile)
     from .progression import learn_skills,friendships
     learn_skills(initial);friendships(profile)
-    profile['privateRulesBaseline']='longzhidao-17327'
+    profile['privateGM']=False
+    profile['privateRulesBaseline']='eng-sp-sss'
     return profile
 
 def grant_starter_tickets(profile):
@@ -113,10 +114,10 @@ def upgrade_profile(data,account):
     from .inventory import repair
     repair(data)
     # Private migration policy: keep inventory/currencies/manual VIP grants;
-    # re-derive combat stats once using the selected Long Chi Dao rules.
+    # re-derive combat stats once using the selected ENG rules.
     from .progression import recalculate,learn_skills
     for role in data.get('team',{}).get('roles',{}).values():
         learn_skills(role);recalculate(data,role)
-    data['privateRulesBaseline']='longzhidao-17327'
+    data['privateRulesBaseline']='eng-sp-sss'
     data['profileSchemaVersion']=SCHEMA_VERSION
     return True

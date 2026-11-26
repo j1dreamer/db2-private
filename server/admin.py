@@ -49,7 +49,7 @@ class Admin:
    p=self.store.player(old['userId'])
    if not p:continue
    p['privateOpsStamp']=stamp(self.store);self.store.save(p)
-   payload=delta(old,p,'admin.sync');payload.pop('privateOpsStamp',None)
+   payload=delta(old,p,'admin.sync');payload.setdefault('extra',{})['goodsList']=p['extra']['goodsList'];payload.pop('privateOpsStamp',None)
    if len(payload)>2:self.store.notify(p['userId'],'onSync',payload)
   self.flush()
  def tick(self):
@@ -219,9 +219,9 @@ class Admin:
     elif a=='player_update':
      values=b.get('values',{});expected=b.get('expected',{})
      if not isinstance(expected,dict):raise ValueError('Dữ liệu đối chiếu không hợp lệ')
-     if any(p.get(k)!=v for k,v in expected.items()):raise ValueError('Dữ liệu đã được sửa ở cửa sổ khác. Làm mới rồi thử lại.')
-     if not isinstance(values,dict)or not values or set(values)-{'gem','coin','actionPoint','skillPoint'}:raise ValueError('Chỉ chỉnh gem, coin, thể lực và điểm kỹ năng')
-     for k,v in values.items():p[k]=integer(v,k,0,10**9)
+     if any((p['vip']['level']if k=='vipLevel'else p.get(k))!=v for k,v in expected.items()):raise ValueError('Dữ liệu đã được sửa ở cửa sổ khác. Làm mới rồi thử lại.')
+     from .gm_controls import set_player
+     set_player(p,values)
     else:
      title=str(b.get('title','')).strip();body=str(b.get('body','')).strip()
      if not title or len(title)>100 or len(body)>2000 or len(p['extra']['mails'])>=200:raise ValueError('Tiêu đề/nội dung không hợp lệ hoặc hộp thư đã đầy')

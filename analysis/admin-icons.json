@@ -2,7 +2,7 @@
   "source": "user-authorized Android archive, Cocos texture UUID mapping",
   "image_codec": "AES-128-CBC prefix from verified native ARM64 decoder; every PNG chunk CRC checked",
   "native_sha256": "6350c8631c3c323ed43721351c71261cd31a1c2edc56daaf735248dbd39c175e",
-  "mapped_items": 2905,
-  "unique_pngs": 1084,
+  "mapped_items": 2845,
+  "unique_pngs": 1083,
   "unmapped_item_ids": []
 }

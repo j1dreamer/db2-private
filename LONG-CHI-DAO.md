@@ -1,3 +1,5 @@
+> Lịch sử nhánh Long Chi Đảo. Bản hiện tại theo yêu cầu mới dùng gameplay ENG ở nhánh `eng-sp-sss`; xem `ENG-SPSSS-GM.md`. Không dùng tài liệu này để chọn APK/server mới.
+
 # Long Chi Đảo — bản chuyển dữ liệu và Việt hóa
 
 Bản này lấy dữ liệu/gameplay đọc được từ **龙之岛-1W免费版, X7 #17327**, giữ tài nguyên và khung client ENG/IPA để tương thích. Backend Python do dự án viết; không có source server gốc. Không thể khẳng định mọi luật kín của server Long Chi Đảo giống hệt.

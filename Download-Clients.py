@@ -1,19 +1,19 @@
-"""Download the complete, checksum-pinned Long Chi Dao APK/IPA without chat downloads.
+"""Download the complete, checksum-pinned DB2 ENG SSS/SP + GM APK/IPA without chat downloads.
 Standard-library only. Public HTTPS inputs; no login, token, Git, Java or old APK needed.
 """
 import argparse,bisect,concurrent.futures,contextlib,hashlib,json,os,re,sys,time,urllib.error,urllib.request,zipfile
 from pathlib import Path
 RAW='https://raw.githubusercontent.com/j1dreamer/db2-private/'
 ANDROID_REF='f193ded34731bfbb63074301cd582f032a8f9107'
-IOS_REF='29967daf6beef1c42d84faa2779b311a286de81e'
+IOS_REF='db70c80675d075de90d9d5cbb7fa5dd410442858'
 ANDROID_MANIFEST='058c91565e0caee080ff4e2f50606c615eef8af6baa75c8ad7df0b3480805ec2'
-IOS_MANIFEST='921e39d95fdf6bf6b32ecf3fdd786dc3098717a4aa2af129eaec086c5525df87'
+IOS_MANIFEST='bc5c2361d892ee6897127d51c78d771652e7a2b5b93c27788f04d40c9e80613f'
 BASE_SHA='a198837ccae5a3ad662d2489c4e1748016aebe77359e84f4bc4734c5f389f430'
 FIXED_SHA='d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f'
-APK_SHA='bea64b41319ebba5a84529f644661b13bea85aceed8f775703b642daf686b0ec'
-IPA_SHA='30220eec7bd79567e81e356d554398833f3aa83eca6b634e40e5b351f85b13bd'
-APK_SIZE=525087425
-IPA_SIZE=511256922
+APK_SHA='4fbfe8eeb3e2d7b9b3bc66dbc24bad7d06ced98e7d4d594a284a5034c1e4c66c'
+IPA_SHA='88dc13d681e502e26181d3ae0009190347e4661d91101c960075d584493b1897'
+APK_SIZE=525058753
+IPA_SIZE=511239717
 CHUNK=1024*1024
 
 def sha(path):
@@ -114,11 +114,11 @@ def finish(temporary,output,size,digest):
     os.replace(temporary,output);print('COMPLETE:',output,flush=True)
 
 def android(output,cache,workers):
-    target=output/'LongChiDao-VI-Android.apk'
+    target=output/'DB2-ENG-SPSSS-GM.apk'
     if ready(target,APK_SIZE,APK_SHA):return target
     paths=parts(cache/'android',ANDROID_REF,ANDROID_MANIFEST,524284609,BASE_SHA,'APK',workers)
     fix=fetch(RAW+'eac27239410d1251638431eb35e798dc00d89ba7/tools/legacy/APK-Install-Fix.zip',cache/'packaging.zip','7a6a3f74d7260a1024645808f5692d87bab238fb118c939897dd042f0c197e75')
-    client=fetch(RAW+'81bfd992483a005a3e76cc977e3ba4b9bcff0337/Client-LongChiDao-VI-Patch.zip',cache/'client.zip','2f0b4b640391fc2bcd9bed25391cee966385162d4f25527625f4cd6df71d16f2')
+    client=fetch(RAW+'eng-sp-sss/Client-ENG-SPSSS-GM-Patch.zip',cache/'client.zip','ecdcdf89d285ef3188b3d4775093c37d4b41b9dc0d193c06d21ad7a649ef75b8')
     first,lit1=load_patch(fix,BASE_SHA,FIXED_SHA);second,lit2=load_patch(client,FIXED_SHA,APK_SHA)
     if first['old_size']!=524284609 or first['new_size']!=second['old_size']or second['new_size']!=APK_SIZE:raise ValueError('Unexpected reconstruction sizes')
     temporary=target.with_name(target.name+'.downloading');print('APK: creating complete signed file...',flush=True)
@@ -131,7 +131,7 @@ def android(output,cache,workers):
     finish(temporary,target,APK_SIZE,APK_SHA);return target
 
 def ios(output,cache,workers):
-    target=output/'LongChiDao-VI-iOS-unsigned.ipa'
+    target=output/'DB2-ENG-SPSSS-GM-unsigned.ipa'
     if ready(target,IPA_SIZE,IPA_SHA):return target
     paths=parts(cache/'ios',IOS_REF,IOS_MANIFEST,IPA_SIZE,IPA_SHA,'IPA',workers)
     temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned file...',flush=True)
@@ -144,7 +144,7 @@ def ios(output,cache,workers):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--only',choices=('both','apk','ipa'),default='both');parser.add_argument('--output',type=Path,default=Path(__file__).resolve().parent);parser.add_argument('--workers',type=int,choices=range(1,9),default=4);args=parser.parse_args()
     output=args.output.expanduser().resolve();output.mkdir(parents=True,exist_ok=True);cache=output/'.longzhidao-download-cache'
-    print('Long Chi Dao VI - complete clients, Speed 1x-10x. IPA is unsigned.',flush=True)
+    print('DB2 ENG SSS/SP + GM VI - complete clients, Speed 1x-10x. IPA is unsigned.',flush=True)
     print('Output:',output,'\nKeep this window open. Run again to reuse verified downloads.',flush=True)
     files=[]
     if args.only in('both','apk'):files.append(android(output,cache,args.workers))

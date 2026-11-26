@@ -13,7 +13,7 @@ r.FUNS.reqMsgFilter(a);
 a = l.decodeData(e, a);
 l.log(e, a);
 l.receiveCb && l.receiveCb(a);
-a.code != l.code.FAIL && n && n(a);
+(a.code != l.code.FAIL || /^logic\\.gmHandler\\./.test(e)) && n && n(a);
 } catch (privateResponseError) {
 try {
 window.DB2PrivateRuntime.reportResponseError(e, privateResponseError);
@@ -400,3 +400,18 @@ tickNumber: window.__require("battle.fightHandler").area.timer.tickNumber
     new='n && n.smapId && a !== F.TYPE.TIME_PEAK_ATTACK_TEAM && !n.isEndless && !n.isPursuit && (I = o.smap.findById(n.smapId).bmapId);'
     if text.count(old)!=1:raise ValueError('Unexpected normal-map lookup in Time Peak selector')
     return text.replace(old,new,1)
+
+def patch_eng_ui_repairs(text):
+    """Repair actual VIP/push lifecycle and add entitled private GM entry points."""
+    def module_replace(name,old,new):
+        nonlocal text
+        start=text.index(name+': [ function(');end=text.index('cc._RF.pop();',start);part=text[start:end]
+        if part.count(old)!=1:raise ValueError('Unexpected '+name+' UI repair anchor')
+        text=text[:start]+part.replace(old,new,1)+text[end:]
+    module_replace('topUpPanel','this.isFadeIn = !0;','this.isFadeIn = !0;\nthis.update_();')
+    module_replace('baseView','g.addRewardEffectPanel = function(a, t, n, r) {','g.addRewardEffectPanel = function(a, t, n, r) {\nif (!a || Object.keys(a).length === 0) return;')
+    module_replace('bagScene','e.chatSkinIds && i.addHintPanel(g.t("解锁了新的聊天对话框"));','e.titleInfoMap && i.addHintPanel("Đã mở danh hiệu. Chọn trong hồ sơ nhân vật để dùng.");\ne.frameIds && i.addHintPanel("Đã mở khung ảnh mới.");\ne.chatSkinIds && i.addHintPanel(g.t("解锁了新的聊天对话框"));')
+    module_replace('endlessRewardPanel','if (!e) return !1;','if (!e || !e.rewards || e.rewards.length < 2 || !s.player.extra || !s.player.extra.goodsList) return !1;')
+    module_replace('serverMain','this.player.update(e);','this.player.update(e);\nwindow.DB2PrivateGM && window.DB2PrivateGM.refresh();')
+    module_replace('serverMain','if (e.level) {','if (e.level && !(e._temp && /(?:gmHandler\\.setPlayer|admin\\.sync)$/.test(e._temp.route || ""))) {')
+    return text

@@ -9,19 +9,19 @@ from .adventure import grant
 from .item_actions import description
 ROUTES={'logic.playerHandler.'+a for a in ('topUpGoodsList','buyGemGoods','costTopUpPoint','costTopUpPoint2','exchangeBuy','exchange2Buy','exchange4Buy','spWishExchangeBuy','exchange')}
 GOODS={
- 1:{'name':'Normal ticket x1','cost':300,'point':3,'rewards':'119x1,2x1','limit':1},
- 2:{'name':'Advanced ticket x1','cost':600,'point':6,'rewards':'120x1,2x1','limit':1},
- 3:{'name':'Training water x20','cost':200,'point':2,'rewards':'20001x20','limit':5},
- 4:{'name':'Private wheel ticket x1','cost':100,'point':1,'rewards':'88x1','limit':8},
- 5:{'name':'Normal dice x1','cost':50,'point':1,'rewards':'94x1','limit':20},
- 6:{'name':'Golden dice x1','cost':100,'point':2,'rewards':'95x1','limit':5},
+ 1:{'name':'Vé thường ×1','cost':300,'point':3,'rewards':'119x1,2x1','limit':1},
+ 2:{'name':'Vé cao cấp ×1','cost':600,'point':6,'rewards':'120x1,2x1','limit':1},
+ 3:{'name':'Nước luyện tập ×20','cost':200,'point':2,'rewards':'20001x20','limit':5},
+ 4:{'name':'Vé vòng quay ×1','cost':100,'point':1,'rewards':'88x1','limit':8},
+ 5:{'name':'Xúc xắc thường ×1','cost':50,'point':1,'rewards':'94x1','limit':20},
+ 6:{'name':'Xúc xắc vàng ×1','cost':100,'point':2,'rewards':'95x1','limit':5},
 }
 EXCHANGES={
  'exchange':{'moneyId':113,'list':[{'id':1,'entityId':20001,'count':5,'price':1,'maxBuyTimes':10,'extra':{}}]},
  'exchange2':{'list':[{'id':1,'getDesc':'120x1','needDesc':'119x5','maxBuyTimes':1}]},
  'exchange4':{'moneyId':105,'list':[{'id':1,'entityId':23001,'count':10,'price':100,'maxBuyTimes':5,'extra':{}}]},
  'spWishExchange':{'moneyId':116,'list':[{'id':1,'entityId':120,'count':1,'price':100,'maxBuyTimes':3,'extra':{}}]},
- 'privateGuild':{'moneyId':107,'exchangeId':1,'name':'Private guild supplies','isDreamExchange':True,'priority':10,'list':[{'id':1,'entityId':21001,'count':5,'price':100,'maxBuyTimes':5,'extra':{}}]},
+ 'privateGuild':{'moneyId':107,'exchangeId':1,'name':'Vật phẩm bang','isDreamExchange':True,'priority':10,'list':[{'id':1,'entityId':21001,'count':5,'price':100,'maxBuyTimes':5,'extra':{}}]},
 }
 
 def stamp_bounds():
@@ -30,7 +30,7 @@ def stamp_bounds():
 def catalog(p):
     counters=p.get('privateCommerce',{}).get('counts',{});result={}
     for ident,offer in GOODS.items():
-        used=counters.get('goods:'+str(ident),0);result[str(ident)]={'id':ident,'name':offer['name'],'price':offer['cost'],'privateCostGem':offer['cost'],'needPoint':offer['point'],'imgId':ident,'show':'$1 Gem','gem':0,'gift':0,'firstGiftRate':0,'isFirstDouble':False,'priceRate':1,'isRecommend':False,'isMonthCard':False,'isBigMonthCard':False,'isYearCard':False,'isWeekCard':False,'dailyGem':0,'point':False,'desc':'Local game offer; no real money. Remaining today: '+str(max(0,offer['limit']-used))}
+        used=counters.get('goods:'+str(ident),0);result[str(ident)]={'id':ident,'name':offer['name'],'price':offer['cost'],'privateCostGem':offer['cost'],'needPoint':offer['point'],'imgId':ident,'show':'$1 Gem','gem':0,'gift':0,'firstGiftRate':0,'isFirstDouble':False,'priceRate':1,'isRecommend':False,'isMonthCard':False,'isBigMonthCard':False,'isYearCard':False,'isWeekCard':False,'dailyGem':0,'point':False,'desc':'Đổi bằng gem/phiếu trong game. Còn lại hôm nay: '+str(max(0,offer['limit']-used))}
     return result
 
 def refresh(p):
@@ -41,7 +41,7 @@ def refresh(p):
     p.setdefault('buyGoodsTimesMap',{});p['extra']['goodsList']=catalog(p);start,end=stamp_bounds()
     for name,config in EXCHANGES.items():
         value=copy.deepcopy(config);value.update(start_time=start,end_time=end)
-        value.setdefault('name',name);value.setdefault('desc','Private '+name+' supplies');value.setdefault('resId',126);value.setdefault('priority',300)
+        value.setdefault('name',name);value.setdefault('desc','Vật phẩm đổi trong server riêng');value.setdefault('resId',126);value.setdefault('priority',300)
         for row in value['list']:row['buyTimes']=private['counts'].get(name+':'+str(row['id']),0)
         if name=='privateGuild':p['activity'].setdefault('exchangeMap',{})['1']=value
         else:p['activity'][name]=value

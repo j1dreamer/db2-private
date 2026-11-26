@@ -1,0 +1,21 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const callbacks={},requests=[];
+class Node{constructor(name=''){this.name=name;this.children=[];this.components=[];this.listeners={};this.valid=true;this.width=0;this.height=0;}set parent(value){if(this._parent)this._parent.children=this._parent.children.filter(x=>x!==this);this._parent=value;if(value)value.children.push(this);}get parent(){return this._parent;}setContentSize(w,h){this.width=w;this.height=h;}setPosition(x,y){this.x=x;this.y=y;}addComponent(Type){const c=new Type();c.node=this;this.components.push(c);return c;}getChildByName(name){return this.children.find(x=>x.name===name);}on(type,cb){this.listeners[type]=cb;}destroy(){this.valid=false;this.parent=null;}click(){this.listeners.end();}}
+class Label{}Label.Overflow={CLAMP:1};class EditBox{}EditBox.InputMode={ANY:1,NUMERIC:2};class Graphics{roundRect(){}fill(){}}class Sprite{}Sprite.SizeMode={CUSTOM:1};
+const canvas=new Node();canvas.setContentSize(740,400);const p={privateGM:false,name:'QA',level:1,gem:50,coin:0,actionPoint:60,skillPoint:10,vip:{level:0},team:{roles:{1:{idx:1,kindId:100101,level:1}}}};
+const catalog={items:[{id:120,name:'Vé cao cấp',type:'item'},{id:100801,name:'Chiến binh SSS',type:'role',grade:'SSS'}],types:['item','role'],page:1,pages:2,total:9};
+let fail=false;const server={player:p,url:'http://127.0.0.1:20003'},socket={request(route,args,cb){requests.push({route,args});if(fail)return cb({code:500,msg:'Server từ chối'});cb({code:200,_temp:{gmCatalog:catalog}});}};
+const cc={Node,Label,EditBox,Graphics,Sprite,Canvas:{instance:{node:canvas}},color:()=>({}),BlockInputEvents:class{},Director:{EVENT_AFTER_SCENE_LAUNCH:'launch'},director:{on:(event,cb)=>callbacks[event]=cb}};Node.EventType={TOUCH_END:'end'};
+const context={cc,window:{__require(name){if(name==='serverMain')return server;if(name==='socket')return socket;if(name==='dataApi')return{findEntityById:()=>({kindName:'Goku'})};throw Error(name);}}};
+vm.runInNewContext(fs.readFileSync(__dirname+'/../../tools/private_gm.js','utf8'),context);
+const api=context.window.DB2PrivateGM;
+function all(root=canvas){return[root,...root.children.flatMap(n=>all(n))];}
+function button(text){const n=all().find(n=>n.listeners.end&&n.children.some(c=>c.components.some(l=>l instanceof Label&&l.string===text)));assert(n,'Missing button '+text);return n;}
+function edits(){return all().flatMap(n=>n.components.filter(c=>c instanceof EditBox));}
+api.refresh();assert(!canvas.getChildByName('DB2PrivateGMButton'));p.privateGM=true;api.refresh();button('GM').click();assert(canvas.getChildByName('DB2PrivateGMPanel'));const panel=canvas.getChildByName('DB2PrivateGMPanel');assert(panel.width*panel.scale<=canvas.width-30+1e-6);assert(panel.height*panel.scale<=canvas.height-24+1e-6);
+let search=edits().find(e=>e.inputMode===1);search.string='cao cấp';button('Tìm tên / ID').click();assert.equal(requests.at(-1).args.q,'cao cấp');
+button('Vé cao cấp  #120').click();edits().find(e=>e.inputMode===2).string='3';button('Cấp mục đã chọn').click();assert.equal(requests.at(-1).args.kindId,120);assert.equal(requests.at(-1).args.itemCount,3);
+button('Cấp / VIP').click();let fields=edits();fields[0].string='99';fields[1].string='16';fields[2].string='777';button('Lưu cấp / VIP / tài nguyên').click();assert.equal(requests.at(-1).args.values.level,99);assert.equal(requests.at(-1).args.values.vipLevel,16);assert.equal(requests.at(-1).args.values.gem,777);
+button('Cấp tướng').click();edits()[0].string='5';button('Lưu cấp tướng').click();assert.equal(requests.at(-1).args.teamIndex,1);assert.equal(requests.at(-1).args.values.level,5);
+fail=true;button('Vật phẩm').click();assert(all().some(n=>n.components.some(l=>l instanceof Label&&l.string==='Server từ chối')));p.privateGM=false;api.refresh();assert(!canvas.getChildByName('DB2PrivateGMButton'));assert(!canvas.getChildByName('DB2PrivateGMPanel'));
+console.log(JSON.stringify({entitlementVisibility:true,catalogSearch:true,selectedGrant:true,playerLevelVip:true,roleLevel:true,serverErrorVisible:true,revocationClosesPanel:true,designFitsSmallCanvas:true}));

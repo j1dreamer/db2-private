@@ -21,7 +21,7 @@ def package(apk,ipa,output):
     commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     if subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip():raise ValueError('Commit source changes before packaging')
     source=output/release['server']['file']
-    subprocess.run(['git','archive','--format=zip','--prefix=LongChiDao-Server/','--output',str(source),commit],cwd=ROOT,check=True)
+    subprocess.run(['git','archive','--format=zip','--prefix=DB2-ENG-SPSSS-GM-Server/','--output',str(source),commit],cwd=ROOT,check=True)
     with zipfile.ZipFile(source)as archive:
         if archive.testzip():raise ValueError('Source ZIP CRC failure')
         names=set(archive.namelist())
@@ -30,7 +30,7 @@ def package(apk,ipa,output):
             if len(parts)>1 and parts[1]in('data','backups','.venv','.git'):raise ValueError('Private/runtime directory in archive: '+name)
             if Path(name).name=='admin-token'or Path(name).suffix.lower()in('.sqlite3','.db','.keystore','.jks','.ipa','.apk'):raise ValueError('Unexpected runtime/client file in source ZIP: '+name)
         for name in ('start.bat','start.py','Install-Android.bat','release.json','web/admin.js','tables/roleData.json','server/app.py'):
-            if 'LongChiDao-Server/'+name not in names:raise ValueError('Missing source entry: '+name)
+            if 'DB2-ENG-SPSSS-GM-Server/'+name not in names:raise ValueError('Missing source entry: '+name)
     readme=output/'README-FIRST.txt';shutil.copyfile(ROOT/'INSTALL.txt',readme)
     files=clients+[source,readme]
     manifest={**release,'source_commit':commit,'player_database_included':False,'assets':[{'file':p.name,'bytes':p.stat().st_size,'sha256':sha(p)}for p in files]}

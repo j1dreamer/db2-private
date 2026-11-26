@@ -25,7 +25,7 @@ def canonical(tables_dir=ROOT/'tables'):
     tables = {p.name[:-9]: json.loads(p.read_text()) for p in sorted(Path(tables_dir).glob('*Data.json'))}
     consts = json.loads((Path(tables_dir)/'clientConstants.json').read_text())['server']['ROLE']['CONSTS']
     maps = {key: consts[key] for key in SOUL_MAPS}
-    rules=json.loads((Path(tables_dir)/'longzhidaoOverrides.json').read_text())
+    rules=json.loads((Path(tables_dir)/'clientRules.json').read_text())
     digest = hashlib.sha256(encoded({'tables': tables, 'soulMaps': maps,'startupRules':rules}).encode()).hexdigest()
     return tables, maps, digest
 
@@ -35,7 +35,7 @@ def overlay(source, tables_dir=ROOT/'tables'):
     if set(tables) != set(shipped):
         raise ValueError('Canonical/archive table names differ')
     changed = {key: value for key, value in tables.items() if value != shipped[key]}
-    rules=json.loads((Path(tables_dir)/'longzhidaoOverrides.json').read_text())
+    rules=json.loads((Path(tables_dir)/'clientRules.json').read_text())
     config=dict(rules['config']);config.update({'ROLE.CONSTS.'+key:value for key,value in maps.items()})
     # Fresh copies matter: dataApi.init destructively removes each table header.
     script = ('(function(w){"use strict";var tables='+encoded(changed)+';var config='+encoded(config)+';var flags='+encoded(rules['flags'])+';'
@@ -45,7 +45,7 @@ def overlay(source, tables_dir=ROOT/'tables'):
               'applyConfig:function(cfg){Object.keys(config).forEach(function(k){var p=k.split("."),o=cfg;for(var i=0;i<p.length-1;i++)o=o[p[i]]||(o[p[i]]={});o[p[p.length-1]]=clone(config[k]);});},'
               'applyBuildExt:function(ext){Object.keys(flags).forEach(function(k){ext[k]=clone(flags[k]);});}'
               '};})(window);\n')
-    return script, {'baseline': 'longzhidao-17327', 'canonical_sha256': digest,
+    return script, {'baseline': json.loads((Path(tables_dir)/'canonical-policy.json').read_text())['baseline'], 'canonical_sha256': digest,
                     'overridden_tables': sorted(changed), 'soul_maps': list(SOUL_MAPS),
                     'overlay_sha256': hashlib.sha256(script.encode()).hexdigest(),
                     'native_modified': False,'startup_config_paths':sorted(config),'build_ext_flags':sorted(rules['flags']),'provenance':'tables/canonical-policy.json'}

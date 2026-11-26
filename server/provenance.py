@@ -8,7 +8,7 @@ def policy():return json.loads((ROOT/'tables/canonical-policy.json').read_text()
 def item_source(kind):
  for row in policy()['compatibility_definitions']:
   if row['kindId']==kind:return row['source']
- return 'longzhidao-client'
+ return 'eng-client'
 @lru_cache(None)
 def summary():
  locale=json.loads((ROOT/'tables/localization/vi.provenance.json').read_text())

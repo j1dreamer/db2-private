@@ -1,0 +1,66 @@
+{
+  "build": "eng-sp-sss-gm-v2",
+  "baseline": "eng-sp-sss",
+  "schema": 30,
+  "source_rpc_handlers": 342,
+  "private_gm_routes": 3,
+  "original_eng_tables": 34,
+  "imported_long_gameplay_modules": 0,
+  "long_startup_overrides_active": false,
+  "full_tests": {
+    "passed": true,
+    "count": 266,
+    "seconds": 309.929
+  },
+  "browser_flows": {
+    "passed": true,
+    "count": 24,
+    "isolated_database": true
+  },
+  "canonical": {
+    "passed": true,
+    "actual_private_ipa_modules_verified": true,
+    "tables_equal": 34,
+    "constant_differences": 0,
+    "identical_full_battle_cases": 8
+  },
+  "gm_tests": [
+    "server denies non-GM/self-granted flags",
+    "revocation checked each RPC",
+    "catalog search and paging",
+    "own-account player/role levels and VIP",
+    "invalid values rollback",
+    "web onSync feeds actual ENG home and VIP models",
+    "UI search/select/grant/level/VIP/error/revocation via renderer adapter"
+  ],
+  "ui_repairs": [
+    "VIP deferred repaint",
+    "full catalog in admin sync",
+    "cosmetic use does not return empty award map",
+    "baseView does not create empty blocking reward panel",
+    "Long ticket-week flags not enabled"
+  ],
+  "artifacts": {
+    "android": {
+      "file": "DB2-ENG-SPSSS-GM.apk",
+      "bytes": 525058753,
+      "sha256": "4fbfe8eeb3e2d7b9b3bc66dbc24bad7d06ced98e7d4d594a284a5034c1e4c66c"
+    },
+    "ios": {
+      "file": "DB2-ENG-SPSSS-GM-unsigned.ipa",
+      "bytes": 511239717,
+      "sha256": "88dc13d681e502e26181d3ae0009190347e4661d91101c960075d584493b1897"
+    },
+    "patch_sha256": "ecdcdf89d285ef3188b3d4775093c37d4b41b9dc0d193c06d21ad7a649ef75b8"
+  },
+  "native_android_play_tested": false,
+  "native_ios_play_tested": false,
+  "signed_ipa": false,
+  "remaining": [
+    "Native BlueStacks replay of user-reported screens",
+    "Legitimate iOS signing and native iPhone gameplay",
+    "Termux/Tailscale device validation"
+  ],
+  "source_policy": "tables/canonical-policy.json",
+  "private_rules": "tables/privateRules.json"
+}

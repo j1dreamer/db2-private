@@ -4,14 +4,21 @@ from .state import integer,snapshot,delta
 from .gameplay import add_reward
 from .team_actions import owned,put_item
 from .progression import friendships
-ROUTES={'logic.gmHandler.'+name for name in ('addItem','addRole','removeRole')}
+ROUTES={'logic.gmHandler.'+name for name in ('addItem','addRole','removeRole','catalog','setPlayer','setRole')}
 def handle(store,account,route,args):
     if route not in ROUTES:raise ValueError('Thao tác GM không tồn tại')
     with store.transaction():
         p=store.player(account)
         if not p or not p.get('privateGM'):raise ValueError('Tài khoản chưa được quản trị viên cấp quyền GM')
         before=snapshot(p);action=route.rsplit('.',1)[-1];rewards={}
-        if action=='removeRole':
+        if action=='catalog':
+            from .gm_controls import catalog
+            return {'code':200,'_temp':{'route':route,'gmCatalog':catalog(args)}}
+        if action in ('setPlayer','setRole'):
+            from .gm_controls import set_player,set_role
+            if action=='setPlayer':set_player(p,args.get('values'))
+            else:set_role(p,args)
+        elif action=='removeRole':
             role=owned(p,args.get('teamIndex'))
             if len(p['team']['roles'])<=1:raise ValueError('Phải giữ lại ít nhất một chiến binh')
             for key,item in role['equipments'].items():
@@ -32,5 +39,5 @@ def handle(store,account,route,args):
             if row['type']=='role'and 'expireTime'in extra:raise ValueError('Chiến binh không hỗ trợ hạn dùng')
             if 'star'in extra:integer(extra['star'],'Sao',1,20)
             rewards=add_reward(p,{'entityId':kind,'count':count,'extra':extra})
-        friendships(p);store.save(p);store.audit('gm_'+action,{'player':p['id'],'args':args})
+        friendships(p);store.save(p);p=store.player(account);store.audit('gm_'+action,{'player':p['id'],'args':args})
         return delta(before,p,route,{'entityCountMap':rewards})

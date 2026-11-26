@@ -1,7 +1,7 @@
-serverConfig: [ function(e, t) {
+serverConfig: [ function(e, a) {
 "use strict";
-cc._RF.push(t, "b803bl3SKFDW4aaFD8yVUpb", "serverConfig");
-var a = e("dataApi"), i = e("underscore"), n = e("underscore.string"), s = e("i18n"), r = e("cryptoApi"), o = e, l = {
+cc._RF.push(a, "b803bl3SKFDW4aaFD8yVUpb", "serverConfig");
+var t = e("dataApi"), n = e("underscore"), i = e("underscore.string"), r = e("i18n"), s = e("cryptoApi"), o = e, l = {
 DEBUG: !1,
 MSG_CRYPTO: !1,
 CONSTS: {
@@ -77,19 +77,19 @@ TEST_SERVER_ID: 9999
 FUNS: {
 reqMsgFilter: function(e) {
 if (l.MSG_CRYPTO) {
-var t = i.values(e)[0], a = t.slice(0, 32), n = t.slice(32, e.length);
-r.password = a;
-n = JSON.parse(r.decrypt(n, !0));
-i.extend(e, n);
+var a = n.values(e)[0], t = a.slice(0, 32), i = a.slice(32, e.length);
+s.password = t;
+i = JSON.parse(s.decrypt(i, !0));
+n.extend(e, i);
 }
 },
 resMsgFilter: function(e) {
 if (l.MSG_CRYPTO) {
-r.genPassword(String(Date.now()));
-var t = r.encrypt(String(Date.now())), a = r.password;
-a += r.encrypt(JSON.stringify(e));
-for (var i in e) delete e[i];
-e[t] = a;
+s.genPassword(String(Date.now()));
+var a = s.encrypt(String(Date.now())), t = s.password;
+t += s.encrypt(JSON.stringify(e));
+for (var n in e) delete e[n];
+e[a] = t;
 }
 },
 getMonthLastTime: function() {
@@ -99,130 +99,130 @@ e.setHours(23, 59, 59, 0);
 return e.getTime();
 },
 isNextDay: function(e) {
-var t = new Date(Date._now ? Date._now() : Date.now()), a = new Date(e);
-return t.getDate() != a.getDate() || t.getMonth() != a.getMonth() || t.getFullYear() != a.getFullYear();
+var a = new Date(Date._now ? Date._now() : Date.now()), t = new Date(e);
+return a.getDate() != t.getDate() || a.getMonth() != t.getMonth() || a.getFullYear() != t.getFullYear();
 },
 isNextMonth: function(e) {
-var t = new Date(), a = new Date(e);
-return t.getMonth() != a.getMonth() || t.getFullYear() != a.getFullYear();
+var a = new Date(), t = new Date(e);
+return a.getMonth() != t.getMonth() || a.getFullYear() != t.getFullYear();
 },
 isNextWeek: function(e) {
-var t = new Date();
-return e < new Date(t.getFullYear(), t.getMonth(), t.getDate(), 0, 0, 0) - 864e5 * (0 == t.getDay() ? 6 : t.getDay() - 1);
+var a = new Date();
+return e < new Date(a.getFullYear(), a.getMonth(), a.getDate(), 0, 0, 0) - 864e5 * (0 == a.getDay() ? 6 : a.getDay() - 1);
 },
 getNowDays: function() {
 return Math.floor((new Date() - new Date("2019-01-01 00:00:00")) / 864e5);
 },
 getEntityName: function(e) {
-return a.findEntityById(e).kindName;
+return t.findEntityById(e).kindName;
 },
 randomByWeight: function(e) {
-var t = 0;
-for (var a in e) t += e[a].weight;
-var i = Math.ceil(Math.random() * t);
-for (var a in e) {
-var n = e[a];
-if ((i -= n.weight) <= 0) return n;
+var a = 0;
+for (var t in e) a += e[t].weight;
+var n = Math.ceil(Math.random() * a);
+for (var t in e) {
+var i = e[t];
+if ((n -= i.weight) <= 0) return i;
 }
 return null;
 },
-getValueByBetween: function(e, t, a) {
-for (var i = 0, n = 0; n < e.length; n++) a >= e[n] && (i = n);
-return t[i];
+getValueByBetween: function(e, a, t) {
+for (var n = 0, i = 0; i < e.length; i++) t >= e[i] && (n = i);
+return a[n];
 },
-genUpdate: function(e, t, a) {
-var n = e.team, s = e.bag, r = e.task, o = {}, l = {};
-for (var c in n.roles) if (n.roles[c]._needSync) {
-l[c] = n.roles[c].toJson();
-n.roles[c]._needSync = !1;
+genUpdate: function(e, a, t) {
+var i = e.team, r = e.bag, s = e.task, o = {}, l = {};
+for (var c in i.roles) if (i.roles[c]._needSync) {
+l[c] = i.roles[c].toJson();
+i.roles[c]._needSync = !1;
 }
 var d = {};
-if (s._needSyncIdxs) {
-for (var c in s._needSyncIdxs) {
-var p = s._needSyncIdxs[c];
-d[p] = s.getExt(p) || null;
+if (r._needSyncIdxs) {
+for (var c in r._needSyncIdxs) {
+var h = r._needSyncIdxs[c];
+d[h] = r.getExt(h) || null;
 }
-s._needSyncIdxs = null;
+r._needSyncIdxs = null;
 }
-i.keys(l).length > 0 && (o.team = {
+n.keys(l).length > 0 && (o.team = {
 roles: l,
-friendshipAttr: n.friendshipAttr
+friendshipAttr: i.friendshipAttr
 });
-i.keys(d).length > 0 && (o.bag = {
+n.keys(d).length > 0 && (o.bag = {
 items: d,
-lastIdx: s.lastIdx
+lastIdx: r.lastIdx
 });
-if (r._needInitTeamInfo) {
+if (s._needInitTeamInfo) {
 e.task.initTeamInfo();
-r._needInitTeamInfo = !1;
+s._needInitTeamInfo = !1;
 }
-if (r._needInitBagInfo) {
+if (s._needInitBagInfo) {
 e.task.initBagInfo();
-r._needInitBagInfo = !1;
+s._needInitBagInfo = !1;
 }
-var _ = e.getAttrStrMap(a);
-for (var m in _) if (void 0 !== t[m]) {
-if (i.include([ "vip", "shop", "task", "activity" ], m)) for (var u in _[m]) if (void 0 !== t[m][u]) {
-if ("object" == typeof _[m][u]) {
-for (var h in _[m][u]) if (t[m][u] && (void 0 === t[m][u][h] || t[m][u][h] != _[m][u][h])) {
+var u = e.getAttrStrMap(t);
+for (var m in u) if (void 0 !== a[m]) {
+if (n.include([ "vip", "shop", "task", "activity" ], m)) for (var g in u[m]) if (void 0 !== a[m][g]) {
+if ("object" == typeof u[m][g]) {
+for (var p in u[m][g]) if (a[m][g] && (void 0 === a[m][g][p] || a[m][g][p] != u[m][g][p])) {
 o[m] = o[m] || {};
-o[m][u] = o[m][u] || {};
+o[m][g] = o[m][g] || {};
 try {
-o[m][u][h] = JSON.parse(_[m][u][h]);
+o[m][g][p] = JSON.parse(u[m][g][p]);
 } catch (e) {
-o[m][u][h] = _[m][u][h];
+o[m][g][p] = u[m][g][p];
 }
 }
-} else if (t[m][u] != _[m][u]) {
+} else if (a[m][g] != u[m][g]) {
 o[m] = o[m] || {};
 try {
-o[m][u] = JSON.parse(_[m][u]);
+o[m][g] = JSON.parse(u[m][g]);
 } catch (e) {
-o[m][u] = _[m][u];
+o[m][g] = u[m][g];
 }
 }
 } else {
 o[m] = o[m] || {};
-o[m][u] = _[m][u];
-} else if (t[m] != _[m]) try {
-o[m] = JSON.parse(_[m]);
+o[m][g] = u[m][g];
+} else if (a[m] != u[m]) try {
+o[m] = JSON.parse(u[m]);
 } catch (e) {
-o[m] = _[m];
+o[m] = u[m];
 }
-} else o[m] = _[m];
+} else o[m] = u[m];
 return o;
 },
-genUpdateEntityCountMap: function(e, t) {
-var a = i.unique(i.keys(e).concat(i.keys(t))), n = {};
-for (var s in a) {
-var r = a[s], o = t[r] ? t[r] : 0, l = e[r] ? e[r] : 0;
-n[r] = o - l;
-0 == n[r] && delete n[r];
+genUpdateEntityCountMap: function(e, a) {
+var t = n.unique(n.keys(e).concat(n.keys(a))), i = {};
+for (var r in t) {
+var s = t[r], o = a[s] ? a[s] : 0, l = e[s] ? e[s] : 0;
+i[s] = o - l;
+0 == i[s] && delete i[s];
 }
-return n;
+return i;
 },
 getNumberList: function(e) {
-return i.map(e, function(e) {
+return n.map(e, function(e) {
 return Number(e);
 });
 },
-addExperience: function(e, t, i, n, s) {
-var r = function(e, t) {
-return "shipExp" == t ? a.findExperienceByLevel(100 * (e.star - 1) + e.level)[t] : a.findExperienceByLevel(e.level)[t];
+addExperience: function(e, a, n, i, r) {
+var s = function(e, a) {
+return "shipExp" == a ? t.findExperienceByLevel(100 * (e.star - 1) + e.level)[a] : t.findExperienceByLevel(e.level)[a];
 };
-e.experience += t;
-if (e.experience >= e.nextLevelExp && e.level < i) {
-(function(e, t, a) {
+e.experience += a;
+if (e.experience >= e.nextLevelExp && e.level < n) {
+(function(e, a, t) {
 for (;e.experience >= e.nextLevelExp; ) {
-if (e.level < t) {
+if (e.level < a) {
 e.level += 1;
 e.experience -= e.nextLevelExp;
-s && s();
+r && r();
 }
-e.nextLevelExp = r(e, a);
-if (e.level == t) break;
+e.nextLevelExp = s(e, t);
+if (e.level == a) break;
 }
-})(e, i, n);
+})(e, n, i);
 return !0;
 }
 return !1;
@@ -230,7 +230,7 @@ return !1;
 },
 MAIL: {
 CONSTS: {
-SYSTEM_NAME: s.a("系统消息"),
+SYSTEM_NAME: r.a("系统消息"),
 SYSTEM_ID: 9999999999,
 NEW_MAIL_EXPIRE_TIME: 6048e5,
 STATUS: {
@@ -277,9 +277,9 @@ ALL_SERVER: 3
 },
 FUNS: {
 isDailyResetTime: function(e) {
-var t, a = new Date(e), i = new Date(e + 864e5), n = new Date();
-t = new Date(a.getFullYear(), a.getMonth(), a.getDate(), l.PLAYER.CONSTS.RESET_HOURS, 0, 0);
-return a < t && n > t || a < (t = new Date(i.getFullYear(), i.getMonth(), i.getDate(), l.PLAYER.CONSTS.RESET_HOURS, 0, 0)) && n > t;
+var a, t = new Date(e), n = new Date(e + 864e5), i = new Date();
+a = new Date(t.getFullYear(), t.getMonth(), t.getDate(), l.PLAYER.CONSTS.RESET_HOURS, 0, 0);
+return t < a && i > a || t < (a = new Date(n.getFullYear(), n.getMonth(), n.getDate(), l.PLAYER.CONSTS.RESET_HOURS, 0, 0)) && i > a;
 },
 getActionPointMax: function(e) {
 return l.CREATE_PLAYER.CONSTS.ACTION_POINT_MAX + e;
@@ -288,78 +288,78 @@ isRobot: function(e) {
 return e <= l.CONSTS.ROBOT_COUNT;
 },
 filter2Battle: function(e) {
-var t = l.EQUIPMENTS.CONSTS.EVL_ITEM_TYPES;
-if (e.roles) for (var a in e.roles) {
-for (var i in t) delete e.roles[a].equipments[t[i]];
-delete e.roles[a].initAttr;
-delete e.roles[a].equipmentsAttr;
+var a = l.EQUIPMENTS.CONSTS.EVL_ITEM_TYPES;
+if (e.roles) for (var t in e.roles) {
+for (var n in a) delete e.roles[t].equipments[a[n]];
+delete e.roles[t].initAttr;
+delete e.roles[t].equipmentsAttr;
 }
-if (e.rolesMap) for (var n in e.rolesMap) for (var a in e.rolesMap[n]) {
-for (var i in t) delete e.rolesMap[n][a].equipments[t[i]];
-delete e.rolesMap[n][a].initAttr;
-delete e.rolesMap[n][a].equipmentsAttr;
+if (e.rolesMap) for (var i in e.rolesMap) for (var t in e.rolesMap[i]) {
+for (var n in a) delete e.rolesMap[i][t].equipments[a[n]];
+delete e.rolesMap[i][t].initAttr;
+delete e.rolesMap[i][t].equipmentsAttr;
 }
 return e;
 },
 filter2Show: function(e) {
-var t = [ "kindId", "star", "level", "awakeLevel", "equipments", "trainLevelMap", "evolveSkillIds", "soulLevelMap" ];
-if (e.roles) for (var a in e.roles) for (var n in e.roles[a]) i.include(t, n) || delete e.roles[a][n];
-if (e.rolesMap) for (var s in e.rolesMap) for (var a in e.rolesMap[s]) for (var n in e.rolesMap[s][a]) i.include(t, n) || delete e.rolesMap[s][a][n];
+var a = [ "kindId", "star", "level", "awakeLevel", "equipments", "trainLevelMap", "evolveSkillIds", "soulLevelMap" ];
+if (e.roles) for (var t in e.roles) for (var i in e.roles[t]) n.include(a, i) || delete e.roles[t][i];
+if (e.rolesMap) for (var r in e.rolesMap) for (var t in e.rolesMap[r]) for (var i in e.rolesMap[r][t]) n.include(a, i) || delete e.rolesMap[r][t][i];
 return e;
 },
 getBuyActionPointCost: function(e) {
-var t = [ 0, 50, 50, 50, 100, 100, 100, 200, 200, 200, 400 ];
-return t[e] || t[t.length - 1];
+var a = [ 0, 50, 50, 50, 100, 100, 100, 200, 200, 200, 400 ];
+return a[e] || a[a.length - 1];
 },
 getBuyCoinCost: function(e) {
-var t = [ 0, 10, 20, 20, 20, 40, 40, 40, 40, 40, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 200 ];
-return t[e] || t[t.length - 1];
+var a = [ 0, 10, 20, 20, 20, 40, 40, 40, 40, 40, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 200 ];
+return a[e] || a[a.length - 1];
 },
-getBuyCoinUnit: function(e, t) {
-return Math.floor((3e4 + 100 * e) * Math.pow(t, .35) / 2.23);
+getBuyCoinUnit: function(e, a) {
+return Math.floor((3e4 + 100 * e) * Math.pow(a, .35) / 2.23);
 },
-getBuyCoin: function(e, t) {
-var a = 1, i = Math.random();
-i <= .001 ? a = 10 : i <= .011 ? a = 5 : i <= .061 ? a = 3 : i <= .211 && (a = 2);
+getBuyCoin: function(e, a) {
+var t = 1, n = Math.random();
+n <= .001 ? t = 10 : n <= .011 ? t = 5 : n <= .061 ? t = 3 : n <= .211 && (t = 2);
 return {
-coin: l.PLAYER.FUNS.getBuyCoinUnit(e, t) * a,
-ratio: a
+coin: l.PLAYER.FUNS.getBuyCoinUnit(e, a) * t,
+ratio: t
 };
 },
 getBuySkillPointCost: function(e) {
-var t = l.PLAYER.CONSTS.BUY_SKILL_COST_GEMS;
-return t[e] || t[t.length - 1];
+var a = l.PLAYER.CONSTS.BUY_SKILL_COST_GEMS;
+return a[e] || a[a.length - 1];
 },
 getUpgradeIncreaseActionPoint: function(e) {
-var t = 0;
-e <= 7 ? t = 20 : e <= 11 ? t = 30 : e <= 20 ? t = 40 : e <= 30 ? t = 60 : e <= 40 ? t = 80 : e <= 50 ? t = 100 : t <= 100 && (t = 120);
-return t;
+var a = 0;
+e <= 7 ? a = 20 : e <= 11 ? a = 30 : e <= 20 ? a = 40 : e <= 30 ? a = 60 : e <= 40 ? a = 80 : e <= 50 ? a = 100 : a <= 100 && (a = 120);
+return a;
 }
 }
 },
 ROLE: {
 CONSTS: {
 COLOR_NAME: {
-1: s.a("白"),
-2: s.a("绿"),
-3: s.a("绿+1"),
-4: s.a("蓝"),
-5: s.a("蓝+1"),
-6: s.a("蓝+2"),
-7: s.a("紫"),
-8: s.a("紫+1"),
-9: s.a("紫+2"),
-10: s.a("紫+3"),
-11: s.a("紫+4"),
-12: s.a("橙"),
-13: s.a("橙+1"),
-14: s.a("橙+2"),
-15: s.a("红"),
-16: s.a("红+1"),
-17: s.a("红+2"),
-18: s.a("黑"),
-19: s.a("黑+1"),
-20: s.a("黑+2")
+1: r.a("白"),
+2: r.a("绿"),
+3: r.a("绿+1"),
+4: r.a("蓝"),
+5: r.a("蓝+1"),
+6: r.a("蓝+2"),
+7: r.a("紫"),
+8: r.a("紫+1"),
+9: r.a("紫+2"),
+10: r.a("紫+3"),
+11: r.a("紫+4"),
+12: r.a("橙"),
+13: r.a("橙+1"),
+14: r.a("橙+2"),
+15: r.a("红"),
+16: r.a("红+1"),
+17: r.a("红+2"),
+18: r.a("黑"),
+19: r.a("黑+1"),
+20: r.a("黑+2")
 },
 STAR_GROWTH: {
 1: 1,
@@ -562,72 +562,72 @@ addCritDmgRate: [ 0, .06, .12, .18, .24, .3, .36, .42, .48, .54, .6 ]
 }
 },
 FUNS: {
-getMaxLevel: function(e, t, a) {
-a = a > 10 ? 10 : a;
-return e <= 10 ? e + 5 : e < 20 ? 20 : e <= 80 ? e : l.FUNS.getValueByBetween([ 0, 16, 17, 18, 19, 20, 26, 27, 28, 29, 30 ], [ 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200 ], t + a);
+getMaxLevel: function(e, a, t) {
+t = t > 10 ? 10 : t;
+return e <= 10 ? e + 5 : e < 20 ? 20 : e <= 80 ? e : l.FUNS.getValueByBetween([ 0, 16, 17, 18, 19, 20, 26, 27, 28, 29, 30 ], [ 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200 ], a + t);
 },
-getPower: function(e, t, a) {
-var i = .1 * e.hp + e.atk + e.def + e.mdef;
-i += 2 * (e.hit || 0);
-i += 2 * (e.dodge || 0);
-i += 2 * (e.crit || 0);
-i += 30 * t;
-i += 6e3 * (e.unDizzinessRate || 0);
-i += 8e3 * (e.critRate || 0);
-i += 6e3 * (e.dmg2HpRate || 0);
-i += 7e3 * (e.dodgeRate || 0);
-i += 3500 * (e.atkSpeedRate || 0);
-i += 10 * (e.keepMp || 0);
-i += .1 * (e.reboundDmgHp || 0);
-i += 3e3 * (e.skillDmg2HpRate || 0);
-i += 3e3 * (e.unConfusedRate || 0);
-i += 2e4 * (e.hitReduceMpRate || 0);
-i += 15e3 * (e.hitRepeledRate || 0);
-i += 7500 * (e.hitReduceAtkSpeedRate || 0);
-i += 7500 * (e.hitReduceRecoverHpRate || 0);
-i += 15e3 * (e.hitRateSilence || 0);
-i += 2100 * (e.missReboundTeamRate || 0);
-i += 1500 * (e.missReboundRate || 0);
-i += 3e3 * (e.atkIgnoreDodgeRate || 0);
-i += 3e3 * (e.unDeBuffRate || 0);
-i += 3e3 * (e.hitMaxHpRate ? 1 - e.hitMaxHpRate : 0);
-i += 500 * (e.recoverMp1Sec || 0);
-i += 1e4 * (e.redHitDmgRate || 0);
-i += 12e3 * (e.incHpRate || 0);
-i += 12e3 * (e.incAtkRate || 0);
-i += 12e3 * (e.addDmgRate2 || 0);
-i += 12e3 * (e.ignoreAddDmgRate2 || 0);
-i += 12e3 * (e.beginMaxHpRateShield || 0);
-i += 6e3 * (e.atkShieldExtDmgRate || 0);
-i += 1e4 * (e.hitReduceRecoverHp || 0);
-i += 1e4 * (e.reviveAddDmgRate || 0);
-i += 1e4 * (e.beginHitDmgRate || 0);
-i += 1e4 * (e.beginHitMdmgRate || 0);
-i += 6e3 * (e.hitReduceAtkSpeed || 0);
-i += 1e4 * (e.hitUnReviveRate || 0);
-i += 30 * (e.hitReduceMp || 0);
-i += 15e3 * (e.hitRepeledRate2 || 0);
-i += 1e5 * (e.hitBleedingHpRate || 0);
-i += 5e4 * (e.recoverHp10SecRate2 || 0);
-i += 8e3 * (e.skill0AddDmgRate || 0);
-i += 1e4 * (e.beginRecoverFullMpRate || 0);
-i += 300 * (e.removeDeBuffSec ? 20 - e.removeDeBuffSec : 0);
-i += 3e4 * (e.hitUnRecoverHpRate || 0);
-i += 15e3 * (e.reboundDmgRate || 0);
-i += 1e4 * (e.beginAddDmgRate || 0);
-i += 3e4 * (e.addRecoverHpRedHitDmgRate || 0);
-i += 3e4 * (e.hitUnRecoverMpRate || 0);
-i += 7e3 * (e.ignoreUnDeBuffRate || 0);
-i += 7e3 * (e.privateUnConfusedRate || 0);
-i += 1e4 * (e.hitRate || 0);
-i += 3e3 * (e.addCritDmgRate || 0);
-i += 3e3 * (e.ignoreCritRate || 0);
-i += 3e3 * (e.addHpRecoverRate || 0);
-i += 3e3 * (e.unDmg2HpRate || 0);
-i += 3e3 * (e.skipHitRate || 0);
-i += 3500 * (e.cdSpeedRate || 0);
-i += 2e4 * (e.hitClearMpRate || 0);
-return (i += 3e3 * (e.reducePctDmgRate || 0)) + 5e3 * a;
+getPower: function(e, a, t) {
+var n = .1 * e.hp + e.atk + e.def + e.mdef;
+n += 2 * (e.hit || 0);
+n += 2 * (e.dodge || 0);
+n += 2 * (e.crit || 0);
+n += 30 * a;
+n += 6e3 * (e.unDizzinessRate || 0);
+n += 8e3 * (e.critRate || 0);
+n += 6e3 * (e.dmg2HpRate || 0);
+n += 7e3 * (e.dodgeRate || 0);
+n += 3500 * (e.atkSpeedRate || 0);
+n += 10 * (e.keepMp || 0);
+n += .1 * (e.reboundDmgHp || 0);
+n += 3e3 * (e.skillDmg2HpRate || 0);
+n += 3e3 * (e.unConfusedRate || 0);
+n += 2e4 * (e.hitReduceMpRate || 0);
+n += 15e3 * (e.hitRepeledRate || 0);
+n += 7500 * (e.hitReduceAtkSpeedRate || 0);
+n += 7500 * (e.hitReduceRecoverHpRate || 0);
+n += 15e3 * (e.hitRateSilence || 0);
+n += 2100 * (e.missReboundTeamRate || 0);
+n += 1500 * (e.missReboundRate || 0);
+n += 3e3 * (e.atkIgnoreDodgeRate || 0);
+n += 3e3 * (e.unDeBuffRate || 0);
+n += 3e3 * (e.hitMaxHpRate ? 1 - e.hitMaxHpRate : 0);
+n += 500 * (e.recoverMp1Sec || 0);
+n += 1e4 * (e.redHitDmgRate || 0);
+n += 12e3 * (e.incHpRate || 0);
+n += 12e3 * (e.incAtkRate || 0);
+n += 12e3 * (e.addDmgRate2 || 0);
+n += 12e3 * (e.ignoreAddDmgRate2 || 0);
+n += 12e3 * (e.beginMaxHpRateShield || 0);
+n += 6e3 * (e.atkShieldExtDmgRate || 0);
+n += 1e4 * (e.hitReduceRecoverHp || 0);
+n += 1e4 * (e.reviveAddDmgRate || 0);
+n += 1e4 * (e.beginHitDmgRate || 0);
+n += 1e4 * (e.beginHitMdmgRate || 0);
+n += 6e3 * (e.hitReduceAtkSpeed || 0);
+n += 1e4 * (e.hitUnReviveRate || 0);
+n += 30 * (e.hitReduceMp || 0);
+n += 15e3 * (e.hitRepeledRate2 || 0);
+n += 1e5 * (e.hitBleedingHpRate || 0);
+n += 5e4 * (e.recoverHp10SecRate2 || 0);
+n += 8e3 * (e.skill0AddDmgRate || 0);
+n += 1e4 * (e.beginRecoverFullMpRate || 0);
+n += 300 * (e.removeDeBuffSec ? 20 - e.removeDeBuffSec : 0);
+n += 3e4 * (e.hitUnRecoverHpRate || 0);
+n += 15e3 * (e.reboundDmgRate || 0);
+n += 1e4 * (e.beginAddDmgRate || 0);
+n += 3e4 * (e.addRecoverHpRedHitDmgRate || 0);
+n += 3e4 * (e.hitUnRecoverMpRate || 0);
+n += 7e3 * (e.ignoreUnDeBuffRate || 0);
+n += 7e3 * (e.privateUnConfusedRate || 0);
+n += 1e4 * (e.hitRate || 0);
+n += 3e3 * (e.addCritDmgRate || 0);
+n += 3e3 * (e.ignoreCritRate || 0);
+n += 3e3 * (e.addHpRecoverRate || 0);
+n += 3e3 * (e.unDmg2HpRate || 0);
+n += 3e3 * (e.skipHitRate || 0);
+n += 3500 * (e.cdSpeedRate || 0);
+n += 2e4 * (e.hitClearMpRate || 0);
+return (n += 3e3 * (e.reducePctDmgRate || 0)) + 5e3 * t;
 },
 getUpgradeCost: function(e) {
 return {
@@ -647,93 +647,93 @@ soul: [ 0, 10, 30, 60 ][e]
 };
 },
 getStarKind: function(e) {
-var t = e - 5, a = e - 10, i = e - 15;
+var a = e - 5, t = e - 10, n = e - 15;
 return {
 star: e > 5 ? 5 : e,
-moon: t = (t = t < 0 ? 0 : t) > 5 ? 5 : t,
-sun: a = (a = a < 0 ? 0 : a) > 5 ? 5 : a,
-shen: i = i < 0 ? 0 : i
+moon: a = (a = a < 0 ? 0 : a) > 5 ? 5 : a,
+sun: t = (t = t < 0 ? 0 : t) > 5 ? 5 : t,
+shen: n = n < 0 ? 0 : n
 };
 },
 getAwakeKind: function(e) {
-var t = e - 5, a = e - 10, i = e - 15;
+var a = e - 5, t = e - 10, n = e - 15;
 return {
 green: e > 5 ? 5 : e,
-blue: t = (t = t < 0 ? 0 : t) > 5 ? 5 : t,
-purple: a = (a = a < 0 ? 0 : a) > 5 ? 5 : a,
-orange: i = i < 0 ? 0 : i
+blue: a = (a = a < 0 ? 0 : a) > 5 ? 5 : a,
+purple: t = (t = t < 0 ? 0 : t) > 5 ? 5 : t,
+orange: n = n < 0 ? 0 : n
 };
 },
-getMaxLevelNeedExp: function(e, t) {
-for (var i = e.nextLevelExp - e.experience, n = l.ROLE.FUNS.getMaxLevel(t, e.star, e.awakeLevel), s = e.level + 1; s <= n; s++) i += a.findExperienceByLevel(s).roleExp;
-return i;
+getMaxLevelNeedExp: function(e, a) {
+for (var n = e.nextLevelExp - e.experience, i = l.ROLE.FUNS.getMaxLevel(a, e.star, e.awakeLevel), r = e.level + 1; r <= i; r++) n += t.findExperienceByLevel(r).roleExp;
+return n;
 },
 getAwakeCost: function(e) {
-var t = 5e6;
-e > 10 && (t = 1e7);
+var a = 5e6;
+e > 10 && (a = 1e7);
 return {
-coin: t,
+coin: a,
 soul: [ 90, 90, 90, 90, 90, 120, 120, 120, 120, 120, 160, 160, 160, 160, 160, 160, 160, 160, 160, 160 ][e]
 };
 },
 getBreakAttr: function(e) {
-var t = l.ROLE.FUNS.getStarKind(e), a = [ 0, .02, .04, .06, .08, .1 ], i = [ 0, .02, .04, .06, .08, .1 ], n = [ 0, .01, .02, .03, .04, .05 ];
+var a = l.ROLE.FUNS.getStarKind(e), t = [ 0, .02, .04, .06, .08, .1 ], n = [ 0, .02, .04, .06, .08, .1 ], i = [ 0, .01, .02, .03, .04, .05 ];
 return {
-atkSpeedRate: a[t.moon],
-unDeBuffRate: i[t.sun],
-skipHitRate: n[t.shen],
-unlockAtkSpeedRate: a[1],
-unlockUnDeBuffRate: i[1],
-unlockSkipHitRate: n[1]
+atkSpeedRate: t[a.moon],
+unDeBuffRate: n[a.sun],
+skipHitRate: i[a.shen],
+unlockAtkSpeedRate: t[1],
+unlockUnDeBuffRate: n[1],
+unlockSkipHitRate: i[1]
 };
 },
-getSoulMaxLevel: function(e, t, a) {
-if (t < 50 || a < 3) return 0;
-var i = l.ROLE.FUNS.getStarKind(a);
+getSoulMaxLevel: function(e, a, t) {
+if (a < 50 || t < 3) return 0;
+var n = l.ROLE.FUNS.getStarKind(t);
 switch (e) {
 case 1:
-if (5 == i.moon) return 10;
-if (5 == i.star) return 6;
+if (5 == n.moon) return 10;
+if (5 == n.star) return 6;
 break;
 
 case 2:
-if (5 == i.moon) return 10;
-if (5 == i.star) return 6;
-if (i.star < 4) return 0;
+if (5 == n.moon) return 10;
+if (5 == n.star) return 6;
+if (n.star < 4) return 0;
 break;
 
 case 3:
 case 4:
-if (5 == i.sun) return 10;
-if (5 == i.moon) return 6;
-if (i.star < 5) return 0;
+if (5 == n.sun) return 10;
+if (5 == n.moon) return 6;
+if (n.star < 5) return 0;
 break;
 
 case 5:
 case 6:
-if (i.shen >= 1) return 10;
-if (5 == i.sun) return 6;
-if (i.moon < 5) return 0;
+if (n.shen >= 1) return 10;
+if (5 == n.sun) return 6;
+if (n.moon < 5) return 0;
 break;
 
 case 7:
 case 8:
 case 9:
-if (i.shen >= 2) return 10;
-if (1 == i.shen) return 6;
-if (i.sun < 5) return 0;
+if (n.shen >= 2) return 10;
+if (1 == n.shen) return 6;
+if (n.sun < 5) return 0;
 }
 return 3;
 },
-getSoulAttr: function(e, t, a) {
-var n = a ? l.ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP[e] : l.ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP[e];
+getSoulAttr: function(e, a, t) {
+var i = t ? l.ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP[e] : l.ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP[e];
 return {
-attrKey: i.keys(n)[0],
-attrValue: i.values(n)[0][t]
+attrKey: n.keys(i)[0],
+attrValue: n.values(i)[0][a]
 };
 },
-getSoulCost: function(e, t, a) {
-var i = [ {
+getSoulCost: function(e, a, t) {
+var n = [ {
 1: 31,
 2: 32,
 3: 33,
@@ -743,7 +743,7 @@ var i = [ {
 7: 37,
 8: 38,
 9: 41
-}[e] ], n = [ {
+}[e] ], i = [ {
 1: 20,
 2: 20,
 3: 20,
@@ -754,10 +754,10 @@ var i = [ {
 8: 35,
 9: 35,
 10: 40
-}[t] ];
-if (a) {
-i.push(39);
-n.push({
+}[a] ];
+if (t) {
+n.push(39);
+i.push({
 1: 2,
 2: 2,
 3: 2,
@@ -768,11 +768,11 @@ n.push({
 8: 4,
 9: 4,
 10: 4
-}[t]);
+}[a]);
 }
 return {
-costItemIds: i,
-costItemCounts: n
+costItemIds: n,
+costItemCounts: i
 };
 },
 getEvolveSkillCost: function() {
@@ -796,16 +796,18 @@ STAR_SIGN_ITEM_TYPES: [ "starSignItem_1", "starSignItem_2", "starSignItem_3", "s
 EQUIP_TYPE_NEED_AWAKE_LEVEL_MAP: {
 capsuleItem_3: 10,
 capsuleItem_4: 15,
-capsuleItem_5: 20
+capsuleItem_5: 20,
+artifactItem_4: 15,
+artifactItem_5: 20
 }
 },
 FUNS: {
 getUpgradeCost: function(e) {
-return a.findCostByLevel(e).eqpUpgradeCoin;
+return t.findCostByLevel(e).eqpUpgradeCoin;
 },
-getUpgradeMaxCost: function(e, t) {
-for (var a = e - t, i = 0, n = 1; n <= a; n++) i += l.EQUIPMENTS.FUNS.getUpgradeCost(t + n);
-return i;
+getUpgradeMaxCost: function(e, a) {
+for (var t = e - a, n = 0, i = 1; i <= t; i++) n += l.EQUIPMENTS.FUNS.getUpgradeCost(a + i);
+return n;
 },
 getEvolveCost: function(e) {
 return l.EQUIPMENTS.CONSTS.EVOLVE_COST_COINS[e] || 0;
@@ -868,13 +870,13 @@ UPGRADE_CONST_POINT: 1
 },
 FUNS: {
 getUpgradeCost: function(e) {
-return a.findCostByLevel(e).skillUpgradeCoin;
+return t.findCostByLevel(e).skillUpgradeCoin;
 },
 getAwakeUpgradeCost: function(e) {
-return a.findCostByLevel(100 + e).skillUpgradeCoin;
+return t.findCostByLevel(100 + e).skillUpgradeCoin;
 },
 getShipUpgradeCost: function(e) {
-return 5 * a.findCostByLevel(e).skillUpgradeCoin;
+return 5 * t.findCostByLevel(e).skillUpgradeCoin;
 }
 }
 },
@@ -929,13 +931,13 @@ ENDLESS_DAY_ROLE_CLASS_IDS_MAP: {
 0: [ 27, 22, 24, 34, 38, 39, 66, 68, 75, 72, 71 ]
 },
 ENDLESS_DAY_TITLE_MAP: {
-1: s.t("赛亚人之家"),
-2: s.a("龟仙派"),
-3: s.a("人造人"),
-4: s.a("弗利萨军团"),
-5: s.a("宇宙强战士"),
-6: s.a("宇宙强敌"),
-0: s.a("超级赛亚人")
+1: r.t("赛亚人之家"),
+2: r.a("龟仙派"),
+3: r.a("人造人"),
+4: r.a("弗利萨军团"),
+5: r.a("宇宙强战士"),
+6: r.a("宇宙强敌"),
+0: r.a("超级赛亚人")
 },
 ENDLESS_MORE_UNLOCK_NEED_LEVEL: 55,
 DAILY_PURSUIT_TIMES: 5,
@@ -947,16 +949,16 @@ DAILY_STAR_SIGN_MAP_TIMES: 10
 },
 FUNS: {
 checkOpen: function(e) {
-var t = Date._now ? Date._now() : Date.now(), a = l.MAP.CONSTS.MAP_OPEN_DAYS_MAP[e], n = new Date(t), s = n.getDay(), r = n.getHours();
-if (!a) return !0;
-if (r < l.PLAYER.CONSTS.RESET_HOURS) {
-var o = 0 == s ? 6 : s - 1;
-return i.include(a, o);
+var a = Date._now ? Date._now() : Date.now(), t = l.MAP.CONSTS.MAP_OPEN_DAYS_MAP[e], i = new Date(a), r = i.getDay(), s = i.getHours();
+if (!t) return !0;
+if (s < l.PLAYER.CONSTS.RESET_HOURS) {
+var o = 0 == r ? 6 : r - 1;
+return n.include(t, o);
 }
-return i.include(a, s);
+return n.include(t, r);
 },
-checkBmapCD: function(e, t) {
-return !l.MAP.CONSTS.BMAP_CD_TIME_MAP[e] || l.MAP.CONSTS.BMAP_CD_TIME_MAP[e] + t - (Date._now ? Date._now() : Date.now()) <= 0;
+checkBmapCD: function(e, a) {
+return !l.MAP.CONSTS.BMAP_CD_TIME_MAP[e] || l.MAP.CONSTS.BMAP_CD_TIME_MAP[e] + a - (Date._now ? Date._now() : Date.now()) <= 0;
 },
 checkHaveBmapCDTime: function(e) {
 return !!l.MAP.CONSTS.BMAP_CD_TIME_MAP[e];
@@ -964,20 +966,20 @@ return !!l.MAP.CONSTS.BMAP_CD_TIME_MAP[e];
 getPlayerExp: function(e) {
 return 1 * e;
 },
-getSkipExpDropList: function(e, t) {
-var i = 5 * e * t, n = [ 20004, 20003, 20002, 20001 ], s = {};
-for (var r in n) s[n[r]] = a.findEntityById(n[r]).extra.roleExp;
-for (var o = {}; i > 0; ) {
-if (i < s[n[n.length - 1]]) {
-o[n[r]] = o[n[r]] || 0;
-o[n[r]]++;
-i -= s[n[n.length - 1]];
+getSkipExpDropList: function(e, a) {
+var n = 5 * e * a, i = [ 20004, 20003, 20002, 20001 ], r = {};
+for (var s in i) r[i[s]] = t.findEntityById(i[s]).extra.roleExp;
+for (var o = {}; n > 0; ) {
+if (n < r[i[i.length - 1]]) {
+o[i[s]] = o[i[s]] || 0;
+o[i[s]]++;
+n -= r[i[i.length - 1]];
 break;
 }
-for (var r in n) if (i >= s[n[r]]) {
-o[n[r]] = o[n[r]] || 0;
-o[n[r]]++;
-i -= s[n[r]];
+for (var s in i) if (n >= r[i[s]]) {
+o[i[s]] = o[i[s]] || 0;
+o[i[s]]++;
+n -= r[i[s]];
 break;
 }
 }
@@ -989,16 +991,16 @@ count: o[c]
 return l;
 },
 getResetSmapCost: function(e) {
-var t = l.MAP.CONSTS.RESET_SMAP_COST_GEMS;
-return t[e] || t[t.length - 1];
+var a = l.MAP.CONSTS.RESET_SMAP_COST_GEMS;
+return a[e] || a[a.length - 1];
 },
 getBuyMapType5TimesCost: function(e) {
-var t = l.MAP.CONSTS.BUY_MAP_TYPE5_TIMES_COST_GEMS;
-return t[e] || t[t.length - 1];
+var a = l.MAP.CONSTS.BUY_MAP_TYPE5_TIMES_COST_GEMS;
+return a[e] || a[a.length - 1];
 },
 getBuyFruitMapTimesCost: function(e) {
-var t = [ 0, 50, 100, 100, 150, 150 ];
-return t[e] || i.last(t);
+var a = [ 0, 50, 100, 100, 150, 150 ];
+return a[e] || n.last(a);
 }
 }
 },
@@ -1019,29 +1021,29 @@ SWITCH_ADVANCED_POOL_COST_GEM: 300
 FUNS: {
 getAdvancedSpecialInfo: function(e) {
 if (!e) return null;
-var t = o("./utils"), a = new Date(e.firstTime).setHours(0, 0, 0, 0), n = Date.now();
-if (n < a) return null;
-var s = e.classIdsList, r = e.durationDaysList, c = t.clone(e.maxLuckMap), d = t.clone(e.baseRateMap), p = e.maxRateIncRatio, _ = Math.ceil((n - a) / l.CONSTS.A_DAY), m = 0;
+var a = o("./utils"), t = new Date(e.firstTime).setHours(0, 0, 0, 0), i = Date.now();
+if (i < t) return null;
+var r = e.classIdsList, s = e.durationDaysList, c = a.clone(e.maxLuckMap), d = a.clone(e.baseRateMap), h = e.maxRateIncRatio, u = Math.ceil((i - t) / l.CONSTS.A_DAY), m = 0;
 if (e.isRepeat) {
-var u = i.reduce(r, function(e, t) {
-return e + t;
+var g = n.reduce(s, function(e, a) {
+return e + a;
 }, 0);
-if (_ > u) {
-a += Math.floor(_ / u) * u * l.CONSTS.A_DAY;
-_ = Math.ceil((n - a) / l.CONSTS.A_DAY);
+if (u > g) {
+t += Math.floor(u / g) * g * l.CONSTS.A_DAY;
+u = Math.ceil((i - t) / l.CONSTS.A_DAY);
 }
 }
-for (var h in r) if (_ <= (m += r[h])) {
-for (var f in c) if (!i.include(s[h], Number(f))) {
-delete c[f];
-delete d[f];
+for (var p in s) if (u <= (m += s[p])) {
+for (var _ in c) if (!n.include(r[p], Number(_))) {
+delete c[_];
+delete d[_];
 }
 return {
 maxLuckMap: c,
 baseRateMap: d,
-maxRateIncRatio: p,
-classIds: s[h],
-endTime: a + m * l.CONSTS.A_DAY
+maxRateIncRatio: h,
+classIds: r[p],
+endTime: t + m * l.CONSTS.A_DAY
 };
 }
 return null;
@@ -1054,60 +1056,60 @@ MAX_LUCK: 100
 },
 FUNS: {
 getDropListByDesc: function(e) {
-if (!i.isString(e)) return e;
-var t = [], a = e.split(",");
-for (var n in a) {
-var s = a[n].split("x"), r = s[0].split("_"), o = Number(r[0]), l = Number(s[1]), c = {};
-if (!isNaN(o) && !isNaN(l)) if (r.length > 2) {
-c[r[1]] = Number(r[2]);
-t.push({
+if (!n.isString(e)) return e;
+var a = [], t = e.split(",");
+for (var i in t) {
+var r = t[i].split("x"), s = r[0].split("_"), o = Number(s[0]), l = Number(r[1]), c = {};
+if (!isNaN(o) && !isNaN(l)) if (s.length > 2) {
+c[s[1]] = Number(s[2]);
+a.push({
 entityId: o,
 extra: c,
 count: l
 });
-} else t.push({
+} else a.push({
 entityId: o,
 count: l
 });
 }
-return t;
+return a;
 },
 getRandomDropListByDesc: function(e) {
-var t = [], a = e.split(",");
-for (var i in a) {
-var n = a[i].split("x"), s = n[1].split("_"), r = Number(n[0]), o = null;
-if (isNaN(r)) {
-var l = n[0].split("_");
-r = Number(l[0]);
+var a = [], t = e.split(",");
+for (var n in t) {
+var i = t[n].split("x"), r = i[1].split("_"), s = Number(i[0]), o = null;
+if (isNaN(s)) {
+var l = i[0].split("_");
+s = Number(l[0]);
 (o = {})[l[1]] = Number(l[2]);
 }
-var c, d = Number(s[0]), p = null, _ = null;
-"W" == s[1][0] ? p = Number(s[1].split("W")[1]) : "R" == s[1][0] && (_ = Number(s[1].split("R")[1]));
-p ? c = {
-entityId: r,
+var c, d = Number(r[0]), h = null, u = null;
+"W" == r[1][0] ? h = Number(r[1].split("W")[1]) : "R" == r[1][0] && (u = Number(r[1].split("R")[1]));
+h ? c = {
+entityId: s,
 extra: o,
 count: d,
-weight: p
-} : _ && (c = {
-entityId: r,
+weight: h
+} : u && (c = {
+entityId: s,
 extra: o,
 count: d,
-rate: _
+rate: u
 });
 c.extra || delete c.extra;
-t.push(c);
-}
-return t;
-},
-dropList2EntityCountMap: function(e, t) {
-t = t || !1;
-var a = {};
-for (var i in e) {
-var n = e[i].entityId, s = t ? "" : "_" + i;
-a[n + s] = a[n + s] || 0;
-a[n + s] += e[i].count;
+a.push(c);
 }
 return a;
+},
+dropList2EntityCountMap: function(e, a) {
+a = a || !1;
+var t = {};
+for (var n in e) {
+var i = e[n].entityId, r = a ? "" : "_" + n;
+t[i + r] = t[i + r] || 0;
+t[i + r] += e[n].count;
+}
+return t;
 }
 }
 },
@@ -1115,7 +1117,7 @@ ARENA: {
 CONSTS: {
 REQUIRED_LEVEL: 10,
 SETTLEMENT_REWARD_HOURS: 21,
-TOP_REWARDS_MSG_TITLE: s.a("历史最高排名奖励"),
+TOP_REWARDS_MSG_TITLE: r.a("历史最高排名奖励"),
 RE_CHALLENGE_CD_TIME: 6e5,
 FREE_TIMES: 5,
 CANCEL_CD_COST_GEM: 50,
@@ -1123,8 +1125,8 @@ BUY_CHALLENGE_TIMES: [ 0, 50, 50, 100, 100, 100, 100, 200, 200, 200 ]
 },
 FUNS: {
 getBuyChallengeTimesCost: function(e) {
-var t = l.ARENA.CONSTS.BUY_CHALLENGE_TIMES;
-return t[e] || t[t.length - 1];
+var a = l.ARENA.CONSTS.BUY_CHALLENGE_TIMES;
+return a[e] || a[a.length - 1];
 }
 }
 },
@@ -1141,22 +1143,22 @@ BUY_CHALLENGE_TIMES: [ 0, 50, 50, 100, 100, 100, 100, 200, 200, 200 ]
 },
 FUNS: {
 getBuyChallengeTimesCost: function(e) {
-var t = l.ARENA_3V3.CONSTS.BUY_CHALLENGE_TIMES;
-return t[e] || t[t.length - 1];
+var a = l.ARENA_3V3.CONSTS.BUY_CHALLENGE_TIMES;
+return a[e] || a[a.length - 1];
 },
 getHourCoinCount: function(e) {
-var t = a.arenaRewards.all(), i = 0;
-for (var n in t) {
-var s = t[n];
-if (e >= s.rankBetween[0] && e <= s.rankBetween[1]) {
-i = s.hourCoin;
+var a = t.arenaRewards.all(), n = 0;
+for (var i in a) {
+var r = a[i];
+if (e >= r.rankBetween[0] && e <= r.rankBetween[1]) {
+n = r.hourCoin;
 break;
 }
 }
-return i;
+return n;
 },
 getWorshipRewardDropList: function(e) {
-for (var t = [ 22, 40, 60, 70, 80, 90 ], a = [ [ {
+for (var a = [ 22, 40, 60, 70, 80, 90 ], t = [ [ {
 entityId: 101,
 count: 2e4
 } ], [ {
@@ -1174,8 +1176,8 @@ count: 7e4
 } ], [ {
 entityId: 101,
 count: 8e4
-} ] ], i = a[0], n = 0; n < t.length; n++) e > t[n] && (i = a[n]);
-return i;
+} ] ], n = t[0], i = 0; i < a.length; i++) e > a[i] && (n = t[i]);
+return n;
 }
 }
 },
@@ -1239,10 +1241,10 @@ return {
 }[e];
 },
 getBuyMatchTimesCost: function(e) {
-var t = l.TOP_ARENA_3V3.CONSTS.BUY_MATCH_COST_MONEY_MAP, a = t[e] || i.last(t);
+var a = l.TOP_ARENA_3V3.CONSTS.BUY_MATCH_COST_MONEY_MAP, t = a[e] || n.last(a);
 return {
 moneyId: l.TOP_ARENA_3V3.CONSTS.MONEY_ID,
-count: a
+count: t
 };
 }
 }
@@ -1312,27 +1314,27 @@ REFRESH_HOURS_MAP: {
 14: [ 21 ]
 },
 SHOP_TITLE_MAP: {
-1: s.a("杂货商店"),
-2: s.a("武道会商店"),
-3: s.a("强者争霸商店"),
-4: s.a("源界商店"),
-5: s.a("武斗商店"),
-6: s.a("家族商店"),
-7: s.a("界王星商店"),
-8: s.a("声望商店"),
-9: s.a("巅峰商店"),
-10: s.a("伙伴商店"),
-11: s.a("龙珠商店"),
-12: s.a("战魂商店"),
-13: s.a("巅峰3v3商店"),
-14: s.a("星座商店")
+1: r.a("杂货商店"),
+2: r.a("武道会商店"),
+3: r.a("强者争霸商店"),
+4: r.a("源界商店"),
+5: r.a("武斗商店"),
+6: r.a("家族商店"),
+7: r.a("界王星商店"),
+8: r.a("声望商店"),
+9: r.a("巅峰商店"),
+10: r.a("伙伴商店"),
+11: r.a("龙珠商店"),
+12: r.a("战魂商店"),
+13: r.a("巅峰3v3商店"),
+14: r.a("星座商店")
 },
 VIP_SHOP_COUPON_ENTITY_ID: 112
 },
 FUNS: {
-getRefreshCost: function(e, t) {
-var a = l.SHOP.CONSTS.REFRESH_COST_MONEY_MAP;
-return a[e][t] || i.last(a[e]);
+getRefreshCost: function(e, a) {
+var t = l.SHOP.CONSTS.REFRESH_COST_MONEY_MAP;
+return t[e][a] || n.last(t[e]);
 }
 }
 },
@@ -1360,16 +1362,16 @@ CONSTS: {
 MAX_LEVEL: 16
 },
 FUNS: {
-getUpgradeVipHintStr: function(e, t, i) {
-var r = a.vip.findBy("level", t)[0], o = a.vip.findBigger(e, r[e])[0];
-o && (i = n.include(e, "Times") ? {
-content: [ i, s.a("(升级至VIP$1可额外获得$2次)") ],
-replaceList: [ null, [ o.level, o[e] - r[e] ] ]
+getUpgradeVipHintStr: function(e, a, n) {
+var s = t.vip.findBy("level", a)[0], o = t.vip.findBigger(e, s[e])[0];
+o && (n = i.include(e, "Times") ? {
+content: [ n, r.a("(升级至VIP$1可额外获得$2次)") ],
+replaceList: [ null, [ o.level, o[e] - s[e] ] ]
 } : {
-content: [ i, s.a("(升级至VIP$1可获得该权限)") ],
+content: [ n, r.a("(升级至VIP$1可获得该权限)") ],
 replaceList: [ null, [ o.level ] ]
 });
-return i;
+return n;
 }
 }
 },
@@ -1404,11 +1406,11 @@ CAN_RECEIVE: 2
 }
 },
 FUNS: {
-getStandardPower: function(e, t) {
-return t * (.7 + (e - 25) / 750 * 3) * (.1 * Math.random() + .95);
+getStandardPower: function(e, a) {
+return a * (.7 + (e - 25) / 750 * 3) * (.1 * Math.random() + .95);
 },
-getRewardCoin: function(e, t) {
-return Math.round((15e3 + 100 * t) * (.00195 * Math.pow(e, 3) - .02403 * Math.pow(e, 2) + .12922 * e + .89286) * t / 25 * 2);
+getRewardCoin: function(e, a) {
+return Math.round((15e3 + 100 * a) * (.00195 * Math.pow(e, 3) - .02403 * Math.pow(e, 2) + .12922 * e + .89286) * a / 25 * 2);
 }
 }
 },
@@ -1472,11 +1474,11 @@ TOTAL_POWERS: [ 1e5, 2e5, 4e5, 8e5, 16e5, 32e5, 64e5 ]
 }
 },
 FUNS: {
-checkOpen: function(e, t) {
-var a = Date.now(), n = null == e.start_time ? -1 : e.start_time, s = null == e.end_time ? -1 : e.end_time, r = -1 == n || 0 != n && a >= new Date(n) && a < new Date(s);
-r = r && (!t || (!e.exclude_server_ids || !i.include(e.exclude_server_ids, t)) && (!e.include_server_ids || i.include(e.include_server_ids, t)));
-t && e.regionMap && !l.ACTIVITY.FUNS.getRankRegionName(e, t) && (r = !1);
-return r;
+checkOpen: function(e, a) {
+var t = Date.now(), i = null == e.start_time ? -1 : e.start_time, r = null == e.end_time ? -1 : e.end_time, s = -1 == i || 0 != i && t >= new Date(i) && t < new Date(r);
+s = s && (!a || (!e.exclude_server_ids || !n.include(e.exclude_server_ids, a)) && (!e.include_server_ids || n.include(e.include_server_ids, a)));
+a && e.regionMap && !l.ACTIVITY.FUNS.getRankRegionName(e, a) && (s = !1);
+return s;
 },
 convert: function(e) {
 if ("string" == typeof e.start_time && "string" == typeof e.end_time) {
@@ -1488,19 +1490,19 @@ e.end_time = isNaN(e.end_time) ? 0 : e.end_time;
 e.exclude_server_ids && 0 == e.exclude_server_ids.length && delete e.exclude_server_ids;
 e.include_server_ids && 0 == e.include_server_ids.length && delete e.include_server_ids;
 },
-getBuyReachValCostGem: function(e, t) {
-return e * t;
+getBuyReachValCostGem: function(e, a) {
+return e * a;
 },
-getRankRegionName: function(e, t) {
+getRankRegionName: function(e, a) {
 if (!e) return "z1";
-for (var a in e.regionMap) {
-var n = e.regionMap[a];
-if (-1 != n.indexOf("-")) {
-var s = n.split("-");
-if (t >= Number(s[0]) && t <= Number(s[1])) return a;
+for (var t in e.regionMap) {
+var i = e.regionMap[t];
+if (-1 != i.indexOf("-")) {
+var r = i.split("-");
+if (a >= Number(r[0]) && a <= Number(r[1])) return t;
 } else {
-s = JSON.parse(n);
-if (i.include(s, t)) return a;
+r = JSON.parse(i);
+if (n.include(r, a)) return t;
 }
 }
 return null;
@@ -1733,12 +1735,12 @@ TYPE_TOWERS_MAP: {
 },
 FUNS: {
 getTowerType: function(e) {
-var t;
-for (var a in l.GUILD_BATTLE.CONSTS.TYPE_TOWERS_MAP) if (i.include(l.GUILD_BATTLE.CONSTS.TYPE_TOWERS_MAP[a], e)) {
-t = a;
+var a;
+for (var t in l.GUILD_BATTLE.CONSTS.TYPE_TOWERS_MAP) if (n.include(l.GUILD_BATTLE.CONSTS.TYPE_TOWERS_MAP[t], e)) {
+a = t;
 break;
 }
-return t;
+return a;
 }
 }
 },
@@ -1840,13 +1842,13 @@ MONEY_REWARD_COUNT_MAP: {
 },
 GEM_REWARD_COUNT: 60,
 EXP_ENTITY_ID: 20001,
-REWARD_MAIL_TITLE: s.a("北界王特训奖励"),
-BE_ATTACK_MAIL_TITLE: s.a("北界王特训被扰乱"),
+REWARD_MAIL_TITLE: r.a("北界王特训奖励"),
+BE_ATTACK_MAIL_TITLE: r.a("北界王特训被扰乱"),
 TITLE_MAP: {
-1: s.a("北界王特训"),
-2: s.a("钻石收集"),
-3: s.a("金币收集"),
-4: s.a("圣水收集")
+1: r.a("北界王特训"),
+2: r.a("钻石收集"),
+3: r.a("金币收集"),
+4: r.a("圣水收集")
 },
 CHALLENGE_TIMES: 6,
 DEFENSE_TIMES: 6,
@@ -1856,21 +1858,21 @@ FUNS: {
 getLevelCost: function(e) {
 return l.PRACTICE.CONSTS.LEVEL_COST_GEMS[e];
 },
-getSettlementMsgBody: function(e, t) {
+getSettlementMsgBody: function(e, a) {
 return {
-content: s.a("恭喜您在<$1>特训完成,在这期间您被扰乱了$2次,在请查收您获得的奖励!"),
-replaceList: [ l.PRACTICE.CONSTS.TITLE_MAP[e], t ]
+content: r.a("恭喜您在<$1>特训完成,在这期间您被扰乱了$2次,在请查收您获得的奖励!"),
+replaceList: [ l.PRACTICE.CONSTS.TITLE_MAP[e], a ]
 };
 },
-getBeAttackMsgBody: function(e, t, i, n, r, o, c) {
-var d = l.PRACTICE.FUNS.getChallengeRewardRate(r, o), p = l.PRACTICE.FUNS.getRewardDropList(e, o, t, d), _ = "";
-for (var m in p) _ += "<" + a.findEntityById(p[m].entityId).kindName + "x" + p[m].count + ">";
-return _ = c ? {
-content: s.a("您的队伍在<$1>被$2区的$3扰乱了,损失了$4."),
-replaceList: [ l.PRACTICE.CONSTS.TITLE_MAP[e], i, n, _ ]
+getBeAttackMsgBody: function(e, a, n, i, s, o, c) {
+var d = l.PRACTICE.FUNS.getChallengeRewardRate(s, o), h = l.PRACTICE.FUNS.getRewardDropList(e, o, a, d), u = "";
+for (var m in h) u += "<" + t.findEntityById(h[m].entityId).kindName + "x" + h[m].count + ">";
+return u = c ? {
+content: r.a("您的队伍在<$1>被$2区的$3扰乱了,损失了$4."),
+replaceList: [ l.PRACTICE.CONSTS.TITLE_MAP[e], n, i, u ]
 } : {
-content: s.a("您的队伍在<$1>成功抵挡了$2区的$3的扰乱."),
-replaceList: [ l.PRACTICE.CONSTS.TITLE_MAP[e], i, n ]
+content: r.a("您的队伍在<$1>成功抵挡了$2区的$3的扰乱."),
+replaceList: [ l.PRACTICE.CONSTS.TITLE_MAP[e], n, i ]
 };
 },
 getRewardCoinCount: function(e) {
@@ -1879,58 +1881,58 @@ return 3 * l.EXPEDITION.FUNS.getRewardCoin(2, e);
 getRewardExpEntityCount: function(e) {
 return Math.ceil(2 * l.PRACTICE.FUNS.getRewardCoinCount(e) / 400);
 },
-getChallengeRewardRate: function(e, t) {
-var a = .1 - .1 * (e - t) / 5;
-return (a = a > .2 ? .2 : a) < .05 ? .05 : a;
+getChallengeRewardRate: function(e, a) {
+var t = .1 - .1 * (e - a) / 5;
+return (t = t > .2 ? .2 : t) < .05 ? .05 : t;
 },
-getRewardDropList: function(e, t, a, i, n) {
-n = n || !1;
-var s, r, o = l.PRACTICE.CONSTS.TYPE;
+getRewardDropList: function(e, a, t, n, i) {
+i = i || !1;
+var r, s, o = l.PRACTICE.CONSTS.TYPE;
 switch (e) {
 case o.MONEY:
-r = Math.ceil(l.PRACTICE.CONSTS.MONEY_REWARD_COUNT_MAP[a] * i);
-s = [ {
+s = Math.ceil(l.PRACTICE.CONSTS.MONEY_REWARD_COUNT_MAP[t] * n);
+r = [ {
 entityId: l.PRACTICE.CONSTS.MONEY_ENTITY_ID,
-count: r
+count: s
 } ];
 break;
 
 case o.GEM:
-r = Math.ceil(l.PRACTICE.CONSTS.GEM_REWARD_COUNT * i);
-r = n ? 3 * r : r;
-s = [ {
+s = Math.ceil(l.PRACTICE.CONSTS.GEM_REWARD_COUNT * n);
+s = i ? 3 * s : s;
+r = [ {
 entityId: l.CONSTS.ENTITY_ID.GEM,
-count: r
+count: s
 } ];
 break;
 
 case o.COIN:
-r = Math.ceil(l.PRACTICE.FUNS.getRewardCoinCount(t) * i);
-s = [ {
+s = Math.ceil(l.PRACTICE.FUNS.getRewardCoinCount(a) * n);
+r = [ {
 entityId: l.CONSTS.ENTITY_ID.COIN,
-count: r
+count: s
 } ];
 break;
 
 case o.EXP:
-r = Math.ceil(l.PRACTICE.FUNS.getRewardExpEntityCount(t) * i);
-var c = Math.floor(r / 25), d = r % 25, p = Math.floor(d / 5);
-d = r % 5;
-s = [];
-c > 0 && s.push({
+s = Math.ceil(l.PRACTICE.FUNS.getRewardExpEntityCount(a) * n);
+var c = Math.floor(s / 25), d = s % 25, h = Math.floor(d / 5);
+d = s % 5;
+r = [];
+c > 0 && r.push({
 entityId: 20003,
 count: c
 });
-p > 0 && s.push({
+h > 0 && r.push({
 entityId: 20002,
-count: p
+count: h
 });
-d > 0 && s.push({
+d > 0 && r.push({
 entityId: 20001,
 count: d
 });
 }
-return s;
+return r;
 }
 }
 },
@@ -2053,13 +2055,13 @@ DAY_ROLE_CLASS_IDS_MAP: {
 0: [ 27, 22, 24, 34, 38, 39 ]
 },
 DAY_TITLE_MAP: {
-1: s.a("赛亚人之家"),
-2: s.a("龟仙派"),
-3: s.a("人造人"),
-4: s.a("弗利萨军团"),
-5: s.a("宇宙强战士"),
-6: s.a("宇宙强敌"),
-0: s.a("超级赛亚人")
+1: r.a("赛亚人之家"),
+2: r.a("龟仙派"),
+3: r.a("人造人"),
+4: r.a("弗利萨军团"),
+5: r.a("宇宙强战士"),
+6: r.a("宇宙强敌"),
+0: r.a("超级赛亚人")
 },
 ROLE_COUNT_MIN_LIMIT: 1,
 OPEN_HOURS: 10,
@@ -2069,38 +2071,38 @@ SETTLEMENT_REWARD_MINUTE: 30
 },
 FUNS: {
 getBuyChallengeTimesCost: function(e) {
-var t = [ 0, 50, 50, 100, 100, 100, 100, 200, 200, 200 ];
-return t[e] || t[t.length - 1];
+var a = [ 0, 50, 50, 100, 100, 100, 100, 200, 200, 200 ];
+return a[e] || a[a.length - 1];
 },
-getPublicRewardList: function(e, t) {
+getPublicRewardList: function(e, a) {
 if (e > 11) return [];
-var a = Math.floor(t / 18e5), i = Math.floor(a ? a / 2 : 0), n = o("./utils").clone(l.EYE.CONSTS.RANK_30_MINUTE_REWARD_LIST_MAP[e]);
-if (a > 0) for (var s in n) n[s].count *= a; else n = [];
-if (i > 0 && e <= 5) {
-var r = o("./dropUtil"), c = [];
-for (s = 0; s < i; s++) {
+var t = Math.floor(a / 18e5), n = Math.floor(t ? t / 2 : 0), i = o("./utils").clone(l.EYE.CONSTS.RANK_30_MINUTE_REWARD_LIST_MAP[e]);
+if (t > 0) for (var r in i) i[r].count *= t; else i = [];
+if (n > 0 && e <= 5) {
+var s = o("./dropUtil"), c = [];
+for (r = 0; r < n; r++) {
 c.push(l.EYE.CONSTS.PUBLIC_STONE_CLASS_ID);
 1 == e && c.push(l.EYE.CONSTS.PUBLIC_STONE_CLASS_ID);
 }
-n = n.concat(r.getDropListByClassIds(c));
+i = i.concat(s.getDropListByClassIds(c));
 }
 var d = {};
-for (var s in n) {
-var p = n[s].entityId, _ = n[s].count;
-d[p] = d[p] || 0;
-d[p] += _;
+for (var r in i) {
+var h = i[r].entityId, u = i[r].count;
+d[h] = d[h] || 0;
+d[h] += u;
 }
 var m = [];
-for (var p in d) m.push({
-entityId: Number(p),
-count: d[p]
+for (var h in d) m.push({
+entityId: Number(h),
+count: d[h]
 });
 return m;
 },
 getPrivateRewardList: function(e) {
-var t = Math.floor(e / 18e5), a = o("./utils").clone(l.EYE.CONSTS.PRIVATE_30_MINUTE_REWARD_LIST);
-if (t > 0) for (var i in a) a[i].count *= t; else a = [];
-return a;
+var a = Math.floor(e / 18e5), t = o("./utils").clone(l.EYE.CONSTS.PRIVATE_30_MINUTE_REWARD_LIST);
+if (a > 0) for (var n in t) t[n].count *= a; else t = [];
+return t;
 }
 }
 },
@@ -2324,15 +2326,15 @@ BATTLE_FAIL_DROP_CLASS_ID: 902
 },
 FUNS: {
 getTowerType: function(e) {
-var t;
-for (var a in l.ALL_SERVER_BATTLE.CONSTS.TYPE_TOWERS_MAP) if (i.include(l.ALL_SERVER_BATTLE.CONSTS.TYPE_TOWERS_MAP[a], e)) {
-t = a;
+var a;
+for (var t in l.ALL_SERVER_BATTLE.CONSTS.TYPE_TOWERS_MAP) if (n.include(l.ALL_SERVER_BATTLE.CONSTS.TYPE_TOWERS_MAP[t], e)) {
+a = t;
 break;
 }
-return t;
+return a;
 },
 getWorshipRewardDropList: function(e) {
-for (var t = [ 22, 40, 60, 70, 80, 90 ], a = [ [ {
+for (var a = [ 22, 40, 60, 70, 80, 90 ], t = [ [ {
 entityId: 101,
 count: 2e4
 } ], [ {
@@ -2350,8 +2352,8 @@ count: 7e4
 } ], [ {
 entityId: 101,
 count: 8e4
-} ] ], i = a[0], n = 0; n < t.length; n++) e > t[n] && (i = a[n]);
-return i;
+} ] ], n = t[0], i = 0; i < a.length; i++) e > a[i] && (n = t[i]);
+return n;
 }
 }
 },
@@ -2637,69 +2639,69 @@ MONEY_REWARD_COUNT_MAP: {
 },
 MONEY_ENTITY_ID: 115,
 PRACTICE_TEAM_MEMBER_COUNT: 3,
-REWARD_MAIL_TITLE: s.a("讨伐弗利萨奖励"),
-BE_ATTACK_MAIL_TITLE: s.a("讨伐弗利萨被扰乱"),
-ATTACK_MAIL_TITLE: s.a("讨伐弗利萨扰乱"),
+REWARD_MAIL_TITLE: r.a("讨伐弗利萨奖励"),
+BE_ATTACK_MAIL_TITLE: r.a("讨伐弗利萨被扰乱"),
+ATTACK_MAIL_TITLE: r.a("讨伐弗利萨扰乱"),
 REWARD_GEM: 30
 },
 FUNS: {
-getSettlementMsgBody: function(e, t, a) {
+getSettlementMsgBody: function(e, a, t) {
 return {
-content: s.a("恭喜您讨伐完成,在这期间您的队伍$1扰乱了别的队伍$2次,被扰乱了$3次,在请查收您获得的奖励!"),
-replaceList: [ e, t, a ]
+content: r.a("恭喜您讨伐完成,在这期间您的队伍$1扰乱了别的队伍$2次,被扰乱了$3次,在请查收您获得的奖励!"),
+replaceList: [ e, a, t ]
 };
 },
-getChallengeMsgBody: function(e, t, n) {
-var r = i.sortBy(e.battleTeamMap, function(t) {
-return t.playerId == e.leaderId ? 1 : 0;
+getChallengeMsgBody: function(e, a, i) {
+var s = n.sortBy(e.battleTeamMap, function(a) {
+return a.playerId == e.leaderId ? 1 : 0;
 }), o = "[";
-for (var c in r) {
-o += r[c].playerName;
-o += c == r.length - 1 ? "]" : "|";
+for (var c in s) {
+o += s[c].playerName;
+o += c == s.length - 1 ? "]" : "|";
 }
-r = i.sortBy(t.battleTeamMap, function(e) {
-return e.playerId == t.leaderId ? 1 : 0;
+s = n.sortBy(a.battleTeamMap, function(e) {
+return e.playerId == a.leaderId ? 1 : 0;
 });
 var d = "[";
-for (var c in r) {
-d += r[c].playerName;
-d += c == r.length - 1 ? "]" : ",";
+for (var c in s) {
+d += s[c].playerName;
+d += c == s.length - 1 ? "]" : ",";
 }
-var p, _, m = e.topLevel, u = t.topLevel, h = i.keys(t.battleTeamMap).length, f = l.PRESTIGE_BATTLE.FUNS.getChallengeRewardRate(m, u), g = l.PRESTIGE_BATTLE.FUNS.getRewardDropList(h, f), v = "";
-for (var c in g) v += "<" + a.findEntityById(g[c].entityId).kindName + "x" + Math.floor(g[c].count / h) + ">";
-if (n) {
-p = {
-content: s.a("您的队伍$1扰乱了$2区的$3的队伍,请查收战利品."),
-replaceList: [ o, t.serverId, d ]
+var h, u, m = e.topLevel, g = a.topLevel, p = n.keys(a.battleTeamMap).length, _ = l.PRESTIGE_BATTLE.FUNS.getChallengeRewardRate(m, g), k = l.PRESTIGE_BATTLE.FUNS.getRewardDropList(p, _), f = "";
+for (var c in k) f += "<" + t.findEntityById(k[c].entityId).kindName + "x" + Math.floor(k[c].count / p) + ">";
+if (i) {
+h = {
+content: r.a("您的队伍$1扰乱了$2区的$3的队伍,请查收战利品."),
+replaceList: [ o, a.serverId, d ]
 };
-_ = {
-content: s.a("您的队伍$1在讨伐中被$2区的$3的队伍扰乱了,损失了$4."),
-replaceList: [ d, e.serverId, o, v ]
+u = {
+content: r.a("您的队伍$1在讨伐中被$2区的$3的队伍扰乱了,损失了$4."),
+replaceList: [ d, e.serverId, o, f ]
 };
 } else {
-p = {
-content: s.a("您的队伍$1扰乱$2区的$3的队伍,然而被反杀了."),
-replaceList: [ o, t.serverId, d ]
+h = {
+content: r.a("您的队伍$1扰乱$2区的$3的队伍,然而被反杀了."),
+replaceList: [ o, a.serverId, d ]
 };
-_ = {
-content: s.a("您的队伍$1在讨伐中遭遇$2区的$3的队伍扰乱,反杀了对方."),
+u = {
+content: r.a("您的队伍$1在讨伐中遭遇$2区的$3的队伍扰乱,反杀了对方."),
 replaceList: [ d, e.serverId, o ]
 };
 }
 return {
-attacker: p,
-defender: _
+attacker: h,
+defender: u
 };
 },
-getChallengeRewardRate: function(e, t) {
-var a = .1 - .1 * (e - t) / 5;
-return (a = a > .2 ? .2 : a) < .05 ? .05 : a;
+getChallengeRewardRate: function(e, a) {
+var t = .1 - .1 * (e - a) / 5;
+return (t = t > .2 ? .2 : t) < .05 ? .05 : t;
 },
-getRewardDropList: function(e, t) {
-var a = Math.ceil(l.PRESTIGE_BATTLE.CONSTS.MONEY_REWARD_COUNT_MAP[e] * e * t);
+getRewardDropList: function(e, a) {
+var t = Math.ceil(l.PRESTIGE_BATTLE.CONSTS.MONEY_REWARD_COUNT_MAP[e] * e * a);
 return [ {
 entityId: l.PRESTIGE_BATTLE.CONSTS.MONEY_ENTITY_ID,
-count: a
+count: t
 } ];
 }
 }
@@ -2970,39 +2972,39 @@ FUNS: {
 getWinPoint: function(e) {
 return e > 2 ? 3 : 2;
 },
-getChallengeMsgBody: function(e, t, a, n) {
-var r = i.sortBy(e.battleTeamMap, function(t) {
-return t.playerId == e.leaderId ? 1 : 0;
+getChallengeMsgBody: function(e, a, t, i) {
+var s = n.sortBy(e.battleTeamMap, function(a) {
+return a.playerId == e.leaderId ? 1 : 0;
 }), o = "[";
-for (var c in r) {
-o += r[c].playerName;
-o += c == r.length - 1 ? "]" : "|";
+for (var c in s) {
+o += s[c].playerName;
+o += c == s.length - 1 ? "]" : "|";
 }
-r = i.sortBy(t.battleTeamMap, function(e) {
-return e.playerId == t.leaderId ? 1 : 0;
+s = n.sortBy(a.battleTeamMap, function(e) {
+return e.playerId == a.leaderId ? 1 : 0;
 });
-var d, p = "[";
-for (var c in r) {
-p += r[c].playerName;
-p += c == r.length - 1 ? "]" : ",";
+var d, h = "[";
+for (var c in s) {
+h += s[c].playerName;
+h += c == s.length - 1 ? "]" : ",";
 }
-if (a) {
-var _ = l.TEAM_BATTLE.FUNS.getWinPoint(n);
+if (t) {
+var u = l.TEAM_BATTLE.FUNS.getWinPoint(i);
 d = {
-content: s.a("您的队伍$1攻击了$2区的$3的队伍取得$4次战斗胜利,获得$5积分."),
-replaceList: [ o, t.serverId, p, n, _ ]
+content: r.a("您的队伍$1攻击了$2区的$3的队伍取得$4次战斗胜利,获得$5积分."),
+replaceList: [ o, a.serverId, h, i, u ]
 };
 } else d = {
-content: s.a("您的队伍$1攻击了$2区的$3的队伍失败了,获得$4积分."),
-replaceList: [ o, t.serverId, p, 0 ]
+content: r.a("您的队伍$1攻击了$2区的$3的队伍失败了,获得$4积分."),
+replaceList: [ o, a.serverId, h, 0 ]
 };
 return {
 attacker: d
 };
 },
 getRefreshCost: function(e) {
-var t = [ 0, 100, 200, 300, 400 ];
-return t[e] || t[t.length - 1];
+var a = [ 0, 100, 200, 300, 400 ];
+return a[e] || a[a.length - 1];
 }
 }
 },
@@ -3018,9 +3020,9 @@ INCREASE_SUCCESS_RATE_COST_GEMS: [ 0, 500, 800, 1200, 2e3, 3e3 ],
 INCREASE_SUCCESS_RATE_MAX_TIMES: 5
 },
 FUNS: {
-getUpgradeStarRate: function(e, t) {
-var a = (10 * l.ARTIFACT.CONSTS.UPGRADE_SUCCESS_RATES[e] + l.ARTIFACT.CONSTS.INCREASE_SUCCESS_RATE * t * 10) / 10;
-return a > 1 ? 1 : a;
+getUpgradeStarRate: function(e, a) {
+var t = (10 * l.ARTIFACT.CONSTS.UPGRADE_SUCCESS_RATES[e] + l.ARTIFACT.CONSTS.INCREASE_SUCCESS_RATE * a * 10) / 10;
+return t > 1 ? 1 : t;
 }
 }
 },
@@ -3069,46 +3071,46 @@ hitUnRecoverMpRate: [ .04, .05, .07, .1 ],
 ignoreUnDeBuffRate: [ .13, .23, .33, .45 ]
 },
 ATTR_NAME_MAP: {
-redHitDmgRate: s.a("免伤能力"),
-atkSpeedRate: s.a("强化攻速"),
-incHpRate: s.a("强化生命"),
-addMpRecoverRate: s.a("能量回复"),
-ignoreCritRate: s.a("暴击抵抗"),
-unDeBuffRate: s.a("负面抵抗"),
-addDmgRate2: s.a("强化攻击"),
-ignoreAddDmgRate2: s.a("无视增伤"),
-critRate: s.a("强化暴击"),
-addCritDmgRate: s.a("强化暴伤"),
-dodgeRate: s.a("强化闪避"),
-atkIgnoreDodgeRate: s.a("无视闪避"),
-addHitRate: s.a("精准打击"),
-skillDmg2HpRate: s.a("技能回血"),
-beginMaxHpRateShield: s.a("护盾环绕"),
-atkShieldExtDmgRate: s.a("护盾破除"),
-addHpRecoverRate: s.a("强化回血"),
-hitReduceRecoverHp: s.a("回血削弱"),
-hitMaxHpRate: s.a("受击上限"),
-reviveAddDmgRate: s.a("浴火重生"),
-beginHitDmgRate: s.a("物理免伤"),
-beginHitMdmgRate: s.a("魔法免伤"),
-hitReduceAtkSpeed: s.a("强化减速"),
-hitUnReviveRate: s.a("禁止复活"),
-keepMp: s.a("能量增加"),
-hitReduceMp: s.a("能量破坏"),
-hitRateSilence2: s.a("强化沉默"),
-hitRepeledRate2: s.a("强化击退"),
-hitBleedingHpRate: s.a("流血割裂"),
-recoverHp10SecRate2: s.a("生命回复"),
-skill0AddDmgRate: s.a("强化普攻"),
-beginRecoverFullMpRate: s.a("初始暴怒"),
-removeDeBuffSec: s.a("负面净化"),
-hitUnRecoverHpRate: s.a("禁止回血"),
-reboundDmgRate: s.a("伤害反弹"),
-privateUnConfusedRate: s.a("抵抗魅惑"),
-beginAddDmgRate: s.a("初始爆发"),
-addRecoverHpRedHitDmgRate: s.a("坚定不移"),
-hitUnRecoverMpRate: s.a("能量阻断"),
-ignoreUnDeBuffRate: s.a("无视抵抗")
+redHitDmgRate: r.a("免伤能力"),
+atkSpeedRate: r.a("强化攻速"),
+incHpRate: r.a("强化生命"),
+addMpRecoverRate: r.a("能量回复"),
+ignoreCritRate: r.a("暴击抵抗"),
+unDeBuffRate: r.a("负面抵抗"),
+addDmgRate2: r.a("强化攻击"),
+ignoreAddDmgRate2: r.a("无视增伤"),
+critRate: r.a("强化暴击"),
+addCritDmgRate: r.a("强化暴伤"),
+dodgeRate: r.a("强化闪避"),
+atkIgnoreDodgeRate: r.a("无视闪避"),
+addHitRate: r.a("精准打击"),
+skillDmg2HpRate: r.a("技能回血"),
+beginMaxHpRateShield: r.a("护盾环绕"),
+atkShieldExtDmgRate: r.a("护盾破除"),
+addHpRecoverRate: r.a("强化回血"),
+hitReduceRecoverHp: r.a("回血削弱"),
+hitMaxHpRate: r.a("受击上限"),
+reviveAddDmgRate: r.a("浴火重生"),
+beginHitDmgRate: r.a("物理免伤"),
+beginHitMdmgRate: r.a("魔法免伤"),
+hitReduceAtkSpeed: r.a("强化减速"),
+hitUnReviveRate: r.a("禁止复活"),
+keepMp: r.a("能量增加"),
+hitReduceMp: r.a("能量破坏"),
+hitRateSilence2: r.a("强化沉默"),
+hitRepeledRate2: r.a("强化击退"),
+hitBleedingHpRate: r.a("流血割裂"),
+recoverHp10SecRate2: r.a("生命回复"),
+skill0AddDmgRate: r.a("强化普攻"),
+beginRecoverFullMpRate: r.a("初始暴怒"),
+removeDeBuffSec: r.a("负面净化"),
+hitUnRecoverHpRate: r.a("禁止回血"),
+reboundDmgRate: r.a("伤害反弹"),
+privateUnConfusedRate: r.a("抵抗魅惑"),
+beginAddDmgRate: r.a("初始爆发"),
+addRecoverHpRedHitDmgRate: r.a("坚定不移"),
+hitUnRecoverMpRate: r.a("能量阻断"),
+ignoreUnDeBuffRate: r.a("无视抵抗")
 },
 ATTR_NAME_SKILL_ID_MAP: {
 redHitDmgRate: 1,
@@ -3154,13 +3156,13 @@ ignoreUnDeBuffRate: 40
 }
 },
 FUNS: {
-getAttrDesc: function(e, t) {
-var a = [ s.t("下级"), s.t("中级"), s.t("上级"), s.t("顶级") ];
-return s.t(l.CAPSULE.CONSTS.ATTR_NAME_MAP[e]) + "(" + a[t - 1] + ")";
+getAttrDesc: function(e, a) {
+var t = [ r.t("下级"), r.t("中级"), r.t("上级"), r.t("顶级") ];
+return r.t(l.CAPSULE.CONSTS.ATTR_NAME_MAP[e]) + "(" + t[a - 1] + ")";
 },
 getResetCostMap: function(e) {
-var t = {};
-t[101] = {
+var a = {};
+a[101] = {
 60001: 1e5,
 60002: 3e5,
 60003: 6e5,
@@ -3168,7 +3170,7 @@ t[101] = {
 60005: 3e6,
 60006: 5e6
 }[e];
-t[60007] = {
+a[60007] = {
 60001: 20,
 60002: 50,
 60003: 120,
@@ -3176,18 +3178,18 @@ t[60007] = {
 60005: 750,
 60006: 2e3
 }[e];
-return t;
+return a;
 },
 getComposeCostMap: function(e) {
-var t = {};
-t[101] = {
+var a = {};
+a[101] = {
 60002: 5e5,
 60003: 1e6,
 60004: 15e5,
 60005: 3e6,
 60006: 5e6
 }[e];
-t[{
+a[{
 60002: 60001,
 60003: 60002,
 60004: 60003,
@@ -3200,27 +3202,27 @@ t[{
 60005: 5,
 60006: 3
 }[e];
-60006 == e && (t[60008] = 1);
-return t;
+60006 == e && (a[60008] = 1);
+return a;
 },
 buildSkillAttrs: function(e) {
-var t = i.keys(l.CAPSULE.CONSTS.ATTR_VALUES_MAP), n = [ "incHpRate", "unDeBuffRate", "beginMaxHpRateShield", "beginHitDmgRate", "beginHitMdmgRate", "hitUnReviveRate", "hitRateSilence2", "hitRepeledRate2", "hitBleedingHpRate", "recoverHp10SecRate2", "beginRecoverFullMpRate", "removeDeBuffSec", "reboundDmgRate" ], s = a.findEntityById(e), r = [];
-for (var o in s.extra.levelWeightMap) r.push({
+var a = n.keys(l.CAPSULE.CONSTS.ATTR_VALUES_MAP), i = [ "incHpRate", "unDeBuffRate", "beginMaxHpRateShield", "beginHitDmgRate", "beginHitMdmgRate", "hitUnReviveRate", "hitRateSilence2", "hitRepeledRate2", "hitBleedingHpRate", "recoverHp10SecRate2", "beginRecoverFullMpRate", "removeDeBuffSec", "reboundDmgRate" ], r = t.findEntityById(e), s = [];
+for (var o in r.extra.levelWeightMap) s.push({
 level: Number(o),
-weight: s.extra.levelWeightMap[o]
+weight: r.extra.levelWeightMap[o]
 });
-for (var c = {}, d = 0; d < s.extra.buildCount; d++) {
-for (var p = l.FUNS.randomByWeight(r), _ = i.sample(t); c[_] || 60001 == e && i.include(n, _); ) _ = i.sample(t);
-c[_] = {
-level: p.level
+for (var c = {}, d = 0; d < r.extra.buildCount; d++) {
+for (var h = l.FUNS.randomByWeight(s), u = n.sample(a); c[u] || 60001 == e && n.include(i, u); ) u = n.sample(a);
+c[u] = {
+level: h.level
 };
 }
 return c;
 },
 getComposeItemLevel: function(e) {
-var t = 0;
-for (var a in e.skillInfo) t += e.skillInfo[a].level;
-return t;
+var a = 0;
+for (var t in e.skillInfo) a += e.skillInfo[t].level;
+return a;
 }
 }
 },
@@ -3236,9 +3238,9 @@ INCREASE_SUCCESS_RATE_COST_GEMS: [ 0, 800, 1500, 2500, 4e3, 5500 ],
 INCREASE_SUCCESS_RATE_MAX_TIMES: 5
 },
 FUNS: {
-getUpgradeStarRate: function(e, t) {
-var a = (10 * l.ARTIFACT.CONSTS.UPGRADE_SUCCESS_RATES[e] + l.ARTIFACT.CONSTS.INCREASE_SUCCESS_RATE * t * 10) / 10;
-return a > 1 ? 1 : a;
+getUpgradeStarRate: function(e, a) {
+var t = (10 * l.ARTIFACT.CONSTS.UPGRADE_SUCCESS_RATES[e] + l.ARTIFACT.CONSTS.INCREASE_SUCCESS_RATE * a * 10) / 10;
+return t > 1 ? 1 : t;
 },
 getPveUpPower: function(e) {
 return 1.5 * e / 100;
@@ -3263,15 +3265,15 @@ MOB_ID_MAP: {
 },
 FUNS: {
 getAttrVal: function(e) {
-var t = a.findEntityById(e.kindId);
-return (100 * (e.star - 1) + e.level) * t.growth;
+var a = t.findEntityById(e.kindId);
+return (100 * (e.star - 1) + e.level) * a.growth;
 },
 getUpgradeSkillCostGem: function(e) {
 return 3 * e;
 },
 getUpgradeStarCostFragment: function(e) {
-var t = [ 0, 0, 50, 50, 50, 50, 50, 50, 50, 50, 50 ];
-return t[e] || t[t.length - 1];
+var a = [ 0, 0, 50, 50, 50, 50, 50, 50, 50, 50, 50 ];
+return a[e] || a[a.length - 1];
 }
 }
 },
@@ -3287,13 +3289,13 @@ DAY_ROLE_CLASS_IDS_MAP: {
 0: [ 27, 22, 24, 34, 38, 39 ]
 },
 DAY_TITLE_MAP: {
-1: s.a("赛亚人之家"),
-2: s.a("龟仙派"),
-3: s.a("人造人"),
-4: s.a("弗利萨军团"),
-5: s.a("宇宙强战士"),
-6: s.a("宇宙强敌"),
-0: s.a("超级赛亚人")
+1: r.a("赛亚人之家"),
+2: r.a("龟仙派"),
+3: r.a("人造人"),
+4: r.a("弗利萨军团"),
+5: r.a("宇宙强战士"),
+6: r.a("宇宙强敌"),
+0: r.a("超级赛亚人")
 }
 },
 FUNS: {}
@@ -3309,12 +3311,12 @@ CAN_RECEIVE: 2
 }
 },
 FUNS: {
-getStandardPower: function(e, t) {
-return t * (.1 * Math.random() + .95);
+getStandardPower: function(e, a) {
+return a * (.1 * Math.random() + .95);
 },
-getRewardCoin: function(e, t) {
+getRewardCoin: function(e, a) {
 e /= 2;
-return Math.round((15e3 + 100 * t) * (.00195 * Math.pow(e, 3) - .02403 * Math.pow(e, 2) + .12922 * e + .89286) * t / 25);
+return Math.round((15e3 + 100 * a) * (.00195 * Math.pow(e, 3) - .02403 * Math.pow(e, 2) + .12922 * e + .89286) * a / 25);
 }
 }
 },
@@ -3347,47 +3349,47 @@ CKL_REWARD_COUNT_MAP: {
 2: 21,
 3: 28
 },
-REWARD_MAIL_TITLE: s.a("维斯训练奖励"),
-BE_ATTACK_MAIL_TITLE: s.a("维斯训练被扰乱"),
+REWARD_MAIL_TITLE: r.a("维斯训练奖励"),
+BE_ATTACK_MAIL_TITLE: r.a("维斯训练被扰乱"),
 DEFENSE_TIMES: 1
 },
 FUNS: {
 getType: function(e) {
-var t = 1;
-for (var a in l.SIX_PRACTICE.CONSTS.TYPE_NEED_VIP_MAP) e >= l.SIX_PRACTICE.CONSTS.TYPE_NEED_VIP_MAP[a] && (t = a);
-return t;
+var a = 1;
+for (var t in l.SIX_PRACTICE.CONSTS.TYPE_NEED_VIP_MAP) e >= l.SIX_PRACTICE.CONSTS.TYPE_NEED_VIP_MAP[t] && (a = t);
+return a;
 },
 getSettlementMsgBody: function(e) {
 return {
-content: s.a("恭喜您<维斯训练>已训练完成,在这期间您被扰乱了$1次,在请查收您获得的奖励!"),
+content: r.a("恭喜您<维斯训练>已训练完成,在这期间您被扰乱了$1次,在请查收您获得的奖励!"),
 replaceList: [ e ]
 };
 },
-getBeAttackMsgBody: function(e, t, i, n, r, o, c) {
-var d = l.SIX_PRACTICE.FUNS.getChallengeRewardRate(r, o), p = l.SIX_PRACTICE.FUNS.getRewardDropList(e, d), _ = "";
-for (var m in p) _ += "<" + a.findEntityById(p[m].entityId).kindName + "x" + p[m].count + ">";
-return _ = c ? {
-content: s.a("您的队伍在<维斯训练>被$1区的$2扰乱了,损失了$3."),
-replaceList: [ i, n, _ ]
+getBeAttackMsgBody: function(e, a, n, i, s, o, c) {
+var d = l.SIX_PRACTICE.FUNS.getChallengeRewardRate(s, o), h = l.SIX_PRACTICE.FUNS.getRewardDropList(e, d), u = "";
+for (var m in h) u += "<" + t.findEntityById(h[m].entityId).kindName + "x" + h[m].count + ">";
+return u = c ? {
+content: r.a("您的队伍在<维斯训练>被$1区的$2扰乱了,损失了$3."),
+replaceList: [ n, i, u ]
 } : {
-content: s.a("您的队伍在<维斯训练>成功抵挡了$1区的$2的扰乱."),
-replaceList: [ i, n ]
+content: r.a("您的队伍在<维斯训练>成功抵挡了$1区的$2的扰乱."),
+replaceList: [ n, i ]
 };
 },
-getChallengeRewardRate: function(e, t) {
-var a = .1 - .1 * (e - t) / 5;
-return (a = a > .2 ? .2 : a) < .05 ? .05 : a;
+getChallengeRewardRate: function(e, a) {
+var t = .1 - .1 * (e - a) / 5;
+return (t = t > .2 ? .2 : t) < .05 ? .05 : t;
 },
-getRewardDropList: function(e, t) {
-var a = l.SIX_PRACTICE.FUNS.getType(e), i = Math.ceil(l.SIX_PRACTICE.CONSTS.CKL_REWARD_COUNT_MAP[a] * t);
+getRewardDropList: function(e, a) {
+var t = l.SIX_PRACTICE.FUNS.getType(e), n = Math.ceil(l.SIX_PRACTICE.CONSTS.CKL_REWARD_COUNT_MAP[t] * a);
 return [ {
 entityId: l.SIX_PRACTICE.CONSTS.CKL_ENTITY_ID,
-count: i
+count: n
 } ];
 },
 getPracticeHours: function(e) {
-var t = l.SIX_PRACTICE.FUNS.getType(e);
-return l.SIX_PRACTICE.CONSTS.PRACTICE_TIME_MAP[t] / 36e5;
+var a = l.SIX_PRACTICE.FUNS.getType(e);
+return l.SIX_PRACTICE.CONSTS.PRACTICE_TIME_MAP[a] / 36e5;
 }
 }
 },
@@ -3476,7 +3478,7 @@ BET_WIN_GET_X: 2
 },
 FUNS: {
 getWorshipRewardDropList: function(e) {
-for (var t = [ 22, 40, 60, 70, 80, 90 ], a = [ [ {
+for (var a = [ 22, 40, 60, 70, 80, 90 ], t = [ [ {
 entityId: 101,
 count: 2e4
 } ], [ {
@@ -3494,8 +3496,8 @@ count: 5
 } ], [ {
 entityId: 116,
 count: 6
-} ] ], i = a[0], n = 0; n < t.length; n++) e > t[n] && (i = a[n]);
-return i;
+} ] ], n = t[0], i = 0; i < a.length; i++) e > a[i] && (n = t[i]);
+return n;
 }
 }
 },
@@ -3571,11 +3573,11 @@ count: 3e6
 BET_COST_GEM: 80,
 BET_WIN_GET_X: 2,
 THEME_TITLE_MAP: {
-1: s.a("超级赛亚双龙争霸"),
-2: s.a("人造人双龙争霸"),
-3: s.a("魔人布欧双龙争霸"),
-4: s.a("宇宙强者双龙争霸"),
-5: s.a("传超赛亚双龙争霸")
+1: r.a("超级赛亚双龙争霸"),
+2: r.a("人造人双龙争霸"),
+3: r.a("魔人布欧双龙争霸"),
+4: r.a("宇宙强者双龙争霸"),
+5: r.a("传超赛亚双龙争霸")
 },
 THEME_ROLE_CLASS_IDS_MAP: {
 1: [ 22, 39, 41, 44, 50, 54, 56, 66, 71, 76, 81, 86 ],
@@ -3587,7 +3589,7 @@ THEME_ROLE_CLASS_IDS_MAP: {
 },
 FUNS: {
 getWorshipRewardDropList: function(e) {
-for (var t = [ 22, 40, 60, 70, 80, 90 ], a = [ [ {
+for (var a = [ 22, 40, 60, 70, 80, 90 ], t = [ [ {
 entityId: 101,
 count: 1e4
 } ], [ {
@@ -3605,8 +3607,8 @@ count: 1
 } ], [ {
 entityId: 109,
 count: 2
-} ] ], i = a[0], n = 0; n < t.length; n++) e > t[n] && (i = a[n]);
-return i;
+} ] ], n = t[0], i = 0; i < a.length; i++) e > a[i] && (n = t[i]);
+return n;
 }
 }
 },
@@ -3633,22 +3635,22 @@ LEVEL_REWARD_MAP: {
 },
 LEVEL_TITLE_MAP: {
 0: "",
-1: s.a("【战五渣】"),
-2: s.a("【武道会冠军】"),
-3: s.a("【星球毁灭者】"),
-4: s.a("【超级赛亚人】"),
-5: s.a("【速趴赛亚人】"),
-6: s.a("【超级赛亚人2】"),
-7: s.a("【魔化赛亚人】"),
-8: s.a("【超级赛亚人3】"),
-9: s.a("【黄金猿异变】"),
-10: s.a("【超级赛亚人4】"),
-11: s.a("【超级赛亚人之神】"),
-12: s.a("【超越极限】"),
-13: s.a("【神之领域】"),
-14: s.a("【永无止境】"),
-15: s.a("【次元最强】"),
-16: s.a("【天下无敌】")
+1: r.a("【战五渣】"),
+2: r.a("【武道会冠军】"),
+3: r.a("【星球毁灭者】"),
+4: r.a("【超级赛亚人】"),
+5: r.a("【速趴赛亚人】"),
+6: r.a("【超级赛亚人2】"),
+7: r.a("【魔化赛亚人】"),
+8: r.a("【超级赛亚人3】"),
+9: r.a("【黄金猿异变】"),
+10: r.a("【超级赛亚人4】"),
+11: r.a("【超级赛亚人之神】"),
+12: r.a("【超越极限】"),
+13: r.a("【神之领域】"),
+14: r.a("【永无止境】"),
+15: r.a("【次元最强】"),
+16: r.a("【天下无敌】")
 }
 },
 FUNS: {
@@ -3680,10 +3682,10 @@ RES_HALF_HOURS_REWARD_MONEY_COUN_MAP: {
 4: 4
 },
 RES_NAME_MAP: {
-1: s.a("顶级"),
-2: s.a("高级"),
-3: s.a("中级"),
-4: s.a("低级")
+1: r.a("顶级"),
+2: r.a("高级"),
+3: r.a("中级"),
+4: r.a("低级")
 },
 AREA_NEED_ROLE_LEVEL_MAP: {
 1: 61,
@@ -3707,40 +3709,40 @@ getAreaId: function(e) {
 return l.FUNS.getValueByBetween([ 61, 71, 81, 91 ], [ 1, 2, 3, 4 ], e);
 },
 getBuyChallengeTimesCost: function(e) {
-var t = [ 0, 30, 30, 40, 40, 50 ];
+var a = [ 0, 30, 30, 40, 40, 50 ];
 return {
 costId: l.ISLAND.CONSTS.MONEY_ENTITY_ID,
-costCount: t[e] || i.last(t)
+costCount: a[e] || n.last(a)
 };
 },
 getReviveRoleCost: function(e) {
-var t = Math.ceil((e - Date.now()) / 36e5);
+var a = Math.ceil((e - Date.now()) / 36e5);
 return {
 costId: l.ISLAND.CONSTS.MONEY_ENTITY_ID,
-costCount: 10 * t
+costCount: 10 * a
 };
 },
-getChallengeRewardRate: function(e, t) {
-var a = .15 - .15 * (e - t) / 10;
-return (a = a > .1995 ? .1995 : a) < .099 ? .099 : a;
+getChallengeRewardRate: function(e, a) {
+var t = .15 - .15 * (e - a) / 10;
+return (t = t > .1995 ? .1995 : t) < .099 ? .099 : t;
 },
 getResLevel: function(e) {
-var t = 4;
-for (var a in l.ISLAND.CONSTS.RES_LEVEL_IDS_MAP) {
-var n = l.ISLAND.CONSTS.RES_LEVEL_IDS_MAP[a];
-i.include(n, e) && (t = Number(a));
+var a = 4;
+for (var t in l.ISLAND.CONSTS.RES_LEVEL_IDS_MAP) {
+var i = l.ISLAND.CONSTS.RES_LEVEL_IDS_MAP[t];
+n.include(i, e) && (a = Number(t));
 }
-return t;
+return a;
 },
-getRewardDropList: function(e, t) {
-var a = l.ISLAND.FUNS.getResLevel(e.resourceId), n = Date.now() > e.finishTime ? e.finishTime : Date.now(), s = Math.floor((n - e.ctime) / 18e5), r = l.ISLAND.FUNS.getAreaId(e.playerId), o = [], c = Math.ceil(l.ISLAND.CONSTS.RES_HALF_HOURS_REWARD_MONEY_COUN_MAP[a] * s * t);
+getRewardDropList: function(e, a) {
+var t = l.ISLAND.FUNS.getResLevel(e.resourceId), i = Date.now() > e.finishTime ? e.finishTime : Date.now(), r = Math.floor((i - e.ctime) / 18e5), s = l.ISLAND.FUNS.getAreaId(e.playerId), o = [], c = Math.ceil(l.ISLAND.CONSTS.RES_HALF_HOURS_REWARD_MONEY_COUN_MAP[t] * r * a);
 c > 0 && o.push({
 entityId: l.ISLAND.CONSTS.MONEY_ENTITY_ID,
 count: c
 });
-i.include([ 1, 2 ], r) && s > 0 && o.push({
+n.include([ 1, 2 ], s) && r > 0 && o.push({
 entityId: l.CONSTS.ENTITY_ID.EXP,
-count: 10 * s
+count: 10 * r
 });
 return o;
 }
@@ -3822,11 +3824,11 @@ ignoreUnDeBuffRate: [ 3121, 3122 ]
 }
 },
 FUNS: {
-getGrowth: function(e, t) {
-var a = l.STAR_SIGN.CONSTS.COLOR_ATTR_VALUE_RANGE_MAP[e][t - 1];
-return i.random(a[0], a[1]) / 1e3;
+getGrowth: function(e, a) {
+var t = l.STAR_SIGN.CONSTS.COLOR_ATTR_VALUE_RANGE_MAP[e][a - 1];
+return n.random(t[0], t[1]) / 1e3;
 },
-getUpgradeCost: function(e, t, a) {
+getUpgradeCost: function(e, a, t) {
 return {
 costSoulId: {
 critRate: 61201,
@@ -3848,7 +3850,7 @@ costSoulCount: {
 3: [ 4, 4, 8, 8, 12, 16, 20, 20, 24 ],
 4: [ 6, 6, 12, 12, 18, 24, 30, 30, 36 ],
 5: [ 8, 8, 16, 16, 24, 32, 40, 40, 50 ]
-}[t][a - 1],
+}[a][t - 1],
 costStoneId: 61001,
 costStoneCount: {
 1: [ 5, 5, 10, 10, 15, 20, 25, 25, 30 ],
@@ -3856,12 +3858,12 @@ costStoneCount: {
 3: [ 20, 20, 40, 40, 60, 80, 100, 100, 120 ],
 4: [ 30, 30, 60, 60, 90, 120, 150, 150, 180 ],
 5: [ 40, 40, 80, 80, 120, 160, 200, 200, 250 ]
-}[t][a - 1]
+}[a][t - 1]
 };
 },
-getDecomposeReward: function(e, t, a) {
-var i = [];
-i.push({
+getDecomposeReward: function(e, a, t) {
+var n = [];
+n.push({
 entityId: 61002,
 count: {
 1: 2,
@@ -3869,26 +3871,26 @@ count: {
 3: 8,
 4: 16,
 5: 30
-}[t]
+}[a]
 });
-for (var n, s, r = 0, o = 0, c = 1; c < a; c++) {
-var d = l.STAR_SIGN.FUNS.getUpgradeCost(e, t, c);
-n = d.costSoulId;
-r += d.costSoulCount;
-s = d.costStoneId;
+for (var i, r, s = 0, o = 0, c = 1; c < t; c++) {
+var d = l.STAR_SIGN.FUNS.getUpgradeCost(e, a, c);
+i = d.costSoulId;
+s += d.costSoulCount;
+r = d.costStoneId;
 o += d.costStoneCount;
 }
-var p = Math.ceil(r / 2);
-p > 0 && i.push({
-entityId: n,
-count: p
+var h = Math.ceil(s / 2);
+h > 0 && n.push({
+entityId: i,
+count: h
 });
-var _ = Math.ceil(o / 2);
-_ > 0 && i.push({
-entityId: s,
-count: _
+var u = Math.ceil(o / 2);
+u > 0 && n.push({
+entityId: r,
+count: u
 });
-return i;
+return n;
 }
 }
 },
@@ -3916,16 +3918,16 @@ TYPE_TIMES_MAP: {
 }
 },
 FUNS: {
-getNextViewTime: function(e, t) {
-var a = t[e] || [], n = i.last(a);
-if (!n) return 0;
-var s = new Date().setHours(0, 0, 0, 0) + l.CONSTS.A_DAY, r = l.AD.CONSTS.TYPE, o = l.AD.CONSTS.TYPE_TIMES_MAP;
-return e == r.SMAP_TIMES && a.length >= o[r.SMAP_TIMES] ? s : i.include([ r.SIGN, r.DIAL, r.GUILD_WORSHIP, r.BUY_ACTION_POINT ], e) && a.length >= 1 ? s : e == r.POINT ? a.length >= o[r.POINT] ? s : n + 216e5 : 0;
+getNextViewTime: function(e, a) {
+var t = a[e] || [], i = n.last(t);
+if (!i) return 0;
+var r = new Date().setHours(0, 0, 0, 0) + l.CONSTS.A_DAY, s = l.AD.CONSTS.TYPE, o = l.AD.CONSTS.TYPE_TIMES_MAP;
+return e == s.SMAP_TIMES && t.length >= o[s.SMAP_TIMES] ? r : n.include([ s.SIGN, s.DIAL, s.GUILD_WORSHIP, s.BUY_ACTION_POINT ], e) && t.length >= 1 ? r : e == s.POINT ? t.length >= o[s.POINT] ? r : i + 216e5 : 0;
 }
 }
 }
 };
-t.exports = l;
+a.exports = l;
 cc._RF.pop();
 }, {
 cryptoApi: "cryptoApi",

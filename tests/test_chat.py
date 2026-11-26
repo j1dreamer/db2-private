@@ -29,13 +29,11 @@ class ChatTests(unittest.TestCase):
   self.assertEqual(len(result['extra']['chat']['guildList']),1)
   self.assertEqual(history(self.store,self.store.player(3),2),[])
  def test_channel_entitlements_and_untrusted_content_are_rejected(self):
-  for kind in (2,0,True):
+  for kind in (2,3,0,True):
    with self.subTest(kind=kind):
     with self.assertRaises(ValueError):self.send(kind)
   for words in ('','<b>x</b>','x\n','a'*201,{},'😀'*101):
    with self.subTest(words=words):
     with self.assertRaises(ValueError):self.send(words=words)
-  # Long Chi Dao explicitly lowers the cross-server VIP requirement to zero.
-  from server.rules import constants
-  self.assertEqual(constants('server.PLAYER.CONSTS.SEND_ALL_SERVER_NEED_VIP'),0)
+  p=self.store.player(1);p['level']=50;self.store.save(p)
   self.assertEqual(self.send(3)['code'],200)

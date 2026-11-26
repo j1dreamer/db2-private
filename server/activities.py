@@ -28,7 +28,8 @@ def reward(desc,needs,received=False,reach=None):
     return {'dropListDesc':desc,'needMap':needs,'status':3 if received else 2 if ready else 1,'desc':''}
 
 def event(name,typ,start,end,reach,rewards,**extra):
-    return {'name':name,'type':typ,'desc':'Private '+name,'resId':126,'priority':300,'start_time':start,'end_time':end,'reachMap':reach,'rewards':rewards,**extra}
+    from .liveops import TEMPLATES
+    return {'name':name,'type':typ,'desc':TEMPLATES.get(name,(name,''))[0],'resId':126,'priority':300,'start_time':start,'end_time':end,'reachMap':reach,'rewards':rewards,**extra}
 
 def refresh(store,p):
     before=json.dumps(p,sort_keys=True);day,start,end,week,ws,we=periods();now=int(time.time()*1000)

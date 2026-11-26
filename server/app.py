@@ -72,7 +72,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
         liveops_task=asyncio.create_task(liveops_maintenance())
         war_maintenance_task=asyncio.create_task(maintain_guild_wars())
     app.on_startup.append(start_war_maintenance)
-    async def health(req):return web.json_response({'status':'ok','stage':'protocol-development','playable_verified':False,'build':'longzhidao-17327-vi','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
+    async def health(req):return web.json_response({'status':'ok','stage':'protocol-development','playable_verified':False,'build':'eng-sp-sss-gm-v2','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
     async def config(req):return web.json_response({'runScriptInfo':{'script':''},'inReviewPackageInfos':[]})
     async def account(req):
         fields=await req.post();name=fields.get('name','');password=fields.get('password','')

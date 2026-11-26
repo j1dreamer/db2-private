@@ -7,6 +7,8 @@
     "grant-item-to-persisted-player",
     "per-instance-rolled-item-details",
     "edit-player-currency",
+    "edit-player-level-and-vip",
+    "grant-gm-rights",
     "system-mail-with-reward",
     "giftcode-with-items",
     "create-scheduled-event",

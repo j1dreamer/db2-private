@@ -6,17 +6,17 @@
   },
   {
     "id": "client-data",
-    "source": "longzhidao-client",
-    "description": "34 bảng và các hằng/công thức đọc được lấy từ Long Chi Đảo ID 17327; các hàng giữ tương thích có nhãn riêng."
+    "source": "eng-client",
+    "description": "34 bảng và gameplay từ client ENG; giữ nguyên nhóm tướng S/SS/SSS/SP. Không dùng override khởi động hay module gameplay Long Chi Đảo."
   },
   {
     "id": "client-shell",
     "source": "eng-client",
-    "description": "Giữ khung giao diện, tài nguyên, SDK/native và bộ tiếng Việt của client ENG; chuyển các module gameplay đã kiểm UUID và trường prefab."
+    "description": "Giữ module gameplay, khung giao diện, native và bộ Việt ngữ ENG; resource/language iOS giữ tính tương thích với IPA gốc."
   },
   {
     "id": "battle",
-    "source": "longzhidao-client",
+    "source": "eng-client",
     "description": "Dùng engine chiến đấu khôi phục từ client ENG đã đối chiếu AST với bản Trung; dữ liệu và serverConfig lấy Long Chi Đảo. Cách xác minh và điều phối trận ở backend là mã dự án."
   },
   {
@@ -47,21 +47,26 @@
   {
     "id": "shop-invalid-count",
     "source": "private-server-rule",
-    "description": "Dòng shop 140004/140005 trong Long Chi Đảo có minCount > maxCount. Backend giữ nguyên bảng và dùng minCount làm số lượng cố định để không gây lỗi; đây là quyết định riêng."
+    "description": "Luật dự phòng số lượng chỉ dùng khi một bảng có minCount lớn hơn maxCount; bảng ENG hiện không có hai dòng bất thường của Long Chi Đảo."
   },
   {
     "id": "profile-migration",
     "source": "private-server-rule",
-    "description": "Giữ nguyên tiền, túi, đội hình, số sao/thức tỉnh và VIP đã cấp; tính lại thuộc tính chiến đấu một lần theo luật mới. Không cấp lại quà khởi đầu. Sao lưu SQLite trước khi chuyển."
+    "description": "Sao lưu SQLite; giữ tiền, túi và VIP đã cấp, tính lại thuộc tính theo ENG. Các GM chỉnh cấp/tài nguyên được kiểm quyền và ghi nhật ký."
   },
   {
     "id": "translation",
     "source": "new-vietnamese-translation",
-    "description": "Tái sử dụng 8.466 mục tiếng Việt ENG; 498 mục dịch bổ sung gồm sáu mục sửa lại. Phần bổ sung được ghi nguồn từng khóa. Văn bản dự trữ có tên Naruto là dữ liệu đã có trong bảng client, không phải tính năng mới được thêm."
+    "description": "Dùng lại 8.466 khóa Việt ENG; phần dịch bổ sung có nguồn từng khóa. Không sửa hướng dẫn ENG thành luật Long Chi Đảo."
   },
   {
     "id": "platform",
     "source": "private-server-implementation",
     "description": "Chọn server, bỏ hướng dẫn, nút speed x1–x10, phục hồi callback và sửa giao thức là các bản vá dự án. APK ký phát triển; IPA phát hành chưa ký, phải được ký hợp lệ trên Mac."
+  },
+  {
+    "id": "gm-controls",
+    "source": "private-server-implementation",
+    "description": "Bảng GM chọn đồ/tướng theo tên/ID, chỉnh cấp người chơi/tướng, VIP và tài nguyên là mã dự án viết; quyền được kiểm tại mỗi RPC và có thể thu hồi trực tiếp."
   }
 ]

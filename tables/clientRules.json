@@ -1,0 +1,10 @@
+{
+  "flags": {
+    "moneyTicketId": 2,
+    "isShowTimeLabel": true,
+    "isShowCenterAndroid": true,
+    "isShowCenterIOS": true,
+    "isNoRemoveHideData": true
+  },
+  "config": {}
+}

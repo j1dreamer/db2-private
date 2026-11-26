@@ -1,4 +1,4 @@
-name: Publish Long Chi Dao full release
+name: Publish DB2 ENG SSS SP GM full release
 on:
   workflow_dispatch:
     inputs:
@@ -11,7 +11,7 @@ on:
 permissions:
   contents: write
 concurrency:
-  group: longzhidao-full-release
+  group: eng-sp-sss-full-release
   cancel-in-progress: false
 jobs:
   release:
@@ -30,7 +30,7 @@ jobs:
         run: |
           mkdir -p .release
           cp INSTALL.txt .release/README-FIRST.txt
-          gh release upload longzhidao-v1.0.0-dev .release/README-FIRST.txt --clobber
+          gh auth status
       - name: Assemble, verify and publish full clients and clean server source
         if: inputs.mode == 'publish'
         run: python -m tools.ci_full_release

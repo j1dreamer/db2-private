@@ -23,8 +23,8 @@ function load(name){
  return cache[name]=mod.exports;
 }
 load('dataApi').init();
-// Source-verified Long Chi Dao startup overrides are shared with native clients.
-const longRules=JSON.parse(fs.readFileSync(path.join(__dirname,'../tables/longzhidaoOverrides.json'),'utf8'));
+// Source-verified ENG startup rules are shared with native clients.
+const longRules=JSON.parse(fs.readFileSync(path.join(__dirname,'../tables/clientRules.json'),'utf8'));
 Object.assign(cache.buildExt,longRules.flags);
 for(const [key,value]of Object.entries(longRules.config)){
  const parts=key.split('.');let target=load('serverConfig');

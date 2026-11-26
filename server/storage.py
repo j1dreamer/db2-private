@@ -73,13 +73,13 @@ class Store:
     def prepare_rules_baseline(self,path):
         """Snapshot existing committed SQLite state before the one-time rules switch."""
         from pathlib import Path
-        baseline='longzhidao-17327'
+        baseline=json.loads((Path(__file__).resolve().parents[1]/'tables/canonical-policy.json').read_text())['baseline']
         row=self.db.execute("SELECT data FROM ops_records WHERE key='rules-baseline'").fetchone()
         if row and json.loads(row[0]).get('baseline')==baseline:return
         backup=None
         if str(path)!=':memory:' and self.db.execute('SELECT count(*)FROM players').fetchone()[0]:
             folder=Path(path).resolve().parent/'backups';folder.mkdir(parents=True,exist_ok=True)
-            backup=folder/('before-longzhidao-'+time.strftime('%Y%m%d-%H%M%S')+'-'+secrets.token_hex(3)+'.sqlite3')
+            backup=folder/('before-'+baseline+'-'+time.strftime('%Y%m%d-%H%M%S')+'-'+secrets.token_hex(3)+'.sqlite3')
             target=sqlite3.connect(backup)
             try:
                 self.db.backup(target)

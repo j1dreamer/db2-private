@@ -114,5 +114,6 @@ def handle(store,account,route,args):
                     if sum(counts.values())!=amount:raise ValueError('Tổng phần thưởng không khớp số rương')
                 chosen=[{**choices[index],'count':choices[index]['count']*count}for index,count in counts.items()if count]
                 take_index(p,item['idx'],amount);rewards=grant(p,chosen)
-        temp['entityCountMap']=rewards;store.save(p);store.audit(action,{'player':p['id'],'item':before['bag']['items'].get(str(args.get('bagIndex')),{}).get('kindId'),'count':args.get('itemCount',0)})
+        if rewards:temp['entityCountMap']=rewards
+        store.save(p);store.audit(action,{'player':p['id'],'item':before['bag']['items'].get(str(args.get('bagIndex')),{}).get('kindId'),'count':args.get('itemCount',0)})
         return delta(before,p,route,temp)

@@ -1,11 +1,12 @@
 param(
     [string]$Adb = $env:DB2_ADB,
     [string]$Serial,
-    [string]$Apk = (Join-Path (Split-Path $PSScriptRoot -Parent) 'LongChiDao-VI-Android.apk')
+    [string]$Apk
 )
 $ErrorActionPreference = 'Stop'
 try {
-    if (-not (Test-Path -LiteralPath $Apk -PathType Leaf)) { throw "Place LongChiDao-VI-Android.apk beside Install-Android.bat. Missing: $Apk" }
+    if (-not $Apk) { $Apk = Join-Path (Split-Path $PSScriptRoot -Parent) ((Get-Content -LiteralPath (Join-Path (Split-Path $PSScriptRoot -Parent) 'release.json') -Raw | ConvertFrom-Json).android.file) }
+    if (-not (Test-Path -LiteralPath $Apk -PathType Leaf)) { throw "Place the complete APK from this release beside Install-Android.bat. Missing: $Apk" }
     $expected = (Get-Content -LiteralPath (Join-Path (Split-Path $PSScriptRoot -Parent) 'release.json') -Raw | ConvertFrom-Json).android.sha256
     if ($expected -notmatch '^[a-f0-9]{64}$') { throw 'Invalid release manifest.' }
     if ((Get-FileHash -LiteralPath $Apk -Algorithm SHA256).Hash.ToLowerInvariant() -ne $expected) { throw 'APK checksum mismatch. Download the APK from this release again.' }

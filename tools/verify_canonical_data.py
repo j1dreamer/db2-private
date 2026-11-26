@@ -40,7 +40,7 @@ if args.patched_ios_archive:
  subprocess.run(['node',str(REPO/'tools/split_bundle.cjs'),str(ROOT/'patched-ios.js'),str(engine_modules)],check=True,capture_output=True)
 engine=ROOT/'engine';server=engine/'server';target=server/'battle_modules';target.mkdir(parents=True,exist_ok=True)
 extract(args.ios_archive,engine/'tables')
-shutil.copyfile(REPO/'tables/longzhidaoOverrides.json',engine/'tables/longzhidaoOverrides.json')
+shutil.copyfile(REPO/'tables/clientRules.json',engine/'tables/clientRules.json')
 for p in (REPO/'server/battle_modules').glob('*.js'):shutil.copyfile(engine_modules/p.name,target/p.name)
 shutil.copyfile(REPO/'server/battle_worker.cjs',server/'battle_worker.cjs')
 
@@ -64,7 +64,7 @@ result['actual_private_ipa_modules_verified']=bool(args.patched_ios_archive)
 base=(ROOT/'engine/server/battle_worker.cjs').read_text()
 base=base.replace("load('dataApi').init();",'context.window={};vm.runInNewContext('+json.dumps(embedded_script or script)+',context);context.window.DB2PrivateData.applyRaw(cache.data);\nload(\'dataApi\').init();context.window.DB2PrivateData.applyConfig(load(\'serverConfig\'));context.window.DB2PrivateData.applyBuildExt(cache.buildExt);')
 if embedded_script:
- base=base.replace("const longRules=JSON.parse(fs.readFileSync(path.join(__dirname,'../tables/longzhidaoOverrides.json'),'utf8'));","const longRules={flags:{},config:{}}; // Verify only rules shipped inside the IPA")
+ base=base.replace("const longRules=JSON.parse(fs.readFileSync(path.join(__dirname,'../tables/clientRules.json'),'utf8'));","const longRules={flags:{},config:{}}; // Verify only rules shipped inside the IPA")
 worker=ROOT/'engine/server/canonical_worker.cjs';worker.write_text(base)
 originalconst=run_node(REPO/'server/battle_worker.cjs',{'mode':'constants'});iosconst=run_node(worker,{'mode':'constants'});result['constant_differences']=compare(originalconst,iosconst)
 for mode in ('pvp','practice','island'):

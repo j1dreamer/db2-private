@@ -1,7 +1,7 @@
 """Repackage the authorized extracted Android client; no Android source compilation.
 Input: ZIP containing DB2-GD/ from the user's Drive archive.
 """
-import argparse,zipfile,json,struct,gzip,hashlib,re,subprocess,tempfile
+import argparse,zipfile,json,struct,gzip,hashlib,re
 from pathlib import Path
 KEY=b'e962577e-f57c-49'
 MASK=0xffffffff
@@ -29,10 +29,7 @@ def patch_client(text,source,server):
     url=urlsplit(server)
     if url.scheme not in ('http','https') or not url.hostname or url.path not in ('','/') or url.username or url.password or url.query or url.fragment:raise ValueError('Use http(s)://HOST:PORT with no path, userinfo or query')
     server=server.rstrip('/');port=url.port or (443 if url.scheme=='https'else 80)
-    with tempfile.TemporaryDirectory()as work:
-        root=Path(__file__).resolve().parents[1];base=Path(work)/'base.js';base.write_text(text)
-        subprocess.run(['node',str(root/'tools/merge_longzhidao.cjs'),str(base),str(root/'client/longzhidao.decoded.js'),str(Path(work)/'merged.js'),str(Path(work)/'report.json')],capture_output=True,text=True,check=True)
-        text=(Path(work)/'merged.js').read_text();gameplay_report=json.loads((Path(work)/'report.json').read_text())
+    gameplay_report={'baseline':'eng-sp-sss','ported_modules':[],'retained_gameplay':'original ENG modules','private_patches':'VIP/sync/GM/transport/VI/speed; explicitly authored'}
     from tools.client_data import overlay,patch_bundle
     data_script,data_report=overlay(source)
     data_report['gameplay_modules']=gameplay_report
@@ -86,8 +83,11 @@ def patch_client(text,source,server):
     text=patch_private_sdk(text)
     text=patch(text,'this.skipMove = !1;','this.skipMove = cc.sys.localStorage.getItem("db2.private.fastSummon") !== "0";')
     text=patch(text,'onSkip_: function() {\nthis.skipMove = !this.skipMove;','onSkip_: function() {\nthis.skipMove = !this.skipMove;\ncc.sys.localStorage.setItem("db2.private.fastSummon", this.skipMove ? "1" : "0");')
+    from tools.client_patches import patch_eng_ui_repairs
+    text=patch_eng_ui_repairs(text)
     settings=(Path(__file__).parent/'private_settings.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_runtime.js').read_text()
+    settings+='\n'+(Path(__file__).parent/'private_gm.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_time_peak.js').read_text()
     settings+='\nwindow.DB2_PRIVATE_VI='+json.dumps(json.loads((Path(__file__).resolve().parents[1]/'tables/localization/vi.merged.json').read_text()),ensure_ascii=False,separators=(',',':'))+';\n'
     settings+=(Path(__file__).parent/'private_locale.js').read_text()
