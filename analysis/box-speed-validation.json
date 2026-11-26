@@ -47,11 +47,12 @@
   "native_ios_play_tested": false,
   "signed_ipa": false,
   "inherited_baseline_validation": "analysis/eng-gm-validation.json",
-  "public_download_verification": "pending",
+  "public_download_verification": "passed: both complete files SHA-256 matched; second run skipped verified outputs",
   "canonical_validation": "analysis/box-speed-canonical-validation.json",
   "android_non_signature_entries_changed": [
     "assets/assets/main/index.jsc"
   ],
   "built_bundle_new_controls_verified": true,
-  "canonical_passed": true
+  "canonical_passed": true,
+  "download_validation": "analysis/client-download-validation.json"
 }
