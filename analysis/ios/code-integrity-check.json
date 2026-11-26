@@ -1,0 +1,11 @@
+[
+  {
+    "code_directory_slot": 0,
+    "hash_algorithm": "sha256",
+    "page_size": 4096,
+    "pages_checked": 4040,
+    "mismatched_pages": [],
+    "info_plist_hash_matches_special_slot_1": true,
+    "apple_certificate_trust_verified": false
+  }
+]

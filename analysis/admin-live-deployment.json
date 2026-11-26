@@ -1,0 +1,9 @@
+{
+  "live_vm_http_health": 200,
+  "authenticated_admin_login": true,
+  "catalog_items": 2845,
+  "system_event_editors": 17,
+  "page_errors": [],
+  "existing_player_inventory_team_and_currencies_preserved": true,
+  "external_preview_configured": false
+}

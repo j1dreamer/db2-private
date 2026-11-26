@@ -15,7 +15,7 @@ def choose(entries):
         if n<0:return r
     raise ValueError('Pool không hợp lệ')
 
-def drops(class_id,depth=0):
+def drops(class_id,depth=0,multiplier=1):
     if depth>12:raise ValueError('Drop reference cycle')
     groups={}
     for row in rows('drop'):
@@ -24,34 +24,49 @@ def drops(class_id,depth=0):
     result=[]
     for entries in groups.values():
         row=choose(entries)
+        # Many role/soul leaves use zero while their parent reference supplies
+        # the quantity (e.g. gacha 102 -> 10403). Our private policy inherits
+        # that quantity; a direct zero leaf defaults to one, never an empty draw.
+        if row['count']<0:raise ValueError('Negative drop quantity')
+        quantity=(row['count']or 1)*multiplier
         if row['refClassId']:
-            for child in drops(row['refClassId'],depth+1):
-                child=dict(child);child['count']*=row['count'];result.append(child)
+            result.extend(drops(row['refClassId'],depth+1,quantity))
         elif row['entityId']:
-            result.append({'entityId':row['entityId'],'count':row['count'],'extra':row['extra'] if isinstance(row['extra'],dict) else {}})
+            result.append({'entityId':row['entityId'],'count':quantity,'extra':row['extra'] if isinstance(row['extra'],dict) else {}})
     return result
 
 def add_reward(player,reward):
     entity=int(reward['entityId']);count=int(reward['count'])
     if count<1:raise ValueError('Invalid reward count')
+    if entity==100:
+        from .adventure import add_experience
+        add_experience(player,count);return {str(entity):count}
+    if entity==99:player['actionPoint']+=count;return {str(entity):count}
+    if entity==98:
+        vip=player['vip'];vip['topUpGem']=vip.get('topUpGem',0)+count;levels={r['level']:r for r in rows('vip')}
+        while vip['level']<max(levels) and vip['topUpGem']>=levels[vip['level']]['nextLevelTopUpGem']:vip['level']+=1
+        player['timesMaxMap']['skillPoint']=5+levels[vip['level']]['increaseSkillPointMax']
+        return {str(entity):count}
     if entity==102:player['gem']+=count;return {str(entity):count}
     if entity==101:player['coin']+=count;return {str(entity):count}
     role=next((r for r in rows('role') if r['kindId']==entity),None)
     if role:
         if count!=1:raise ValueError('Multiple role reward not supported')
-        owned=next((r for r in player['team']['roles'].values() if r['kindId']==entity),None)
+        owned=next((r for r in player['team']['roles'].values() if next(x['classId']for x in rows('role')if x['kindId']==r['kindId'])==role['classId']),None)
         if owned:
             soul=next(r for r in rows('soul') if r['classId']==role['classId'])
-            # Explicit private-server duplicate conversion policy, configurable later.
-            return add_reward(player,{'entityId':soul['kindId'],'count':10,'extra':{}})
+            from .rules import constants
+            equivalents=constants('server.ROLE.CONSTS.EQUIVALENT_SOULS');star=int(reward.get('extra',{}).get('star',1))
+            quantity=equivalents[star] if 0<=star<len(equivalents) else 0
+            return add_reward(player,{'entityId':soul['kindId'],'count':quantity,'extra':{}}) if quantity else {}
         from .profile import character
         idx=max([int(k) for k in player['team']['roles']]+[0])+1
         player['team']['roles'][str(idx)]=character(entity,idx,int(reward['extra'].get('star',1)))
+        from .progression import learn_skills,recalculate
+        created=player['team']['roles'][str(idx)];learn_skills(created);recalculate(player,created)
         return {str(entity):count}
-    bag=player['bag'];existing=next((r for r in bag['items'].values() if r['kindId']==entity),None)
-    if existing:existing['count']+=count
-    else:
-        bag['lastIdx']+=1;idx=bag['lastIdx'];bag['items'][str(idx)]={'idx':idx,'kindId':entity,'count':count}
+    from .inventory import insert
+    insert(player,entity,count,reward.get('extra',{}))
     return {str(entity):count}
 
 def point_default():return {'normalTimes':0,'advancedTimes':0,'dailyNormalUseGemTimes':0,'selectAdvancedIdx':0,'advancedLuck':0,'advancedLuckClassId':1,'advancedSpecialInfo':None}
@@ -63,15 +78,10 @@ def draw(store,account,mode,count):
         if not player:raise ValueError('Chưa có nhân vật')
         before_items=json.loads(json.dumps(player['bag']['items']));before_roles=set(player['team']['roles'])
         point=player.setdefault('point',point_default());ticket=119 if mode=='normal' else 120
-        items=player['bag']['items'];available=sum(x['count'] for x in items.values() if x['kindId']==ticket)
+        from .state import stack_count,consume
+        items=player['bag']['items'];available=stack_count(player,ticket)
         if available>=count:
-            remaining=count
-            for idx in list(items):
-                item=items[idx]
-                if item['kindId']!=ticket:continue
-                used=min(remaining,item['count']);item['count']-=used;remaining-=used
-                if not item['count']:del items[idx]
-                if not remaining:break
+            consume(player,ticket,count)
         elif mode=='normal':
             cost=300 if count==1 else 2700*(count//10)
             if player['gem']<cost:raise ValueError('Không đủ gem hoặc vé')
@@ -83,7 +93,15 @@ def draw(store,account,mode,count):
         for i in range(count):
             if overrides:
                 item=dict(choose(overrides));item.pop('weight',None);rewards.append(item)
-            else:rewards.extend(drops((101 if mode=='normal' else 201) if previous+i==0 else pool))
+            else:
+                from .rules import constants
+                limit=constants('server.POINT.CONSTS.'+mode.upper()+'_MUST_STAR3_TIMES')
+                if (previous+i+1)%limit==0:
+                    # Every twentieth built-in draw uses the shipped 3-star
+                    # branch. Admin-defined pools explicitly keep their rules.
+                    branch=next(r['refClassId']for r in rows('drop')if r['classId']==pool and r['refClassId']and any(x['classId']==r['refClassId']and isinstance(x['extra'],dict)and x['extra'].get('star',0)>=3 for x in rows('drop')))
+                    rewards.extend(drops(branch))
+                else:rewards.extend(drops((101 if mode=='normal' else 201) if previous+i==0 else pool))
         entity_map={}
         for reward in rewards:
             granted=add_reward(player,reward)
@@ -94,20 +112,8 @@ def draw(store,account,mode,count):
         return {'code':200,**{key:player[key] for key in ('gem','coin','costGem','point')},'bag':{'items':item_delta,'lastIdx':player['bag']['lastIdx']},'team':{'roles':role_delta},'_temp':{'route':'logic.pointHandler.'+mode,'dropList':rewards,'entityCountMap':entity_map}}
 
 def claim_events(store,account,names,indices):
-    if not isinstance(names,list) or not isinstance(indices,list) or len(names)!=len(indices) or not 1<=len(names)<=50 or len(set(names))!=len(names):raise ValueError('Danh sách thưởng không hợp lệ')
-    with store.transaction():
-        p=store.player(account)
-        if not p:raise ValueError('Chưa có nhân vật')
-        gem=0
-        for name,index in zip(names,indices):
-            if not isinstance(name,str) or index!=0:raise ValueError('Chỉ hỗ trợ phần thưởng riêng số 0')
-            row=store.db.execute('SELECT data FROM events WHERE id=?',(name,)).fetchone()
-            if not row:raise ValueError('Event không tồn tại')
-            event=json.loads(row[0]);now=time.time()
-            if not event['start']<=now<event['end']:raise ValueError('Event chưa mở hoặc đã kết thúc')
-            store.db.execute('INSERT INTO event_claims VALUES(?,?)',(name,p['id']));gem+=event['gem']
-        p['gem']+=gem;store.save(p);store.audit('claim_events',{'player':p['id'],'events':names,'gem':gem})
-        return {'code':200,'gem':p['gem'],'_temp':{'route':'logic.playerHandler.receiveActivityAward','entityCountMap':{'102':gem}}}
+    from .activities import claim_batch
+    return claim_batch(store,account,names,indices)
 
 def validate_pool_entry(body):
     pool=int(body['pool']);entity=int(body['entity']);weight=int(body['weight']);count=int(body['count']);star=int(body.get('star',1))

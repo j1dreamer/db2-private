@@ -1,0 +1,17 @@
+{
+  "references": [
+    {
+      "url": "https://www.youtube.com/watch?v=vhMdoXwQEwk",
+      "title": "DB2 SAIYANS UNITED GAMEPLAY",
+      "channel": "Helixone",
+      "access": "Search metadata only; video open throttled. No gameplay mechanics verified."
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=B_WuFDYYJ1I",
+      "title": "DB2 Saiyans United Gameplay (Android, iOS)",
+      "channel": "Lenzy Games",
+      "access": "Search metadata only; video open throttled. No gameplay mechanics verified."
+    }
+  ],
+  "implementation_evidence": "Client JavaScript, extracted tables and original engine checks; video metadata is not evidence of server rules."
+}

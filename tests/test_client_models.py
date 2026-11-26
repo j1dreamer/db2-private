@@ -1,3 +1,4 @@
+from server.profile import SCHEMA_VERSION
 """Run the recovered Player/Bag/Team and point data generator against server data.
 UI and network dependencies are stubbed; this is not a rendering/device test.
 """
@@ -11,8 +12,10 @@ class ClientModelTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.store=Store(Path(self.tmp.name)/'db');self.store.register('tester','password');self.profile=self.store.create_player(1,'Goku')
  def tearDown(self):self.store.db.close();self.tmp.cleanup()
- def client(self,profile,deltas,check_home=False):
-  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps({'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True,'checkHome':check_home,'checkGameplay':check_home,'checkNoGuide':True}),text=True,capture_output=True,check=True)
+ def client(self,profile,deltas,check_home=False,now=None):
+  payload={'profile':profile,'deltas':deltas,'checkPoint':True,'checkRoles':True,'checkTeam':True,'checkHome':check_home,'checkGameplay':check_home,'checkNoGuide':True}
+  if now is not None:payload['now']=now
+  result=subprocess.run(['node',str(Path(__file__).parent/'fixtures/client_profile.cjs')],input=json.dumps(payload),text=True,capture_output=True,check=True)
   return json.loads(result.stdout)
  def test_initial_profile_constructs_original_models(self):
   state=self.client(self.profile,[])
@@ -23,23 +26,29 @@ class ClientModelTests(unittest.TestCase):
   self.assertGreater(len(state['friendship']['friendshipItems']),0)
   self.assertEqual(state['teamItems'][0]['classId'],1)
  def test_home_generator_hides_absent_events_and_reads_daily_state(self):
-  state=self.client(self.profile,[],check_home=True)
+  # Daily stamina awards become available during meal windows. Freeze this
+  # initial-home assertion at 05:00 rather than depending on runner time/TZ.
+  from datetime import datetime,timezone
+  now=datetime.fromtimestamp(self.profile['ctime']/1000,timezone.utc).replace(hour=5,minute=0,second=0,microsecond=0)
+  state=self.client(self.profile,[],check_home=True,now=int(now.timestamp()*1000))
   self.assertEqual(state['home']['playerName'],'Goku')
   self.assertEqual(state['home']['vip'],0)
-  for key in ('isShowFirstTopUp','isHaveCarnival','isHaveCarnival2','isShowAcePack','isShowDreamActivity'):
+  for key in ('isShowFirstTopUp','isHaveCarnival','isHaveCarnival2','isShowAcePack'):
    self.assertFalse(state['home'][key],key)
-  self.assertIsNone(state['home']['starSignPointPanel'])
+  self.assertTrue(state['home']['isShowDreamActivity'])
+  self.assertIsNotNone(state['home']['starSignPointPanel'])
   self.assertEqual(state['daily']['receivedPointMap'],{'daily':{},'weekly':{}})
   self.assertFalse(state['daily']['isCanReceiveTaskAward'])
   self.assertFalse(state['quick']['isNeedMark'])
   self.assertFalse(state['quick']['isMarkDailyTask'])
+  self.assertGreater(state['roleScenes'][0]['skillItems'][0]['costCoin'],0)
  def test_version_two_profile_migrates_before_home_generator(self):
   p=self.profile;p['profileSchemaVersion']=2
   for key in ('daily','dailyActivePoint','weeklyActivePoint','receivedPointMap'):p['task'].pop(key)
   p['activity'].pop('scorePointInfoMap');p.pop('signInDays');p.pop('signInTime')
   p['gem']=789;self.store.save(p)
   migrated=self.store.player(1);state=self.client(migrated,[],check_home=True)
-  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],6)
+  self.assertEqual(state['gem'],789);self.assertEqual(migrated['profileSchemaVersion'],SCHEMA_VERSION)
   self.assertEqual(state['home']['playerName'],'Goku')
  def test_migration_preserves_existing_task_rewards_and_activity_state(self):
   p=self.profile;p['profileSchemaVersion']=2
@@ -64,17 +73,17 @@ class ClientModelTests(unittest.TestCase):
   self.assertIn("reading 'actionPoint'",r.stderr)
   p['level']=12;p['gem']=987;p['actionPoint']=44;self.store.save(p)
   migrated=self.store.player(1);state=self.client(migrated,[])
-  self.assertEqual(migrated['profileSchemaVersion'],6)
+  self.assertEqual(migrated['profileSchemaVersion'],SCHEMA_VERSION)
   self.assertEqual(state['topBar']['maxActionPoint'],72)
   self.assertEqual(state['topBar']['actionPoint'],44)
   self.assertEqual(state['gem'],987)
  def test_recovery_migration_preserves_existing_caps_and_timestamps(self):
   p=self.profile;p['profileSchemaVersion']=3
-  p['timesMaxMap']['actionPoint']=123;p['nextRecoverTimeMap']['actionPoint']=456789
+  p['timesMaxMap']['actionPoint']=123;future=int(__import__('time').time()*1000)+600000;p['nextRecoverTimeMap']['actionPoint']=future
   p['vip']['buyActionPointTimes']=2;self.store.save(p)
   migrated=self.store.player(1)
   self.assertEqual(migrated['timesMaxMap']['actionPoint'],123)
-  self.assertEqual(migrated['nextRecoverTimeMap']['actionPoint'],456789)
+  self.assertEqual(migrated['nextRecoverTimeMap']['actionPoint'],future)
   self.assertEqual(migrated['vip']['buyActionPointTimes'],2)
  def test_rename_delta_updates_original_player_and_home(self):
   p=self.profile;p['name']=p['userName'];self.store.save(p)
@@ -101,7 +110,7 @@ class ClientModelTests(unittest.TestCase):
   state=self.client(migrated,[],check_home=True)
   self.assertEqual(migrated['smapStarMap'],{'1':{'101':{}}})
   self.assertEqual(state['point']['advancedTicketCount'],1)
-  self.assertEqual(migrated['profileSchemaVersion'],6)
+  self.assertEqual(migrated['profileSchemaVersion'],SCHEMA_VERSION)
  def test_advanced_draw_accepts_real_role_scene_and_result_generator(self):
   delta=draw(self.store,1,'advanced',1)
   state=self.client(self.profile,[delta],check_home=True)

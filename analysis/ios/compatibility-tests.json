@@ -1,0 +1,70 @@
+{
+  "constant_differences": [
+    ".server.ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP.10",
+    ".server.ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP.9.dodgeRate",
+    ".server.ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP.9.addCritDmgRate",
+    ".server.ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP.10",
+    ".server.ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP.9.dodgeRate",
+    ".server.ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP.9.addCritDmgRate"
+  ],
+  "ios_engine_module_files_available": 50,
+  "model_checks": {
+    "home_name": "iOS Tester",
+    "gem": 50,
+    "normal_ticket_count": 1,
+    "advanced_ticket_count": 1,
+    "team_roles": 1,
+    "topbar": {
+      "coin": 0,
+      "gem": 50,
+      "actionPoint": 60,
+      "maxActionPoint": 61,
+      "nextRecoveryLabel": "行动力已满",
+      "buyTimes": [
+        0,
+        1
+      ]
+    }
+  },
+  "codec_identical_request_bytes": true,
+  "battle_comparisons": [
+    {
+      "mode": "pvp",
+      "seed": 1,
+      "identical": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "pvp",
+      "seed": 777,
+      "identical": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "practice",
+      "seed": 1,
+      "identical": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "practice",
+      "seed": 777,
+      "identical": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "island",
+      "seed": 1,
+      "identical": true,
+      "difference_paths": []
+    },
+    {
+      "mode": "island",
+      "seed": 777,
+      "identical": true,
+      "difference_paths": []
+    }
+  ],
+  "table_source": "34 data files extracted from actual iOS IPA, compared to Android/backend tables",
+  "scope": "Six baseline robot matchups only; changed-skill counterexamples are in a separate report."
+}

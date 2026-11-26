@@ -1,7 +1,7 @@
 """Interoperability checks against the original client's recovered JS codec."""
 import unittest,subprocess,json,base64,shutil
 from pathlib import Path
-from server.protocol import packages,request,response
+from server.protocol import packages,request,response,push
 
 @unittest.skipUnless(shutil.which('node'),'Node needed only for original-client contract tests')
 class ClientContractTests(unittest.TestCase):
@@ -13,6 +13,10 @@ class ClientContractTests(unittest.TestCase):
   encoded=self.codec({'operation':'request','id':300,'route':'logic.playerHandler.useGiftCode','body':body})
   kind,packet=list(packages(base64.b64decode(encoded)))[0]
   self.assertEqual(kind,4);self.assertEqual(request(packet),(300,'logic.playerHandler.useGiftCode',body))
+ def test_python_push_parses_in_original_client(self):
+  body={'mail':{'_id':'hello'}}
+  decoded=json.loads(self.codec({'operation':'response','data':base64.b64encode(push('onNewMail',body)).decode()}))
+  self.assertEqual(decoded['route'],'onNewMail');self.assertEqual(decoded['body'],body)
  def test_python_response_parses_in_original_client(self):
   body={'code':200,'gem':150,'msg':'Đã nhận thưởng'}
   decoded=json.loads(self.codec({'operation':'response','data':base64.b64encode(response(300,body)).decode()}))

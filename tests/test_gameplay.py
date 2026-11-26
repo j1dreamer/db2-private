@@ -1,3 +1,4 @@
+from server.profile import SCHEMA_VERSION
 import tempfile,unittest,time,json,sqlite3
 from pathlib import Path
 from unittest.mock import patch
@@ -11,8 +12,10 @@ class EconomyTests(unittest.TestCase):
  def test_older_profile_upgrades_without_resetting_currency_or_roster(self):
   p=self.store.player(1);p.pop('profileSchemaVersion');p['gem']=777;p.pop('photoInfo');p.pop('friendshipUnlockMap');p['team']['roles']['1']['attr']['hp']=77
   self.store.save(p);restored=self.store.player(1)
-  self.assertEqual(restored['gem'],777);self.assertEqual(restored['team']['roles']['1']['attr']['hp'],77);self.assertEqual(len(restored['team']['roles']),1)
-  self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],6)
+  self.assertEqual(restored['gem'],777);self.assertEqual(len(restored['team']['roles']),1)
+  for key in ('kindId','level','star','awakeLevel'):self.assertEqual(restored['team']['roles']['1'][key],p['team']['roles']['1'][key])
+  self.assertGreater(restored['team']['roles']['1']['attr']['hp'],77);self.assertEqual(restored['privateRulesBaseline'],'longzhidao-17327')
+  self.assertIn('photoInfo',restored);self.assertEqual(restored['profileSchemaVersion'],SCHEMA_VERSION)
  def test_first_rename_is_free_persistent_and_repeat_is_idempotent(self):
   p=self.store.player(1);p['name']=p['userName'];p['gem']=50;self.store.save(p)
   response=rename_player(self.store,1,'Son Goku')
@@ -69,6 +72,25 @@ class EconomyTests(unittest.TestCase):
   with patch('server.gameplay.drops',side_effect=ValueError('broken table')):
    with self.assertRaises(ValueError):draw(self.store,1,'normal',10)
   p=self.store.player(1);self.assertEqual(p['gem'],10000);self.assertEqual(p['point']['normalTimes'],0)
+ def test_zero_quantity_nested_source_leaf_inherits_parent_count(self):
+  from server.gameplay import drops
+  # Both the free guild chest and most gacha role leaves store count zero.
+  # Parent count one must reach the leaf rather than create an empty draw.
+  with patch('server.gameplay.choose',side_effect=lambda entries:entries[0]):
+   self.assertEqual(drops(701),[{'entityId':50020,'count':1,'extra':{}}])
+   self.assertEqual(drops(10403)[0]['count'],1)
+ def test_twentieth_builtin_draw_is_three_star_in_all_pools(self):
+  from server.state import stack_count
+  for mode,index in (('normal',0),('advanced',0),('advanced',1),('advanced',2)):
+   p=self.store.player(1);p['point'][mode+'Times']=19;p['point']['selectAdvancedIdx']=index;p['gem']=10000
+   from server.inventory import insert
+   insert(p,119 if mode=='normal'else 120,1);self.store.save(p)
+   with patch('server.gameplay.choose',side_effect=lambda entries:entries[0]):r=draw(self.store,1,mode,1)
+   self.assertEqual(r['_temp']['dropList'][0]['extra']['star'],3);self.assertEqual(r['_temp']['dropList'][0]['count'],1)
+ def test_nested_reference_multiplier_preserves_positive_and_zero_leaves(self):
+  from server.gameplay import drops
+  data=[{'classId':1,'groupId':1,'weight':1,'count':3,'refClassId':2,'entityId':0,'extra':{}},{'classId':2,'groupId':1,'weight':1,'count':0,'refClassId':0,'entityId':101,'extra':{}}]
+  with patch('server.gameplay.rows',return_value=data):self.assertEqual(drops(1),[{'entityId':101,'count':3,'extra':{}}])
  def test_insufficient_advanced_tickets_cannot_spend_gem(self):
   with self.assertRaises(ValueError):draw(self.store,1,'advanced',1)
   self.assertEqual(self.store.player(1)['gem'],10000)

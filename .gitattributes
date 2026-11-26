@@ -1,0 +1,2 @@
+# Preserve exact decoded vendor bytes for source hashes and reproducible ports.
+client/longzhidao.decoded.js -text -whitespace

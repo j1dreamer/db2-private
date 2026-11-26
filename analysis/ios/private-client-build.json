@@ -1,0 +1,69 @@
+{
+  "stage": "unsigned-private-ios-development-not-device-tested",
+  "source_sha256": "de3072e9ee041d809c7e0a0f7979d35e0ef14dbb066171e56e27846faa456261",
+  "ipa_sha256": "8653b63259b17b1645d290a4de304a4d4e45f5df66a2cc26f121b4290cf809e1",
+  "ipa_bytes": 510997150,
+  "bundle_id": "com.j1dreamer.db2.private",
+  "native_executable_sha256": "c925457ac1964ade6ddfde7e316091468f678cf7421bcdc3dec7fafacc0ec314",
+  "all_preserved_entries_verified": 17261,
+  "modified_entries": [
+    "Payload/dragonball.app/Info.plist",
+    "Payload/dragonball.app/assets/main/index.jsc"
+  ],
+  "removed_signature_provision_entries": [
+    "Payload/dragonball.app/embedded.mobileprovision",
+    "Payload/dragonball.app/_CodeSignature/",
+    "Payload/dragonball.app/_CodeSignature/CodeResources"
+  ],
+  "native_libraries_modified": false,
+  "original_ats": {
+    "NSAllowsArbitraryLoads": true
+  },
+  "canonical_data": {
+    "baseline": "android",
+    "canonical_sha256": "c436403350a1fc1236eeb6b1d2320c54f4af965e3da93d97ff4fbcace1ccb079",
+    "overridden_tables": [
+      "artifact",
+      "buff",
+      "entity",
+      "entityExt",
+      "fightSkill",
+      "role",
+      "task",
+      "vip"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "995f3d908dad7073d42dbb7ed01e32c1b28b6fd330b283d81fcc4284de9db031",
+    "native_modified": false
+  },
+  "shared_bundle": {
+    "shared_gameplay_baseline": "android",
+    "module_count": 319,
+    "shared_modules": 317,
+    "ios_modules_preserved": [
+      "resource",
+      "language"
+    ],
+    "script_uuid_mismatches": 0,
+    "serialized_property_mismatches": 0,
+    "android_resource_keys_verified_in_ios": 4011,
+    "native_execution_tested": false
+  },
+  "default_server": "http://db2-server.invalid:20003",
+  "editable_server": true,
+  "unconfigured_first_launch_skips_network": true,
+  "tutorial": false,
+  "speed_range": [
+    1,
+    10
+  ],
+  "sdk_login": "local-account",
+  "private_transport_patches": true,
+  "requires_resigning": true,
+  "signed_ipa_built": false,
+  "native_ios_execution_tested": false,
+  "decoded_bundle_sha256": "b458b07fe2e09a57265bd0ed88eb15b18eafb6d4c86ef9de1a2e257f593cda8d"
+}

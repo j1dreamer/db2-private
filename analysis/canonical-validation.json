@@ -1,0 +1,27 @@
+{
+  "full_suite": {
+    "total": 236,
+    "passed": 235,
+    "failed": 1,
+    "seconds": 336.983,
+    "failure": "test_home_generator_hides_absent_events_and_reads_daily_state depended on current meal-reward clock window"
+  },
+  "resolution": "Freeze client fixture clock at 05:00 in that initial-home test; production game rules unchanged",
+  "affected_client_group_rerun": {
+    "total": 23,
+    "passed": 23,
+    "failed": 0,
+    "seconds": 29.94
+  },
+  "all_236_tests_verified_across_runs": true,
+  "new_table_overlay_and_item_tool_tests": 13,
+  "canonical_ios_full_result_comparisons": 8,
+  "canonical_tables_compared": 34,
+  "android_signature_schemes_verified": [
+    1,
+    2,
+    3
+  ],
+  "python_and_powershell_reconstruction_verified": true,
+  "native_device_execution_tested": false
+}

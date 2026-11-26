@@ -21,7 +21,7 @@ window.DB2PrivateSettings = function () {
         var g=panel.addComponent(cc.Graphics);g.fillColor=cc.color(10,16,28,245);
         g.rect(-panel.width/2,-panel.height/2,panel.width,panel.height);g.fill();
         text(panel,'Kết nối server riêng',29,130);
-        text(panel,'Nhập http://IP-TAILSCALE:20003',20,85);
+        text(panel,'Nhập http://IP-TAILSCALE:20003 hoặc HTTPS',20,85);
         var field=new cc.Node();field.parent=panel;field.setContentSize(580,60);
         var bg=field.addComponent(cc.Graphics);bg.fillColor=cc.color(35,46,65);bg.roundRect(-290,-30,580,60,8);bg.fill();
         var edit=field.addComponent(cc.EditBox);edit.inputMode=cc.EditBox.InputMode.ANY;
@@ -30,10 +30,16 @@ window.DB2PrivateSettings = function () {
         var hint=text(panel,'Lưu sẽ khởi động lại game.',18,-60);
         button(panel,'Lưu và khởi động lại',270,-100,-125,function(){
             var value=edit.string.trim().replace(/\/$/,'');
-            if(!/^http:\/\/[^\s/:?#]+(?::\d{1,5})?$/.test(value)) {hint.string='Địa chỉ cần có dạng http://HOST:PORT';return;}
+            if(!/^https?:\/\/[^\s/:?#]+(?::\d{1,5})?$/.test(value)) {hint.string='Địa chỉ cần có dạng http(s)://HOST:PORT';return;}
             cc.sys.localStorage.setItem('db2.private.server',value);cc.game.restart();
         });
         button(panel,'Đóng',130,150,-125,function(){panel.destroy();});
     });
     trigger.name='DB2PrivateServerButton';trigger.zIndex=31000;
+    var sourceButton=button(canvas,'Nguồn và luật',160,-canvas.width/2+280,-canvas.height/2+40,function(){
+        window.__require('baseView').addMessageBox('Dữ liệu và luật client: Long Chi Đảo (X7 17327).\nTiếng Việt: dùng lại bản ENG và bổ sung bản dịch mới.\nLuật chỉ có ở server gốc: bản server mình tự định nghĩa, có ghi nhãn riêng.\nXem mục Nguồn và bản dịch trong web quản trị để biết chi tiết.',function(){});
+    });
+    sourceButton.name='DB2PrivateSourceButton';sourceButton.zIndex=31000;
+    var endpoint=cc.sys.localStorage.getItem('db2.private.server')||window.DB2_PRIVATE_DEFAULT_SERVER;
+    if (/\.invalid(?::|\/|$)/.test(endpoint)) trigger.emit(cc.Node.EventType.TOUCH_END);
 };

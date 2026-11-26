@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "flows": [
+    "login",
+    "catalog-search-focus",
+    "real-item-detail",
+    "grant-item-to-persisted-player",
+    "per-instance-rolled-item-details",
+    "edit-player-currency",
+    "system-mail-with-reward",
+    "giftcode-with-items",
+    "create-scheduled-event",
+    "pause-event",
+    "edit-live-SP-price-limit-pity",
+    "item-autocomplete",
+    "gacha-weight-edit",
+    "eight-slot-wheel-config",
+    "all-17-system-event-editors",
+    "three-choice-gift-config",
+    "score-milestones-and-boxes",
+    "dream-board-and-lap-rewards",
+    "source-provenance-desktop-and-mobile",
+    "item-source-and-new-vietnamese-attribution",
+    "calendar-desktop",
+    "calendar-mobile-list"
+  ],
+  "errors": [],
+  "dataset": "isolated temporary SQLite, never the running user database"
+}

@@ -1,0 +1,156 @@
+{
+  "policy": "Android canonical with only iOS definitions required by existing Android references",
+  "imported": [
+    {
+      "kindId": 373,
+      "definition": {
+        "kindId": 373,
+        "kindName": "T2-Partner(S) Box",
+        "desc": "One item for reward.",
+        "type": "box",
+        "price": 1000,
+        "imgId": 355,
+        "maxNum": -1,
+        "color": 12,
+        "extra": {
+          "dropListDesc": "9070x1,9080x1,9090x1,9100x1",
+          "selectCount": 1
+        }
+      },
+      "existing_android_gm_references": [
+        {
+          "gm_kindId": 3,
+          "field": "activeRewardDesc",
+          "value": "24001x68,373x1"
+        },
+        {
+          "gm_kindId": 3,
+          "field": "dailyRewardDesc",
+          "value": "24001x68,373x1"
+        },
+        {
+          "gm_kindId": 4,
+          "field": "activeRewardDesc",
+          "value": "24001x98,373x2"
+        },
+        {
+          "gm_kindId": 4,
+          "field": "dailyRewardDesc",
+          "value": "24001x98,373x2"
+        }
+      ],
+      "reward_dependencies": [
+        {
+          "kindId": 9070,
+          "exists_in_android": true
+        },
+        {
+          "kindId": 9080,
+          "exists_in_android": true
+        },
+        {
+          "kindId": 9090,
+          "exists_in_android": true
+        },
+        {
+          "kindId": 9100,
+          "exists_in_android": true
+        }
+      ],
+      "icons": [
+        {
+          "platform": "android",
+          "path": "img/355",
+          "present": true
+        },
+        {
+          "platform": "ios",
+          "path": "img/355",
+          "present": true
+        }
+      ]
+    },
+    {
+      "kindId": 379,
+      "definition": {
+        "kindId": 379,
+        "kindName": "Gem Box(Lv.4)",
+        "desc": "Can get all items for rewards.",
+        "type": "box",
+        "price": 1000,
+        "imgId": 373,
+        "maxNum": -1,
+        "color": 7,
+        "extra": {
+          "dropListDesc": "60104x1,60204x1,60304x1,60404x1,60504x1,60604x1"
+        }
+      },
+      "existing_android_gm_references": [
+        {
+          "gm_kindId": 6,
+          "field": "activeRewardDesc",
+          "value": "24001x328,379x8"
+        },
+        {
+          "gm_kindId": 6,
+          "field": "dailyRewardDesc",
+          "value": "24001x328,379x8"
+        }
+      ],
+      "reward_dependencies": [
+        {
+          "kindId": 60104,
+          "exists_in_android": true
+        },
+        {
+          "kindId": 60204,
+          "exists_in_android": true
+        },
+        {
+          "kindId": 60304,
+          "exists_in_android": true
+        },
+        {
+          "kindId": 60404,
+          "exists_in_android": true
+        },
+        {
+          "kindId": 60504,
+          "exists_in_android": true
+        },
+        {
+          "kindId": 60604,
+          "exists_in_android": true
+        }
+      ],
+      "icons": [
+        {
+          "platform": "android",
+          "path": "img/373",
+          "present": true
+        },
+        {
+          "platform": "ios",
+          "path": "img/373",
+          "present": true
+        }
+      ]
+    }
+  ],
+  "deferred_reason": "No Android typed reward/buff dependency identified; retain as reference, do not enable",
+  "platform_native": "Preserve original iOS executable, frameworks, SDK bridges and Info.plist; never replace with Android binaries",
+  "packaged_manifests": {
+    "android": {
+      "version": "1.0.0.01",
+      "remoteManifestUrl": "http://cdn.lz-singapore.miaomuxian.cn/fun3/project.manifest",
+      "remoteVersionUrl": "http://cdn.lz-singapore.miaomuxian.cn/fun3/version.manifest"
+    },
+    "ios": {
+      "version": "1.0.0.23",
+      "remoteManifestUrl": "http://cdn.lz-singapore.miaomuxian.cn/fun3/project.manifest",
+      "remoteVersionUrl": "http://cdn.lz-singapore.miaomuxian.cn/fun3/version.manifest"
+    },
+    "same_update_url": true,
+    "device_hot_update_cache_inspected": false
+  }
+}

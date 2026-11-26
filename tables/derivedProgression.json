@@ -1,0 +1,2188 @@
+{
+  "starCosts": [
+    {
+      "coin": 0,
+      "soul": 0,
+      "gem": 0,
+      "isSelf": false
+    },
+    {
+      "coin": 35000,
+      "soul": 20,
+      "gem": 0,
+      "isSelf": true
+    },
+    {
+      "coin": 120000,
+      "soul": 30,
+      "gem": 0,
+      "isSelf": true
+    },
+    {
+      "coin": 300000,
+      "soul": 40,
+      "gem": 0,
+      "isSelf": true
+    },
+    {
+      "coin": 800000,
+      "soul": 50,
+      "gem": 0,
+      "isSelf": true
+    },
+    {
+      "coin": 1000000,
+      "soul": 60,
+      "gem": 500,
+      "isSelf": false
+    },
+    {
+      "coin": 1000000,
+      "soul": 60,
+      "gem": 500,
+      "isSelf": false
+    },
+    {
+      "coin": 1000000,
+      "soul": 60,
+      "gem": 500,
+      "isSelf": false
+    },
+    {
+      "coin": 1000000,
+      "soul": 60,
+      "gem": 500,
+      "isSelf": false
+    },
+    {
+      "coin": 1000000,
+      "soul": 60,
+      "gem": 500,
+      "isSelf": false
+    },
+    {
+      "coin": 3000000,
+      "soul": 60,
+      "gem": 800,
+      "isSelf": true
+    },
+    {
+      "coin": 3000000,
+      "soul": 60,
+      "gem": 800,
+      "isSelf": true
+    },
+    {
+      "coin": 3000000,
+      "soul": 60,
+      "gem": 800,
+      "isSelf": true
+    },
+    {
+      "coin": 3000000,
+      "soul": 60,
+      "gem": 800,
+      "isSelf": true
+    },
+    {
+      "coin": 3000000,
+      "soul": 60,
+      "gem": 800,
+      "isSelf": true
+    },
+    {
+      "coin": 5000000,
+      "soul": 150,
+      "gem": 1200,
+      "isSelf": false
+    },
+    {
+      "coin": 5000000,
+      "soul": 120,
+      "gem": 1200,
+      "isSelf": true
+    },
+    {
+      "coin": 5000000,
+      "soul": 150,
+      "gem": 1200,
+      "isSelf": false
+    },
+    {
+      "coin": 5000000,
+      "soul": 120,
+      "gem": 1200,
+      "isSelf": true
+    },
+    {
+      "coin": 5000000,
+      "soul": 150,
+      "gem": 1200,
+      "isSelf": false
+    }
+  ],
+  "awakeCosts": [
+    {
+      "coin": 5000000,
+      "soul": 90
+    },
+    {
+      "coin": 5000000,
+      "soul": 90
+    },
+    {
+      "coin": 5000000,
+      "soul": 90
+    },
+    {
+      "coin": 5000000,
+      "soul": 90
+    },
+    {
+      "coin": 5000000,
+      "soul": 90
+    },
+    {
+      "coin": 5000000,
+      "soul": 120
+    },
+    {
+      "coin": 5000000,
+      "soul": 120
+    },
+    {
+      "coin": 5000000,
+      "soul": 120
+    },
+    {
+      "coin": 5000000,
+      "soul": 120
+    },
+    {
+      "coin": 5000000,
+      "soul": 120
+    },
+    {
+      "coin": 5000000,
+      "soul": 160
+    },
+    {
+      "coin": 10000000,
+      "soul": 160
+    },
+    {
+      "coin": 10000000,
+      "soul": 160
+    },
+    {
+      "coin": 10000000,
+      "soul": 160
+    },
+    {
+      "coin": 10000000,
+      "soul": 160
+    },
+    {
+      "coin": 10000000,
+      "soul": 160
+    },
+    {
+      "coin": 10000000,
+      "soul": 160
+    },
+    {
+      "coin": 10000000,
+      "soul": 160
+    },
+    {
+      "coin": 10000000,
+      "soul": 160
+    },
+    {
+      "coin": 10000000,
+      "soul": 160
+    }
+  ],
+  "maxLevels": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    110,
+    120,
+    130,
+    140,
+    150,
+    150,
+    150,
+    150,
+    150,
+    150,
+    160,
+    170,
+    180,
+    190,
+    200
+  ],
+  "soulCosts": {
+    "0": {
+      "1": [
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            31
+          ],
+          "costItemCounts": [
+            40
+          ]
+        }
+      ],
+      "2": [
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            32
+          ],
+          "costItemCounts": [
+            40
+          ]
+        }
+      ],
+      "3": [
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            33
+          ],
+          "costItemCounts": [
+            40
+          ]
+        }
+      ],
+      "4": [
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            34
+          ],
+          "costItemCounts": [
+            40
+          ]
+        }
+      ],
+      "5": [
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            35
+          ],
+          "costItemCounts": [
+            40
+          ]
+        }
+      ],
+      "6": [
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            36
+          ],
+          "costItemCounts": [
+            40
+          ]
+        }
+      ],
+      "7": [
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            37
+          ],
+          "costItemCounts": [
+            40
+          ]
+        }
+      ],
+      "8": [
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            38
+          ],
+          "costItemCounts": [
+            40
+          ]
+        }
+      ],
+      "9": [
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            20
+          ]
+        },
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            25
+          ]
+        },
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            30
+          ]
+        },
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            35
+          ]
+        },
+        {
+          "costItemIds": [
+            41
+          ],
+          "costItemCounts": [
+            40
+          ]
+        }
+      ]
+    },
+    "1": {
+      "1": [
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            31,
+            39
+          ],
+          "costItemCounts": [
+            40,
+            4
+          ]
+        }
+      ],
+      "2": [
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            32,
+            39
+          ],
+          "costItemCounts": [
+            40,
+            4
+          ]
+        }
+      ],
+      "3": [
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            33,
+            39
+          ],
+          "costItemCounts": [
+            40,
+            4
+          ]
+        }
+      ],
+      "4": [
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            34,
+            39
+          ],
+          "costItemCounts": [
+            40,
+            4
+          ]
+        }
+      ],
+      "5": [
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            35,
+            39
+          ],
+          "costItemCounts": [
+            40,
+            4
+          ]
+        }
+      ],
+      "6": [
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            36,
+            39
+          ],
+          "costItemCounts": [
+            40,
+            4
+          ]
+        }
+      ],
+      "7": [
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            37,
+            39
+          ],
+          "costItemCounts": [
+            40,
+            4
+          ]
+        }
+      ],
+      "8": [
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            38,
+            39
+          ],
+          "costItemCounts": [
+            40,
+            4
+          ]
+        }
+      ],
+      "9": [
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            20,
+            2
+          ]
+        },
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            25,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            30,
+            3
+          ]
+        },
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            35,
+            4
+          ]
+        },
+        {
+          "costItemIds": [
+            41,
+            39
+          ],
+          "costItemCounts": [
+            40,
+            4
+          ]
+        }
+      ]
+    }
+  },
+  "soulMaxLevels": {
+    "1": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "2": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "3": {
+      "1": 3,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "4": {
+      "1": 3,
+      "2": 3,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "5": {
+      "1": 6,
+      "2": 6,
+      "3": 3,
+      "4": 3,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "6": {
+      "1": 6,
+      "2": 6,
+      "3": 3,
+      "4": 3,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "7": {
+      "1": 6,
+      "2": 6,
+      "3": 3,
+      "4": 3,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "8": {
+      "1": 6,
+      "2": 6,
+      "3": 3,
+      "4": 3,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "9": {
+      "1": 6,
+      "2": 6,
+      "3": 3,
+      "4": 3,
+      "5": 0,
+      "6": 0,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "10": {
+      "1": 10,
+      "2": 10,
+      "3": 6,
+      "4": 6,
+      "5": 3,
+      "6": 3,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "11": {
+      "1": 10,
+      "2": 10,
+      "3": 6,
+      "4": 6,
+      "5": 3,
+      "6": 3,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "12": {
+      "1": 10,
+      "2": 10,
+      "3": 6,
+      "4": 6,
+      "5": 3,
+      "6": 3,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "13": {
+      "1": 10,
+      "2": 10,
+      "3": 6,
+      "4": 6,
+      "5": 3,
+      "6": 3,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "14": {
+      "1": 10,
+      "2": 10,
+      "3": 6,
+      "4": 6,
+      "5": 3,
+      "6": 3,
+      "7": 0,
+      "8": 0,
+      "9": 0
+    },
+    "15": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 6,
+      "6": 6,
+      "7": 3,
+      "8": 3,
+      "9": 3
+    },
+    "16": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 10,
+      "6": 10,
+      "7": 6,
+      "8": 6,
+      "9": 6
+    },
+    "17": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 10,
+      "6": 10,
+      "7": 10,
+      "8": 10,
+      "9": 10
+    },
+    "18": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 10,
+      "6": 10,
+      "7": 10,
+      "8": 10,
+      "9": 10
+    },
+    "19": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 10,
+      "6": 10,
+      "7": 10,
+      "8": 10,
+      "9": 10
+    },
+    "20": {
+      "1": 10,
+      "2": 10,
+      "3": 10,
+      "4": 10,
+      "5": 10,
+      "6": 10,
+      "7": 10,
+      "8": 10,
+      "9": 10
+    }
+  },
+  "powerFactors": {
+    "hp": 0.1,
+    "atk": 1,
+    "def": 1,
+    "mdef": 1,
+    "hit": 2,
+    "dodge": 2,
+    "crit": 2,
+    "unDizzinessRate": 6000,
+    "critRate": 8000,
+    "dmg2HpRate": 6000,
+    "dodgeRate": 7000,
+    "atkSpeedRate": 3500,
+    "keepMp": 10,
+    "reboundDmgHp": 0.1,
+    "skillDmg2HpRate": 3000,
+    "unConfusedRate": 3000,
+    "hitReduceMpRate": 20000,
+    "hitRepeledRate": 15000,
+    "hitReduceAtkSpeedRate": 7500,
+    "hitReduceRecoverHpRate": 7500,
+    "hitRateSilence": 15000,
+    "missReboundTeamRate": 2100,
+    "missReboundRate": 1500,
+    "atkIgnoreDodgeRate": 3000,
+    "unDeBuffRate": 3000,
+    "hitMaxHpRate": 0,
+    "recoverMp1Sec": 500,
+    "redHitDmgRate": 10000,
+    "incHpRate": 12000,
+    "incAtkRate": 12000,
+    "addDmgRate2": 12000,
+    "ignoreAddDmgRate2": 12000,
+    "beginMaxHpRateShield": 12000,
+    "atkShieldExtDmgRate": 6000,
+    "hitReduceRecoverHp": 10000,
+    "reviveAddDmgRate": 10000,
+    "beginHitDmgRate": 10000,
+    "beginHitMdmgRate": 10000,
+    "hitReduceAtkSpeed": 6000,
+    "hitUnReviveRate": 10000,
+    "hitReduceMp": 30,
+    "hitRepeledRate2": 15000,
+    "hitBleedingHpRate": 100000,
+    "recoverHp10SecRate2": 50000,
+    "skill0AddDmgRate": 8000,
+    "beginRecoverFullMpRate": 10000,
+    "removeDeBuffSec": 5700,
+    "hitUnRecoverHpRate": 30000,
+    "reboundDmgRate": 15000,
+    "beginAddDmgRate": 10000,
+    "addRecoverHpRedHitDmgRate": 30000,
+    "hitUnRecoverMpRate": 30000,
+    "ignoreUnDeBuffRate": 7000,
+    "privateUnConfusedRate": 7000,
+    "hitRate": 10000,
+    "addCritDmgRate": 3000,
+    "ignoreCritRate": 3000,
+    "addHpRecoverRate": 3000,
+    "unDmg2HpRate": 3000,
+    "skipHitRate": 3000,
+    "cdSpeedRate": 3500,
+    "hitClearMpRate": 20000,
+    "reducePctDmgRate": 3000
+  }
+}

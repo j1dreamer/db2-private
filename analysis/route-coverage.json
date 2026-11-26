@@ -1,1377 +1,3175 @@
 {
   "source_bundle_sha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
+  "target": 342,
   "routes_in_client": 342,
-  "implemented_routes": 16,
-  "unsupported_routes": 326,
-  "note": "Counts describe implemented dispatch only, not device-verified gameplay. HTTP account/admin endpoints are separate.",
+  "implemented_routes": 342,
+  "unsupported_routes": 0,
+  "note": "Draft branch coverage. Headless-tested dispatch is not device-verified or a complete original-server rule set.",
   "routes": [
     {
       "route": "chat.chatHandler.getGuildLast",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_chat.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "connector.entryHandler.entry",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "connector.playerHandler.createPlayer",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "connector.playerHandler.entry",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "connector.playerHandler.getPlayers",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "gate.gateHandler.queryEntry",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.enter",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.exit",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.openInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.result",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.setDefenseTeamInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.activityGuildBattleHandler.wintTimesRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.apply",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.applyRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.beginBattle",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.endBattle",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.endTopRankInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.enter",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.exit",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.getReport",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.getTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.move",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.openInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.receiveAward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.recover",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.winTimesRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.worshipRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.allServerBattleHandler.worshipStatue",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_resources.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.buyChallengeTimes",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.defenseTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.info",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.match",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.receive",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.reportList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.setDefenseTeamIndexsMap",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.top50",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.worshipRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arena3v3Handler.worshipStatue",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena3v3.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arenaHandler.buyChallengeTimes",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arenaHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arenaHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arenaHandler.defenseTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arenaHandler.info",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arenaHandler.match",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arenaHandler.report",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arenaHandler.reportList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.arenaHandler.setDefenseTeamIndexs",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.addShipExperience",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeArtifact",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeCapsule",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeFruit",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeItem",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeRole",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.composeShip",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.decomposeStarSign",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.increaseArtifactUpgradeStarSuccessRate",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.increaseFruitUpgradeStarSuccessRate",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.resetCapsule",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.saveResetCapsule",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.sell",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeShip",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeShipSkill",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeShipStar",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeStarArtifact",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeStarFruit",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.bagHandler.upgradeStarSign",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bag_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.apply",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.battleInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.bet",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.getChampionTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.getMyTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.getTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.openInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.worshipRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.doubleBattleHandler.worshipStatue",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.endlessHandler.begin",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_endless.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.endlessHandler.buyFruitMapTimes",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_endless.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.endlessHandler.pass",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_endless.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.endlessHandler.resetSetPursuitTeamTimes",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_endless.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.endlessHandler.setPursuitTeamIndexs",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_endless.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.endlessHandler.skip",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_endless.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.expeditionHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.expeditionHandler.receive",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.expeditionHandler.reset",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.expeditionHandler.skip",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.eyeHandler.buyChallengeTimes",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_eye.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.eyeHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_eye.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.eyeHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_eye.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.eyeHandler.defenseTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_eye.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.eyeHandler.info",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_eye.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.eyeHandler.report",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_eye.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.eyeHandler.startPrivate",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_eye.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.acceptAddFriend",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.exchangeTicket",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.findTarget",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.giveAndReceiveGiftAll",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.giveGift",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.giveGiftAll",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.myFriendList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.receiveGift",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.receiveGiftAll",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.recommendList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.refuseAddFriend",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.removeFriend",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.requestAddFriend",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.friendHandler.requestAddFriendList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.gmHandler.addItem",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_gm.py",
+        "tests/test_server.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.gmHandler.addRole",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_gm.py",
+        "tests/test_server.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.gmHandler.removeRole",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_gm.py",
+        "tests/test_server.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildBossHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildBossHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildBossHandler.dmgRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildBossHandler.openInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.addViceChairman",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.applyJoin",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.changeChairman",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.create",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.dismiss",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.drum",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.exit",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.handleApply",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.info",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.inherit",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.list",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.modifyNotice",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.modifySetting",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.openBox",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.receiveWorshipAward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.removeViceChairman",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.upgradeSkill",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.guildHandler.worship",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.buyChallengeTimes",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.defenseTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.earlySettlement",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.enemyList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.help",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.match",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.myIslandList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.practice",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.report",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.reportList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.reviveRole",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.setNeedHelp",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.islandHandler.settlement",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_island.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.mailHandler.read",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.mailHandler.receive",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.mailHandler.receiveAll",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.mailHandler.removeAllRead",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.mailHandler.send",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_social_mail.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.enter",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.exit",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.openInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.result",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.setDefenseTeamInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.newGuildBattleHandler.winTimesRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_guild_wars.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.activitySaveGem",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.activitySelectDropList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.buyActionPoint",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_player_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.buyCoin",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_player_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.buyGemGoods",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_commerce.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.buySkillPoint",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_player_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.costTopUpPoint",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_commerce.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.costTopUpPoint2",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_commerce.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.dreamRoll",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.exchange",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_commerce.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.exchange2Buy",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_commerce.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.exchange4Buy",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_commerce.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.exchangeBuy",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_commerce.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.fillLoginTopUp",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.fillTaskActive",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.incOnlineTime",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_online.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.receiveActivityAward",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.receiveHonourReward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_item_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.receiveScorePointBoxReward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.receiveTaskActiveAward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tasks.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.receiveTaskAward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tasks.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.rename",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.rollDial",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.scorePoint",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.selectBoxReward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_item_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.selectBoxReward2",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_item_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.sendChat",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_chat.py",
+        "tests/test_push.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.setChatSkin",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_player_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.setHideEqpt",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_player_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.setPhotoImg",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_player_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.setShipImg",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_player_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.setTitleImg",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_player_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.signIn",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_player_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.spWish",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.spWishExchangeBuy",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_commerce.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.topUpGoodsList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_commerce.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.updateFreeActivity",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.updateRepeatReceiveActivityTime",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_activities.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.useAllBox",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_item_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.useGiftCode",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.useItem",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_item_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.playerHandler.viewAd",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_local_boosts.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.pointHandler.adReward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_local_boosts.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.pointHandler.advanced",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.pointHandler.advancedHundred",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.pointHandler.advancedTen",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.pointHandler.normal",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.pointHandler.normalHundred",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.pointHandler.normalTen",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.pointHandler.selectWishClassId",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.pointHandler.switchAdvancedPool",
-      "implemented": true
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_server.py",
+        "tests/test_gameplay.py",
+        "tests/test_client_models.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.practiceHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.practiceHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.practiceHandler.defenseTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.practiceHandler.match",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.practiceHandler.setDefenseInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.createTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.dissolveTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.getInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.getReadyTeamInfos",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.joinTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.match",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.practice",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.rank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.removeTeamMember",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.prestigeBattleHandler.setAutoPractice",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.rankHandler.arenaTop50",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_rank.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.rankHandler.top50",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_rank.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.shopHandler.buy",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_shops.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.shopHandler.refresh",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_shops.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixExpeditionHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixExpeditionHandler.info",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixExpeditionHandler.receive",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixExpeditionHandler.reset",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixExpeditionHandler.skip",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_expedition.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixPracticeHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixPracticeHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixPracticeHandler.defenseTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixPracticeHandler.match",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.sixPracticeHandler.setDefenseInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_practice.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.smapHandler.beginSmap",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_adventure.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.smapHandler.buyMapType5Times",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_adventure.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.smapHandler.endSmap",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_adventure.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.smapHandler.receiveBmapAward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_adventure.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.smapHandler.resetSmapTimes",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_adventure.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.smapHandler.skip",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_adventure.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.tailHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tail.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.tailHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tail.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.createTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.dissolveTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.getInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.getReadyTeamInfos",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.joinTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.match",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.practice",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.rank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.refresh",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.removeTeamMember",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamBattleHandler.setAutoPractice",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_cooperative.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipAllArtifact",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipAllCapsule",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipAllStarSign",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipAllStone",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipArtifact",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipCapsule",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipStarSign",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.equipStone",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.evolveAllEquipment",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.evolveEquipment",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.evolveRole",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.evolveRoleSkill",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.increaseAwakeLevelUpgradeSuccessRate",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.increaseEvolveSkillSuccessRate",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.resetRole",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.resetRoleTrain",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.roleBreak",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.soulRole",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.trainRole",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipAllArtifact",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipAllCapsule",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipAllStarSign",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipAllStone",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipArtifact",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipCapsule",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipStarSign",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unEquipStone",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unlockFriendship",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.unlockRoleTrain",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeAllEquipmentMax",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeEquipment",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeEquipmentMax",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeRoleAwakeLevel",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeRoleAwakeSkill",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeRoleSkill",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.upgradeRoleStar",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.useExpItem",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.teamHandler.useExpItemMax",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_team_actions.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.timePeakHandler.altar",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.borrowRole",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.closeMap",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.getBlessing",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.openBox",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.openMap",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.recordLog",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.selectBlessing",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.setExtInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.setStatus",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.spa",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.timePeakHandler.updateBattleInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_time_peak.py"
+      ],
+      "device_verified": false,
+      "compatibility_kind": "documented-private-adapter-missing-original-content"
     },
     {
       "route": "logic.topArena3v3Handler.buyMatchTimes",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.challengeTop",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.challengeTopNull",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.defenseTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.info",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.match",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.receiveFirstReachReward",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.reportList",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.topArena3v3Handler.setDefenseTeamIndexsMap",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_top_arena.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worldBossHandler.challenge",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worldBossHandler.choose",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worldBossHandler.dmgRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worldBossHandler.inspire",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worldBossHandler.openInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_bosses.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.apply",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.battleInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.bet",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.getChampionTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.getMyTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.getTeam",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.openInfo",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.worshipRank",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     },
     {
       "route": "logic.worshipBattleHandler.worshipStatue",
-      "implemented": false
+      "implemented": true,
+      "status": "headless-tested",
+      "test_groups": [
+        "tests/test_tournaments.py"
+      ],
+      "device_verified": false
     }
   ]
 }

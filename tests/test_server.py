@@ -91,4 +91,13 @@ class ServerTests(unittest.IsolatedAsyncioTestCase):
   await ws.close()
  def test_truncated_package_rejected(self):
   with self.assertRaises(ValueError):list(packages(b'\4\0\0\2x'))
+ async def test_gm_entitlement_can_only_be_changed_with_admin_token(self):
+  s=Store(Path(self.temp.name)/'game.sqlite3');s.register('gmuser','password');s.create_player(1,'Goku');s.db.close()
+  body={'action':'set_gm','player':1,'enabled':True}
+  self.assertEqual((await self.client.post('/admin/api',json=body)).status,401)
+  headers={'Authorization':'Bearer test-secret'}
+  self.assertEqual((await self.client.post('/admin/api',json=body,headers=headers)).status,200)
+  data=await(await self.client.get('/admin/api',headers=headers)).json();self.assertTrue(data['players'][0]['privateGM'])
+  body['enabled']=False;self.assertEqual((await self.client.post('/admin/api',json=body,headers=headers)).status,200)
+  data=await(await self.client.get('/admin/api',headers=headers)).json();self.assertFalse(data['players'][0]['privateGM'])
 if __name__=='__main__':unittest.main()

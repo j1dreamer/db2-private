@@ -1,0 +1,130 @@
+{
+  "baseline": "longzhidao-17327",
+  "apk_sha256": "bea64b41319ebba5a84529f644661b13bea85aceed8f775703b642daf686b0ec",
+  "apk_bytes": 525087425,
+  "patch_sha256": "2f0b4b640391fc2bcd9bed25391cee966385162d4f25527625f4cd6df71d16f2",
+  "patch_bytes": 5316593,
+  "bundle_sha256": "928123bd45bddf88d08b2808568540b695b42985bcc6edc69c813803a8ae72f2",
+  "resources": {
+    "resources_compression": "stored",
+    "resources_offset": 44,
+    "aligned_4_bytes": true,
+    "size": 696528
+  },
+  "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953",
+  "signatures_verified": [
+    1,
+    2,
+    3
+  ],
+  "python_full_reconstruction_verified": true,
+  "powershell_full_reconstruction_verified": true,
+  "changed_non_signature_entries": [
+    "assets/assets/main/index.jsc"
+  ],
+  "native_android_tested": false,
+  "source_map": "tables/canonical-policy.json",
+  "translation_map": "tables/localization/vi.provenance.json",
+  "canonical_data": {
+    "baseline": "longzhidao-17327",
+    "canonical_sha256": "c2d43f1557f53ccb87a63c32f7c7ace368f4c91f2126d40051572eeb1e25feb1",
+    "overridden_tables": [
+      "arenaAchieveRewards",
+      "arenaRewards",
+      "entityExt",
+      "shop",
+      "signIn",
+      "task",
+      "vip"
+    ],
+    "soul_maps": [
+      "SOUL_TYPE_ATTR_ITEM_MAP",
+      "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+    ],
+    "overlay_sha256": "05c1da3c13d8a01d8729b4e5169bd193a792e8756086c562fa13c143b80de5a0",
+    "native_modified": false,
+    "startup_config_paths": [
+      "ACTIVITY.CONSTS.CARD_DAILY_REWARD_LIST_DESCS",
+      "ACTIVITY.CONSTS.CARD_DAYS",
+      "ACTIVITY.CONSTS.CARD_NAMES",
+      "ACTIVITY.CONSTS.CARD_REWARD_LIST_DESCS",
+      "ACTIVITY.CONSTS.CARD_TITLES",
+      "EQUIPMENTS.CONSTS.ARTIFACT_ITEM_TYPES",
+      "EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES",
+      "GUILD_BOSS.CONSTS.RANK_REWARD_BETWEENS",
+      "GUILD_BOSS.CONSTS.RANK_REWARD_DROP_LIST_MAPS",
+      "PLAYER.CONSTS.SEND_ALL_SERVER_NEED_VIP",
+      "ROLE.CONSTS.EVOLVE_SKILL_NO_LEVEL_MAP",
+      "ROLE.CONSTS.MAX_AWAKE_LEVEL",
+      "ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP",
+      "ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP",
+      "TASK.CONSTS.ACTIVE_REWARD_MAP"
+    ],
+    "build_ext_flags": [
+      "dailyNormalGemPointTimes",
+      "hideTrainTypeIds",
+      "isCanSkipGuide",
+      "isHidePackageInfo",
+      "isHideResetTrain",
+      "isHideRoleReset",
+      "isNoModifyNotice",
+      "isNoRemoveHideData",
+      "isPayDialNew",
+      "isShowAllFristTopUp",
+      "isShowBtDiscount",
+      "isShowTicketCards",
+      "isShowTicketShop",
+      "isShowX16",
+      "maxSpeedUPLevel",
+      "moneyTicketId",
+      "scorePointShowHundredBt",
+      "sendChatDelay",
+      "sendChatNoSame",
+      "spTaskActiveOneCostGem",
+      "speed3Scale",
+      "speedUPLevel3NeedVip"
+    ],
+    "provenance": "tables/canonical-policy.json",
+    "gameplay_modules": {
+      "baseline": "longzhidao-17327",
+      "ported_modules": [
+        "acePackPanel",
+        "activityPanel",
+        "bagScene",
+        "dial2Panel",
+        "diyGiftPack2Panel",
+        "diyGiftPackPanel",
+        "dreamExtActivityPanel",
+        "firstTopUpPanel",
+        "homeScene",
+        "itemItem",
+        "itemItem2",
+        "roleScene",
+        "rulePanel",
+        "serverConfig",
+        "shopScene",
+        "skillInfoPanel",
+        "spActivityPanel",
+        "starSignPointPanel",
+        "taskActiveTopUpPanel",
+        "triggerTopUpPanel"
+      ],
+      "preserved_shell_modules": [
+        "buildExt",
+        "resource",
+        "language",
+        "sdkApi",
+        "serverMain",
+        "settingPanel",
+        "soundApi"
+      ],
+      "target_serialized_property_supersets_preserved": [
+        "shopScene",
+        "acePackPanel"
+      ],
+      "script_uuid_mismatches": 0,
+      "missing_serialized_properties": 0,
+      "native_device_tested": false
+    }
+  }
+}

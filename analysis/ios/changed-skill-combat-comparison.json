@@ -1,0 +1,176 @@
+[
+  {
+    "mode": "pvp",
+    "seed": 1,
+    "changed_skill": 105501,
+    "attacker_kind": 105501,
+    "identical": false,
+    "difference_paths": [
+      ".defender.roles.0.hp",
+      ".defender.roles.0.mp",
+      ".attacker.roles.0.hp",
+      ".attacker.roles.0.mp",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.base.0",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.base.2",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.base.3",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.initVal",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.growth.0",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.growth.2",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.growth.3",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.valGrowth",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.atkPer",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.base.0",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.base.2",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.base.3",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.initVal",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.growth.0",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.growth.2",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.growth.3",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.valGrowth",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.atkPer",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.base.0",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.base.2",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.base.3",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.initVal",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.growth.0",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.growth.2",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.growth.3",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.valGrowth"
+    ],
+    "android_win": true,
+    "ios_win": true,
+    "android_ticks": 3002,
+    "ios_ticks": 3002,
+    "android_damage": {
+      "1": {
+        "1": {
+          "type": "role",
+          "entityId": 1,
+          "star": 3,
+          "trainLevelMap": {},
+          "kindId": 105501,
+          "damage": 99711
+        }
+      },
+      "2": {
+        "2": {
+          "type": "role",
+          "entityId": 2,
+          "star": 3,
+          "trainLevelMap": {},
+          "kindId": 100101,
+          "damage": 63302
+        }
+      }
+    },
+    "ios_damage": {
+      "1": {
+        "1": {
+          "type": "role",
+          "entityId": 1,
+          "star": 3,
+          "trainLevelMap": {},
+          "kindId": 105501,
+          "damage": 107971
+        }
+      },
+      "2": {
+        "2": {
+          "type": "role",
+          "entityId": 2,
+          "star": 3,
+          "trainLevelMap": {},
+          "kindId": 100101,
+          "damage": 61841
+        }
+      }
+    }
+  },
+  {
+    "mode": "pvp",
+    "seed": 777,
+    "changed_skill": 105501,
+    "attacker_kind": 105501,
+    "identical": false,
+    "difference_paths": [
+      ".defender.roles.0.hp",
+      ".defender.roles.0.mp",
+      ".attacker.roles.0.hp",
+      ".attacker.roles.0.mp",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.base.0",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.base.2",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.base.3",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.initVal",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.growth.0",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.growth.2",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.growth.3",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.valGrowth",
+      ".attacker.roles.0.skills.0.buffs.0.skillData.atkPer",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.base.0",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.base.2",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.base.3",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.initVal",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.growth.0",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.growth.2",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.growth.3",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.valGrowth",
+      ".attacker.roles.0.skills.0.buffs.0.data.skillData.atkPer",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.base.0",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.base.2",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.base.3",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.initVal",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.growth.0",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.growth.2",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.growth.3",
+      ".attacker.roles.0.skills.0.buffs.1.skillData.valGrowth"
+    ],
+    "android_win": true,
+    "ios_win": true,
+    "android_ticks": 3002,
+    "ios_ticks": 3002,
+    "android_damage": {
+      "1": {
+        "1": {
+          "type": "role",
+          "entityId": 1,
+          "star": 3,
+          "trainLevelMap": {},
+          "kindId": 105501,
+          "damage": 99711
+        }
+      },
+      "2": {
+        "2": {
+          "type": "role",
+          "entityId": 2,
+          "star": 3,
+          "trainLevelMap": {},
+          "kindId": 100101,
+          "damage": 63302
+        }
+      }
+    },
+    "ios_damage": {
+      "1": {
+        "1": {
+          "type": "role",
+          "entityId": 1,
+          "star": 3,
+          "trainLevelMap": {},
+          "kindId": 105501,
+          "damage": 107971
+        }
+      },
+      "2": {
+        "2": {
+          "type": "role",
+          "entityId": 2,
+          "star": 3,
+          "trainLevelMap": {},
+          "kindId": 100101,
+          "damage": 61841
+        }
+      }
+    }
+  }
+]

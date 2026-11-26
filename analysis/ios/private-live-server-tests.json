@@ -1,0 +1,59 @@
+{
+  "server_on_selected_vm": true,
+  "health": {
+    "status": "ok",
+    "stage": "protocol-development",
+    "playable_verified": false,
+    "build": "route-342-development",
+    "profile_schema": 28,
+    "routes": {
+      "implemented": 342,
+      "target": 342
+    }
+  },
+  "successful_routes": [
+    {
+      "route": "gate.gateHandler.queryEntry",
+      "code": 200
+    },
+    {
+      "route": "connector.entryHandler.entry",
+      "code": 200
+    },
+    {
+      "route": "connector.playerHandler.getPlayers",
+      "code": 200
+    },
+    {
+      "route": "connector.playerHandler.createPlayer",
+      "code": 200
+    },
+    {
+      "route": "logic.playerHandler.rename",
+      "code": 200
+    },
+    {
+      "route": "logic.pointHandler.normal",
+      "code": 200
+    },
+    {
+      "route": "logic.pointHandler.advanced",
+      "code": 200
+    },
+    {
+      "route": "connector.playerHandler.entry",
+      "code": 200
+    }
+  ],
+  "built_ipa_codec_and_models": true,
+  "profile_schema": 28,
+  "final_name": "iOS Ready",
+  "gate": {
+    "code": 200,
+    "host": "127.0.0.1",
+    "port": 20003
+  },
+  "native_ios_execution_tested": false,
+  "external_phone_connection_verified": false,
+  "pass": true
+}

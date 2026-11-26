@@ -1,0 +1,47 @@
+[
+  {
+    "archive_path": "Payload/dragonball.app/assets/internal/index.jsc",
+    "encrypted_bytes": 320,
+    "encrypted_sha256": "a453761aef009b3204ef2e1dc81b99abffec0790e1aec916d6b3636972397276",
+    "format": "XXTEA followed by gzip-compressed UTF-8 JavaScript",
+    "decoded_bytes": 563,
+    "decoded_sha256": "7797411ef5e6c439b3b13999c9ee94c2142d743021727044531da33109e917bf",
+    "decoded_path": "assets/internal/index.js"
+  },
+  {
+    "archive_path": "Payload/dragonball.app/assets/resources/index.jsc",
+    "encrypted_bytes": 320,
+    "encrypted_sha256": "a453761aef009b3204ef2e1dc81b99abffec0790e1aec916d6b3636972397276",
+    "format": "XXTEA followed by gzip-compressed UTF-8 JavaScript",
+    "decoded_bytes": 563,
+    "decoded_sha256": "7797411ef5e6c439b3b13999c9ee94c2142d743021727044531da33109e917bf",
+    "decoded_path": "assets/resources/index.js"
+  },
+  {
+    "archive_path": "Payload/dragonball.app/assets/main/index.jsc",
+    "encrypted_bytes": 1910868,
+    "encrypted_sha256": "aad8601dd8f5becc6c25c17192c84136ec84533a880a267d30eda834feec1ef6",
+    "format": "XXTEA followed by gzip-compressed UTF-8 JavaScript",
+    "decoded_bytes": 7656528,
+    "decoded_sha256": "3edb048a08a29e1107d32007fa523a38fe0973f560906f55caa54c87c2d3516f",
+    "decoded_path": "assets/main/index.js"
+  },
+  {
+    "archive_path": "Payload/dragonball.app/src/settings.jsc",
+    "encrypted_bytes": 200,
+    "encrypted_sha256": "4caca440f78a5922e38dee7700abe831508d1998fd17daf0f4cc5400ac6136c6",
+    "format": "XXTEA followed by gzip-compressed UTF-8 JavaScript",
+    "decoded_bytes": 245,
+    "decoded_sha256": "672164cea1ed09ef155fc06ea12f4ec4320352f51ac62e737bdfebaca9c9c46c",
+    "decoded_path": "src/settings.js"
+  },
+  {
+    "archive_path": "Payload/dragonball.app/src/cocos2d-jsb.jsc",
+    "encrypted_bytes": 365796,
+    "encrypted_sha256": "e6781523f25aaab838c4f3b4c08fef39aa0277f04cadb2ac8bc37e30e94951f0",
+    "format": "XXTEA followed by gzip-compressed UTF-8 JavaScript",
+    "decoded_bytes": 1587373,
+    "decoded_sha256": "63a6617cc067781e72a5da77e5097c8664e8361136914c02f20d7bd2b2d8e78f",
+    "decoded_path": "src/cocos2d-jsb.js"
+  }
+]

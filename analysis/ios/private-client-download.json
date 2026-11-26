@@ -1,0 +1,116 @@
+{
+  "filename": "DB2-Private-unsigned.ipa",
+  "sha256": "8653b63259b17b1645d290a4de304a4d4e45f5df66a2cc26f121b4290cf809e1",
+  "size": 510997150,
+  "stage": "unsigned-private-development-requires-Mac-signing",
+  "base": null,
+  "parts": [
+    {
+      "file": "part-000.bin",
+      "size": 25165824,
+      "sha256": "0d066b72a599fe34f2d041af9544212b8755741a843d125b535a8552bfac652b"
+    },
+    {
+      "file": "part-001.bin",
+      "size": 25165824,
+      "sha256": "1180dec88b1ea03c2a78d1cdf959a3b51493eccd68271f2e4eacea8b08a7c436"
+    },
+    {
+      "file": "part-002.bin",
+      "size": 25165824,
+      "sha256": "5918df1fc0428984c7fd04ed68066ed77d71a591a38c6d9746c21bbc17c8e927"
+    },
+    {
+      "file": "part-003.bin",
+      "size": 25165824,
+      "sha256": "2fe0a49bc965bd882fd7a0c1a70370bcbb8cae61527c081dc3ff1ad3bb282204"
+    },
+    {
+      "file": "part-004.bin",
+      "size": 25165824,
+      "sha256": "3b4368851a483c903885e5cbc1156806dff11b63663c3d7227d3676829838d98"
+    },
+    {
+      "file": "part-005.bin",
+      "size": 25165824,
+      "sha256": "1189b20d049a2ef404f6896df17987af7d4701aa47c8152a81b290c5b6675358"
+    },
+    {
+      "file": "part-006.bin",
+      "size": 25165824,
+      "sha256": "53746990a2f5327db189730b8f5c7b21712f1f27b94eddfeae0cb1acdc7cfb78"
+    },
+    {
+      "file": "part-007.bin",
+      "size": 25165824,
+      "sha256": "52ee7b4a41a2279aa253c51aed9697669421541dd0fc099016c0fcbe2f0bbbb4"
+    },
+    {
+      "file": "part-008.bin",
+      "size": 25165824,
+      "sha256": "15e1b6e00b54ead6da3d1c6e64538b091b3e6913b1efb77eb2014ca0566e3f09"
+    },
+    {
+      "file": "part-009.bin",
+      "size": 25165824,
+      "sha256": "6bdae800c8146451075dc9421c8c6597b623e7e3ec6cf2000e346cf911eca13a"
+    },
+    {
+      "file": "part-010.bin",
+      "size": 25165824,
+      "sha256": "b686d3f3453098f0b1b57d4bbee525ed5492799f0fcad2565eb7a8acfee21101"
+    },
+    {
+      "file": "part-011.bin",
+      "size": 25165824,
+      "sha256": "7b94b52f3adba0b97736bc16cc9d5eb39e932bed1218802ff53b3b4be7c8f6cd"
+    },
+    {
+      "file": "part-012.bin",
+      "size": 25165824,
+      "sha256": "01c4ef459c69cead2549cf6f0c9c87c436bddd9298371ab8eaf3ff2af22e6092"
+    },
+    {
+      "file": "part-013.bin",
+      "size": 25165824,
+      "sha256": "9fe92c95e0cb82343e3996092066e2dc430a9230f7c7d2df0d56fa2b1a4e5a6d"
+    },
+    {
+      "file": "part-014.bin",
+      "size": 25165824,
+      "sha256": "72d47373e7f985e9407b5c9894516ba8cf1176f3f99882e4c42155d4c2e6fba5"
+    },
+    {
+      "file": "part-015.bin",
+      "size": 25165824,
+      "sha256": "4e3513b2f1edab7ab935b134d1c4b0fc1a814e7bd4ae770f0bedcc671265d9da"
+    },
+    {
+      "file": "part-016.bin",
+      "size": 25165824,
+      "sha256": "eb53183be4241fd27afb7088a041be0899fac6e6d39a687f0552692cd9e41c60"
+    },
+    {
+      "file": "part-017.bin",
+      "size": 25165824,
+      "sha256": "20a2bbec64857c0f3ae93dcb4bbde6b8ca5eeab06b0d1cd0e215afe6e6ff5ce0"
+    },
+    {
+      "file": "part-018.bin",
+      "size": 25165824,
+      "sha256": "46c659b3c9b895e9893848d95b488b6e222a0a2ddfb2b01d15bf92f9842c2e6b"
+    },
+    {
+      "file": "part-019.bin",
+      "size": 25165824,
+      "sha256": "bc838766954568dd060c113ff6e9a893f0553f557c013a4de528aa27fd92086b"
+    },
+    {
+      "file": "part-020.bin",
+      "size": 7680670,
+      "sha256": "099986109a7f68fd4ed5b6741639b0d3b686f60bcdf9c0badb14035db5fa26c9"
+    }
+  ],
+  "published": false,
+  "distribution_status": "private-only-user-request; private-GitHub-repo-creation-failed-403"
+}

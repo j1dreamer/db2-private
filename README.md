@@ -1,16 +1,29 @@
+> **Web quản trị mới:** 9 khu vực, 2.905 item/role có ảnh thật, 17 event hệ thống và lịch sự kiện tùy chỉnh; cùng SQLite/RPC với game. Xem [cách chạy và phạm vi chỉnh sửa](ADMIN.md).
+
+> **Bản Long Chi Đảo Việt hóa (26/11/2026):** server, APK và IPA dùng chung 34 bảng theo **龙之岛-1W免费版, X7 #17327** cùng các override khởi động đã đọc từ client. Giữ 3 ID tương thích cũ có ghi nguồn riêng. Backend Python là mã dự án viết để tương thích giao thức, không phải source server gốc ENG/Long Chi Đảo. Xem [chi tiết chuyển bản và cập nhật](LONG-CHI-DAO.md), mục **Nguồn và bản dịch** trên web quản trị và [bảng nguồn](tables/canonical-policy.json).
+
+> **APK mới:** tải [Client-LongChiDao-VI-Patch.zip](Client-LongChiDao-VI-Patch.zip), khoảng 5,1 MB. Giải nén vào thư mục mới, chép **DB2-Private-Android-fixed.apk** cũ vào đó, chạy `Apply-Dev.bat`, sau đó `Install-Dev.bat`. Tạo **DB2-LongChiDao-VI.apk**, cùng package/chữ ký để cài đè. Có tiếng Việt mặc định, nguồn luật, bỏ hướng dẫn, Speed 1×–10× và bản sửa scheduler khởi động. Cần cập nhật **cả server lẫn APK** cho cùng bộ luật; không gỡ game hoặc xóa data.
+
+> **Tiếng Việt:** dùng lại 8.466 mục có sẵn trong ENG, bổ sung 498 mục mới, sáu mục được sửa lại; có 8.958 khóa sau ghép. Giữ nguyên từ điển gốc trong `tables/localization/vi.eng.json`, bản dịch bổ sung ở `vi.authored.json`; nguồn từng khóa ở `vi.provenance.json`. Tên/mô tả 2.905 vật phẩm đều có tiếng Việt. Ảnh UI và prefab gốc ENG được giữ để tương thích; không tuyên bố mọi chữ vẽ sẵn trong ảnh đã được Việt hóa.
+
+> **IPA:** đã dựng bản **Long Chi Đảo VI riêng, chưa ký**, không có payload trong repo public. Dùng cùng dữ liệu/gameplay, từ điển VI và speed đã sửa; giữ native Mach-O/SDK/tài nguyên iOS gốc. Cần chủ máy ký hợp lệ và cài trên Mac. Xem [hướng dẫn iOS](IOS-PRIVATE.md). Chưa xác minh native Android/iPhone cho bản này.
+
+> Nhánh `route-342` vẫn có **342/342 handler**; Time Peak và các luật server-only tiếp tục có nhãn luật riêng, xem [phạm vi triển khai](IMPLEMENTATION-342.md) và [quy tắc có ghi nguồn](tables/privateRules.json).
+
+> Server phải dùng [source nhánh route-342](https://github.com/j1dreamer/db2-private/archive/refs/heads/route-342.zip), có Python và **Node.js LTS** (`pkg install nodejs` trên Termux). Dừng server cũ, giải nén source vào thư mục mới, chép thư mục `data` từ bản cũ sang rồi chạy `start.bat`; giữ lại thư mục cũ làm bản sao lưu. `Check-Home.py` → `running_health` sẽ hiển thị build, schema và số route để phát hiện đang chạy nhầm server cũ.
+
 # DB2 Private — bản phát triển
 
 > **Sửa lỗi cài đặt Android 11+**: APK `v0.1.0-dev` cũ đã nén `resources.arsc`, có thể bị hệ thống từ chối dù chữ ký hợp lệ. Dùng [APK-Install-Fix.zip](APK-Install-Fix.zip), giải nén cạnh APK cũ, nhấp đúp `Apply-Fix.bat` trên Windows rồi cài **DB2-Private-Android-fixed.apk**. Bản vá khoảng 1,5 MB; không cần tải lại toàn bộ APK.
 
-Backend Python + SQLite, web quản trị và công cụ đóng gói client Android từ bộ file người dùng cung cấp. iOS chưa nằm trong bản này.
+Backend Python + SQLite, web quản trị và công cụ cập nhật APK/IPA từ các client đã được cung cấp hoặc tải theo yêu cầu. IPA dẫn xuất luôn giữ riêng.
 
 ## Trạng thái thực tế
 
-- Đã có: đăng ký/đăng nhập tài khoản riêng, session 24 giờ, Pomelo handshake/heartbeat, gate/connector, tạo/chọn nhân vật theo schema dự thảo, đặt/đổi tên đội, đổi giftcode, web quản trị có token, tạo giftcode, cấp gem, pool gacha tùy chỉnh và lưu lịch event.
-- Đã kiểm thử giao thức và SQLite qua mạng loopback.
-- Chưa có: xác minh profile đủ trường để vào sảnh trên thiết bị, toàn bộ 342 route gameplay, tích hợp các event tùy ý vào UI event gốc.
-- Người dùng đã cài APK trên BlueStacks và tới cảnh sảnh; phát hiện lỗi khởi tạo dữ liệu sảnh. Schema 3 sửa lỗi này ở server, cần xác nhận lại trên thiết bị. Mã SDK Java vẫn còn trong gói.
-- Các thao tác chưa triển khai trả lỗi rõ ràng; không giả lập thành công.
+- Nhánh hiện tại có 342/342 handler và profile schema 29; dữ liệu/công thức đọc được theo Long Chi Đảo #17327, bộ giao diện và Việt ngữ giữ nền ENG/iOS. Chi tiết nguồn ở `tables/canonical-policy.json` và `tables/privateRules.json`.
+- Backend đã kiểm thử giao thức, lưu SQLite, replay chiến đấu và cập nhật quản trị qua loopback. Các luật server không có trong client được định nghĩa riêng và ghi nhãn.
+- Người dùng đã vào sảnh/quay trên bản fixed cũ. Bản Long Chi Đảo mới cần kiểm tra cài đặt và chơi thực tế trên BlueStacks/iPhone; chưa tuyên bố chơi hoàn chỉnh.
+- Web quản trị có 9 khu vực, 2.905 định nghĩa item/role và 17 bộ chỉnh event hệ thống; dùng cùng SQLite/RPC với game.
 
 ## Chạy
 
@@ -63,7 +76,7 @@ Sao lưu khi server đã dừng, hoặc dùng SQLite backup API; không sao ché
 
 - Quay thường dùng vé 119 nếu đủ cho cả lượt quay; nếu thiếu, dùng 300 gem/lần hoặc 2.700 gem/10 lần. Quay 100 lần dùng 27.000 gem. Vé lẻ không bị trừ khi chọn thanh toán bằng gem.
 - Cao cấp dùng vé 120. Pool là 202/203/204; đổi pool tốn 300 gem theo hằng số client.
-- Nếu chưa có pool tùy chỉnh, đọc drop table được trích từ client. Lần quay đầu dùng class 101 hoặc 201. Chưa triển khai bảo hiểm và điều chỉnh xác suất theo wishlist; không khẳng định thuật toán giống server gốc.
+- Nếu chưa có pool tùy chỉnh, đọc drop table được trích từ client. Lần quay đầu dùng class 101 hoặc 201. Pool mặc định bảo đảm nhánh 3 sao mỗi lượt thứ 20 theo hằng số client, theo luật riêng dùng counter tích lũy. Pool admin giữ cấu hình riêng; chưa điều chỉnh xác suất theo wishlist. Không khẳng định thuật toán giống server gốc.
 - Tướng trùng chuyển thành 10 hồn cùng class: đây là chính sách server riêng hiện tại.
 - Trên web quản trị, thêm mục thưởng vào pool sẽ kích hoạt danh sách tùy chỉnh cho pool đó. Trọng số được chuẩn hóa tương đối, không phải phần trăm độc lập.
 - Event quản trị hiện có một phần thưởng gem tại chỉ số 0, nhận bằng route `logic.playerHandler.receiveActivityAward`. Mỗi nhân vật nhận một lần, thời gian server tính bằng giây Unix. Chưa nối các tên event tùy ý vào màn event gốc của game.
@@ -111,7 +124,7 @@ Windows có Python 3: nhấp đúp **Download-APK.bat** trong thư mục repo. H
 python tools/download_apk.py
 ```
 
-Công cụ tải 25 phần từ nhánh `apk-download`, kiểm tra SHA-256 từng phần, ghép thành **DB2-Private-Android-dev.apk** và kiểm tra checksum toàn file. Không build/ký lại APK. Nếu mất mạng, chạy lại để tiếp tục các phần còn thiếu. Cần khoảng 1 GB trống cho phần tải và APK hoàn chỉnh.
+Công cụ tải 25 phần từ nhánh `apk-download`, kiểm tra SHA-256 từng phần, ghép APK nền rồi áp dụng bản sửa cài đặt để tạo **DB2-Private-Android-fixed.apk**. Dùng file fixed này làm đầu vào cho **Client-LongChiDao-VI-Patch.zip** ở đầu tài liệu; file nền chưa có bộ luật Long Chi Đảo mới. Không build/ký lại APK. Nếu mất mạng, chạy lại để tiếp tục các phần còn thiếu. Cần khoảng 1 GB trống cho phần tải và APK hoàn chỉnh.
 
 Nếu không dùng Python, tải ZIP của nhánh `apk-download`, giải nén và nhấp **join-apk.bat** trên Windows để ghép bằng lệnh có sẵn của hệ điều hành.
 

@@ -39,3 +39,8 @@ def response(ident,body):
         n=ident&127;ident>>=7;result.append(n|(128 if ident else 0))
         if not ident:break
     return package(4,bytes(result)+json.dumps(body,ensure_ascii=False,separators=(',',':')).encode())
+
+def push(route,body):
+    encoded=route.encode()
+    if not 1<=len(encoded)<=255:raise ValueError('Invalid push route')
+    return package(4,bytes([6,len(encoded)])+encoded+json.dumps(body,ensure_ascii=False,separators=(',',':')).encode())

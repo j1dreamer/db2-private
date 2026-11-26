@@ -1,0 +1,67 @@
+[
+  {
+    "id": "backend",
+    "source": "private-server-implementation",
+    "description": "Toàn bộ backend Python và SQLite do dự án viết để tương thích giao thức; không có source backend ENG/Long Chi Đảo."
+  },
+  {
+    "id": "client-data",
+    "source": "longzhidao-client",
+    "description": "34 bảng và các hằng/công thức đọc được lấy từ Long Chi Đảo ID 17327; các hàng giữ tương thích có nhãn riêng."
+  },
+  {
+    "id": "client-shell",
+    "source": "eng-client",
+    "description": "Giữ khung giao diện, tài nguyên, SDK/native và bộ tiếng Việt của client ENG; chuyển các module gameplay đã kiểm UUID và trường prefab."
+  },
+  {
+    "id": "battle",
+    "source": "longzhidao-client",
+    "description": "Dùng engine chiến đấu khôi phục từ client ENG đã đối chiếu AST với bản Trung; dữ liệu và serverConfig lấy Long Chi Đảo. Cách xác minh và điều phối trận ở backend là mã dự án."
+  },
+  {
+    "id": "gacha",
+    "source": "private-server-rule",
+    "description": "Dùng drop khai báo trong bảng client khi có. Chọn trọng số, lưu bảo hiểm và giao dịch là backend dự án; pool sửa trên web là luật quản trị riêng."
+  },
+  {
+    "id": "events",
+    "source": "private-server-rule",
+    "description": "Lịch, điều kiện mở, chống nhận trùng và 17 DTO sự kiện có thể quản trị là luật dự án. Các mốc nguồn client được dùng khi đọc được; không nhận là lịch server gốc."
+  },
+  {
+    "id": "tournaments",
+    "source": "private-server-rule",
+    "description": "Ghép cặp, lịch mùa/đấu, bot, thưởng và quyết toán liên server không đọc đầy đủ từ client; dùng luật riêng đã mô tả trong README và module tương ứng."
+  },
+  {
+    "id": "time-peak",
+    "source": "private-server-rule",
+    "description": "Time Peak vẫn dùng adapter, màn điều khiển và luật riêng vì thiếu màn/bảng cần thiết trong source; không phải bản sao server gốc."
+  },
+  {
+    "id": "world-social",
+    "source": "private-server-rule",
+    "description": "Đăng nhập local, bạn bè, bang, thư, GM, giftcode, kho dữ liệu bền vững và chống gửi lặp do dự án triển khai."
+  },
+  {
+    "id": "shop-invalid-count",
+    "source": "private-server-rule",
+    "description": "Dòng shop 140004/140005 trong Long Chi Đảo có minCount > maxCount. Backend giữ nguyên bảng và dùng minCount làm số lượng cố định để không gây lỗi; đây là quyết định riêng."
+  },
+  {
+    "id": "profile-migration",
+    "source": "private-server-rule",
+    "description": "Giữ nguyên tiền, túi, đội hình, số sao/thức tỉnh và VIP đã cấp; tính lại thuộc tính chiến đấu một lần theo luật mới. Không cấp lại quà khởi đầu. Sao lưu SQLite trước khi chuyển."
+  },
+  {
+    "id": "translation",
+    "source": "new-vietnamese-translation",
+    "description": "Tái sử dụng 8.466 mục tiếng Việt ENG; 498 mục dịch bổ sung gồm sáu mục sửa lại. Phần bổ sung được ghi nguồn từng khóa. Văn bản dự trữ có tên Naruto là dữ liệu đã có trong bảng client, không phải tính năng mới được thêm."
+  },
+  {
+    "id": "platform",
+    "source": "private-server-implementation",
+    "description": "Chọn server, bỏ hướng dẫn, nút speed x1–x10, phục hồi callback và sửa giao thức là các bản vá dự án. APK ký phát triển; IPA riêng phải được ký hợp lệ trên Mac."
+  }
+]

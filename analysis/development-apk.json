@@ -1,0 +1,38 @@
+{
+  "stage": "development-not-device-verified",
+  "implemented_routes": 342,
+  "target_routes": 342,
+  "apk_sha256": "bea64b41319ebba5a84529f644661b13bea85aceed8f775703b642daf686b0ec",
+  "old_apk_sha256": "d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f",
+  "resources": {
+    "resources_compression": "stored",
+    "resources_offset": 44,
+    "aligned_4_bytes": true,
+    "size": 696528
+  },
+  "tutorial": false,
+  "game_speed": [
+    1,
+    10
+  ],
+  "server_branch": "route-342",
+  "new_original_routes_complete": false,
+  "all_route_handlers_implemented": true,
+  "private_time_peak_adapter": true,
+  "apk_filename": "DB2-LongChiDao-VI.apk",
+  "runtime_scheduler_binding": "lazy-after-director-init",
+  "baseline": "longzhidao-17327",
+  "profile_schema": 29,
+  "translation_original_eng": 8466,
+  "translation_authored": 498,
+  "translation_overrides": 6,
+  "translation_final": 8958,
+  "source_map": "tables/canonical-policy.json",
+  "translation_map": "tables/localization/vi.provenance.json",
+  "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953",
+  "verified_signature_schemes": [
+    1,
+    2,
+    3
+  ]
+}

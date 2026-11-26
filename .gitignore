@@ -10,6 +10,8 @@ node_modules/
 *.db
 *.jks
 *.apk
+*.ipa
+.db2-ios-parts/
 .release/
 .db2-apk-parts/
 *.assembling

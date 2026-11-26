@@ -1,0 +1,314 @@
+{
+  "baseline": "longzhidao-17327",
+  "source": {
+    "game": "龙之岛-1W免费版",
+    "x7_id": 17327,
+    "url": "https://www.x7sy.com/game/app/17327",
+    "apk_sha256": "437321b3e6c1bb3fe9e7758bec418e08364f7defcddc5f3cc7322492e7babdf4",
+    "jsc_sha256": "d04718492bbdd0b43bcdb3826a27280d56f8dd06f1224b7adc13b273609b4a0a",
+    "native_sha256": "199f7aac71ee281850feedbade9b28f8c8d7d9ccb68bf4dd4e49173644862b40"
+  },
+  "tables": {
+    "stone": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/0a/0a903e43-c43b-4bf9-a138-289e615b4576.bin",
+      "shipped_rows": 44,
+      "canonical_rows": 44,
+      "shipped_content_sha256": "bc211ce373d03325a70fec33a8db69af08fb955771a9fddb27128433eaef678b",
+      "compatibility_rows": []
+    },
+    "vip": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/0c/0c03b369-6aca-4e11-aca4-26ca9ac00c87.bin",
+      "shipped_rows": 17,
+      "canonical_rows": 17,
+      "shipped_content_sha256": "acb9a5481dac4ea39cf5b67e78d74e881bfbf6151a74be45e7f492c339e15f6c",
+      "compatibility_rows": []
+    },
+    "soul": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/14/14e99198-b3ba-4050-a7a4-8872f2ef8144.bin",
+      "shipped_rows": 88,
+      "canonical_rows": 88,
+      "shipped_content_sha256": "95d6dd0bd1ca0764622e23b2dcd110da330493b82bc3c976ae13526599378475",
+      "compatibility_rows": []
+    },
+    "arenaAchieveRewards": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/15/151d1b05-d891-4c54-ae34-f6451d3895ab.bin",
+      "shipped_rows": 1651,
+      "canonical_rows": 1651,
+      "shipped_content_sha256": "a93c36a75c0aaec9c32a53968b471f75aa53bd02eb4b75794ed03a6fe1db78f8",
+      "compatibility_rows": []
+    },
+    "artifact": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/22/22a11ba0-9d13-4889-9f70-5b497b16932a.bin",
+      "shipped_rows": 117,
+      "canonical_rows": 117,
+      "shipped_content_sha256": "b1f51d97dd05b15fe0e5e7be383317bc21867e3de59939e31bd4d639f5fc8c91",
+      "compatibility_rows": []
+    },
+    "islandRewards": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/28/284f1742-16e5-4924-b31d-3e8e6d7dade2.bin",
+      "shipped_rows": 7,
+      "canonical_rows": 7,
+      "shipped_content_sha256": "16ec54b538fa2cae86d373a8468094b97fa7b3d356bbb9ad0dc3361d21160392",
+      "compatibility_rows": []
+    },
+    "robot": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/2c/2cea2522-8915-429f-ad4a-81955535a089.bin",
+      "shipped_rows": 234,
+      "canonical_rows": 234,
+      "shipped_content_sha256": "63cc10732939b6654562beb03c11db2c4075621d1351c4be62b24e2ac715e32b",
+      "compatibility_rows": []
+    },
+    "entity": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/2c/2cf6e170-9b63-46ba-b21a-91d57377c522.bin",
+      "shipped_rows": 2818,
+      "canonical_rows": 2818,
+      "shipped_content_sha256": "c029ec518a52977e6f37213231cbe07035a3aa8801accee58cd227cf0fb84758",
+      "compatibility_rows": []
+    },
+    "cost": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/2f/2fc7271c-1bb0-45bb-8446-bf6f1d6aefc4.bin",
+      "shipped_rows": 500,
+      "canonical_rows": 500,
+      "shipped_content_sha256": "568b6cb6e28f68ce0993b01b6c2e24b6e90289d771b652b939c3da7e4558f7d3",
+      "compatibility_rows": []
+    },
+    "math": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/32/323e958e-0a81-4c24-95dd-fd8e9aef73a0.bin",
+      "shipped_rows": 1000,
+      "canonical_rows": 1000,
+      "shipped_content_sha256": "8ba4922f7cf9487599d876dfb86054d547ede553e250939ea90dee6f25542ea5",
+      "compatibility_rows": []
+    },
+    "timePeakSmap": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/3d/3d04fcce-11e5-4d46-be12-847de9cc86dc.bin",
+      "shipped_rows": 3742,
+      "canonical_rows": 3742,
+      "shipped_content_sha256": "ed8cab83d5436ecdec09faa832049076c232704805d0963c703f3a5110fc516a",
+      "compatibility_rows": []
+    },
+    "experience": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/3d/3d79d3f6-66b5-4025-8792-c382e4a66094.bin",
+      "shipped_rows": 1002,
+      "canonical_rows": 1002,
+      "shipped_content_sha256": "b9b8cfbb58fd50e83455d0ae1ac14d044236838098cd25811659993b5cdcd45d",
+      "compatibility_rows": []
+    },
+    "smap": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/47/47895d6c-ab10-40c3-b5a7-774c15a675b5.bin",
+      "shipped_rows": 11599,
+      "canonical_rows": 11599,
+      "shipped_content_sha256": "05c65e39a80627155b9790052489eda5397a72861fab48afbfae5c483660d93c",
+      "compatibility_rows": []
+    },
+    "ship": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/51/51f7cb6c-a1f4-48a5-adb1-c66be84966cc.bin",
+      "shipped_rows": 19,
+      "canonical_rows": 19,
+      "shipped_content_sha256": "43cb960e5d0029aacfa19798bfe1ce79e275bb7cff568357e64ba5bce2cfe720",
+      "compatibility_rows": []
+    },
+    "signIn": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/7e/7efa99ea-b3b2-428f-9e81-f1ad1287937d.bin",
+      "shipped_rows": 1236,
+      "canonical_rows": 1236,
+      "shipped_content_sha256": "a80d3e7fe09c23fa8f34336f3f23b16001470da3b558627c928f86507e1ee819",
+      "compatibility_rows": []
+    },
+    "task": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/7f/7f2372b0-6397-4c15-826c-e89908c10370.bin",
+      "shipped_rows": 512,
+      "canonical_rows": 512,
+      "shipped_content_sha256": "eb532486cc63f34c1c67582f6b92614fffbcb6c35cbfe335ebf3e1d97c1fcaac",
+      "compatibility_rows": []
+    },
+    "bmap": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/83/8308b416-9a11-4718-bf3f-3780ae5cf8c3.bin",
+      "shipped_rows": 117,
+      "canonical_rows": 117,
+      "shipped_content_sha256": "33b3d06039f393f085aad144948ebd24afd9c3e2b1df55146d668872a9ab61a6",
+      "compatibility_rows": []
+    },
+    "entityExt": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/84/848f88c5-70fc-49ea-868d-02fbe978822f.bin",
+      "shipped_rows": 84,
+      "canonical_rows": 87,
+      "shipped_content_sha256": "ee3149d6b2a2ec9aaed2e5710ffa524cc073a844584c63cc6882f39fe6232ac8",
+      "compatibility_rows": [
+        1,
+        373,
+        379
+      ]
+    },
+    "mobS": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/86/86792a8d-23c9-4468-9f62-08f4c4a2028c.bin",
+      "shipped_rows": 96,
+      "canonical_rows": 96,
+      "shipped_content_sha256": "fecbf38f43a169182620a1ee9897eb423d755108f2ef60c8f003c6f3ca473f97",
+      "compatibility_rows": []
+    },
+    "buff": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/8a/8a6d7ced-f08d-44b2-b555-8406385a6446.bin",
+      "shipped_rows": 1860,
+      "canonical_rows": 1860,
+      "shipped_content_sha256": "eb398f0a0875881ad9b5f503ac110beb41b6d4d2dbcac12dabad780d5613495b",
+      "compatibility_rows": []
+    },
+    "gm": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/95/95dde027-a5e3-4ccd-b1a3-d87f1cb89b39.bin",
+      "shipped_rows": 6,
+      "canonical_rows": 6,
+      "shipped_content_sha256": "6166e04250aceed154e07f5cead9e26dca136e7ef355376394b33a4416dfd51f",
+      "compatibility_rows": []
+    },
+    "arenaRewards": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/9d/9daf9d41-c703-486e-a645-0c59c5263e66.bin",
+      "shipped_rows": 29,
+      "canonical_rows": 29,
+      "shipped_content_sha256": "72506a66ef940f7c03938bba9008a671522eac48d32b731b9e155b3930fc66c3",
+      "compatibility_rows": []
+    },
+    "friendship": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/a0/a0e584a4-20bc-4244-b5b9-8e569ab85dc4.bin",
+      "shipped_rows": 64,
+      "canonical_rows": 64,
+      "shipped_content_sha256": "013b0000a7054e52ec050cce540f0a59cd1b4082650b23386bc6ee7eb177ffe0",
+      "compatibility_rows": []
+    },
+    "mobExt": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/a3/a315e43d-b4c0-49b3-8c7b-7277686f0707.bin",
+      "shipped_rows": 70000,
+      "canonical_rows": 70000,
+      "shipped_content_sha256": "1a3845168d507b7dd46fb18976be36645657461ec159cc4fe2ba6ea33261926c",
+      "compatibility_rows": []
+    },
+    "fruit": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/a6/a630d0d0-4fc4-4237-9ea0-f088c2ee9ec3.bin",
+      "shipped_rows": 35,
+      "canonical_rows": 35,
+      "shipped_content_sha256": "cbaff0a47b509fa656234240cfe0c5cf1a7bf00e264260779a6266b1a6f136b7",
+      "compatibility_rows": []
+    },
+    "timePeakBmap": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/a9/a9503b64-82ba-434c-bf68-90654fb139f4.bin",
+      "shipped_rows": 46,
+      "canonical_rows": 46,
+      "shipped_content_sha256": "d0550732acf98d8dc3f850b18f4e24baabdaf506776aa373d6c93bb422729ebd",
+      "compatibility_rows": []
+    },
+    "shop": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/b0/b0619184-648b-461f-a763-c48dfb14af80.bin",
+      "shipped_rows": 295,
+      "canonical_rows": 295,
+      "shipped_content_sha256": "80c2f0e22d0a306866985a618cce2dfdcc46b1673cd4a280749bfc0df67a86d1",
+      "compatibility_rows": []
+    },
+    "evolutionItem": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/b3/b30f3a5c-a2d0-4bb1-9ad1-61e5a598fc3b.bin",
+      "shipped_rows": 120,
+      "canonical_rows": 120,
+      "shipped_content_sha256": "cc5c9d7720455e90de260aa2fd3aa14ecaf18ec12d2c0cf48ecc99883f0ddaa9",
+      "compatibility_rows": []
+    },
+    "fightSkill": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/c6/c6f8eb72-52e1-4b88-a1c7-497e754a4c7e.bin",
+      "shipped_rows": 765,
+      "canonical_rows": 765,
+      "shipped_content_sha256": "185357d65bdba768377d6c58a77807fb0746ce486d978d72f5fda9a371fcf454",
+      "compatibility_rows": []
+    },
+    "fruitMapRewards": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/c8/c89d7a91-3346-4832-85c3-79946416e466.bin",
+      "shipped_rows": 8,
+      "canonical_rows": 8,
+      "shipped_content_sha256": "8cef9942792932f7da1ae6408ab16f611c3bd8cc57dd95fa6207a3fd75793fa1",
+      "compatibility_rows": []
+    },
+    "drop": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/cb/cb258631-20d9-411f-b715-e6a60abc5c6f.bin",
+      "shipped_rows": 449,
+      "canonical_rows": 449,
+      "shipped_content_sha256": "4cd0c2b362aaf27af99e7187eb9c9cd69f71b02971cb9dad271bd0d2cf0e3fde",
+      "compatibility_rows": []
+    },
+    "role": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/d1/d1998cb3-47dc-43b0-b64c-14b540d3a502.bin",
+      "shipped_rows": 1760,
+      "canonical_rows": 1760,
+      "shipped_content_sha256": "ede70645a0003e489fc41be2e46869b46955c1620c9977dd2946189e262ec310",
+      "compatibility_rows": []
+    },
+    "plot": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/d6/d6e0bad0-1e1d-45f7-af6e-a510e44c3943.bin",
+      "shipped_rows": 395,
+      "canonical_rows": 395,
+      "shipped_content_sha256": "42ff16dc2e422dc8810dd17b5cd82ee59a1eb153f90bd27b995ee020abe560f4",
+      "compatibility_rows": []
+    },
+    "mob": {
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/d7/d750f6e4-e369-4665-a2e7-7d8f9db88aaa.bin",
+      "shipped_rows": 46009,
+      "canonical_rows": 46009,
+      "shipped_content_sha256": "70352e7571db262dd23cbdaab43370c09e90434dedac7f9097651536a934dbec",
+      "compatibility_rows": []
+    }
+  },
+  "compatibility_definitions": [
+    {
+      "table": "entityExt",
+      "kindId": 1,
+      "source": "eng-client",
+      "reason": "Preserve existing bag IDs / existing gmData references; absent from Long Chi Dao shipped table"
+    },
+    {
+      "table": "entityExt",
+      "kindId": 373,
+      "source": "original-ios-compatibility",
+      "reason": "Preserve existing bag IDs / existing gmData references; absent from Long Chi Dao shipped table"
+    },
+    {
+      "table": "entityExt",
+      "kindId": 379,
+      "source": "original-ios-compatibility",
+      "reason": "Preserve existing bag IDs / existing gmData references; absent from Long Chi Dao shipped table"
+    }
+  ],
+  "retained_implementation": "ENG client resource/language/native shell; verified gameplay module ports; existing private backend for server-only rules",
+  "private_rules_document": "tables/privateRules.json",
+  "native_platform_resources": "Keep original Android/iOS native executables, SDK resources and signing identity; IPA remains private and unsigned until owner signs",
+  "profile_migration_required": true,
+  "migration": "Preserve accounts, currencies, inventory and existing VIP grants; refresh derived combat state once with snapshot backup."
+}

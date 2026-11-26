@@ -1,0 +1,9 @@
+{
+  "creation_date": "2026-04-15 08:04:51",
+  "expiration_date": "2027-04-15 08:04:51",
+  "provisioned_device_count": 0,
+  "provisions_all_devices": true,
+  "get_task_allow": false,
+  "cms_signature_verified_without_certificate_trust_check": true,
+  "application_identifier_matches_info_bundle_id": false
+}

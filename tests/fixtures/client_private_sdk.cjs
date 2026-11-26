@@ -1,0 +1,12 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const input=JSON.parse(fs.readFileSync(0,'utf8'));let paid=[],hints=[],native=0;
+const view={addLoading(){},removeLoading(){},addHintPanel(s){hints.push(s)},addRewardEffectPanel(){}};
+const player={extra:{goodsList:{7:{privateCostGem:300}}}};
+const handler={buyGemGoods(id,cost,cb){paid.push({id,cost});cb({_temp:{entityCountMap:{119:1}}});}};
+const modules={underscore:{},querystring:{},md5:{},buildExt:{},http:{},i18n:{},cryptoApi:{},serverMain:{player},baseView:view};
+const context={cc:{_RF:{push(){},pop(){}},sys:{isNative:true,os:'android',OS_ANDROID:'android'}},window:{__require:n=>n==='playerHandler'?handler:view},jsb:{reflection:{callStaticMethod(){native++;throw Error('Unexpected native SDK call');}}},Date};
+const source=input.source,begin=source.indexOf('function('),end=source.lastIndexOf('}, {');const mod={exports:{}};
+vm.runInNewContext('('+source.slice(begin,end)+'})',context)(name=>modules[name],mod,mod.exports);
+const sdk=context.window.sdkApi;sdk.emitData(1);sdk.emitData(sdk.EMIT_TYPE.LOGIN);sdk.pay(7,999,'wrong client price',999999);sdk.pay(999,100,'unknown',100);
+assert.equal(native,0);assert.equal(paid.length,1);assert.equal(paid[0].id,7);assert.equal(paid[0].cost,300);assert.equal(hints.length,1);
+process.stdout.write(JSON.stringify({native,offers:paid.length}));

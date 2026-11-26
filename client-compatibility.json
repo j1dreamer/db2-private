@@ -2,7 +2,7 @@
   "method": "Acorn AST of outer Browserify module table",
   "outer_modules": 319,
   "note": "Previous regex counts included nested bundles and were not a count of top-level game modules.",
-  "model_tests": "Recovered model and data-generator code; UI callbacks and network dependencies stubbed. Android rendering not tested.",
+  "model_tests": "229 full tests pass, including recovered model/data generators, real combat engine, original cooperative scene loops, and authored private Time Peak panel/transport. Rendering adapters and network callbacks are stubbed in JavaScript fixtures; Android rendering is not device verified.",
   "fixtures": {
     "client_underscore.js": "5aa4f9c56ee14f8b201fa53baac3b9d66f61fbab374361fd494cae9d6591c078",
     "client_dataApi.js": "3b1fbf12ceaff819d551d55c9a136a91ff31510b11b0ddff606a2ba08d3a4a16",
@@ -19,6 +19,13 @@
     "client_bag.js": "63bcf37676ff351aeda2dca5057e4a45aba7d8d3756912b81dc10e4363b9bcc4",
     "client_eqptScene.js": "e890137fe9eeaa9e2ae2ec7b87bc6612cc9eeb1e9b98e3776348d7f872c8e5c3",
     "client_player.js": "37370fe7f440a01095f33c9965f5932f9c92368d6725cf31b32c3c98625fb7f6",
-    "client_clientConfig.js": "b68ec80ae2b711b3162226237c63e35b9eb08143c21ed9c0bdf9d899aa881f86"
+    "client_clientConfig.js": "b68ec80ae2b711b3162226237c63e35b9eb08143c21ed9c0bdf9d899aa881f86",
+    "client_arenaScene.js": "ca8a63149e1a546466fb73de957caff2af61bab12ee00ca85574db914067e680",
+    "client_islandScene.js": "5a2f8261c07d002e1db9c7c8c7b63a58c419a5ea93b334347c6f59d35196b7e5",
+    "client_islandScene.myIsland.js": "6533ba8d28547cd1cb1361177a1cbef00cb9685266856dc16b5ab3b9fd93f76b",
+    "client_islandScene.team.js": "1bb415540373afe6be4df4aded25bc7ea827f0f56bc05a062d7c209953bc4d9a",
+    "client_prestigeBattleScene.js": "b14e24f0968f8473d74b86e644e5c40329db693f1961389fc8e3ac5a31e7dc7a",
+    "client_teamBattleScene.js": "33239f2b5a7bf56b547134291caa077430ca106acbd8f42ea963e9ab1318ed0d",
+    "client_selectBattleRolesScene.js": "fe4e9baaa7b2922814f789efa33983ae47f654e0a92778b63efa90df9ec38a72"
   }
 }

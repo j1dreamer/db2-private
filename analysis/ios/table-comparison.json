@@ -1,0 +1,322 @@
+{
+  "count": 34,
+  "identical_count": 26,
+  "different": [
+    "data/vipData",
+    "data/artifactData",
+    "data/entityData",
+    "data/taskData",
+    "data/entityExtData",
+    "data/buffData",
+    "data/fightSkillData",
+    "data/roleData"
+  ],
+  "tables": [
+    {
+      "name": "data/stoneData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/0a/0a903e43-c43b-4bf9-a138-289e615b4576.bin",
+      "sha256": "baabc045379d44733ad9bd55c47cac098ea890479365214c5a03123386167bc4",
+      "records_including_header": 45,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/vipData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/0c/0c03b369-6aca-4e11-aca4-26ca9ac00c87.bin",
+      "sha256": "8218fcf1796387bacf6d7b39cf94570523a5505e7ae75fb14dd82e41ef3756cc",
+      "records_including_header": 18,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": false,
+      "android_table_present": true
+    },
+    {
+      "name": "data/soulData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/14/14e99198-b3ba-4050-a7a4-8872f2ef8144.bin",
+      "sha256": "894772cd0776096e551ce62472d9d0d1c6564854c82f6a7925ededb0e8025c49",
+      "records_including_header": 89,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/arenaAchieveRewardsData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/15/151d1b05-d891-4c54-ae34-f6451d3895ab.bin",
+      "sha256": "816b1f60b07ec3618d3e8be2af4cc70c80985034b3bedc1d74bc2b36d161f452",
+      "records_including_header": 1652,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/artifactData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/22/22a11ba0-9d13-4889-9f70-5b497b16932a.bin",
+      "sha256": "52fbf2341800bca2759e23c75269c5633acfbde4b6e599e9c48af89002cf2a78",
+      "records_including_header": 118,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": false,
+      "android_table_present": true
+    },
+    {
+      "name": "data/islandRewardsData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/28/284f1742-16e5-4924-b31d-3e8e6d7dade2.bin",
+      "sha256": "27e265316447b9a2ab6d82cc8276c04c24db8f3541ae13c72af19d5a6bc76653",
+      "records_including_header": 8,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/robotData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/2c/2cea2522-8915-429f-ad4a-81955535a089.bin",
+      "sha256": "63cc779f9d89c298f27f3b21f61733bdfe2882c31f24c0f8046f1e2a38326960",
+      "records_including_header": 235,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/entityData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/2c/2cf6e170-9b63-46ba-b21a-91d57377c522.bin",
+      "sha256": "c61c40122d8bf48f1e5201798551e8e762630d50eea2546871264c667556a9da",
+      "records_including_header": 2819,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": false,
+      "android_table_present": true
+    },
+    {
+      "name": "data/costData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/2f/2fc7271c-1bb0-45bb-8446-bf6f1d6aefc4.bin",
+      "sha256": "6cbd11a53234a2586aa350f2267fb33e4cdec25e6c9ef75677c830d86efeccfb",
+      "records_including_header": 501,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/mathData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/32/323e958e-0a81-4c24-95dd-fd8e9aef73a0.bin",
+      "sha256": "5b408da6344e7d1603f591cb3a25fdb7ff1d757db90af937f71a078f789c15a6",
+      "records_including_header": 1001,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/timePeakSmapData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/3d/3d04fcce-11e5-4d46-be12-847de9cc86dc.bin",
+      "sha256": "6196c17c91ab6d1746aefb2816c36665fa3188d36a803b55fa188aab6f5b4769",
+      "records_including_header": 3743,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/experienceData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/3d/3d79d3f6-66b5-4025-8792-c382e4a66094.bin",
+      "sha256": "6c532789dbc3376b8e561ad5547c9da4952c501da1d55b5dbc3f0349f83ca5bd",
+      "records_including_header": 1003,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/smapData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/47/47895d6c-ab10-40c3-b5a7-774c15a675b5.bin",
+      "sha256": "6bcb0e7837ef1112ae8143381dc72de608e343708798f8fb32a43cfff2ebc20d",
+      "records_including_header": 11600,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/shipData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/51/51f7cb6c-a1f4-48a5-adb1-c66be84966cc.bin",
+      "sha256": "ee195626ad54c35a573c2207c4b674d2e173a36169dcad43ed1fac0fd1a6dbb1",
+      "records_including_header": 20,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/signInData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/7e/7efa99ea-b3b2-428f-9e81-f1ad1287937d.bin",
+      "sha256": "6aa30378d4357c99e13cdeee1ec505ee456b0ce5f504949ff3cf3033cac9140a",
+      "records_including_header": 1237,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/taskData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/7f/7f2372b0-6397-4c15-826c-e89908c10370.bin",
+      "sha256": "b09a7766307aefd485c082ec02f1af8006e7cd4c58f4da074c41c8fe01ab0db8",
+      "records_including_header": 513,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": false,
+      "android_table_present": true
+    },
+    {
+      "name": "data/bmapData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/83/8308b416-9a11-4718-bf3f-3780ae5cf8c3.bin",
+      "sha256": "e9f10d32be279fa44787d2d65eb584d31b8efe04d2dcd0c422cc2888f1df22e3",
+      "records_including_header": 118,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/entityExtData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/84/848f88c5-70fc-49ea-868d-02fbe978822f.bin",
+      "sha256": "c7d8866e20c3a5ccc5ca13f5f341fabfb9b432990028b28580948dba76a3c7a0",
+      "records_including_header": 48,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": false,
+      "android_table_present": true
+    },
+    {
+      "name": "data/mobSData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/86/86792a8d-23c9-4468-9f62-08f4c4a2028c.bin",
+      "sha256": "2fcdb1828db29baf0023fb7367c09b10f7c6e28319354b8d896df5ebda7f3afd",
+      "records_including_header": 97,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/buffData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/8a/8a6d7ced-f08d-44b2-b555-8406385a6446.bin",
+      "sha256": "1dc3b5552d70d82c43e07843b7e325bdd2ee3dae1da8f6929b5006cb25a38aa1",
+      "records_including_header": 1870,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": false,
+      "android_table_present": true
+    },
+    {
+      "name": "data/gmData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/95/95dde027-a5e3-4ccd-b1a3-d87f1cb89b39.bin",
+      "sha256": "b8d1cbb6de1af01b614b48d1cfde12f8b53ecb441683da1b0a9d8218cd73b094",
+      "records_including_header": 7,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/arenaRewardsData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/9d/9daf9d41-c703-486e-a645-0c59c5263e66.bin",
+      "sha256": "21c558e5dc3b87492cd897e37457a4f8a7e296b71e8b247fc73b9b3db696e12f",
+      "records_including_header": 30,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/friendshipData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/a0/a0e584a4-20bc-4244-b5b9-8e569ab85dc4.bin",
+      "sha256": "2986e69265c7984fb669e776e1c1468172bd8cb6ee9f3e84b86ac20983d48989",
+      "records_including_header": 65,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/mobExtData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/a3/a315e43d-b4c0-49b3-8c7b-7277686f0707.bin",
+      "sha256": "e8947a9947fb48f7e06527ba204a13861427d5bbb431d3eb4af4ce1a11d9d3dc",
+      "records_including_header": 70001,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/fruitData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/a6/a630d0d0-4fc4-4237-9ea0-f088c2ee9ec3.bin",
+      "sha256": "cc9a19683b6567f88f20fbbf44127be5eb91427fe9e485994c05554a46366f8d",
+      "records_including_header": 36,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/timePeakBmapData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/a9/a9503b64-82ba-434c-bf68-90654fb139f4.bin",
+      "sha256": "3d72e6ee001c5caa747de5a364df9c8d6d76b203f238469c97a4924d599a3259",
+      "records_including_header": 47,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/shopData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/b0/b0619184-648b-461f-a763-c48dfb14af80.bin",
+      "sha256": "f79b3701627cbe4e0c88459f491e88696ec9bd635c8a0d013d81e2621e3f591d",
+      "records_including_header": 296,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/evolutionItemData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/b3/b30f3a5c-a2d0-4bb1-9ad1-61e5a598fc3b.bin",
+      "sha256": "d2d74d3c89eb0b2e34761fdd5a8401b8468c5db04806d2ce8e1a030da6cd48b8",
+      "records_including_header": 121,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/fightSkillData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/c6/c6f8eb72-52e1-4b88-a1c7-497e754a4c7e.bin",
+      "sha256": "c062529a6ed506c05845562a9d789577b50afcdd2d86b83ed3e4f99264596b91",
+      "records_including_header": 766,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": false,
+      "android_table_present": true
+    },
+    {
+      "name": "data/fruitMapRewardsData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/c8/c89d7a91-3346-4832-85c3-79946416e466.bin",
+      "sha256": "5d28420b011879d25ea6220abac64b8192b0ac6bf3f252993ae7581f6e70a5e2",
+      "records_including_header": 9,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/dropData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/cb/cb258631-20d9-411f-b715-e6a60abc5c6f.bin",
+      "sha256": "7a2682138b7933d7ec2c29cc6b06e6ae52aab0955de571443ccaaa0c1c4f8c76",
+      "records_including_header": 450,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/roleData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/d1/d1998cb3-47dc-43b0-b64c-14b540d3a502.bin",
+      "sha256": "6672e8548fef22341ff975c5192cae4978191c3891c2e7e771d40a1879a701c5",
+      "records_including_header": 1761,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": false,
+      "android_table_present": true
+    },
+    {
+      "name": "data/plotData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/d6/d6e0bad0-1e1d-45f7-af6e-a510e44c3943.bin",
+      "sha256": "0a358a8af46c91f874993c45657e769b2b664ce008986eda1cc4c3d0162863dd",
+      "records_including_header": 396,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    },
+    {
+      "name": "data/mobData",
+      "archive_path": "Payload/dragonball.app/assets/resources/native/d7/d750f6e4-e369-4665-a2e7-7d8f9db88aaa.bin",
+      "sha256": "c51690a0bfd55542415fcd6693208ea745f730d4993a648c28243d1ed8383471",
+      "records_including_header": 46010,
+      "trailing_metadata_chars": 64,
+      "identical_json_to_android": true,
+      "android_table_present": true
+    }
+  ]
+}
