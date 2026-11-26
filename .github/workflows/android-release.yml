@@ -1,0 +1,36 @@
+name: Publish Long Chi Dao full release
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Preflight uploads the installation guide; publish uploads all complete files.'
+        required: true
+        type: choice
+        default: preflight
+        options: [preflight, publish]
+permissions:
+  contents: write
+concurrency:
+  group: longzhidao-full-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify release upload access
+        if: inputs.mode == 'preflight'
+        run: |
+          mkdir -p .release
+          cp INSTALL.txt .release/README-FIRST.txt
+          gh release upload longzhidao-v1.0.0-dev .release/README-FIRST.txt --clobber
+      - name: Assemble, verify and publish full clients and clean server source
+        if: inputs.mode == 'publish'
+        run: python -m tools.ci_full_release
