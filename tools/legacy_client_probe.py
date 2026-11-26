@@ -167,7 +167,7 @@ def installation_device(directory):
 async def run(args,out,report):
     base=args.server.rstrip('/');parsed=urlsplit(base)
     if parsed.scheme not in ('http','https')or not parsed.hostname or parsed.path or parsed.query or parsed.fragment or parsed.username:raise ValueError('Use http://HOST:PORT, with no credentials or path')
-    username='gm'+secrets.token_hex(3);password=secrets.token_urlsafe(18)
+    username='zuri'+secrets.token_hex(3);password=secrets.token_urlsafe(18)
     device=args.device or installation_device(Path(__file__).resolve().parent)
     if not re.fullmatch('[0-9a-fA-F]{8,64}',device):raise ValueError('Device ID must match the APK format: 8 to 64 hexadecimal characters')
     credentials={'server':base,'username':username,'password':password,'device':device}
