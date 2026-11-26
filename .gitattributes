@@ -1,2 +1,4 @@
 # Preserve exact decoded vendor bytes for source hashes and reproducible ports.
 client/longzhidao.decoded.js -text -whitespace
+# Store batch files as LF in Git and check them out as CRLF on every platform.
+*.bat text eol=crlf

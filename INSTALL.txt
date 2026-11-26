@@ -1,0 +1,32 @@
+LONG CHI DAO VI - FULL INSTALL 1.0.0-dev
+Branch: long-chi-dao
+https://github.com/j1dreamer/db2-private/releases/tag/longzhidao-v1.0.0-dev
+
+1. Download LongChiDao-Server.zip and LongChiDao-VI-Android.apk.
+2. Stop the old server. Extract the server ZIP into a NEW folder. Do not copy old data.
+3. Install Python 3.10+ and Node.js LTS; double-click start.bat.
+   First start installs aiohttp and creates a new empty database/admin token.
+4. Put the APK beside Install-Android.bat. Start BlueStacks, enable Android Debug Bridge,
+   run Install-Android.bat and enter the ADB address shown by BlueStacks (default 127.0.0.1:6610).
+5. Open the game, use http://127.0.0.1:20003 and REGISTER A NEW ACCOUNT.
+   If the existing app remembers an old account/server, log out and enter the new settings.
+6. Admin: http://127.0.0.1:20003 ; token: data/admin-token inside the NEW server folder.
+
+The complete APK is development-signed; no old APK or patch concatenation is required.
+It uses the existing com.dp2.web.dev package, so Android may update the existing app.
+No old database is included and the installer does not erase old app or server data.
+
+IOS: LongChiDao-VI-iOS-unsigned.ipa is complete but UNSIGNED.
+Sign legitimately on your Mac and install using your own Apple account/certificate.
+A cable or a browser cannot install this unsigned IPA by itself.
+For a laptop server, use an actual reachable LAN/Tailscale address in the iPhone game.
+Do not use 127.0.0.1 on the phone to refer to the laptop.
+
+GAMEPLAY: Long Chi Dao X7 #17327 tables/startup rules + ENG/iOS resource shell.
+Vietnamese: 8466 original ENG entries plus 498 authored entries, including 6 overrides.
+New/private rules are attributed in the admin Source and Translation page.
+Speed 1x-10x and tutorial skip included.
+
+VALIDATION: 260 backend/client tests, 22 admin browser flows; 34 tables/constants
+and 8 full headless combat cases match. Native Android/iPhone play remains unverified.
+Check SHA256SUMS.txt for full file checksums.
