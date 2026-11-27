@@ -19,6 +19,21 @@ class AdminOpsTests(unittest.IsolatedAsyncioTestCase):
   r=await self.client.get(path,headers=self.h);self.assertEqual(r.status,200);return await r.json()
  def event(self,**kw):
   now=int(time.time());return {'action':'event_save','id':'SUMMER','name':'Test event','start':now-60,'end':now+3600,'enabled':True,'rewards':[{'entityId':119,'count':3}],**kw}
+ async def test_event_reward_previews_have_real_icons_and_follow_live_rewards(self):
+  await self.post(self.event(rewards=[{'entityId':50570,'count':60}]))
+  await self.post({'action':'activity_config','id':'privateSelect','enabled':True,'version':0,'options':{'choices':[[{'entityId':50570,'count':60}],[{'entityId':119,'count':10}],[{'entityId':120,'count':2}]]}})
+  await self.post({'action':'wheel_prizes','entries':[{'entityId':119,'count':i+1,'weight':1}for i in range(8)]})
+  data=await self.get('/admin/events');items={r['id']:r for r in data['rewardItems']}
+  self.assertEqual(next(e for e in data['events']if e['id']=='SUMMER')['rewardGroups'][0]['items'][0]['count'],60)
+  choice=next(e for e in data['templates']if e['id']=='privateSelect');self.assertEqual(choice['rewardGroups'][0]['items'][0]['count'],60)
+  wheel=next(e for e in data['templates']if e['id']=='dial:luck');self.assertEqual([g['items'][0]['count']for g in wheel['rewardGroups']],list(range(1,9)))
+  for event in data['events']+data['templates']:
+   for group in event['rewardGroups']:
+    for reward in group['items']:
+     item=items[reward['entityId']];self.assertTrue(item['image'].startswith('/assets/items/'));self.assertTrue(item['name'])
+  response=await self.client.get(items[50570]['image']);self.assertEqual(response.status,200);self.assertTrue((await response.read()).startswith(b'\x89PNG\r\n\x1a\n'))
+  claim_events(self.store,1,['SUMMER'],[0]);self.assertEqual(stack_count(self.store.player(1),50570),60)
+  with self.assertRaises(sqlite3.IntegrityError):claim_events(self.store,1,['SUMMER'],[0])
  async def test_every_admin_read_requires_token_and_catalog_uses_real_icons(self):
   for path in ('api','catalog','catalog/119','overview','players','players/1','events','calendar?start=1&end=2','gacha','giftcodes','audit','provenance'):
    self.assertEqual((await self.client.get('/admin/'+path)).status,401,path)

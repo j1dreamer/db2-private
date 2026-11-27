@@ -1,7 +1,7 @@
 {
-  "version": "4.0.0-dev",
+  "version": "5.0.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-v4-dev",
+  "tag": "eng-sp-sss-v5-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
   "implementation_commit": null,
@@ -29,7 +29,7 @@
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
     "port": 20003,
-    "build": "eng-sp-sss-box-info-v4",
+    "build": "eng-sp-sss-events-v5",
     "profile_schema": 30,
     "routes": 342,
     "private_gm_routes": 3,
@@ -40,7 +40,8 @@
       "requires_root": false,
       "tailscale_app_required_for_remote_clients": true,
       "native_device_verified": false
-    }
+    },
+    "admin_event_reward_images": true
   },
   "download_helper": {
     "file": "Download-Clients.zip",

@@ -1,4 +1,4 @@
-# DB2 ENG · SSS/SP + GM — v4 mô tả rương / Speed
+# DB2 ENG · SSS/SP + GM — v5 sự kiện / ảnh vật phẩm
 
 Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS / SSS / SP**. Không trộn startup override hoặc module gameplay Long Chi Đảo. Backend Python vẫn là mã tương thích của dự án; luật kín server gốc không có trong client vẫn dùng luật riêng có ghi nguồn.
 
@@ -19,9 +19,19 @@ Không cần APK cũ, Java, Git hoặc ghép tay. Cần khoảng 2,2 GB trống 
 2. Chạy `start.bat`. Thư mục mới tự tạo `data/game.sqlite3` và `data/admin-token`, không kèm tài khoản hoặc token của ai. Nếu cần dữ liệu cũ, tự giữ bản sao trước khi chuyển; server có snapshot SQLite trước đổi baseline.
 3. Đặt APK mới cạnh `Install-Android.bat`, bật BlueStacks → Android Debug Bridge rồi chạy BAT. Nhập đúng cổng ADB (thường `127.0.0.1:6610`). Không cần gỡ app hoặc xóa data Android.
 4. Trong game dùng server `http://127.0.0.1:20003`. Với database trắng, đăng ký tài khoản mới.
-5. Kiểm `/health`: **build `eng-sp-sss-box-info-v4`, schema 30**. Cần cập nhật **cả server và client** để tránh trộn hai bộ luật.
+5. Kiểm `/health`: **build `eng-sp-sss-events-v5`, schema 30**. Dùng client ENG BoxInfo tương thích; nếu đã cài BoxInfo thì bản web này chỉ cần cập nhật server.
 
 Web quản trị: **http://127.0.0.1:20003**; token nằm ở `data/admin-token` trong đúng thư mục server đang chạy.
+
+## Sự kiện và ảnh vật phẩm trong quản trị
+
+- Event tùy chỉnh và 17 event hệ thống xem trước ảnh, tên, ID và số lượng phần thưởng. Thưởng được chia theo mốc, lựa chọn và từng ô quay, không cộng gộp các điều kiện thành một gói.
+- Chỉnh thưởng có ảnh món đang chọn, tìm theo tên/ID, danh sách có hình, số lượng và sao tướng. Dùng phím ↑/↓ và Enter để chọn; Escape đóng gợi ý và giữ form đang sửa. Bố cục dành cho màn hình điện thoại.
+- Tìm sự kiện theo tên, ID sự kiện hoặc tên/ID phần thưởng; lọc trạng thái. Lịch UTC+7, bật/tắt và lịch sử nhận thưởng tiếp tục dùng cùng dữ liệu/RPC của game.
+- Những thay đổi này chỉ cần cập nhật source server và làm mới web. **APK/IPA BoxInfo hiện có vẫn dùng được**; không cần cài lại client cho phần quản trị mới. Giữ thư mục `data` khi cập nhật.
+- Kiểm tra tại [analysis/event-admin-validation.json](analysis/event-admin-validation.json). Các nhóm thưởng và giao diện quản trị bổ sung là mã dự án viết, không được nhận là web quản trị server gốc.
+
+Ảnh quản trị: [desktop](docs/admin-events-desktop.png) · [form điện thoại](docs/admin-event-editor-mobile.png).
 
 ## Rương SP và Speed lần này
 
@@ -57,7 +67,7 @@ Android chạy server: xem [hướng dẫn Termux + Tailscale](TERMUX.md). Trong
 
 Nguồn từng bảng và bản dịch: [canonical-policy](tables/canonical-policy.json), [privateRules](tables/privateRules.json), mục **Nguồn và bản dịch** trong quản trị. Tiếng Việt ENG gốc được giữ riêng; các phần bổ sung ghi nguồn từng khóa. Chữ vẽ sẵn trong ảnh có thể vẫn là ENG/Trung.
 
-Báo cáo hiện tại: [analysis/box-info-validation.json](analysis/box-info-validation.json); kiểm chứng bản trước ở `analysis/eng-gm-validation.json`. Các báo cáo Long Chi Đảo là lịch sử. Các kiểm tra model/UI adapter/headless không thay thế chơi thực tế đầy đủ trên Android/iPhone.
+Báo cáo web hiện tại: [analysis/event-admin-validation.json](analysis/event-admin-validation.json). Bản client: [analysis/box-info-validation.json](analysis/box-info-validation.json); kiểm chứng bản trước ở `analysis/eng-gm-validation.json`. Các báo cáo Long Chi Đảo là lịch sử. Các kiểm tra model/UI adapter/headless không thay thế chơi thực tế đầy đủ trên Android/iPhone.
 
 Nhánh có đủ 342 handler hợp đồng gốc, cộng 3 RPC GM riêng (`catalog`, `setPlayer`, `setRole`). Chưa tuyên bố mọi tính năng gốc hoặc toàn bộ gameplay native đã được kiểm chứng. Github release upload từ Cloud và Actions vẫn bị chặn; bộ tải GitHub ở trên hoạt động độc lập, không cần đăng nhập.
 

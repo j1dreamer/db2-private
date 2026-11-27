@@ -1,0 +1,52 @@
+{
+  "build": "eng-sp-sss-events-v5",
+  "gameplay_baseline": "eng-sp-sss",
+  "profile_schema": 30,
+  "system_event_editors": 17,
+  "backend_tests": {
+    "passed": true,
+    "count": 24,
+    "suites": [
+      "tests.test_admin_ops",
+      "tests.test_activities"
+    ],
+    "seconds": 8.36
+  },
+  "browser": {
+    "passed": true,
+    "flows": 29,
+    "errors": [],
+    "report": "analysis/admin-browser-tests.json",
+    "viewports": [
+      {
+        "width": 1440,
+        "height": 1000
+      },
+      {
+        "width": 390,
+        "height": 844
+      }
+    ]
+  },
+  "verified": [
+    "event reward catalog includes all displayed reward groups",
+    "actual PNG used for a 60-fragment reward",
+    "custom event claims persist 60 fragments and reject duplicate claim",
+    "wheel previews follow saved 8-slot prize quantities",
+    "selected item image, name, ID and quantity persist through save",
+    "keyboard selection and Escape preserve event editor",
+    "17 system event editors open without page errors",
+    "event schedule, pause, choice gifts, score boxes, dream rewards remain editable",
+    "mobile editor does not overflow horizontally",
+    "modal does not steal focus after quantity entry"
+  ],
+  "new_database_migration_required": false,
+  "client_rebuild_required": false,
+  "native_android_ios_play_tested": false,
+  "uses_user_database_for_tests": false,
+  "screenshots": [
+    "docs/admin-events-desktop.png",
+    "docs/admin-event-editor-mobile.png"
+  ],
+  "provenance": "Existing client-derived item images; admin groups, catalog response and UI authored by this project."
+}

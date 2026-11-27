@@ -92,7 +92,10 @@ class Admin:
    for slot,r in p['team']['roles'].items():team.append({**item_view(entities()[r['kindId']]),'slot':slot,'count':1,'instance':r})
    return {'player':self.player_summary(p,self.online_ids()),'bag':bag,'team':team,'profile':p}
   if path=='/admin/provenance':return provenance.summary()
-  if path=='/admin/events':return {'events':[self.event_view(e)for e in liveops.custom_events(s)if not e.get('deleted')],'templates':self.templates(),'version':liveops.revision(s)}
+  if path=='/admin/events':
+   events=[self.event_view(e)for e in liveops.custom_events(s)if not e.get('deleted')];templates=self.templates()
+   ids={int(r['entityId'])for event in events+templates for group in event['rewardGroups']for r in group['items']}
+   return {'events':events,'templates':templates,'rewardItems':[item_view(entities()[kind])for kind in sorted(ids)],'version':liveops.revision(s)}
   if path=='/admin/calendar':return {'items':liveops.calendar(s,int(req.query['start']),int(req.query['end'])),'timezone':'Asia/Ho_Chi_Minh'}
   if path=='/admin/gacha':return self.gacha()
   if path=='/admin/giftcodes':return {'items':self.codes()}
@@ -103,7 +106,8 @@ class Admin:
  def event_view(self,e):
   w=liveops.window(e);now=time.time();count=self.store.db.execute('SELECT count(*)FROM event_claims WHERE event=?',(e['id'],)).fetchone()[0]+self.store.db.execute('SELECT count(*)FROM event_window_claims WHERE event=?',(e['id'],)).fetchone()[0]
   version=self.store.db.execute('SELECT version FROM ops_records WHERE key=?',('event-revision:'+e['id'],)).fetchone()
-  return {**e,'version':version[0]if version else 0,'window':w,'claims':count,'status':'paused'if not e.get('enabled',True)else'active'if w['active']else'scheduled'if w['start']>now or e.get('repeat','none')!='none'and(not e.get('until')or e['until']>now)else'ended','rewards':e.get('rewards')or[{'entityId':102,'count':e.get('gem',0),'extra':{}}]}
+  loot=e.get('rewards')or([{'entityId':102,'count':e['gem'],'extra':{}}]if e.get('gem')else[])
+  return {**e,'version':version[0]if version else 0,'window':w,'claims':count,'status':'paused'if not e.get('enabled',True)else'active'if w['active']else'scheduled'if w['start']>now or e.get('repeat','none')!='none'and(not e.get('until')or e['until']>now)else'ended','rewards':loot,'rewardGroups':[{'label':'Mỗi kỳ · nhận một lần','items':loot}]}
  def templates(self):
   from .profile import new_profile
   from .activities import refresh,SCORES,BOXES,SELECT
@@ -120,7 +124,13 @@ class Admin:
    if key.startswith('scorePoint')and options is None:options={'scores':SCORES,'boxes':[description(x)for x in BOXES]}
    if key=='privateSelect'and options is None:options={'choices':[description(x)for x in SELECT]}
    if key=='dream'and options is None:options={'tiles':[description(x)for x in('101x5000','20001x5','93x10','23001x5')],'lap':description('93x100')}
-   result.append({'id':key,'title':title,'period':period,'enabled':cfg.get('enabled',True),'open':liveops.is_open(self.store,key),'description':cfg.get('description',''),'schedule':{k:cfg[k]for k in('start','end','repeat','until')}if'start'in cfg else None,'version':row[0]if row else 0,'rewards':reward_rows,'options':options,'clientVisibility':'Nút vòng quay có thể còn hiện trên client cũ; server chặn lượt quay khi đóng'if key.startswith('dial:')else'Theo thời gian và dữ liệu activity của game'})
+   groups=[{'label':f'Mốc {i+1}','items':r['items']}for i,r in enumerate(reward_rows)]
+   for field,label in (('boxes','Rương mốc'),('choices','Lựa chọn'),('tiles','Nhóm ô')):
+    groups.extend({'label':f'{label} {i+1}','items':items}for i,items in enumerate((options or {}).get(field,[])))
+   if (options or {}).get('lap'):groups.append({'label':'Qua một vòng','items':options['lap']})
+   if key.startswith('dial:'):
+    groups=[{'label':f'Ô quay {i+1}','items':[{'entityId':kind,'count':count,'extra':{}}]}for i,(kind,count,weight)in enumerate(liveops.prizes(self.store))]
+   result.append({'id':key,'title':title,'period':period,'enabled':cfg.get('enabled',True),'open':liveops.is_open(self.store,key),'description':cfg.get('description',''),'schedule':{k:cfg[k]for k in('start','end','repeat','until')}if'start'in cfg else None,'version':row[0]if row else 0,'rewards':reward_rows,'rewardGroups':groups,'options':options,'clientVisibility':'Nút vòng quay có thể còn hiện trên client cũ; server chặn lượt quay khi đóng'if key.startswith('dial:')else'Theo thời gian và dữ liệu activity của game'})
   return result
  def codes(self):
   rows=[]
