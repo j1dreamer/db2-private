@@ -12,7 +12,7 @@ class Node{
 }
 Node.EventType={TOUCH_START:'start',TOUCH_MOVE:'move',TOUCH_END:'end',TOUCH_CANCEL:'cancel'};
 class Graphics{roundRect(){}circle(){}rect(){}fill(){}}
-class Label{};Label.Overflow={SHRINK:2};class EditBox{};EditBox.InputMode={ANY:0};EditBox.InputFlag={PASSWORD:0};
+class Label{};Label.Overflow={CLAMP:1,SHRINK:2};class EditBox{};EditBox.InputMode={ANY:0};EditBox.InputFlag={PASSWORD:0};
 class Touch{constructor(x,y,id){this.p={x,y};this.id=id;}getLocation(){return this.p;}getID(){return this.id;}_setPoint(p){this.p=p;}_setPrevPoint(){}}
 class ET{constructor(touches){this.touches=touches;}};Object.assign(ET,{BEGAN:0,MOVED:1,ENDED:2,CANCELED:3});
 const canvas=new Node('Canvas');canvas.width=1280;canvas.height=590;const handlers={};const scheduler={setTimeScale(v){scale=v;},getTimeScale(){return scale;}};

@@ -4,11 +4,20 @@
     U.canvas = function () { return cc.Canvas.instance && cc.Canvas.instance.node; };
     U.destroy = function (node) { if (node && (!cc.isValid || cc.isValid(node))) { node.active = false; node.destroy(); } };
     U.text = function (parent, value, size, x, y, width, height) {
-        var n = new cc.Node(); n.parent = parent; n.setPosition(x || 0,y || 0);
+        // Configure while inactive: native Label.onEnable renders immediately and
+        // Overflow.NONE can collapse an empty node before SHRINK gets its bounds.
+        var n = new cc.Node(); n.active=false; n.setPosition(x || 0,y || 0);
+        var l = n.addComponent(cc.Label); l.enabled=false;
+        // This is the same fallback path used by this engine's RichText segments.
+        l._forceUseCanvas=true;
+        l.overflow=cc.Label.Overflow.CLAMP; l.enableWrapText=true;
+        l.fontFamily='Arial'; l.useSystemFont=true;
+        l.cacheMode=cc.Label.CacheMode?cc.Label.CacheMode.NONE:0;
+        l.horizontalAlign=1; l.verticalAlign=1;
+        l.fontSize=size; l.lineHeight=size+5; l.string=String(value===null||value===undefined?'':value);
+        n.color=cc.color(238,245,255,255);n.opacity=255;
         n.setContentSize(width || 420,height || size + 10);
-        var l = n.addComponent(cc.Label); l.fontFamily='Arial'; l.useSystemFont=true;
-        l.fontSize=size; l.lineHeight=size+5; l.string=value;
-        l.overflow=cc.Label.Overflow.SHRINK; l.enableWrapText=true;
+        n.parent=parent;l.enabled=true;n.active=true;
         return l;
     };
     U.button = function (parent, title, width, x, y, action, dark) {
@@ -20,7 +29,7 @@
         n.on(cc.Node.EventType.TOUCH_END,function(e){if(e&&e.stopPropagation)e.stopPropagation();action();});return n;
     };
     U.edit = function(parent,value,width,x,y,password) {
-        var n=new cc.Node();n.parent=parent;n.setPosition(x,y);n.setContentSize(width,44);
+        var n=new cc.Node();n.active=false;n.setPosition(x,y);n.setContentSize(width,44);
         var g=n.addComponent(cc.Graphics);g.fillColor=cc.color(35,46,65,255);g.roundRect(-width/2,-22,width,44,7);g.fill();
         var label=U.text(n,'',18,0,0,width-18,36),placeholder=U.text(n,'',18,0,0,width-18,36);
         var e=n.addComponent(cc.EditBox);e.inputMode=cc.EditBox.InputMode.ANY;e.maxLength=160;
@@ -30,6 +39,8 @@
         if(password)e.inputFlag=cc.EditBox.InputFlag.PASSWORD;
         // Native EditBox uses these values too; assigning only textLabel is insufficient on iOS.
         e.fontSize=18;e.fontColor=cc.color(240,245,255);e.placeholderFontSize=16;e.placeholderFontColor=cc.color(155,171,192);
+        label.node.setContentSize(width-18,36);placeholder.node.setContentSize(width-18,36);
+        n.parent=parent;n.active=true;
         return e;
     };
     U.modal = function(name,title,width,height) {
