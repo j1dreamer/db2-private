@@ -36,3 +36,11 @@ Nút Time Peak nổi là màn thử nghiệm do dự án thêm, không phải m�
 - Kiểm proxy dùng HTTP trên loopback để test routing. Không coi đó là đã cấp/chạy chứng chỉ ACME thật trên VPS.
 - APK giữ nguyên native/resources/manifest và chứng thư debug phát triển cũ, kiểm alignment/signature/CRC. IPA giữ sửa plugin khởi động, cần ký lại hợp lệ. Không bỏ kiểm chứng chỉ TLS; bundle CA Android có ISRG Root X1/X2.
 - Cloud chưa SSH được vào VPS; DNS đã kiểm trỏ đúng nhưng HTTPS/triển khai thực tế và thao tác native trên iPhone/Android vẫn cần xác minh sau cài.
+
+## Sửa bộ cài báo combat.available=false sau khi cài Node
+
+Bộ cài cũ dùng `umask 077` rồi `cp -a` thư mục giải nén Node; thao tác này giữ mode 0700 của thư mục gốc vào `/opt/db2/node`. Root chạy được Node nhưng tài khoản dịch vụ `db2` không truy cập được. Bộ cài mới sửa quyền đọc/thực thi cây runtime và thử Node bằng `runuser -u db2` trước khi chuyển bản server. Đường dẫn Node được resolve trước khi kiểm tra để không vô tình dùng symlink tới nvm trong home bị systemd ProtectHome chặn.
+
+Nếu gặp lỗi này, chạy lại **Setup-Public.sh bản đã sửa**; giữ database và backup như trước. Không dùng đường dẫn commit bộ cài cũ vì nó vẫn ghim Setup-Ubuntu.sh cũ. Không cần ký/cài lại APK/IPA cho lỗi Node trên VPS. Sau khi cài thành công kiểm `/health`: `combat.available` phải là `true`. HTTPS chỉ sẵn sàng khi bộ cài xác minh chứng chỉ thành công.
+
+Kiểm hồi quy: `python3 -m unittest tests.test_ubuntu_node_install tests.test_node_runtime -v` (5 test). Test tái hiện mode 0700 bằng `cp -a` thật dưới umask 077 và kiểm quyền sau sửa; không coi kiểm cục bộ là đã xác minh systemd trên VPS người dùng.

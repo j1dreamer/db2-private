@@ -44,6 +44,7 @@ python3 -c 'import sys; assert sys.version_info >= (3,10), "Python 3.10+ require
 install -d -m 755 "$BASE" "$BASE/releases"
 # Use supported Node 22 with upstream checksum, without replacing system Node.
 nodebin=$(command -v node || true)
+if [[ -n $nodebin ]]; then nodebin=$(readlink -f "$nodebin"); fi
 # The service cannot read login-shell nvm installs under ProtectHome=true.
 case "$nodebin" in /root/*|/home/*|/run/user/*) nodebin=;; esac
 if [[ -z $nodebin ]] || ! "$nodebin" -e 'process.exit(Number(process.versions.node.split(".")[0])>=22?0:1)'; then
@@ -57,6 +58,9 @@ if [[ -z $nodebin ]] || ! "$nodebin" -e 'process.exit(Number(process.versions.no
  install -d -m 755 "$BASE/node"; cp -a "$work/node/." "$BASE/node/"
  nodebin=$BASE/node/bin/node
 fi
+# cp -a preserves the mode of the source directory itself. Under umask 077,
+# the extraction root is 0700: repair both new and previously installed trees.
+if [[ -d $BASE/node ]]; then chmod -R a+rX "$BASE/node"; fi
 if [[ $NETWORK == loopback ]]; then
  bind=127.0.0.1
 else
@@ -85,6 +89,11 @@ tar -xzf "$work/source.tar.gz" --strip-components=1 -C "$work/app" \
  "db2-private-$REF/client" "db2-private-$REF/analysis/route-coverage.json" \
  "db2-private-$REF/deploy" "db2-private-$REF/requirements.txt" "db2-private-$REF/tools/public_proxy.py"
 id db2 >/dev/null 2>&1 || useradd --system --home-dir /var/lib/db2 --shell /usr/sbin/nologin db2
+# Probe as the service account, not root, before stopping an existing server.
+if ! runuser -u db2 -- "$nodebin" -e 'process.exit(Number(process.versions.node.split(".")[0])>=22?0:1)'; then
+ echo "Node runtime is not usable by db2: $nodebin. Existing deployment was left untouched." >&2
+ exit 1
+fi
 install -d -m 700 -o db2 -g db2 /var/lib/db2
 install -d -m 700 /etc/db2 "$BASE/backups"
 # Refuse an unrelated existing listener instead of stopping it.
