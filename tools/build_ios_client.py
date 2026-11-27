@@ -1,12 +1,14 @@
 """Build an unsigned private iOS IPA from the authorized original IPA.
 
-Native Mach-O/SDK/framework bytes stay original. App resource signatures and
-embedded provisions are removed; the output MUST be legitimately re-signed.
+Native instructions/SDK/framework bytes stay original. Two startup plugin load
+commands and their files are removed after validating no imports use them.
+The output MUST be legitimately re-signed.
 """
 import argparse,gzip,hashlib,json,plistlib,subprocess,tempfile,zipfile
 from pathlib import Path
 from tools.build_client import encrypt,file_hash,patch,patch_client
 from tools.decode_jsc import decrypt,gunzip
+from tools.fix_ios_launch import KNOWN_NATIVE,PLUGINS,remove_plugin_commands
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -17,7 +19,9 @@ def build(source,out,server='http://db2-server.invalid:20003',bundle_id='com.j1d
         if len(roots)!=1:raise ValueError('Expected one top-level iOS app')
         app=roots[0];info=plistlib.loads(zin.read(app+'Info.plist'))
         executable=app+info['CFBundleExecutable'];native=zin.read(executable)
-        if native[:4]!=b'\xcf\xfa\xed\xfe':raise ValueError('Expected original 64-bit Mach-O')
+        if hashlib.sha256(native).hexdigest()!=KNOWN_NATIVE:raise ValueError('Unrecognized original executable')
+        native,native_report=remove_plugin_commands(native)
+        removed_plugins=[app+p.removeprefix('@executable_path/')for p in PLUGINS]
         original=gunzip(decrypt(zin.read(app+'assets/main/index.jsc'))).decode()
         temp=Path(td);(temp/'ios.js').write_text(original)
         subprocess.run(['node',str(ROOT/'tools/ios_shared_bundle.cjs'),str(ROOT/'client/main.decoded.js'),str(temp/'ios.js'),str(temp/'shared.js'),str(temp/'shared.json')],check=True,capture_output=True)
@@ -37,10 +41,11 @@ def build(source,out,server='http://db2-server.invalid:20003',bundle_id='com.j1d
         removed=[];changed=[];unchanged=0
         with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=6)as zout:
             for entry in zin.infolist():
-                if entry.filename.endswith('embedded.mobileprovision')or'/_CodeSignature/'in entry.filename:
+                if entry.filename in removed_plugins or entry.filename.endswith('embedded.mobileprovision')or'/_CodeSignature/'in entry.filename:
                     removed.append(entry.filename);continue
                 raw=zin.read(entry)
-                if entry.filename==app+'assets/main/index.jsc':raw=changed_jsc;changed.append(entry.filename)
+                if entry.filename==executable:raw=native;changed.append(entry.filename)
+                elif entry.filename==app+'assets/main/index.jsc':raw=changed_jsc;changed.append(entry.filename)
                 elif entry.filename==app+'Info.plist':raw=plistlib.dumps(info,fmt=plistlib.FMT_BINARY);changed.append(entry.filename)
                 else:unchanged+=1
                 zout.writestr(entry,raw)
@@ -51,7 +56,7 @@ def build(source,out,server='http://db2-server.invalid:20003',bundle_id='com.j1d
                 if a.read(entry)!=b.read(entry.filename):raise ValueError('Unexpected changed resource: '+entry.filename)
         if b.read(executable)!=native:raise ValueError('Native executable changed')
         if gunzip(decrypt(b.read(app+'assets/main/index.jsc'))).decode()!=text:raise ValueError('JSC read-back failed')
-    report={'stage':'unsigned-private-ios-development-not-device-tested','source_sha256':file_hash(source),'ipa_sha256':file_hash(out),'ipa_bytes':out.stat().st_size,'bundle_id':bundle_id,'native_executable_sha256':hashlib.sha256(native).hexdigest(),'all_preserved_entries_verified':unchanged,'modified_entries':changed,'removed_signature_provision_entries':removed,'native_libraries_modified':False,'original_ats':original_ats,'canonical_data':data_report,'shared_bundle':shared,'default_server':server,'editable_server':True,'unconfigured_first_launch_skips_network':True,'tutorial':False,'speed_range':[1,10],'sdk_login':'local-account','private_transport_patches':True,'requires_resigning':True,'signed_ipa_built':False,'native_ios_execution_tested':False,'decoded_bundle_sha256':hashlib.sha256(text.encode()).hexdigest()}
+    report={'stage':'unsigned-private-ios-development-not-device-tested','source_sha256':file_hash(source),'ipa_sha256':file_hash(out),'ipa_bytes':out.stat().st_size,'bundle_id':bundle_id,'native_executable_sha256':hashlib.sha256(native).hexdigest(),'all_preserved_entries_verified':unchanged,'modified_entries':changed,'removed_signature_provision_entries':removed,'native_libraries_modified':False,'native_executable_load_commands_modified':True,'native_instructions_modified':False,'removed_startup_plugins':removed_plugins,'native_launch_fix':native_report,'original_ats':original_ats,'canonical_data':data_report,'shared_bundle':shared,'default_server':server,'editable_server':True,'unconfigured_first_launch_skips_network':True,'tutorial':False,'speed_range':[1,10],'sdk_login':'local-account','private_transport_patches':True,'requires_resigning':True,'signed_ipa_built':False,'native_ios_execution_tested':False,'decoded_bundle_sha256':hashlib.sha256(text.encode()).hexdigest()}
     out.with_suffix('.json').write_text(json.dumps(report,indent=2)+'\n');out.with_suffix('.patched.js').write_text(text)
     print(json.dumps(report,indent=2));return report
 
