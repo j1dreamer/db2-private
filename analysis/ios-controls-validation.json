@@ -1,0 +1,128 @@
+{
+  "build": "ios-controls",
+  "build_details": {
+    "ipa_sha256": "9a17a6c16495b08fbd296ad155ab1df349c2f150adb051b561a8d80ca60c23ba",
+    "ipa_bytes": 510861884,
+    "native_launch_fix": {
+      "removed_dependencies": [
+        "@executable_path/CombinedPlugin.dylib",
+        "@executable_path/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "removed_ordinals": [
+        50,
+        51
+      ],
+      "imported_plugin_symbols": false,
+      "bytes_after_original_load_commands_unchanged": true,
+      "native_instructions_patched": false,
+      "requires_resigning": true,
+      "source_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+      "ipa_sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732",
+      "ipa_bytes": 510859616,
+      "native_executable_sha256": "bd791a92795afc1c27bf20c7eed378249ed194e666e0419b2d34996ebf69d715",
+      "removed_files": [
+        "Payload/dragonball.app/CombinedPlugin.dylib",
+        "Payload/dragonball.app/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "unchanged_entries": 17260,
+      "jsc_and_settings_unchanged": true,
+      "native_device_tested": false
+    },
+    "only_additional_modified_entry": "Payload/dragonball.app/assets/main/index.jsc",
+    "source_button_removed": true,
+    "connection_timeout_ms": 8000,
+    "font_fallback": "Arial/system for Vietnamese labels",
+    "requires_resigning": true,
+    "native_device_tested": false,
+    "packaged_login_runtime": {
+      "unconfigured_opens_account_form": true,
+      "timeout_returns_to_login": true,
+      "network_error_returns_to_login": true,
+      "timeout_ms": 8000,
+      "duplicate_callbacks_ignored": true,
+      "wrong_service_rejected": true,
+      "successful_config_continues": true,
+      "original_username_password_register_login_work": true
+    },
+    "packaged_controls_runtime": {
+      "compact_server_card": [
+        520,
+        276
+      ],
+      "circle_diameter": 46,
+      "hold_ms": 2000,
+      "slider_applies_immediately": true,
+      "drag_does_not_open_panel": true,
+      "single_clicks": 3,
+      "multipoint_clicks": 4,
+      "record_swipe_replay": true,
+      "stops_on_scene_background_and_network": true,
+      "network_popup_removed_without_retry": true,
+      "small_status_hidden_when_idle": true
+    },
+    "patch_file": "Client-ENG-SPSSS-IOS-Controls.zip",
+    "patch_sha256": "6f82f0a3cd5c52e36a00520718885ebf2dc3e97492cce0e4990d77f1a2f863f6",
+    "patch_bytes": 9726192
+  },
+  "download_proof": {
+    "passed": true,
+    "public_patch_downloaded_and_checked": true,
+    "full_ipa_checksum_and_crc_verified": true,
+    "embedded_scripts_verified": true,
+    "packaged_runtime": {
+      "compact_server_card": [
+        520,
+        276
+      ],
+      "circle_diameter": 46,
+      "hold_ms": 2000,
+      "slider_applies_immediately": true,
+      "drag_does_not_open_panel": true,
+      "single_clicks": 3,
+      "multipoint_clicks": 4,
+      "record_swipe_replay": true,
+      "stops_on_scene_background_and_network": true,
+      "network_popup_removed_without_retry": true,
+      "small_status_hidden_when_idle": true
+    },
+    "repeat_run_reuses_verified_output": true,
+    "native_iphone_tested": false
+  },
+  "targeted_tests": {
+    "passed": true,
+    "count": 22,
+    "seconds": 2.245
+  },
+  "network_recovery": "Network message boxes are intercepted before original retry callback; old popup/loading/mask and queue/reconnect timer cleared, socket disconnected, login/server editor opened.",
+  "ui": {
+    "server_card": [
+      520,
+      276
+    ],
+    "circle_diameter": 46,
+    "hold_ms": 2000,
+    "speed_range": [
+      1,
+      10
+    ],
+    "single_and_multi_click": true,
+    "touch_swipe_record_replay": true,
+    "stop_button_hidden_when_idle": true,
+    "stop_button_separate_from_circle": true
+  },
+  "automation_limits": {
+    "min_interval_ms": 100,
+    "max_interval_ms": 10000,
+    "max_points": 20,
+    "max_record_ms": 120000,
+    "max_record_events": 2000,
+    "same_scene_only": true,
+    "stops_on_background_scene_network_and_controls": true,
+    "uses_server_item_grant_shortcuts": false
+  },
+  "native_iphone_input_render_tested": false,
+  "server_or_existing_apk_changed": false,
+  "resigning_required": true,
+  "provenance": "Authored Cocos UI and touch dispatch, layered on the original ENG login and gameplay.",
+  "guide": "CLIENT-CONTROLS.md"
+}

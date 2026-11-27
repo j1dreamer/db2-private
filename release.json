@@ -1,7 +1,7 @@
 {
-  "version": "6.2.0-dev",
+  "version": "6.3.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-ios-loginfix-dev",
+  "tag": "eng-sp-sss-ios-controls-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
   "implementation_commit": null,
@@ -19,9 +19,9 @@
     "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953"
   },
   "ios": {
-    "file": "DB2-ENG-SPSSS-LoginFix-unsigned.ipa",
-    "bytes": 510859640,
-    "sha256": "1cd99a563104b3ca68e91aaf20cb22f15cae59ff7b7c02f15581a9319d0c9170",
+    "file": "DB2-ENG-SPSSS-Controls-unsigned.ipa",
+    "bytes": 510861884,
+    "sha256": "9a17a6c16495b08fbd296ad155ab1df349c2f150adb051b561a8d80ca60c23ba",
     "bundle_id": "com.j1dreamer.db2.private",
     "signed": false,
     "publication_authorized": true,
@@ -30,7 +30,14 @@
     "account_form_unconfigured": true,
     "startup_connection_timeout_ms": 8000,
     "source_rules_button": false,
-    "vietnamese_system_font_fallback": true
+    "vietnamese_system_font_fallback": true,
+    "round_speed_control_hold_ms": 2000,
+    "autoclick_modes": [
+      "single",
+      "multi"
+    ],
+    "touch_record_replay": true,
+    "network_popup_recovery": true
   },
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
@@ -75,6 +82,11 @@
       "commit": "2c5f786c552e224774c8dc44a513f57dc0221da2",
       "file": "Client-ENG-SPSSS-IOS-LoginFix.zip",
       "sha256": "bd43d23016f247e417daf9aa4812ebe26e85b8c910c400432ca2a344d5b6ab28"
+    },
+    "controls_patch": {
+      "commit": "6da0c69357c8ef8e3af45683bbf3d2d57a384e05",
+      "file": "Client-ENG-SPSSS-IOS-Controls.zip",
+      "sha256": "6f82f0a3cd5c52e36a00520718885ebf2dc3e97492cce0e4990d77f1a2f863f6"
     }
   }
 }

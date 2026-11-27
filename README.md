@@ -7,7 +7,7 @@ Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS /
 **[Download-Clients.zip](Download-Clients.zip)** → giải nén → mở **Download-Clients.bat** (cần Python 3.10+). Công cụ tự tải, tạo và kiểm SHA-256 hai file nguyên vẹn:
 
 - `DB2-ENG-SPSSS-BoxInfo.apk`: đã ký phát triển, cài đè cùng package/chứng thư, có Speed 1–10×.
-- `DB2-ENG-SPSSS-LoginFix-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
+- `DB2-ENG-SPSSS-Controls-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
 
 **Chỉ tải IPA:** [Download-IPA.zip](Download-IPA.zip) → giải nén → mở `Download-IPA.bat` trên Windows; trên Mac chạy `bash Download-IPA.command`. Xem [ký/cài IPA và nhập IP Tailscale](IPA-INSTALL.md). BAT tải file, không tự ký/cài.
 
@@ -49,6 +49,10 @@ Web → Sự kiện → Tạo/Sửa → chọn **Điều kiện** và **Mốc nh
 ## VPS Ubuntu
 
 Ubuntu 24.04 LTS **1 vCPU / 2 GB RAM** dùng được để thử nghiệm hoặc nhóm nhỏ; chưa có benchmark để cam kết số người chơi đồng thời. Cần Python 3.10+, Node.js LTS để chạy engine trận, ổ đĩa cho source/dữ liệu/backup và Tailscale nếu chơi qua mạng riêng. Client APK/IPA không cần nằm trên VPS. Xem [UBUNTU.md](UBUNTU.md) và mẫu systemd trong `deploy/`.
+
+## Điều khiển iOS · Controls
+
+IPA hiện tại sửa vòng popup mất mạng, thu gọn hộp server, thay Speed bằng nút tròn giữ 2 giây mở slider 1–10×. Chạm nhanh mở auto một điểm/nhiều điểm hoặc ghi/phát lại thao tác. Có nút Dừng riêng, tự ngắt lúc chuyển cảnh/mất mạng/xuống nền. [Hướng dẫn](CLIENT-CONTROLS.md) · [Kiểm chứng](analysis/ios-controls-validation.json). Bản này cập nhật IPA, không thay APK/server; cần ký lại và thử native trên iPhone.
 
 ## Đăng nhập iOS · LoginFix
 

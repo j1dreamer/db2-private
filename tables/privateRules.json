@@ -88,5 +88,10 @@
     "id": "ios-login-recovery",
     "source": "private-client-repair",
     "description": "Sửa khởi động iOS để form tài khoản vẫn mở khi chưa cấu hình; probe cấu hình server tối đa 8 giây rồi trả về ô sửa IP khi lỗi/sai dịch vụ; bỏ nút nguồn và luật; fallback Arial cho chữ Việt thiếu glyph. Tài liệu nguồn giữ trên web quản trị. Đây là bản vá dự án; cần kiểm UI native iPhone."
+  },
+  {
+    "id": "client-automation-controls",
+    "source": "private-client-implementation",
+    "description": "Nút tròn giữ 2 giây/slider tốc độ, auto chạm một/nhiều điểm, ghi/phát chạm/kéo và khôi phục lỗi mạng là mã client dự án. Dùng sự kiện chạm của game, không gọi RPC cấp đồ; thời gian/thưởng server không đổi. Dừng khi đổi cảnh, mất mạng, mở điều khiển hoặc app nền. Bản phát hành hiện cập nhật IPA, chưa kiểm native iPhone."
   }
 ]
