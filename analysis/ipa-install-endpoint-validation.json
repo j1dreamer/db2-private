@@ -1,0 +1,75 @@
+{
+  "client_build": "ENG BoxInfo",
+  "compatible_server_build": "eng-sp-sss-event-goals-v6",
+  "packaged_clients": [
+    {
+      "platform": "ios",
+      "file": "DB2-ENG-SPSSS-BoxInfo-unsigned.ipa",
+      "bytes": 511242249,
+      "sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+      "jsc_matches_verified_build": true,
+      "editable_saved_endpoint": true,
+      "settings_embedded": true,
+      "ATS": {
+        "NSAllowsArbitraryLoads": true
+      },
+      "local_network_description": "Connect to your authorized private DB2 game server over LAN or Tailscale."
+    },
+    {
+      "platform": "android",
+      "file": "DB2-ENG-SPSSS-BoxInfo.apk",
+      "bytes": 525062849,
+      "sha256": "20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47",
+      "jsc_matches_verified_build": true,
+      "editable_saved_endpoint": true,
+      "settings_embedded": true
+    }
+  ],
+  "runtime_endpoint_checks": [
+    {
+      "platform": "ios",
+      "selector_save_and_restart": true,
+      "invalid_url_rejected": true,
+      "two_changed_tailscale_ips_applied_to_http_and_gate": true,
+      "client_config_platform": "ios"
+    },
+    {
+      "platform": "android",
+      "selector_save_and_restart": true,
+      "invalid_url_rejected": true,
+      "two_changed_tailscale_ips_applied_to_http_and_gate": true,
+      "client_config_platform": "android"
+    }
+  ],
+  "server_endpoint_tests": {
+    "passed": true,
+    "count": 2,
+    "suite": "tests.test_server_endpoint"
+  },
+  "signing_required": true,
+  "native_signed_iphone_install_tested": false,
+  "tailscale_vps_deployed": false,
+  "native_windows_bat_executed": false,
+  "client_bytes_modified": false,
+  "previous_complete_public_download": "analysis/client-download-validation.json",
+  "instructions": "IPA-INSTALL.md",
+  "public_download_recheck": {
+    "manifest_verified": true,
+    "parts": 25,
+    "first_part_fresh_download_verified": true,
+    "bytes": 20971520
+  },
+  "current_ipa_output_checksum_reverified": true,
+  "download_helpers": {
+    "Download-IPA.zip": {
+      "bytes": 7170,
+      "sha256": "961ed4d9be3247dbc89900ed129240a049ef60fe15c7b215d4503a4a703e810d",
+      "zip_crc_passed": true
+    },
+    "Download-Clients.zip": {
+      "bytes": 8556,
+      "sha256": "a74c3290b85af9327a55367ff72eaa84c47f620cb9da5e4fd96ab45b65fafcc7",
+      "zip_crc_passed": true
+    }
+  }
+}

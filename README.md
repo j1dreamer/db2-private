@@ -9,6 +9,8 @@ Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS /
 - `DB2-ENG-SPSSS-BoxInfo.apk`: đã ký phát triển, cài đè cùng package/chứng thư, có Speed 1–10×.
 - `DB2-ENG-SPSSS-BoxInfo-unsigned.ipa`: có cùng sửa lỗi/GM/speed; **chưa ký**, cần ký hợp lệ trên Mac.
 
+**Chỉ tải IPA:** [Download-IPA.zip](Download-IPA.zip) → giải nén → mở `Download-IPA.bat` trên Windows; trên Mac chạy `bash Download-IPA.command`. Xem [ký/cài IPA và nhập IP Tailscale](IPA-INSTALL.md). BAT tải file, không tự ký/cài.
+
 Không cần APK cũ, Java, Git hoặc ghép tay. Cần khoảng 2,2 GB trống gồm cache; chạy lại sẽ dùng các phần đã tải đúng. Có thể tải riêng: `python Download-Clients.py --only apk` hoặc `python3 Download-Clients.py --only ipa`.
 
 **Source server:** tải [ZIP nhánh eng-sp-sss](https://github.com/j1dreamer/db2-private/archive/refs/heads/eng-sp-sss.zip). Không tải nhánh `main` hoặc dùng chung server Long Chi Đảo cũ.

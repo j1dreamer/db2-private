@@ -25,7 +25,10 @@ Source/provenance and implementation limits are documented in that repository.
 
 GM: Admin > Players > Grant GM. New client shows GM below Speed.
 GM has item/role lists and player/role level, VIP and resource controls.
-Use the matching eng-sp-sss-box-info-v4 server (schema 30).
+Use the current eng-sp-sss-event-goals-v6 server (schema 30).
+The v6 event update keeps these same BoxInfo clients.
+IPA-only: double-click Download-IPA.bat; on Mac run bash Download-IPA.command.
+Signing/install and later Tailscale IP setup: see IPA-INSTALL.md.
 
 New box UI: owned/open/reward counts, 1/10/max, cancel X.
 Speed is compact, draggable; position is saved, tap changes immediately.
