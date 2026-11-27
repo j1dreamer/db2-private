@@ -1,10 +1,10 @@
-DB2 ENG SSS/SP + GM + BOX INFO/SPEED V4 - AUTOMATIC COMPLETE CLIENT DOWNLOAD
+DB2 ENG SSS/SP + GM + BOX INFO/SPEED + IOS LAUNCH FIX - AUTOMATIC COMPLETE CLIENT DOWNLOAD
 
 Windows: install Python 3.10+ (enable Add Python to PATH).
 Extract this ZIP to a NEW folder and double-click Download-Clients.bat.
 The program automatically downloads and checks every part, then creates:
   DB2-ENG-SPSSS-BoxInfo.apk        (525,062,849 bytes; signed)
-  DB2-ENG-SPSSS-BoxInfo-unsigned.ipa   (511,242,249 bytes; unsigned)
+  DB2-ENG-SPSSS-LaunchFix-unsigned.ipa   (510,859,616 bytes; unsigned)
 Both include Speed 1x-10x and the original ENG gameplay, Vietnamese and permission-checked GM.
 No old APK, Git, Java, Node or manual file joining is needed for downloading.
 
@@ -36,3 +36,10 @@ Install the new client AND update server. Keep your existing ENG player database
 
 All box descriptions explain selection/full/random rewards from actual config.
 One SP box with x60 fragments shows x60 on the reward cell (not chest count).
+
+IOS LAUNCHFIX: removes two startup plugins after the device log showed
+[sjcode] disabled/not-found; kill now, followed by a voluntary process exit.
+Select the LaunchFix IPA in Sideloadly and sign/install again.
+Native instructions and JSC remain unchanged; signed-device launch is pending.
+Optional: Download-IPA.bat --ipa-source "C:\path\DB2-ENG-SPSSS-BoxInfo-unsigned.ipa"
+Use the old ORIGINAL unsigned file, not a signed/edited IPA.

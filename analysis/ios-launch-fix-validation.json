@@ -1,0 +1,93 @@
+{
+  "diagnosis": "Native startup plugin explicitly terminates app; device log reports voluntary exit. Signature was accepted.",
+  "evidence": [
+    {
+      "line": 7941,
+      "message": "AMFI: profile validated the code signature"
+    },
+    {
+      "line": 8544,
+      "message": "CombinedPlugin: ATHelper strict/hardlock/command hooks installed"
+    },
+    {
+      "line": 9424,
+      "message": "CombinedPlugin: [sjcode] disabled/not-found; kill now"
+    },
+    {
+      "line": 9532,
+      "message": "termination reported by launchd (0, 0, 0)"
+    },
+    {
+      "line": 9560,
+      "message": "Process exited: voluntary"
+    }
+  ],
+  "raw_user_log_committed": false,
+  "build": {
+    "removed_dependencies": [
+      "@executable_path/CombinedPlugin.dylib",
+      "@executable_path/Frameworks/AppRuntime/ATHelper.dylib"
+    ],
+    "removed_ordinals": [
+      50,
+      51
+    ],
+    "imported_plugin_symbols": false,
+    "bytes_after_original_load_commands_unchanged": true,
+    "native_instructions_patched": false,
+    "requires_resigning": true,
+    "source_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+    "ipa_sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732",
+    "ipa_bytes": 510859616,
+    "native_executable_sha256": "bd791a92795afc1c27bf20c7eed378249ed194e666e0419b2d34996ebf69d715",
+    "removed_files": [
+      "Payload/dragonball.app/CombinedPlugin.dylib",
+      "Payload/dragonball.app/Frameworks/AppRuntime/ATHelper.dylib"
+    ],
+    "unchanged_entries": 17260,
+    "jsc_and_settings_unchanged": true,
+    "native_device_tested": false,
+    "patch_file": "Client-ENG-SPSSS-IOS-LaunchFix.zip",
+    "patch_sha256": "bf080a905f6c8056a0a4e4c70d46ce16903f376af917ad25ef721a4c09ce0a26",
+    "patch_bytes": 7416537,
+    "patch_operations": 34521
+  },
+  "downloader": {
+    "passed": true,
+    "public_patch_download_verified": true,
+    "cached_original_ipa_used": true,
+    "output_sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732",
+    "output_bytes": 510859616,
+    "zip_crc_passed": true,
+    "settings_jsc_plist_unchanged": true,
+    "both_plugin_files_absent": true,
+    "second_run_skips_verified_output": true,
+    "native_device_tested": false
+  },
+  "targeted_tests": {
+    "passed": true,
+    "count": 13,
+    "suites": [
+      "tests.test_ipa_download",
+      "tests.test_ios_launch_fix",
+      "tests.test_ipa_inspection",
+      "tests.test_server_endpoint"
+    ]
+  },
+  "http_and_gate_selection": "JSC/Info.plist unchanged; existing endpoint tests and artifact checks inherited",
+  "user_signed_ipa_tested": false,
+  "native_launch_after_fix_verified": false,
+  "server_changes_required": false,
+  "android_changes_required": false,
+  "resigning_required": true,
+  "default_downloader_proof": {
+    "passed": true,
+    "default_no_ipa_source_path_verified": true,
+    "parts": 25,
+    "base_parts_sha256_validated_against_public_manifest": true,
+    "cached_parts_seeded_from_exact_local_base_not_new_public_download": true,
+    "public_patch_downloaded": true,
+    "output_sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732"
+  },
+  "helper_zip_sha256": "d39388c53ff9ee7e88eac4df22b94a7d8b45e3de76fa1bab3264200565d539e8"
+}

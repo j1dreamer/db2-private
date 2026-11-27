@@ -1,7 +1,7 @@
 {
-  "version": "6.0.0-dev",
+  "version": "6.1.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-v6-dev",
+  "tag": "eng-sp-sss-ios-launchfix-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
   "implementation_commit": null,
@@ -19,12 +19,14 @@
     "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953"
   },
   "ios": {
-    "file": "DB2-ENG-SPSSS-BoxInfo-unsigned.ipa",
-    "bytes": 511242249,
-    "sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+    "file": "DB2-ENG-SPSSS-LaunchFix-unsigned.ipa",
+    "bytes": 510859616,
+    "sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732",
     "bundle_id": "com.j1dreamer.db2.private",
     "signed": false,
-    "publication_authorized": true
+    "publication_authorized": true,
+    "startup_plugin_removal": true,
+    "native_device_launch_verified": false
   },
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
@@ -58,6 +60,12 @@
   "release_asset_upload_status": "draft: cloud-upload-401-and-actions-account-billing-lock",
   "ios_transport": {
     "commit": "63d1537f2d4e8d0c9f7eb19a76911251da3a4907",
-    "manifest_sha256": "680b31b9219ab931c73dc2d1b3cbc673d9ee91a7a3a06a645001440c88f75012"
+    "manifest_sha256": "680b31b9219ab931c73dc2d1b3cbc673d9ee91a7a3a06a645001440c88f75012",
+    "base_ipa_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+    "launch_fix_patch": {
+      "commit": "85ad6eb34ee6030e5bfe5801d0f690c8819bc7a6",
+      "file": "Client-ENG-SPSSS-IOS-LaunchFix.zip",
+      "sha256": "bf080a905f6c8056a0a4e4c70d46ce16903f376af917ad25ef721a4c09ce0a26"
+    }
   }
 }

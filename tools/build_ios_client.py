@@ -36,7 +36,7 @@ def build(source,out,server='http://db2-server.invalid:20003',bundle_id='com.j1d
         info['CFBundleIdentifier']=bundle_id
         info['CFBundleDisplayName']='DB2 Private Dev'
         info['NSLocalNetworkUsageDescription']='Connect to your authorized private DB2 game server over LAN or Tailscale.'
-        # Keep original ATS policy, platform declarations, native dependencies.
+        # Keep original ATS policy, platform declarations and remaining dependencies.
         original_ats=info.get('NSAppTransportSecurity')
         removed=[];changed=[];unchanged=0
         with zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED,compresslevel=6)as zout:

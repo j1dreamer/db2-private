@@ -1,10 +1,20 @@
-# IPA BoxInfo mới nhất · server ENG v6
+# IPA LaunchFix mới nhất · server ENG v6
 
-Bộ tải tạo **DB2-ENG-SPSSS-BoxInfo-unsigned.ipa**, 511.242.249 byte (~488 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
+Bộ tải tạo **DB2-ENG-SPSSS-LaunchFix-unsigned.ipa**, 510.859.616 byte (~487 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
+
+## Sửa lỗi mở đen rồi tự thoát
+
+Log thiết bị cho thấy iOS chấp nhận chữ ký, sau đó `CombinedPlugin.dylib` ghi `[sjcode] disabled/not-found; kill now` và app thoát với trạng thái `voluntary`. Bản trước giữ nguyên native nên cũng giữ hai plugin khởi động này. LaunchFix bỏ hai mục nạp plugin ở cuối bảng thư viện và hai file `CombinedPlugin.dylib`, `Frameworks/AppRuntime/ATHelper.dylib`; đã kiểm không có symbol import phụ thuộc chúng. Không đổi mã lệnh gameplay hoặc JSC; IP server vẫn nhập trong game. Bản này cần ký lại hợp lệ, chưa được thử mở native trên iPhone.
 
 ## Tải
 
-**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT.
+**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT. **Chọn file có chữ `LaunchFix` để ký, không chọn lại BoxInfo cũ.** Nếu đã có file BoxInfo gốc chưa ký, có thể tránh tải lại 488 MB bằng lệnh trong CMD tại thư mục bộ tải:
+
+```bat
+Download-IPA.bat --ipa-source "C:\duong-dan\DB2-ENG-SPSSS-BoxInfo-unsigned.ipa"
+```
+
+Thay đường dẫn bằng file thật. Nếu đã sửa/ký file đầu vào, bỏ tùy chọn này để tải tự động. Bộ tải mới vẫn dùng cache các phần từ lần trước nếu nằm cùng thư mục.
 
 **Mac:** cài Python 3.10+, giải nén ZIP. Mở Terminal ở thư mục đó và chạy:
 
@@ -17,7 +27,7 @@ Có thể dùng `python3 Download-Clients.py --only ipa`. Không cần file game
 SHA-256 IPA **trước khi ký**:
 
 ```text
-c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b
+4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732
 ```
 
 ## Ký và cài qua máy tính

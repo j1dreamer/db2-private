@@ -11,9 +11,13 @@ IOS_MANIFEST='680b31b9219ab931c73dc2d1b3cbc673d9ee91a7a3a06a645001440c88f75012'
 BASE_SHA='a198837ccae5a3ad662d2489c4e1748016aebe77359e84f4bc4734c5f389f430'
 FIXED_SHA='d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f'
 APK_SHA='20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47'
-IPA_SHA='c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b'
+IPA_BASE_SHA='c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b'
+IPA_SHA='4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732'
+IOS_LAUNCH_REF='85ad6eb34ee6030e5bfe5801d0f690c8819bc7a6'
+IOS_LAUNCH_PATCH_SHA='bf080a905f6c8056a0a4e4c70d46ce16903f376af917ad25ef721a4c09ce0a26'
 APK_SIZE=525062849
-IPA_SIZE=511242249
+IPA_BASE_SIZE=511242249
+IPA_SIZE=510859616
 CHUNK=1024*1024
 
 def sha(path):
@@ -130,25 +134,37 @@ def android(output,cache,workers):
                 for block in source.blocks(op['copy'],op['size']):dest.write(block)
     finish(temporary,target,APK_SIZE,APK_SHA);return target
 
-def ios(output,cache,workers):
-    target=output/'DB2-ENG-SPSSS-BoxInfo-unsigned.ipa'
+def ios(output,cache,workers,source=None):
+    target=output/'DB2-ENG-SPSSS-LaunchFix-unsigned.ipa'
     if ready(target,IPA_SIZE,IPA_SHA):return target
-    paths=parts(cache/'ios',IOS_REF,IOS_MANIFEST,IPA_SIZE,IPA_SHA,'IPA',workers)
-    temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned file...',flush=True)
-    with temporary.open('wb')as dest:
-        for p in paths:
-            with p.open('rb')as source:
-                for block in iter(lambda:source.read(CHUNK),b''):dest.write(block)
+    if source is not None:
+        source=Path(source).expanduser().resolve()
+        if not source.is_file()or source.stat().st_size!=IPA_BASE_SIZE or sha(source)!=IPA_BASE_SHA:
+            raise ValueError('Use the original unsigned BoxInfo IPA as --ipa-source, before Sideloadly signing. Omit this option to download automatically.')
+        paths=[source];print('IPA: verified original unsigned BoxInfo input.',flush=True)
+    else:paths=parts(cache/'ios',IOS_REF,IOS_MANIFEST,IPA_BASE_SIZE,IPA_BASE_SHA,'IPA',workers)
+    patch=fetch(RAW+IOS_LAUNCH_REF+'/Client-ENG-SPSSS-IOS-LaunchFix.zip',cache/'ios-launchfix.zip',IOS_LAUNCH_PATCH_SHA)
+    plan,literal=load_patch(patch,IPA_BASE_SHA,IPA_SHA)
+    if plan['old_size']!=IPA_BASE_SIZE or plan['new_size']!=IPA_SIZE:raise ValueError('Unexpected IPA reconstruction sizes')
+    temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned LaunchFix file...',flush=True)
+    with contextlib.ExitStack()as stack,temporary.open('wb')as dest:
+        source=PartSource(paths,stack)
+        for op in plan['operations']:
+            if 'literal'in op:dest.write(literal[op['literal']:op['literal']+op['size']])
+            else:
+                offset=op['copy'];remaining=op['size']
+                while remaining:
+                    count=min(remaining,CHUNK);dest.write(source.read(offset,count));offset+=count;remaining-=count
     finish(temporary,target,IPA_SIZE,IPA_SHA);return target
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--only',choices=('both','apk','ipa'),default='both');parser.add_argument('--output',type=Path,default=Path(__file__).resolve().parent);parser.add_argument('--workers',type=int,choices=range(1,9),default=4);args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--only',choices=('both','apk','ipa'),default='both');parser.add_argument('--output',type=Path,default=Path(__file__).resolve().parent);parser.add_argument('--ipa-source',type=Path,help='Optional original unsigned BoxInfo IPA to avoid downloading it again');parser.add_argument('--workers',type=int,choices=range(1,9),default=4);args=parser.parse_args()
     output=args.output.expanduser().resolve();output.mkdir(parents=True,exist_ok=True);cache=output/'.longzhidao-download-cache'
-    print('DB2 ENG SSS/SP + GM VI - complete clients, Box quantities/descriptions + draggable Speed 1x-10x. IPA is unsigned.',flush=True)
+    print('DB2 ENG SSS/SP + GM VI - complete clients, BoxInfo + Speed 1x-10x. iOS LaunchFix is unsigned; sign again.',flush=True)
     print('Output:',output,'\nKeep this window open. Run again to reuse verified downloads.',flush=True)
     files=[]
     if args.only in('both','apk'):files.append(android(output,cache,args.workers))
-    if args.only in('both','ipa'):files.append(ios(output,cache,args.workers))
+    if args.only in('both','ipa'):files.append(ios(output,cache,args.workers,args.ipa_source))
     (output/'CLIENT-SHA256SUMS.txt').write_text(''.join(sha(p)+'  '+p.name+'\n'for p in files))
     print('DONE. Use/upload the complete APK/IPA above; no manual joining is needed.',flush=True)
     print('Verified cache can be deleted after success:',cache,flush=True)

@@ -7,7 +7,7 @@ Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS /
 **[Download-Clients.zip](Download-Clients.zip)** → giải nén → mở **Download-Clients.bat** (cần Python 3.10+). Công cụ tự tải, tạo và kiểm SHA-256 hai file nguyên vẹn:
 
 - `DB2-ENG-SPSSS-BoxInfo.apk`: đã ký phát triển, cài đè cùng package/chứng thư, có Speed 1–10×.
-- `DB2-ENG-SPSSS-BoxInfo-unsigned.ipa`: có cùng sửa lỗi/GM/speed; **chưa ký**, cần ký hợp lệ trên Mac.
+- `DB2-ENG-SPSSS-LaunchFix-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
 
 **Chỉ tải IPA:** [Download-IPA.zip](Download-IPA.zip) → giải nén → mở `Download-IPA.bat` trên Windows; trên Mac chạy `bash Download-IPA.command`. Xem [ký/cài IPA và nhập IP Tailscale](IPA-INSTALL.md). BAT tải file, không tự ký/cài.
 
@@ -49,6 +49,12 @@ Web → Sự kiện → Tạo/Sửa → chọn **Điều kiện** và **Mốc nh
 ## VPS Ubuntu
 
 Ubuntu 24.04 LTS **1 vCPU / 2 GB RAM** dùng được để thử nghiệm hoặc nhóm nhỏ; chưa có benchmark để cam kết số người chơi đồng thời. Cần Python 3.10+, Node.js LTS để chạy engine trận, ổ đĩa cho source/dữ liệu/backup và Tailscale nếu chơi qua mạng riêng. Client APK/IPA không cần nằm trên VPS. Xem [UBUNTU.md](UBUNTU.md) và mẫu systemd trong `deploy/`.
+
+## Sửa khởi động iOS · LaunchFix
+
+Log iPhone đã xác nhận `CombinedPlugin.dylib` ghi `[sjcode] disabled/not-found; kill now`, rồi app tự thoát (`voluntary`) sau khi chữ ký được chấp nhận. IPA mới bỏ hai plugin khởi động và mục nạp tương ứng, kiểm không có import phụ thuộc; phần mã lệnh sau load commands và JSC giữ nguyên. Không gọi dịch vụ kiểm tra riêng của plugin. Đây là thay đổi native load commands được dự án thực hiện, cần ký lại; chưa kiểm mở native trên iPhone. APK/server không cần đổi cho lỗi này.
+
+Tải lại [Download-IPA.zip](Download-IPA.zip), giải nén vào thư mục riêng, chọn file **LaunchFix** khi ký bằng Sideloadly. Có thể dùng `--ipa-source` với BoxInfo gốc chưa ký để tránh tải lại toàn bộ. Hướng dẫn trong [IPA-INSTALL.md](IPA-INSTALL.md), kiểm chứng ở [analysis/ios-launch-fix-validation.json](analysis/ios-launch-fix-validation.json).
 
 ## Rương SP và Speed lần này
 

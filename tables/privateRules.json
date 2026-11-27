@@ -78,5 +78,10 @@
     "id": "event-objectives",
     "source": "private-server-rule",
     "description": "Tiêu Gem được tính bằng phần tăng costGem đã lưu; thắng/quét màn và quay thường/cao cấp lấy từ giao dịch server thành công. Tiến độ ghi SQLite theo khoảng lịch, bắt đầu thu thập sau nâng cấp, không hồi tố. Mỗi ID sự kiện một mốc và một nhóm quà mỗi kỳ. Đây là luật dự án, không phải luật server ENG gốc."
+  },
+  {
+    "id": "ios-startup-plugin-removal",
+    "source": "private-client-repair",
+    "description": "Log thiết bị xác nhận CombinedPlugin ghi sjcode disabled/not-found; kill now rồi app tự thoát. LaunchFix bỏ hai native load commands và hai file plugin, xác nhận không có symbol import dùng chúng. Mã lệnh gameplay, framework còn lại và JSC không đổi; cần ký lại, chưa xác minh mở trên iPhone."
   }
 ]
