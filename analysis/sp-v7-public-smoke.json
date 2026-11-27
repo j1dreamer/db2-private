@@ -1,0 +1,19 @@
+{
+  "public_installer_verified": true,
+  "source_commit": "37923336880e58cec5c709d7e84e9582252c8663",
+  "installer_commit": "00757c605494724ee2da944fefc72fa47bdca2b6",
+  "extracted_health": {
+    "status": "ok",
+    "stage": "protocol-development",
+    "playable_verified": false,
+    "build": "eng-sp-sss-sp-events-v7",
+    "profile_schema": 30,
+    "routes": {
+      "implemented": 342,
+      "target": 342
+    }
+  },
+  "sp_catalog_classes": 20,
+  "builtin_templates": 18,
+  "root_install_on_vps_verified": false
+}
