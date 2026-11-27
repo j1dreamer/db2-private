@@ -108,5 +108,10 @@
     "id": "sp-campaign-v7",
     "source": "private-server-rule",
     "description": "Lịch SP do quản trị xếp; 6 ô pool, bảo hiểm, vé, quà đăng nhập/chiến lệnh, gói Gem và điểm nạp quản trị, kết toán BXH qua thư là luật riêng. Tướng/vé/ảnh và DTO màn dùng bảng ENG, không nhận là timeline hoặc luật backend gốc."
+  },
+  {
+    "id": "boxrestore-v8",
+    "source": "private-client-implementation",
+    "description": "Khôi phục nút chọn/số lượng/xác nhận rương ENG; nhãn số lượng và font Canvas do dự án thêm. Không đổi bảng quà SP/SS/SSS; web đọc nội dung từ cấu hình thực. Rương #351 cần config instance."
   }
 ]

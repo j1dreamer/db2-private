@@ -1,0 +1,7 @@
+{
+  "tables_checked": 34,
+  "different_from_server": [],
+  "canonical_sha256": "c4e0fe0e36a548b872c9d47c34c8fdc02145e7abc56476ef46e3277dcf23eb69",
+  "overlay_sha256": "a8500ee1be13f74ef7ee806c7c84e5ffa888db832caccd816c16d089e7f98f2d",
+  "method": "Read IPA native tables and apply its checksum-matched canonical iOS overlay. The IPA builder also checks that exact overlay exists in the packaged JSC."
+}

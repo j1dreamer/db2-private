@@ -6,11 +6,12 @@
         Type.prototype[method] = function () {
             if (!this.__db2FontBusy && (cc.sys.localStorage.getItem('defaultLanguage') || 'vi') === 'vi' && /[\u00c0-\u024f\u1e00-\u1eff]/.test(String(this.string || ''))) {
                 this.__db2FontBusy = true;
-                try { this.fontFamily = 'Arial'; this.useSystemFont = true; } finally { this.__db2FontBusy = false; }
+                try { this._forceUseCanvas = true; this.font = null; this.fontFamily = 'Arial'; this.useSystemFont = true; if (this.spacingX !== undefined && this.spacingX !== 0) this.spacingX = 0; } finally { this.__db2FontBusy = false; }
             }
             return original.apply(this, arguments);
         };
     }
     wrap(cc.Label, '_forceUpdateRenderData');
+    wrap(cc.Label, 'setVertsDirty');
     wrap(cc.RichText, '_updateRichTextStatus');
 }());

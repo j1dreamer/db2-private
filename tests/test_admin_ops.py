@@ -123,16 +123,6 @@ class AdminOpsTests(unittest.IsolatedAsyncioTestCase):
   await self.post({'action':'activity_config','id':'dial:luck','enabled':False,'version':0})
   with self.assertRaises(ValueError):activities.handle(self.store,1,'logic.playerHandler.rollDial',{'type':'luck','times':1})
 
-@unittest.skipUnless(importlib.util.find_spec('cryptography'),'cryptography is optional; required only for native PNG decoder tests')
-class ImageCodecTests(unittest.TestCase):
- def test_encrypted_native_prefix_and_every_chunk_crc(self):
-  from tools.extract_admin_icons import decode_png,valid_png
-  from cryptography.hazmat.primitives.ciphers import Cipher,algorithms,modes
-  # Actual PNG extracted from the Android client, then re-encrypted with a test key.
-  p=next((Path(__file__).resolve().parents[1]/'web/assets/items').glob('*.png'));raw=p.read_bytes();key=b'test-image-key12';iv=b'test-image-iv123';key=key.ljust(16,b'0');iv=iv.ljust(16,b'0');enc=Cipher(algorithms.AES(key),modes.CBC(iv)).encryptor();encrypted=enc.update(raw[:64]+b'\x10'*16)+enc.finalize()+raw[64:]
-  self.assertTrue(valid_png(raw));self.assertEqual(decode_png(encrypted,key,iv),raw)
-  with self.assertRaises(ValueError):decode_png(encrypted[:-1]+bytes([encrypted[-1]^1]),key,iv)
-
  async def test_sp_campaign_admin_images_calendar_credit_and_authentication(self):
   from server import sp_events
   now=int(time.time());b={**sp_events.defaults(),'action':'sp_banner_save','id':'qa_sp','name':'SP QA','start':now-10,'end':now+86400,'enabled':True,'version':0}
@@ -157,3 +147,13 @@ class ImageCodecTests(unittest.TestCase):
    self.assertNotEqual(before_mark,stamp(self.store));control.tick()
    self.assertTrue(self.store.player(1)['activity']['map']['privateSpWish']['spClassId'])
    self.assertGreater(self.store.db.execute("SELECT count(*)FROM notifications WHERE event='onSync'").fetchone()[0],0)
+
+@unittest.skipUnless(importlib.util.find_spec('cryptography'),'cryptography is optional; required only for native PNG decoder tests')
+class ImageCodecTests(unittest.TestCase):
+ def test_encrypted_native_prefix_and_every_chunk_crc(self):
+  from tools.extract_admin_icons import decode_png,valid_png
+  from cryptography.hazmat.primitives.ciphers import Cipher,algorithms,modes
+  # Actual PNG extracted from the Android client, then re-encrypted with a test key.
+  p=next((Path(__file__).resolve().parents[1]/'web/assets/items').glob('*.png'));raw=p.read_bytes();key=b'test-image-key12';iv=b'test-image-iv123';key=key.ljust(16,b'0');iv=iv.ljust(16,b'0');enc=Cipher(algorithms.AES(key),modes.CBC(iv)).encryptor();encrypted=enc.update(raw[:64]+b'\x10'*16)+enc.finalize()+raw[64:]
+  self.assertTrue(valid_png(raw));self.assertEqual(decode_png(encrypted,key,iv),raw)
+  with self.assertRaises(ValueError):decode_png(encrypted[:-1]+bytes([encrypted[-1]^1]),key,iv)

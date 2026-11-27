@@ -1,0 +1,391 @@
+{
+  "items": 2845,
+  "box_count": 54,
+  "unique_images": 1083,
+  "boxes": [
+    {
+      "id": 311,
+      "name": "Rương Đá Lv1",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 312,
+      "name": "Rương Đá Lv2",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 313,
+      "name": "Rương Đá Lv3",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 314,
+      "name": "Rương Đá Lv4",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 315,
+      "name": "Rương Đá Lv5",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 316,
+      "name": "Rương Đá Lv6",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 317,
+      "name": "Rương Đá Lv7",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 321,
+      "name": "Rương VL Chiêu Thức Lục",
+      "choices": 13,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 322,
+      "name": "Rương VL Chiêu Thức Lam",
+      "choices": 13,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 323,
+      "name": "Rương VL Chiêu Thức Tím",
+      "choices": 13,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 324,
+      "name": "Rương VL Chiêu Thức Cam",
+      "choices": 13,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 325,
+      "name": "Rương VL Chiêu Thức Đỏ",
+      "choices": 13,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 326,
+      "name": "Rương VL Chiêu Thức Đen",
+      "choices": 13,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 331,
+      "name": "Rương Bảo Vật Thường",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 332,
+      "name": "Rương Bảo Vật Hiếm",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 333,
+      "name": "Rương Bảo Vật Quý",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 341,
+      "name": "Rương Vàng Thường",
+      "choices": 10,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 342,
+      "name": "Rương Vàng Hiếm",
+      "choices": 10,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 343,
+      "name": "Rương Vàng Quý",
+      "choices": 10,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 351,
+      "name": "Rương Thiết Lập",
+      "choices": 0,
+      "configurable": true,
+      "selectCount": 0
+    },
+    {
+      "id": 352,
+      "name": "Rương Chọn Mảnh Ngọc Rồng",
+      "choices": 35,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 353,
+      "name": "Rương Chọn Chiến Hồn",
+      "choices": 8,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 354,
+      "name": "Rương Chiến Hồn Ngẫu Nhiên",
+      "choices": 8,
+      "configurable": false,
+      "selectCount": 0
+    },
+    {
+      "id": 355,
+      "name": "Rương tự chọn tinh hồn",
+      "choices": 12,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 356,
+      "name": "Rương tự chọn chòm sao Sơ cấp",
+      "choices": 12,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 357,
+      "name": "Rương tự chọn chòm sao Trung cấp",
+      "choices": 12,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 358,
+      "name": "Rương tự chọn chòm sao Cao cấp",
+      "choices": 12,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 359,
+      "name": "Rương tự chọn chòm sao Tối cao",
+      "choices": 12,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 360,
+      "name": "Rương tự chọn chòm sao Truyền thuyết",
+      "choices": 12,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 701,
+      "name": "Rương Đồng Đội",
+      "choices": 3,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 702,
+      "name": "Rương Kết Giao",
+      "choices": 3,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 703,
+      "name": "Rương Hợp Kích",
+      "choices": 3,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 704,
+      "name": "Rương Tri Kỷ",
+      "choices": 3,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 705,
+      "name": "Rương Gắn Bó",
+      "choices": 3,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 706,
+      "name": "Rương Hero SSS Lam",
+      "choices": 12,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 707,
+      "name": "Rương Hero SSS Tím",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 708,
+      "name": "Rương Hero SSS Đỏ",
+      "choices": 5,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 710,
+      "name": "Rương Chọn Bảo Vật Tr.Thuyết",
+      "choices": 22,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 711,
+      "name": "Rương Hero SSS",
+      "choices": 11,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 712,
+      "name": "Rương Anh Hùng SSS",
+      "choices": 10,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 721,
+      "name": "Rương Chọn Hero I",
+      "choices": 2,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 722,
+      "name": "Rương Chọn Hero II",
+      "choices": 2,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 723,
+      "name": "Rương Chọn Hero III",
+      "choices": 2,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 724,
+      "name": "Rương Chọn Hero IV",
+      "choices": 23,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 725,
+      "name": "Rương Chọn Vật Liệu",
+      "choices": 4,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 726,
+      "name": "Rương Chọn Hero",
+      "choices": 18,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 727,
+      "name": "Rương Chọn Anh Hùng",
+      "choices": 20,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 728,
+      "name": "Rương Chọn Bảo Vật Thường",
+      "choices": 11,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 729,
+      "name": "Rương Chọn Bảo Vật Hiếm",
+      "choices": 11,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 730,
+      "name": "Rương Chọn Bảo Vật Quý",
+      "choices": 11,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 731,
+      "name": "Rương Chọn Bảo Vật Tr.Kỳ",
+      "choices": 18,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 732,
+      "name": "Rương Chọn Bảo Vật Ác Ma",
+      "choices": 10,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 373,
+      "name": "T2-Partner(S) Box",
+      "choices": 4,
+      "configurable": false,
+      "selectCount": 1
+    },
+    {
+      "id": 379,
+      "name": "Gem Box(Lv.4)",
+      "choices": 6,
+      "configurable": false,
+      "selectCount": 0
+    }
+  ],
+  "errors": [],
+  "native_use_verified": false,
+  "http_details_checked": 2845,
+  "http_unique_images_checked": 1083,
+  "http_failures": [],
+  "dataset": "isolated temporary SQLite; no user account changed"
+}

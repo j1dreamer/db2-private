@@ -44,7 +44,7 @@ def grant_box_rewards(player,rewards):
     def merge(values):
         for key,value in values.items():result[key]=result.get(key,0)+value
     for reward in rewards:
-        row=entity(reward['entityId']);count=integer(reward['count'],'Số lượng thưởng',1,10**6)
+        row=entity(reward['entityId']);count=integer(reward['count'],'Số lượng thưởng',1,10**12 if row['type']=='money'else 10**6)
         if row['type']!='role':merge(grant(player,[reward]));continue
         star=integer(reward.get('extra',{}).get('star',1),'Sao tướng',1,20)
         first=grant(player,[{**reward,'count':1}]);key=str(reward['entityId'])

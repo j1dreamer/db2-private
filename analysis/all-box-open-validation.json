@@ -1,0 +1,11 @@
+{
+  "configured_boxes": 53,
+  "configurable_without_default": [
+    351
+  ],
+  "cases": 374,
+  "selection_cases": 332,
+  "errors": [],
+  "source_tables_unchanged": true,
+  "native_verified": false
+}

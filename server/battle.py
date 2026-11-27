@@ -56,8 +56,8 @@ def validate_records(records):
             integer(action.get('skillId'),'Kỹ năng',1)
 
 def simulate(payload):
-    node=shutil.which('node')
-    if not node:raise ValueError('Combat cần Node.js; cài Node.js LTS rồi mở lại server')
+    from .node_runtime import resolve_node
+    node=resolve_node()
     try:
         result=subprocess.run([node,str(WORKER)],input=json.dumps(payload),text=True,capture_output=True,timeout=30 if payload.get('mode')in ('bestOfThree','series')else 15,check=True)
         return json.loads(result.stdout)

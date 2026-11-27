@@ -1,19 +1,25 @@
 // Authored quantity/close controls around the original ENG reward panel and RPCs.
 (function () {
     function dimensions(view) { var c=cc.Canvas.instance&&cc.Canvas.instance.node;return {w:view.node.width||c&&c.width||960,h:view.node.height||c&&c.height||640}; }
-    function label(parent,text,size,x,y) {
-        var n=new cc.Node();n.parent=parent;n.setPosition(x||0,y||0);var l=n.addComponent(cc.Label);l.string=String(text);l.fontSize=size||18;l.lineHeight=(size||18)+4;return l;
+    function label(parent,text,size,x,y,width,height) {
+        var n=new cc.Node();n.active=false;n.setPosition(x||0,y||0);
+        var l=n.addComponent(cc.Label);l.enabled=false;
+        l._forceUseCanvas=true;l.font=null;l.fontFamily='Arial';l.useSystemFont=true;
+        l.fontSize=size||18;l.lineHeight=(size||18)+4;l.overflow=cc.Label.Overflow.CLAMP;l.enableWrapText=true;
+        l.horizontalAlign=1;l.verticalAlign=1;l.cacheMode=cc.Label.CacheMode?cc.Label.CacheMode.NONE:0;
+        l.string=String(text);n.color=cc.color(238,245,255,255);n.opacity=255;
+        n.setContentSize(width||680,height||(size||18)+10);n.parent=parent;l.enabled=true;n.active=true;return l;
     }
     function button(parent,text,x,y,width,cb) {
         var n=new cc.Node();n.parent=parent;n.setPosition(x,y);n.setContentSize(width,36);var g=n.addComponent(cc.Graphics);g.fillColor=cc.color(27,48,70,245);g.roundRect(-width/2,-18,width,36,5);g.fill();
-        var l=label(n,text,17);n.on(cc.Node.EventType.TOUCH_END,function(event){if(event&&event.stopPropagation)event.stopPropagation();cb();});return l;
+        var l=label(n,text,17,0,0,width-8,28);n.on(cc.Node.EventType.TOUCH_END,function(event){if(event&&event.stopPropagation)event.stopPropagation();cb();});return l;
     }
     function quantity(node,value) {
         var target=node.getChildByName('item_item')||node;
         var original=target.getComponent('itemItem2')||target.getComponent('itemItem');
         if(original&&original.setCountLabelActive_)original.setCountLabelActive_(false);
         var n=node.getChildByName('DB2BoxQuantity');
-        if(!n){n=new cc.Node('DB2BoxQuantity');n.parent=node;n.zIndex=100;n.setPosition(0,-(node.height||100)/2+12);var g=n.addComponent(cc.Graphics);g.fillColor=cc.color(5,18,30,230);g.roundRect(-42,-12,84,24,4);g.fill();n._label=label(n,'',16);}
+        if(!n){n=new cc.Node('DB2BoxQuantity');n.parent=node;n.zIndex=100;n.setPosition(0,-(node.height||100)/2+12);var g=n.addComponent(cc.Graphics);g.fillColor=cc.color(5,18,30,230);g.roundRect(-42,-12,84,24,4);g.fill();n._label=label(n,'',16,0,0,78,22);}
         n.active=true;n._label.string='×'+value;
     }
     function rowQuantities(view,multiplier) {
@@ -49,17 +55,10 @@
             var ui=tools(view,function(){close(view);}),data=view.data,box=data.privateBoxInfo;
             view._db2BoxInfo=null;view._db2BoxOpen=null;
             if(view.canSelect){
-                var bar=new cc.Node();bar.parent=ui.root;bar.setPosition(0,-ui.size.h/2+65);bar.scale=Math.min(1,(ui.size.w-36)/720);
-                view._db2BoxInfo=label(bar,'',18,0,48);
-                label(bar,'Số nhận trên mỗi ô = thưởng mỗi rương × số rương mở.',15,0,23);
-                button(bar,'−1',-315,-16,58,function(){count(view,data.useCount-1);});
-                button(bar,'+1',-245,-16,58,function(){count(view,data.useCount+1);});
-                button(bar,'1',-175,-16,52,function(){count(view,1);});
-                button(bar,'10',-110,-16,56,function(){count(view,10);});
-                button(bar,'Tất cả',-23,-16,95,function(){count(view,data.count);});
-                view._db2BoxOpen=button(bar,'Mở',180,-16,260,function(){view.onYes_();});
-                label(bar,'Tướng trùng được quy đổi hồn theo luật hiện có.',14,0,-49);
-                if(view.useCountNode)view.useCountNode.active=false;if(view.yesBt)view.yesBt.active=false;
+                // Keep the original ENG selection, quantity buttons and confirm action.
+                view._db2BoxInfo=label(ui.root,'',16,0,ui.size.h/2-70,Math.min(680,ui.size.w-100),28);
+                if(view.useCountNode)view.useCountNode.active=true;
+                if(view.yesBt)view.yesBt.active=true;
                 count(view,data.useCount||1);
             } else {
                 if(view.yesBt)view.yesBt.active=true;

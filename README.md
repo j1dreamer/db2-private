@@ -21,7 +21,7 @@ Không cần APK cũ, Java, Git hoặc ghép tay. Cần khoảng 2,2 GB trống 
 2. Chạy `start.bat`. Thư mục mới tự tạo `data/game.sqlite3` và `data/admin-token`, không kèm tài khoản hoặc token của ai. Nếu cần dữ liệu cũ, tự giữ bản sao trước khi chuyển; server có snapshot SQLite trước đổi baseline.
 3. Đặt APK mới cạnh `Install-Android.bat`, bật BlueStacks → Android Debug Bridge rồi chạy BAT. Nhập đúng cổng ADB (thường `127.0.0.1:6610`). Không cần gỡ app hoặc xóa data Android.
 4. Trong game dùng server `http://127.0.0.1:20003`. Với database trắng, đăng ký tài khoản mới.
-5. Kiểm `/health`: **build `eng-sp-sss-sp-events-v7`, schema 30**. Dùng client ENG BoxInfo tương thích; nếu đã cài BoxInfo thì bản web này chỉ cần cập nhật server.
+5. Kiểm `/health`: **build `eng-sp-sss-combat-box-v8`, schema 30**. Dùng client ENG BoxInfo tương thích; nếu đã cài BoxInfo thì bản web này chỉ cần cập nhật server.
 
 Web quản trị: **http://127.0.0.1:20003**; token nằm ở `data/admin-token` trong đúng thư mục server đang chạy.
 
@@ -117,3 +117,7 @@ Thư viện kịch bản có tên, điểm kéo được và thời gian chờ/g
 ## Lịch SP, vé và thưởng · v7
 
 [Sự kiện → Lịch SP & vé](SP-EVENTS.md): xếp đợt theo ngày, chọn tướng/vé từ client, chỉnh pool/bảo hiểm, đăng nhập, chiến lệnh, mốc nạp riêng, gói vé và thưởng BXH qua thư. Sửa DTO gây lỗi `needMap` khi mở Hoạt động. APK/IPA không đổi trong bản server này.
+
+## Combat và rương IPA · v8
+
+[Sửa runtime Ubuntu và rương](COMBAT-BOX-FIX.md): Node qua đường dẫn tuyệt đối, health báo readiness, IPA BoxRestore dùng nút chọn/số lượng gốc và font Canvas cho chữ Việt. Web hiển thị nội dung từng rương với ảnh/ID/loại/số lượng.

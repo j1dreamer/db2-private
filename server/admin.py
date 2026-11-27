@@ -22,7 +22,11 @@ def item_view(row,detail=False):
  k=row['kindId'];label=labels().get(str(k),{});out={'id':k,'name':label.get('name',row['kindName']),'originalName':row['kindName'],'description':label.get('description',row.get('desc','')),'type':row['type'],'color':row.get('color',0),'image':images().get(str(k)),'imgId':row.get('imgId'),'price':row.get('price',0),'maxStack':row.get('maxNum',-1)}
  out['dataSource']=provenance.item_source(k);out['translationSource']={'name':label.get('nameSource','source-text-untranslated'),'description':label.get('descriptionSource','source-text-untranslated')}
  if row['type']=='role':out['grade']={2:'S',3:'SS',4:'SSS',5:'SP'}.get(row.get('group'),'')
- if detail:out['definition']=row
+ if detail:
+  out['definition']=row
+  if row['type']=='box':
+   from .catalog_audit import box_preview
+   out['box']=box_preview(row)
  return out
 
 def page_args(req):

@@ -1,0 +1,153 @@
+{
+  "build": "eng-sp-sss-combat-box-v8",
+  "full_suite": {
+    "command": "python -m unittest discover -s tests -q",
+    "tests": 308,
+    "passed": true,
+    "seconds": 338.822,
+    "coroutine_warning_fixed": "Moved async SP API tests into IsolatedAsyncioTestCase, and verified they actually execute."
+  },
+  "browser_flows": 38,
+  "browser_passed": true,
+  "catalog_http_report": "analysis/catalog-all-items-web-validation.json",
+  "box_open_report": "analysis/all-box-open-validation.json",
+  "canonical_tables_report": "analysis/box-client-server-tables.json",
+  "ipa": {
+    "ipa_sha256": "01ab9b9af0fa69f60b8ac61439a71caf9e931bd4d436d209856dc85b76439b86",
+    "ipa_bytes": 510865940,
+    "native_launch_fix": {
+      "removed_dependencies": [
+        "@executable_path/CombinedPlugin.dylib",
+        "@executable_path/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "removed_ordinals": [
+        50,
+        51
+      ],
+      "imported_plugin_symbols": false,
+      "bytes_after_original_load_commands_unchanged": true,
+      "native_instructions_patched": false,
+      "requires_resigning": true,
+      "source_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+      "ipa_sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732",
+      "ipa_bytes": 510859616,
+      "native_executable_sha256": "bd791a92795afc1c27bf20c7eed378249ed194e666e0419b2d34996ebf69d715",
+      "removed_files": [
+        "Payload/dragonball.app/CombinedPlugin.dylib",
+        "Payload/dragonball.app/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "unchanged_entries": 17260,
+      "jsc_and_settings_unchanged": true,
+      "native_device_tested": false
+    },
+    "only_additional_modified_entry": "Payload/dragonball.app/assets/main/index.jsc",
+    "source_button_removed": true,
+    "connection_timeout_ms": 8000,
+    "font_fallback": "Arial/system for Vietnamese labels",
+    "requires_resigning": true,
+    "native_device_tested": false,
+    "canonical_data_verified": {
+      "baseline": "eng-sp-sss",
+      "canonical_sha256": "c4e0fe0e36a548b872c9d47c34c8fdc02145e7abc56476ef46e3277dcf23eb69",
+      "overridden_tables": [
+        "artifact",
+        "buff",
+        "entity",
+        "entityExt",
+        "fightSkill",
+        "role",
+        "task",
+        "vip"
+      ],
+      "soul_maps": [
+        "SOUL_TYPE_ATTR_ITEM_MAP",
+        "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+      ],
+      "overlay_sha256": "a8500ee1be13f74ef7ee806c7c84e5ffa888db832caccd816c16d089e7f98f2d",
+      "native_modified": false,
+      "startup_config_paths": [
+        "ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP",
+        "ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP"
+      ],
+      "build_ext_flags": [
+        "isNoRemoveHideData",
+        "isShowCenterAndroid",
+        "isShowCenterIOS",
+        "isShowTimeLabel",
+        "moneyTicketId"
+      ],
+      "provenance": "tables/canonical-policy.json"
+    },
+    "embedded_scripts_verified": [
+      "private_ui",
+      "private_connection",
+      "private_settings",
+      "private_runtime",
+      "private_auto",
+      "private_box",
+      "private_font"
+    ],
+    "packaged_login_runtime": {
+      "unconfigured_opens_account_form": true,
+      "timeout_returns_to_login": true,
+      "network_error_returns_to_login": true,
+      "timeout_ms": 8000,
+      "duplicate_callbacks_ignored": true,
+      "wrong_service_rejected": true,
+      "successful_config_continues": true,
+      "original_username_password_register_login_work": true
+    },
+    "packaged_controls": {
+      "named_plan_library": true,
+      "separate_saved_and_draft_data": true,
+      "draggable_numbered_points": true,
+      "per_point_delay_and_hold": true,
+      "press_release_use_distinct_times": true,
+      "pause_resume_restarts_interrupted_gesture": true,
+      "explicit_record_start_save_and_load": true,
+      "record_swipe_replay": true,
+      "foreground_scene_transition_supported": true,
+      "background_pauses": true,
+      "discard_keeps_saved_plan": true,
+      "network_popup_removed_without_retry": true,
+      "long_hold_slider_preserved": true
+    },
+    "label_lifecycle": {
+      "label_enable_runs_only_after_configuration": true,
+      "fixed_nonzero_bounds": true,
+      "no_shrink_mode": true,
+      "canvas_text_path": true,
+      "box_labels_configured_before_activation": true,
+      "ascii_vietnamese_url_and_zero_labels": 7,
+      "input_labels_configured": true,
+      "activation_count": 11
+    },
+    "box_controls": {
+      "descriptionsFromActualConfig": true,
+      "perBoxCount": true,
+      "tenBoxTotal": true,
+      "openTen": true,
+      "originalSelectionControls": true,
+      "configuredCanvasLabels": true,
+      "clampToOwned": true,
+      "explicitCancel": true,
+      "previewToSelection": true,
+      "exchangePreview": true,
+      "rewardClose": true
+    },
+    "patch_file": "Client-ENG-SPSSS-IOS-BoxRestore.zip",
+    "patch_sha256": "9cbdf93d3efe7743f591eaf5f623203b2b65dd12104afb1caf48b1ea6f67d6aa",
+    "patch_bytes": 9729848
+  },
+  "ubuntu_runtime_fix": [
+    "DB2_NODE absolute path",
+    "PATH-independent /opt/db2/node/bin/node fallback",
+    "reject inaccessible home/nvm runtimes in systemd installer",
+    "health reports combat.available and degraded state when missing"
+  ],
+  "source_rewards_changed": false,
+  "gold_box_343_currency_limit_fixed": true,
+  "ubuntu_vps_deployed_by_cloud": false,
+  "native_iphone_verified": false,
+  "native_each_map_verified": false
+}

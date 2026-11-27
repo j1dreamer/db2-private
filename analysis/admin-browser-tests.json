@@ -35,7 +35,10 @@
     "sp-editor-real-images-role-ticket-migration",
     "sp-custom-rewards-topup-milestones",
     "sp-sequential-timeline",
-    "sp-mobile-editor"
+    "sp-mobile-editor",
+    "hero-box-original-choices-and-x60",
+    "box-reward-item-detail-navigation",
+    "box-preview-mobile"
   ],
   "errors": [],
   "dataset": "isolated temporary SQLite, never the running user database"

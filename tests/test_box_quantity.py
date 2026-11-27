@@ -33,6 +33,12 @@ class BoxQuantityTests(unittest.TestCase):
    before=copy.deepcopy(self.store.player(1))
    with self.assertRaises(ValueError):self.open(idx,count,choice)
    self.assertEqual(self.store.player(1)['bag'],before['bag'])
+ def test_gold_box_source_reward_above_one_million_is_not_rejected(self):
+  from unittest.mock import patch
+  idx=self.give(343,1)
+  with patch('server.item_actions.choose',side_effect=lambda rows:next(r for r in rows if r['count']==9000000)):
+   r=handle(self.store,1,'logic.playerHandler.useItem',{'bagIndex':idx,'itemCount':1})
+  self.assertEqual(r['_temp']['entityCountMap'],{'101':9000000})
  def test_shipped_role_box_trailing_comma_matches_client_parser(self):
   self.assertTrue(entity(724)['extra']['dropListDesc'].endswith(','));idx=self.give(724,1);self.assertTrue(self.open(idx,1)['_temp']['entityCountMap']);self.assertTrue(description('105504_star_3x1, '))
  def test_different_configurable_boxes_do_not_merge_rewards(self):
