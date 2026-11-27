@@ -83,5 +83,10 @@
     "id": "ios-startup-plugin-removal",
     "source": "private-client-repair",
     "description": "Log thiết bị xác nhận CombinedPlugin ghi sjcode disabled/not-found; kill now rồi app tự thoát. LaunchFix bỏ hai native load commands và hai file plugin, xác nhận không có symbol import dùng chúng. Mã lệnh gameplay, framework còn lại và JSC không đổi; cần ký lại, chưa xác minh mở trên iPhone."
+  },
+  {
+    "id": "ios-login-recovery",
+    "source": "private-client-repair",
+    "description": "Sửa khởi động iOS để form tài khoản vẫn mở khi chưa cấu hình; probe cấu hình server tối đa 8 giây rồi trả về ô sửa IP khi lỗi/sai dịch vụ; bỏ nút nguồn và luật; fallback Arial cho chữ Việt thiếu glyph. Tài liệu nguồn giữ trên web quản trị. Đây là bản vá dự án; cần kiểm UI native iPhone."
   }
 ]

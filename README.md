@@ -7,7 +7,7 @@ Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS /
 **[Download-Clients.zip](Download-Clients.zip)** → giải nén → mở **Download-Clients.bat** (cần Python 3.10+). Công cụ tự tải, tạo và kiểm SHA-256 hai file nguyên vẹn:
 
 - `DB2-ENG-SPSSS-BoxInfo.apk`: đã ký phát triển, cài đè cùng package/chứng thư, có Speed 1–10×.
-- `DB2-ENG-SPSSS-LaunchFix-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
+- `DB2-ENG-SPSSS-LoginFix-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
 
 **Chỉ tải IPA:** [Download-IPA.zip](Download-IPA.zip) → giải nén → mở `Download-IPA.bat` trên Windows; trên Mac chạy `bash Download-IPA.command`. Xem [ký/cài IPA và nhập IP Tailscale](IPA-INSTALL.md). BAT tải file, không tự ký/cài.
 
@@ -49,6 +49,10 @@ Web → Sự kiện → Tạo/Sửa → chọn **Điều kiện** và **Mốc nh
 ## VPS Ubuntu
 
 Ubuntu 24.04 LTS **1 vCPU / 2 GB RAM** dùng được để thử nghiệm hoặc nhóm nhỏ; chưa có benchmark để cam kết số người chơi đồng thời. Cần Python 3.10+, Node.js LTS để chạy engine trận, ổ đĩa cho source/dữ liệu/backup và Tailscale nếu chơi qua mạng riêng. Client APK/IPA không cần nằm trên VPS. Xem [UBUNTU.md](UBUNTU.md) và mẫu systemd trong `deploy/`.
+
+## Đăng nhập iOS · LoginFix
+
+IPA mới khôi phục form tài khoản/mật khẩu khi chưa đặt IP, bỏ nút “Nguồn và luật”, thêm fallback font hệ thống cho chữ Việt. Kiểm tra kết nối lúc mở chỉ chờ tối đa 8 giây, sau lỗi mạng/timeout/sai dịch vụ sẽ về màn đăng nhập và mở lại ô sửa server. Không thay đổi backend cho bản sửa này. Xem [analysis/ios-login-fix-validation.json](analysis/ios-login-fix-validation.json). Bản native/render iPhone cần người dùng xác nhận.
 
 ## Sửa khởi động iOS · LaunchFix
 

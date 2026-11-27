@@ -1,14 +1,22 @@
-# IPA LaunchFix mới nhất · server ENG v6
+# IPA LoginFix mới nhất · server ENG v6
 
-Bộ tải tạo **DB2-ENG-SPSSS-LaunchFix-unsigned.ipa**, 510.859.616 byte (~487 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
+Bộ tải tạo **DB2-ENG-SPSSS-LoginFix-unsigned.ipa**, 510.859.640 byte (~487 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
 
 ## Sửa lỗi mở đen rồi tự thoát
 
 Log thiết bị cho thấy iOS chấp nhận chữ ký, sau đó `CombinedPlugin.dylib` ghi `[sjcode] disabled/not-found; kill now` và app thoát với trạng thái `voluntary`. Bản trước giữ nguyên native nên cũng giữ hai plugin khởi động này. LaunchFix bỏ hai mục nạp plugin ở cuối bảng thư viện và hai file `CombinedPlugin.dylib`, `Frameworks/AppRuntime/ATHelper.dylib`; đã kiểm không có symbol import phụ thuộc chúng. Không đổi mã lệnh gameplay hoặc JSC; IP server vẫn nhập trong game. Bản này cần ký lại hợp lệ, chưa được thử mở native trên iPhone.
 
+## Tài khoản / mất kết nối / font — LoginFix
+
+- Form tài khoản/mật khẩu gốc hoạt động cả khi chưa cấu hình server: đóng hộp “Server riêng” để thấy form. Bản trước iOS bỏ qua nhầm bước mở form nếu địa chỉ mặc định chưa được đặt.
+- Thử IP không tới được: chờ tối đa 8 giây rồi quay về màn đăng nhập, tự mở lại “Server riêng” với lỗi. Mạng lỗi/HTTP lỗi/địa chỉ trả HTML hoặc JSON không phải cấu hình DB2 đều trả về để sửa IP, không đứng mãi ở màn tải.
+- Bỏ nút “Nguồn và luật” khỏi IPA; thông tin nguồn vẫn nằm trong tài liệu/web quản trị.
+- Chữ Việt dùng font hệ thống Arial dự phòng khi font đóng gói thiếu dấu; không sửa font size hoặc ảnh chứa chữ. Cần kiểm hình ảnh thực tế trên iPhone sau cài.
+- Vẫn giữ sửa plugin tự thoát của LaunchFix. Ký/cài file **LoginFix** mới bằng Sideloadly; không chọn lại IPA cũ.
+
 ## Tải
 
-**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT. **Chọn file có chữ `LaunchFix` để ký, không chọn lại BoxInfo cũ.** Nếu đã có file BoxInfo gốc chưa ký, có thể tránh tải lại 488 MB bằng lệnh trong CMD tại thư mục bộ tải:
+**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT. **Chọn file có chữ `LoginFix` để ký, không chọn lại BoxInfo cũ.** Nếu đã có file BoxInfo gốc chưa ký, có thể tránh tải lại 488 MB bằng lệnh trong CMD tại thư mục bộ tải:
 
 ```bat
 Download-IPA.bat --ipa-source "C:\duong-dan\DB2-ENG-SPSSS-BoxInfo-unsigned.ipa"
@@ -27,7 +35,7 @@ Có thể dùng `python3 Download-Clients.py --only ipa`. Không cần file game
 SHA-256 IPA **trước khi ký**:
 
 ```text
-4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732
+1cd99a563104b3ca68e91aaf20cb22f15cae59ff7b7c02f15581a9319d0c9170
 ```
 
 ## Ký và cài qua máy tính

@@ -1,0 +1,103 @@
+{
+  "build": "ios-loginfix",
+  "root_cause": "iOS initAssetsManager returned for the unconfigured URL before hotUpdateSuccess could call sdkApi.login; configured startup had unbounded-looking network waits and timeout without useful recovery.",
+  "build_details": {
+    "ipa_sha256": "1cd99a563104b3ca68e91aaf20cb22f15cae59ff7b7c02f15581a9319d0c9170",
+    "ipa_bytes": 510859640,
+    "native_launch_fix": {
+      "removed_dependencies": [
+        "@executable_path/CombinedPlugin.dylib",
+        "@executable_path/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "removed_ordinals": [
+        50,
+        51
+      ],
+      "imported_plugin_symbols": false,
+      "bytes_after_original_load_commands_unchanged": true,
+      "native_instructions_patched": false,
+      "requires_resigning": true,
+      "source_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+      "ipa_sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732",
+      "ipa_bytes": 510859616,
+      "native_executable_sha256": "bd791a92795afc1c27bf20c7eed378249ed194e666e0419b2d34996ebf69d715",
+      "removed_files": [
+        "Payload/dragonball.app/CombinedPlugin.dylib",
+        "Payload/dragonball.app/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "unchanged_entries": 17260,
+      "jsc_and_settings_unchanged": true,
+      "native_device_tested": false
+    },
+    "only_additional_modified_entry": "Payload/dragonball.app/assets/main/index.jsc",
+    "source_button_removed": true,
+    "connection_timeout_ms": 8000,
+    "font_fallback": "Arial/system for Vietnamese labels",
+    "requires_resigning": true,
+    "native_device_tested": false,
+    "actual_packaged_login_runtime": {
+      "unconfigured_opens_account_form": true,
+      "timeout_returns_to_login": true,
+      "timeout_ms": 8000,
+      "duplicate_callbacks_ignored": true,
+      "wrong_service_rejected": true,
+      "successful_config_continues": true,
+      "original_username_password_register_login_work": true
+    },
+    "patch_file": "Client-ENG-SPSSS-IOS-LoginFix.zip",
+    "patch_sha256": "bd43d23016f247e417daf9aa4812ebe26e85b8c910c400432ca2a344d5b6ab28",
+    "patch_bytes": 9723964
+  },
+  "download_proof": {
+    "passed": true,
+    "public_patch_downloaded_and_sha256_verified": true,
+    "full_ipa_sha256_verified": true,
+    "zip_crc_passed": true,
+    "source_button_absent": true,
+    "packaged_runtime": {
+      "unconfigured_opens_account_form": true,
+      "timeout_returns_to_login": true,
+      "timeout_ms": 8000,
+      "duplicate_callbacks_ignored": true,
+      "wrong_service_rejected": true,
+      "successful_config_continues": true,
+      "original_username_password_register_login_work": true
+    },
+    "repeat_run_uses_verified_output": true,
+    "native_device_tested": false
+  },
+  "tests": {
+    "passed": true,
+    "count": 20,
+    "seconds": 2.222,
+    "suites": [
+      "tests.test_login_fix",
+      "tests.test_client_runtime",
+      "tests.test_ios_launch_fix",
+      "tests.test_ipa_inspection",
+      "tests.test_ipa_download",
+      "tests.test_server_endpoint"
+    ]
+  },
+  "original_scene_asset_contains": [
+    "userNameEditbox",
+    "passwordEditbox"
+  ],
+  "network_cases": [
+    "unconfigured URL",
+    "8-second timeout",
+    "network error",
+    "HTTP error",
+    "HTML or incompatible service",
+    "valid DB2 config",
+    "duplicate callbacks ignored"
+  ],
+  "source_rules_button_removed_from_delivered_ipa": true,
+  "vietnamese_font_fallback_checked_for_recursion": true,
+  "native_font_rendering_verified": false,
+  "native_loginfix_iphone_play_verified": false,
+  "prior_launchfix_user_feedback": "App opens after native plugin fix; user reports missing account fields.",
+  "existing_server_and_apk_unchanged": true,
+  "client_speed_box_gm_and_tailscale_settings_retained": true,
+  "recovered_eng_login_panel_preserved": true
+}
