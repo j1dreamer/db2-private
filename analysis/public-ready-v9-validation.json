@@ -1,0 +1,204 @@
+{
+  "build": "eng-sp-sss-public-game-v9",
+  "full_suite": {
+    "tests": 314,
+    "passed": true,
+    "seconds": 343.485
+  },
+  "delivery_tests": {
+    "tests": 5,
+    "passed": true
+  },
+  "browser_flows": 38,
+  "proxy": {
+    "passed": true,
+    "caddy_version": "v2.11.9",
+    "checks": [
+      [
+        "/user/clientConfig",
+        200
+      ],
+      [
+        "/admin",
+        401
+      ],
+      [
+        "/admin/overview",
+        401
+      ],
+      [
+        "/admin/overview",
+        401
+      ],
+      [
+        "/admin/overview",
+        200
+      ],
+      [
+        "/assets/item-icons.json",
+        401
+      ],
+      [
+        "/admin.js",
+        401
+      ],
+      [
+        "/%61dmin/api",
+        401
+      ],
+      [
+        "/user/../admin/api",
+        401
+      ],
+      [
+        "/admin",
+        200
+      ],
+      [
+        "public_game_gate_advertises_frontend_host_and_port",
+        200
+      ],
+      [
+        "websocket_root_without_admin_password",
+        101
+      ]
+    ],
+    "domain_configured": "db2.teck.io.vn",
+    "transport": "loopback HTTP only for integration test; production config enables automatic HTTPS",
+    "live_dns_or_acme_verified": false,
+    "user_vps_deployed": false
+  },
+  "ipa": {
+    "ipa_sha256": "97426f5069319c083042706faacf5aac46031a613cf500a1d8819ece2438200d",
+    "ipa_bytes": 510866000,
+    "native_launch_fix": {
+      "removed_dependencies": [
+        "@executable_path/CombinedPlugin.dylib",
+        "@executable_path/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "removed_ordinals": [
+        50,
+        51
+      ],
+      "imported_plugin_symbols": false,
+      "bytes_after_original_load_commands_unchanged": true,
+      "native_instructions_patched": false,
+      "requires_resigning": true,
+      "source_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+      "ipa_sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732",
+      "ipa_bytes": 510859616,
+      "native_executable_sha256": "bd791a92795afc1c27bf20c7eed378249ed194e666e0419b2d34996ebf69d715",
+      "removed_files": [
+        "Payload/dragonball.app/CombinedPlugin.dylib",
+        "Payload/dragonball.app/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "unchanged_entries": 17260,
+      "jsc_and_settings_unchanged": true,
+      "native_device_tested": false
+    },
+    "only_additional_modified_entry": "Payload/dragonball.app/assets/main/index.jsc",
+    "source_button_removed": true,
+    "connection_timeout_ms": 8000,
+    "font_fallback": "Arial/system for Vietnamese labels",
+    "requires_resigning": true,
+    "native_device_tested": false,
+    "canonical_data_verified": {
+      "baseline": "eng-sp-sss",
+      "canonical_sha256": "c4e0fe0e36a548b872c9d47c34c8fdc02145e7abc56476ef46e3277dcf23eb69",
+      "overridden_tables": [
+        "artifact",
+        "buff",
+        "entity",
+        "entityExt",
+        "fightSkill",
+        "role",
+        "task",
+        "vip"
+      ],
+      "soul_maps": [
+        "SOUL_TYPE_ATTR_ITEM_MAP",
+        "SOUL_TYPE_SP_ATTR_ITEM_MAP"
+      ],
+      "overlay_sha256": "a8500ee1be13f74ef7ee806c7c84e5ffa888db832caccd816c16d089e7f98f2d",
+      "native_modified": false,
+      "startup_config_paths": [
+        "ROLE.CONSTS.SOUL_TYPE_ATTR_ITEM_MAP",
+        "ROLE.CONSTS.SOUL_TYPE_SP_ATTR_ITEM_MAP"
+      ],
+      "build_ext_flags": [
+        "isNoRemoveHideData",
+        "isShowCenterAndroid",
+        "isShowCenterIOS",
+        "isShowTimeLabel",
+        "moneyTicketId"
+      ],
+      "provenance": "tables/canonical-policy.json"
+    },
+    "login": {
+      "unconfigured_opens_account_form": true,
+      "timeout_returns_to_login": true,
+      "network_error_returns_to_login": true,
+      "timeout_ms": 8000,
+      "duplicate_callbacks_ignored": true,
+      "wrong_service_rejected": true,
+      "successful_config_continues": true,
+      "original_username_password_register_login_work": true
+    },
+    "controls": {
+      "named_plan_library": true,
+      "separate_saved_and_draft_data": true,
+      "draggable_numbered_points": true,
+      "per_point_delay_and_hold": true,
+      "press_release_use_distinct_times": true,
+      "pause_resume_restarts_interrupted_gesture": true,
+      "explicit_record_start_save_and_load": true,
+      "record_swipe_replay": true,
+      "foreground_scene_transition_supported": true,
+      "background_pauses": true,
+      "discard_keeps_saved_plan": true,
+      "network_popup_removed_without_retry": true,
+      "long_hold_slider_preserved": true
+    },
+    "time_peak_hidden_by_default": true,
+    "patch_file": "Client-ENG-SPSSS-IOS-PublicReady.zip",
+    "patch_sha256": "83713958704e009a72680455360a2edc2aab11ef1c2db47d66e542947126de0d",
+    "patch_bytes": 9729867
+  },
+  "apk": {
+    "apk_sha256": "88e3f90d8bc80c7271b36c9d560a5cc62575ee9858942c30d5722c703a480506",
+    "apk_bytes": 525071041,
+    "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953",
+    "same_development_signing_identity": true,
+    "resource_layout": {
+      "resources_compression": "stored",
+      "resources_offset": 44,
+      "aligned_4_bytes": true,
+      "size": 696528
+    },
+    "zip_crc_passed": true,
+    "only_game_script_modified": true,
+    "time_peak_hidden_by_default": true,
+    "native_device_tested": false,
+    "patch_file": "Client-ENG-SPSSS-Android-PublicReady.zip",
+    "patch_sha256": "cfdb54f1785665862c788735424b1ed438f6d06a8456731057b3e6745ba99e5c",
+    "patch_bytes": 5296527
+  },
+  "domain": "db2.teck.io.vn",
+  "dns_A_observed": [
+    "103.232.122.74"
+  ],
+  "admin_layers": [
+    "HTTPS basic authentication with bcrypt hash",
+    "application admin token in separate header",
+    "loopback-only backend and explicit public game endpoint routing"
+  ],
+  "no_tls_verification_bypass": true,
+  "android_CA_bundle_checked": {
+    "certificates": 141,
+    "ISRG_Root_X1": true,
+    "ISRG_Root_X2": true
+  },
+  "user_vps_ssh_connected": false,
+  "public_acme_verified": false,
+  "native_clients_verified": false
+}

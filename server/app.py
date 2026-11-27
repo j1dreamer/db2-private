@@ -15,12 +15,13 @@ def advertised_endpoint(authority,public_host,game_port,forwarded_proto='http'):
         raise ValueError('Invalid connection Host')
     return parsed.hostname,parsed.port or (443 if forwarded_proto=='https'else game_port)
 
-def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None):
+def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None,admin_networks=None):
     data_dir=Path(data_dir);data_dir.mkdir(parents=True,exist_ok=True)
     store=Store(data_dir/'game.sqlite3');token=admin_token or secrets.token_urlsafe(32)
     from .profile import SCHEMA_VERSION
     route_coverage=json.loads((ROOT/'analysis/route-coverage.json').read_text())
-    app=web.Application(client_max_size=256*1024)
+    from .access_control import middleware
+    app=web.Application(client_max_size=256*1024,middlewares=[middleware(admin_networks)])
     app[web.AppKey('store',Store)]=store
     live={};mail_seen={};selected_players={};notification_lock=asyncio.Lock();notification_task=None
     war_maintenance_task=None
@@ -74,8 +75,8 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     app.on_startup.append(start_war_maintenance)
     async def health(req):
         from .node_runtime import runtime_status
-        combat=runtime_status()
-        return web.json_response({'combat':combat,'status':'ok'if combat['available']else'degraded','stage':'protocol-development','playable_verified':False,'build':'eng-sp-sss-combat-box-v8','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
+        combat={k:v for k,v in runtime_status().items()if k!='executable'}
+        return web.json_response({'combat':combat,'status':'ok'if combat['available']else'degraded','stage':'protocol-development','playable_verified':False,'build':'eng-sp-sss-public-game-v9','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
     async def config(req):return web.json_response({'runScriptInfo':{'script':''},'inReviewPackageInfos':[]})
     async def account(req):
         fields=await req.post();name=fields.get('name','');password=fields.get('password','')
@@ -98,7 +99,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     control=Admin(store,token,lambda:set(selected_players.values()),start_notifications)
     async def admin(req):return await(control.get(req)if req.method=='GET'else control.post(req))
     async def ws_handler(req):
-        ws=web.WebSocketResponse(max_msg_size=256*1024);await ws.prepare(req)
+        ws=web.WebSocketResponse(max_msg_size=256*1024,heartbeat=30,receive_timeout=90);await ws.prepare(req)
         uid=None;handshake=False;acked=False;recent={}
         async for msg in ws:
             if msg.type!=WSMsgType.BINARY:continue

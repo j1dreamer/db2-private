@@ -45,7 +45,10 @@ def stamp(store):
 class Admin:
  def __init__(self,store,token,online_ids,flush):self.store=store;self.token=token;self.online_ids=online_ids;self.flush=flush;self.started=time.time()
  def auth(self,req):
-  if not hmac.compare_digest(req.headers.get('Authorization',''),'Bearer '+self.token):raise web.HTTPUnauthorized(text='Token quản trị không đúng hoặc phiên đã kết thúc')
+  supplied=req.headers.get('X-DB2-Admin-Token')
+  if supplied is None:
+   auth=req.headers.get('Authorization','');supplied=auth[7:]if auth.startswith('Bearer ')else''
+  if not hmac.compare_digest(supplied.encode(),self.token.encode()):raise web.HTTPUnauthorized(text='Token quản trị không đúng hoặc phiên đã kết thúc')
  def snapshots(self):
   ids=self.online_ids()
   return {r['id']:json.loads(r['data'])for r in self.store.db.execute('SELECT id,data FROM players')if r['id']in ids}

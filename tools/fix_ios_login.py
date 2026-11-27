@@ -7,6 +7,7 @@ from .client_patches import patch_private_startup,patch_private_recovery
 from .fix_ios_launch import repair
 from .apply_apk_fix import sha
 from .client_data import overlay
+from .client_refresh import refresh
 ROOT=Path(__file__).parents[1]
 BASE_SHA='c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b'
 
@@ -20,15 +21,7 @@ def rebuild(source,output):
    name='Payload/dragonball.app/assets/main/index.jsc';old=gunzip(decrypt(zin.read(name))).decode()
    expected_overlay,data_report=overlay(source)
    if expected_overlay.strip()not in old:raise ValueError('IPA data overlay differs from the current ENG server tables')
-   begin=old.index('// Server selector displayed');end=old.index('// Private client: persistent engine speed;',begin)
-   settings=(ROOT/'tools/private_ui.js').read_text()+'\n'+(ROOT/'tools/private_connection.js').read_text()+'\n'+(ROOT/'tools/private_font.js').read_text()+'\n'+(ROOT/'tools/private_settings.js').read_text()+'\n'
-   text=old[:begin]+settings+old[end:];text=patch_private_recovery(patch_private_startup(text))
-   runtime_begin=text.index('// Private client: persistent engine speed;');runtime_end=text.index('// Authored private-server GM UI.',runtime_begin)if '// Authored private-server GM UI.'in text[runtime_begin:]else -1
-   if runtime_end<0:raise ValueError('Unexpected private runtime boundary')
-   text=text[:runtime_begin]+(ROOT/'tools/private_runtime.js').read_text()+'\n'+(ROOT/'tools/private_auto.js').read_text()+'\n'+text[runtime_end:]
-   box_begin=text.index('// Authored quantity/close controls around the original ENG reward panel and RPCs.')
-   box_end=text.index('// Private control panel: the shipped archive has no Time Peak scene module.',box_begin)
-   text=text[:box_begin]+(ROOT/'tools/private_box.js').read_text()+'\n'+text[box_end:]
+   text=refresh(old)
    text=patch(text,'initAssetsManager_: function() {\nif (/\\.invalid(?::|\\/|$)/.test(l.url)) return;','initAssetsManager_: function() {')
    script=encrypt(gzip.compress(text.encode(),mtime=0))
    with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED,compresslevel=6)as zout:

@@ -24,3 +24,23 @@ class IpaDownloadTests(unittest.TestCase):
    with zipfile.ZipFile(p,'w')as z:
     z.writestr('plan.json',json.dumps({'old_sha256':'old','new_sha256':'new','old_size':3,'new_size':5,'operations':[{'copy':0,'size':5}]}));z.writestr('literals.bin',b'')
    with self.assertRaisesRegex(ValueError,'range'):d.load_patch(p,'old','new')
+
+ def test_signed_boxinfo_apk_patch_and_cli_source_argument(self):
+  import sys
+  with tempfile.TemporaryDirectory()as td:
+   root=Path(td);source=root/'old.apk';source.write_bytes(b'BOXINFO-INPUT');expected=b'BOXINFO-V9';archive=root/'android-patch.zip'
+   plan={'old_size':13,'new_size':10,'old_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'new_sha256':hashlib.sha256(expected).hexdigest(),'operations':[{'copy':0,'size':8},{'literal':0,'size':2}]}
+   with zipfile.ZipFile(archive,'w')as z:z.writestr('plan.json',json.dumps(plan));z.writestr('literals.bin',b'V9')
+   with patch.multiple(d,APK_BOXINFO_SIZE=13,APK_SIZE=10,APK_BOXINFO_SHA=plan['old_sha256'],APK_SHA=plan['new_sha256']),patch.object(d,'fetch',return_value=archive),patch.object(d,'parts')as parts:
+    target=d.android(root,root/'cache',1,source);self.assertEqual(target.read_bytes(),expected);self.assertFalse(parts.called)
+   with patch.object(sys,'argv',['Download-Clients.py','--only','apk','--apk-source',str(source),'--output',str(root)]),patch.object(d,'android',return_value=target)as android:
+    d.main();self.assertEqual(android.call_args.args[-1],source)
+ def test_nested_virtual_apk_sources_read_across_copy_literal_boundaries(self):
+  class Source:
+   def read(self,offset,n):return b'abcdefgh'[offset:offset+n]
+  a=d.FixedSource(Source(),{'operations':[{'copy':0,'size':3},{'literal':0,'size':2},{'copy':5,'size':3}]},b'XY')
+  b=d.FixedSource(a,{'operations':[{'copy':1,'size':5},{'literal':0,'size':1}]},b'!')
+  c=d.FixedSource(b,{'operations':[{'literal':0,'size':1},{'copy':0,'size':6}]},b'@')
+  for source,expected in [(a,b'abcXYfgh'),(b,b'bcXYf!'),(c,b'@bcXYf!')]:
+   for start in range(len(expected)+1):
+    for n in range(len(expected)-start+1):self.assertEqual(source.read(start,n),expected[start:start+n])

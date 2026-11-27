@@ -121,3 +121,7 @@ Thư viện kịch bản có tên, điểm kéo được và thời gian chờ/g
 ## Combat và rương IPA · v8
 
 [Sửa runtime Ubuntu và rương](COMBAT-BOX-FIX.md): Node qua đường dẫn tuyệt đối, health báo readiness, IPA BoxRestore dùng nút chọn/số lượng gốc và font Canvas cho chữ Việt. Web hiển thị nội dung từng rương với ảnh/ID/loại/số lượng.
+
+## Public HTTPS · v9
+
+[Game public và web quản trị](PUBLIC-HTTPS.md): cấu hình `db2.teck.io.vn`, game HTTPS/WSS không cần VPN; Caddy password + token ứng dụng cho quản trị, backend chỉ loopback. PublicReady ẩn nút Time Peak thử nghiệm mặc định trên APK/IPA. Triển khai/chứng chỉ thật trên VPS còn chờ chạy bộ cài.

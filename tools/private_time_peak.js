@@ -1,5 +1,6 @@
 // Private control panel: the shipped archive has no Time Peak scene module.
 (function () {
+    function enabled(){try{return cc.sys.localStorage.getItem('db2.private.timePeak.enabled')==='1';}catch(e){return false;}}
     var mapIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130], selectedMap = mapIds[0], panel = null, last = null;
     function req(name, args, callback) {
         window.__require('socket').request('logic.timePeakHandler.' + name, args || {}, function (data) {
@@ -18,6 +19,7 @@
         node.on(cc.Node.EventType.TOUCH_END, run);return node;
     }
     function refresh() {
+        if(!enabled()){remove();return;}
         var s = player().timePeak;
         if (s.bmapId) req('openMap', { bmapId: s.bmapId }, draw);else draw();
     }
@@ -66,6 +68,10 @@
     }
     var api = window.DB2PrivateTimePeak = {
         mount: function () {
+            var canvas=cc.Canvas.instance&&cc.Canvas.instance.node;
+            var old=canvas&&canvas.getChildByName('PrivateTimePeakButton');
+            var scene=cc.director.getScene&&cc.director.getScene();
+            if(!enabled()||!scene||!/home/i.test(scene.name||'')){if(old)old.destroy();remove();return;}
             var p;try { p=player(); } catch(ignored) { return; }
             if (!p || p.level < 50) return;
             var canvas=cc.Canvas.instance && cc.Canvas.instance.node;if(!canvas || canvas.getChildByName('PrivateTimePeakButton')) return;

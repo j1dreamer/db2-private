@@ -113,5 +113,10 @@
     "id": "boxrestore-v8",
     "source": "private-client-implementation",
     "description": "Khôi phục nút chọn/số lượng/xác nhận rương ENG; nhãn số lượng và font Canvas do dự án thêm. Không đổi bảng quà SP/SS/SSS; web đọc nội dung từ cấu hình thực. Rương #351 cần config instance."
+  },
+  {
+    "id": "public-ready-v9",
+    "source": "private-client-implementation",
+    "description": "Nút Time Peak thử nghiệm do dự án thêm, không có scene native ENG tương ứng; ẩn mặc định trên PublicReady và không gắn vào cảnh chiến đấu. Bảo vệ HTTPS/proxy/web là triển khai riêng, không đổi luật trận hoặc bảng vật phẩm."
   }
 ]

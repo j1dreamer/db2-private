@@ -1,0 +1,58 @@
+{
+  "passed": true,
+  "caddy_version": "v2.11.9",
+  "checks": [
+    [
+      "/user/clientConfig",
+      200
+    ],
+    [
+      "/admin",
+      401
+    ],
+    [
+      "/admin/overview",
+      401
+    ],
+    [
+      "/admin/overview",
+      401
+    ],
+    [
+      "/admin/overview",
+      200
+    ],
+    [
+      "/assets/item-icons.json",
+      401
+    ],
+    [
+      "/admin.js",
+      401
+    ],
+    [
+      "/%61dmin/api",
+      401
+    ],
+    [
+      "/user/../admin/api",
+      401
+    ],
+    [
+      "/admin",
+      200
+    ],
+    [
+      "public_game_gate_advertises_frontend_host_and_port",
+      200
+    ],
+    [
+      "websocket_root_without_admin_password",
+      101
+    ]
+  ],
+  "domain_configured": "db2.teck.io.vn",
+  "transport": "loopback HTTP only for integration test; production config enables automatic HTTPS",
+  "live_dns_or_acme_verified": false,
+  "user_vps_deployed": false
+}
