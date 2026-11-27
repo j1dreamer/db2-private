@@ -1,42 +1,25 @@
-// Server selector displayed on the original Cocos login scene.
+// Compact server editor; login fields remain available when this card is closed.
 window.DB2PrivateSettings = function () {
-    var canvas = cc.Canvas.instance && cc.Canvas.instance.node;
-    if (!canvas || canvas.getChildByName('DB2PrivateServerButton')) return;
-    function text(parent, value, size, y) {
-        var node = new cc.Node(); node.parent = parent; node.y = y || 0;
-        var label = node.addComponent(cc.Label); label.string = value;
-        label.fontFamily = 'Arial'; label.useSystemFont = true; label.fontSize = size; label.lineHeight = size + 5; return label;
-    }
-    function button(parent, value, width, x, y, cb) {
-        var node = new cc.Node(); node.parent = parent; node.setContentSize(width, 50);
-        node.setPosition(x,y);var g=node.addComponent(cc.Graphics);
-        g.fillColor=cc.color(245,174,68);g.roundRect(-width/2,-25,width,50,8);g.fill();
-        text(node,value,20).node.color=cc.color(20,25,35);
-        node.on(cc.Node.EventType.TOUCH_END,cb);return node;
-    }
-    var trigger=button(canvas,'Server riêng',160,-canvas.width/2+100,-canvas.height/2+40,function(){
-        if(canvas.getChildByName('DB2PrivateServerPanel'))return;
-        var panel=new cc.Node('DB2PrivateServerPanel');panel.parent=canvas;panel.zIndex=32000;
-        panel.setContentSize(canvas.width,canvas.height);panel.addComponent(cc.BlockInputEvents);
-        var g=panel.addComponent(cc.Graphics);g.fillColor=cc.color(10,16,28,245);
-        g.rect(-panel.width/2,-panel.height/2,panel.width,panel.height);g.fill();
-        text(panel,'Kết nối server riêng',29,130);
-        text(panel,'Nhập http://IP-TAILSCALE:20003 hoặc HTTPS',20,85);
-        var field=new cc.Node();field.parent=panel;field.setContentSize(580,60);
-        var bg=field.addComponent(cc.Graphics);bg.fillColor=cc.color(35,46,65);bg.roundRect(-290,-30,580,60,8);bg.fill();
-        var edit=field.addComponent(cc.EditBox);edit.inputMode=cc.EditBox.InputMode.ANY;
-        edit.maxLength=160;edit.textLabel=text(field,'',23);edit.placeholderLabel=text(field,'http://127.0.0.1:20003',23);
-        edit.string=cc.sys.localStorage.getItem('db2.private.server')||window.DB2_PRIVATE_DEFAULT_SERVER;
-        var hint=text(panel,window.DB2_PRIVATE_CONNECTION_ERROR || 'Lưu sẽ khởi động lại game.',18,-60);
-        hint.node.setContentSize(580,65); hint.overflow=cc.Label.Overflow.SHRINK; hint.enableWrapText=true; hint.fontFamily='Arial'; hint.useSystemFont=true;
-        button(panel,'Lưu và khởi động lại',270,-100,-125,function(){
+    var U=window.DB2PrivateUI,canvas=U.canvas();if(!canvas)return;
+    window.DB2PrivateOpenServer=function(message) {
+        var m=U.modal('DB2PrivateServerPanel','Server riêng',520,276);if(!m)return;
+        var box=m.box,w=box.width-40;
+        U.text(box,'Địa chỉ server · Tailscale / LAN',16,0,64,w,30);
+        var saved=cc.sys.localStorage.getItem('db2.private.server')||window.DB2_PRIVATE_DEFAULT_SERVER;
+        var edit=U.edit(box,/\.invalid(?::|\/|$)/.test(saved)?'':saved,w,0,23);edit.placeholderLabel.string='http://100.x.x.x:20003';edit.placeholder='http://100.x.x.x:20003';
+        var hint=U.text(box,message||window.DB2_PRIVATE_CONNECTION_ERROR||'Nhập đầy đủ http://IP:20003',16,0,-32,w,50);
+        U.button(box,'Kết nối',160,-86,-99,function(){
             var value=edit.string.trim().replace(/\/$/,'');
-            if(!/^https?:\/\/[^\s/:?#]+(?::\d{1,5})?$/.test(value)) {hint.string='Địa chỉ cần có dạng http(s)://HOST:PORT';return;}
+            var match=/^https?:\/\/[^\s/:?#]+(?::(\d{1,5}))?$/.exec(value);
+            if(!match||match[1]&&(+match[1]<1||+match[1]>65535)){hint.string='Địa chỉ cần dạng http://IP:20003';return;}
             cc.sys.localStorage.setItem('db2.private.server',value);cc.game.restart();
         });
-        button(panel,'Đóng',130,150,-125,function(){panel.destroy();});
-    });
-    trigger.name='DB2PrivateServerButton';trigger.zIndex=31000;
+        U.button(box,'Đóng',136,88,-99,function(){window.DB2_PRIVATE_CONNECTION_ERROR=null;U.destroy(m.shade);},true);
+    };
+    if(!canvas.getChildByName('DB2PrivateServerButton')){
+        var trigger=U.button(canvas,'Server',112,-canvas.width/2+74,-canvas.height/2+35,function(){window.DB2PrivateOpenServer();});
+        trigger.name='DB2PrivateServerButton';trigger.zIndex=31000;
+    }
     var endpoint=cc.sys.localStorage.getItem('db2.private.server')||window.DB2_PRIVATE_DEFAULT_SERVER;
-    if (window.DB2_PRIVATE_CONNECTION_ERROR || /\.invalid(?::|\/|$)/.test(endpoint)) trigger.emit(cc.Node.EventType.TOUCH_END);
+    if(window.DB2_PRIVATE_CONNECTION_ERROR||/\.invalid(?::|\/|$)/.test(endpoint))window.DB2PrivateOpenServer();
 };

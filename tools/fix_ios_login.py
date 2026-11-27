@@ -3,7 +3,7 @@ import argparse,gzip,hashlib,json,tempfile,zipfile
 from pathlib import Path
 from .decode_jsc import decrypt,gunzip
 from .build_client import encrypt,patch
-from .client_patches import patch_private_startup
+from .client_patches import patch_private_startup,patch_private_recovery
 from .fix_ios_launch import repair
 from .apply_apk_fix import sha
 ROOT=Path(__file__).parents[1]
@@ -18,8 +18,11 @@ def rebuild(source,output):
   with zipfile.ZipFile(clean)as zin:
    name='Payload/dragonball.app/assets/main/index.jsc';old=gunzip(decrypt(zin.read(name))).decode()
    begin=old.index('// Server selector displayed');end=old.index('// Private client: persistent engine speed;',begin)
-   settings=(ROOT/'tools/private_connection.js').read_text()+'\n'+(ROOT/'tools/private_font.js').read_text()+'\n'+(ROOT/'tools/private_settings.js').read_text()+'\n'
-   text=old[:begin]+settings+old[end:];text=patch_private_startup(text)
+   settings=(ROOT/'tools/private_ui.js').read_text()+'\n'+(ROOT/'tools/private_connection.js').read_text()+'\n'+(ROOT/'tools/private_font.js').read_text()+'\n'+(ROOT/'tools/private_settings.js').read_text()+'\n'
+   text=old[:begin]+settings+old[end:];text=patch_private_recovery(patch_private_startup(text))
+   runtime_begin=text.index('// Private client: persistent engine speed;');runtime_end=text.index('// Authored private-server GM UI.',runtime_begin)if '// Authored private-server GM UI.'in text[runtime_begin:]else -1
+   if runtime_end<0:raise ValueError('Unexpected private runtime boundary')
+   text=text[:runtime_begin]+(ROOT/'tools/private_runtime.js').read_text()+'\n'+(ROOT/'tools/private_auto.js').read_text()+'\n'+text[runtime_end:]
    text=patch(text,'initAssetsManager_: function() {\nif (/\\.invalid(?::|\\/|$)/.test(l.url)) return;','initAssetsManager_: function() {')
    script=encrypt(gzip.compress(text.encode(),mtime=0))
    with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED,compresslevel=6)as zout:

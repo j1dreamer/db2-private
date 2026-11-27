@@ -5,7 +5,7 @@ if(input.delayedScheduler)saved['db2.private.gameSpeed']='7';
 const scheduler={setTimeScale(v){scale=v;},getTimeScale(){return scale;}};
 activeScheduler=scheduler;
 const modules={baseView:{removeLoading(){removed++;},addHintPanel(s){hints.push(s);}},helper:{sendError(s){reports.push(s);}},battleScene:{instance:null}};
-const context={window:{__require:n=>modules[n]},cc:{sys:{localStorage:{getItem:k=>saved[k],setItem:(k,v)=>saved[k]=v}},director:{getScheduler:()=>ready?activeScheduler:null,on(name,cb){events[name]=cb;}},Director:{EVENT_AFTER_SCENE_LAUNCH:'scene'},Canvas:{instance:null}},console:{error(){}},Date,isFinite};
+const context={window:{__require:n=>modules[n]},cc:{sys:{localStorage:{getItem:k=>saved[k],setItem:(k,v)=>saved[k]=v}},director:{getScheduler:()=>ready?activeScheduler:null,on(name,cb){events[name]=cb;}},Director:{EVENT_AFTER_SCENE_LAUNCH:'scene'},Canvas:{instance:null}},console:{error(){}},Date,isFinite,setTimeout,clearTimeout};
 vm.runInNewContext(fs.readFileSync(__dirname+'/../../tools/private_runtime.js','utf8'),context);
 const runtime=context.window.DB2PrivateRuntime;
 if(input.delayedScheduler){
@@ -32,11 +32,11 @@ class Node {
  on(event,callback){this.events[event]=callback;}
 }
 Node.EventType={TOUCH_END:'touch',TOUCH_START:'start',TOUCH_MOVE:'move',TOUCH_CANCEL:'cancel'};
-context.cc.Node=Node;context.cc.Graphics=class {roundRect(){}fill(){}};context.cc.Label=class {};
+context.cc.Node=Node;context.cc.Graphics=class {roundRect(){}circle(){}fill(){}};context.cc.Label=class {};
 context.cc.color=()=>({});const canvas=new Node('canvas');canvas.width=1280;canvas.height=720;
 context.cc.Canvas.instance={node:canvas};runtime.mount();runtime.mount();assert.equal(canvas.children.length,1);
-const button=canvas.getChildByName('DB2PrivateSpeed');assert.equal(button.width,84);assert.equal(button.height,30);
-button.events.touch();assert.equal(runtime.getSpeed(),1);runtime.setSpeed(10);
+const button=canvas.getChildByName('DB2PrivateSpeed');assert.equal(button.width,46);assert.equal(button.height,46);
+button.events.touch();assert.equal(runtime.getSpeed(),10);runtime.setSpeed(10);
 scheduler.setTimeScale(3);assert.equal(scale,10);runtime.setSpeed(2);assert.equal(scale,6);
 scheduler.setTimeScale(0);assert.equal(scale,0);scheduler.setTimeScale(1);assert.equal(scale,2);
 const event=(x,y)=>({getLocation:()=>({x,y}),stopPropagation(){}});

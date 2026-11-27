@@ -83,10 +83,11 @@ def patch_client(text,source,server):
     text=patch_private_sdk(text)
     text=patch(text,'this.skipMove = !1;','this.skipMove = cc.sys.localStorage.getItem("db2.private.fastSummon") !== "0";')
     text=patch(text,'onSkip_: function() {\nthis.skipMove = !this.skipMove;','onSkip_: function() {\nthis.skipMove = !this.skipMove;\ncc.sys.localStorage.setItem("db2.private.fastSummon", this.skipMove ? "1" : "0");')
-    from tools.client_patches import patch_eng_ui_repairs,patch_box_quantities,patch_private_startup
-    text=patch_private_startup(patch_box_quantities(patch_eng_ui_repairs(text)))
-    settings=(Path(__file__).parent/'private_connection.js').read_text()+'\n'+(Path(__file__).parent/'private_font.js').read_text()+'\n'+(Path(__file__).parent/'private_settings.js').read_text()
+    from tools.client_patches import patch_eng_ui_repairs,patch_box_quantities,patch_private_startup,patch_private_recovery
+    text=patch_private_recovery(patch_private_startup(patch_box_quantities(patch_eng_ui_repairs(text))))
+    settings=(Path(__file__).parent/'private_ui.js').read_text()+'\n'+(Path(__file__).parent/'private_connection.js').read_text()+'\n'+(Path(__file__).parent/'private_font.js').read_text()+'\n'+(Path(__file__).parent/'private_settings.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_runtime.js').read_text()
+    settings+='\n'+(Path(__file__).parent/'private_auto.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_gm.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_box.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_time_peak.js').read_text()

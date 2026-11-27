@@ -60,7 +60,7 @@
                 var battle = window.__require('battleScene').instance;
                 if (battle && battle.areaNode) battle.areaNode.updateSpinesSpeed_();
             } catch (ignored) {}
-            if (label) label.string = rate + 'x';
+            if (label) label.string = rate + '×';
         },
         mount: function () {
             var canvas = cc.Canvas.instance && cc.Canvas.instance.node;
@@ -68,30 +68,48 @@
             var existing = canvas.getChildByName('DB2PrivateSpeed');
             if (existing) { speedNode = existing;clampPosition(existing,canvas,savedPosition?savedPosition.x*canvas.width:existing.x,savedPosition?savedPosition.y*canvas.height:existing.y);return; }
             var node = new cc.Node('DB2PrivateSpeed');node.parent = canvas;speedNode = node;
-            node.zIndex = 31000;node.setContentSize(84, 30);
+            node.zIndex = 31000;node.setContentSize(46, 46);
             clampPosition(node, canvas, savedPosition ? savedPosition.x * canvas.width : canvas.width / 2 - 60,
                 savedPosition ? savedPosition.y * canvas.height : canvas.height / 2 - 100);
             var graphics = node.addComponent(cc.Graphics);
             graphics.fillColor = cc.color(20, 30, 48, 235);
-            graphics.roundRect(-42, -15, 84, 30, 6);graphics.fill();
+            graphics.circle(0, 0, 23);graphics.fill();
             var text = new cc.Node();text.parent = node;
-            label = text.addComponent(cc.Label);label.fontSize = 16;label.lineHeight = 20;label.string = rate + 'x';
-            var touch = null;
+            label = text.addComponent(cc.Label);label.fontSize = 16;label.lineHeight = 20;label.fontFamily='Arial';label.useSystemFont=true;label.string = rate + '×';
+            var touch = null, holdTimer = null, held = false;
+            function holdCheck(){if(!touch||touch.moved)return;var left=2000-(Date.now()-touch.began);if(left>5){holdTimer=setTimeout(holdCheck,left);return;}held=true;api.openSpeed();}
+            function clearHold(){clearTimeout(holdTimer);holdTimer=null;}
             node.on(cc.Node.EventType.TOUCH_START, function (event) {
-                stop(event);var p = localPoint(canvas, event);touch = p ? { x:p.x, y:p.y, nodeX:node.x, nodeY:node.y, moved:false } : null;
+                stop(event);var p = localPoint(canvas, event);touch = p ? { x:p.x, y:p.y, nodeX:node.x, nodeY:node.y, moved:false, began:Date.now() } : null;held=false;clearHold();if(touch)holdTimer=setTimeout(holdCheck,2000);
             });
             node.on(cc.Node.EventType.TOUCH_MOVE, function (event) {
                 stop(event);var p = localPoint(canvas, event);if (!touch || !p) return;
                 var dx=p.x-touch.x, dy=p.y-touch.y;
-                if (dx*dx+dy*dy > 36) touch.moved=true;
+                if (dx*dx+dy*dy > 36) { touch.moved=true;clearHold(); }
                 if (touch.moved) clampPosition(node, canvas, touch.nodeX+dx, touch.nodeY+dy);
             });
             node.on(cc.Node.EventType.TOUCH_END, function (event) {
                 stop(event);
-                if (touch && touch.moved) remember(node,canvas);else api.setSpeed(rate % 10 + 1);
+                clearHold();if (touch && touch.moved) remember(node,canvas);else if(!held){if(touch&&Date.now()-touch.began>=2000)api.openSpeed();else if(window.DB2PrivateAuto){window.DB2PrivateAuto.finishPick();window.DB2PrivateAuto.open('auto');}}
                 touch=null;
             });
-            node.on(cc.Node.EventType.TOUCH_CANCEL, function (event) { stop(event);if(touch && touch.moved)remember(node,canvas);touch=null; });
+            node.on(cc.Node.EventType.TOUCH_CANCEL, function (event) { stop(event);clearHold();if(touch && touch.moved)remember(node,canvas);touch=null; });
+        },
+        openSpeed: function () {
+            var U=window.DB2PrivateUI;if(!U)return;
+            if(window.DB2PrivateAuto){window.DB2PrivateAuto.finishRecord();window.DB2PrivateAuto.stop();}
+            var m=U.modal('DB2PrivateControls','Tốc độ game',430,270);if(!m)return;
+            var b=m.box,width=b.width-64,read=U.text(b,rate+'×',28,0,42,100,40);
+            var track=new cc.Node();track.parent=b;track.setPosition(0,-6);track.setContentSize(width,46);
+            var g=track.addComponent(cc.Graphics);g.fillColor=cc.color(70,87,110);g.roundRect(-width/2,-4,width,8,4);g.fill();
+            var handle=new cc.Node();handle.parent=track;var hg=handle.addComponent(cc.Graphics);hg.fillColor=cc.color(245,174,68);hg.circle(0,0,12);hg.fill();
+            function refresh(){read.string=rate+'×';handle.setPosition(-width/2+(rate-1)/9*width,0);}
+            function slide(e){stop(e);var p=track.convertToNodeSpaceAR(e.getLocation());api.setSpeed(Math.max(1,Math.min(10,1+Math.round((p.x+width/2)/width*9))));refresh();}
+            track.on(cc.Node.EventType.TOUCH_START,slide);track.on(cc.Node.EventType.TOUCH_MOVE,slide);track.on(cc.Node.EventType.TOUCH_END,stop);
+            U.text(b,'1×',15,-width/2,-38,40,24);U.text(b,'10×',15,width/2,-38,40,24);
+            U.button(b,'−',65,-126,-91,function(){api.setSpeed(Math.max(1,rate-1));refresh();},true);
+            U.button(b,'Auto / Ghi',155,0,-91,function(){if(window.DB2PrivateAuto)window.DB2PrivateAuto.open('auto');});
+            U.button(b,'+',65,126,-91,function(){api.setSpeed(Math.min(10,rate+1));refresh();},true);refresh();
         },
         getPosition: function () { return savedPosition ? {x:savedPosition.x,y:savedPosition.y} : null; },
         reportResponseError: function (route, error) {
