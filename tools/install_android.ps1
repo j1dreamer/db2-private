@@ -1,7 +1,8 @@
 param(
     [string]$Adb = $env:DB2_ADB,
     [string]$Serial,
-    [string]$Apk
+    [string]$Apk,
+    [switch]$LocalServer
 )
 $ErrorActionPreference = 'Stop'
 try {
@@ -28,9 +29,13 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'ADB device is not ready. Check the address shown in BlueStacks.' }
     & $Adb -s $Serial install -r $Apk
     if ($LASTEXITCODE -ne 0) { throw 'APK install failed. See the ADB error above.' }
+    if ($LocalServer) {
     & $Adb -s $Serial reverse tcp:20003 tcp:20003
     if ($LASTEXITCODE -ne 0) { throw 'APK installed, but reverse failed. Check ADB before opening the game.' }
     & $Adb -s $Serial reverse --list
     if ($LASTEXITCODE -ne 0) { throw 'Cannot verify ADB reverse.' }
-    Write-Host 'Installed. Start the new server, then use http://127.0.0.1:20003 and register a new game account.'
+    Write-Host 'Installed for local server: http://127.0.0.1:20003'
+    } else {
+        Write-Host 'Installed. In the game Server settings enter https://db2.teck.io.vn after HTTPS deployment is ready. No ADB reverse or VPN is needed.'
+    }
 } catch { Write-Host $_.Exception.Message -ForegroundColor Red; exit 1 }

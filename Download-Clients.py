@@ -10,14 +10,18 @@ ANDROID_MANIFEST='058c91565e0caee080ff4e2f50606c615eef8af6baa75c8ad7df0b3480805e
 IOS_MANIFEST='680b31b9219ab931c73dc2d1b3cbc673d9ee91a7a3a06a645001440c88f75012'
 BASE_SHA='a198837ccae5a3ad662d2489c4e1748016aebe77359e84f4bc4734c5f389f430'
 FIXED_SHA='d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f'
-APK_SHA='20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47'
+APK_BOXINFO_SHA='20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47'
+APK_BOXINFO_SIZE=525062849
+APK_PUBLIC_REF='c99e814e540a59e0efbe081966d9747af6ea8af7'
+APK_PUBLIC_PATCH_SHA='cfdb54f1785665862c788735424b1ed438f6d06a8456731057b3e6745ba99e5c'
+APK_SHA='88e3f90d8bc80c7271b36c9d560a5cc62575ee9858942c30d5722c703a480506'
 IPA_BASE_SHA='c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b'
-IPA_SHA='01ab9b9af0fa69f60b8ac61439a71caf9e931bd4d436d209856dc85b76439b86'
-IOS_LAUNCH_REF='9aee53ee50ec2175e7bd74fd18da8458319bbe87'
-IOS_LAUNCH_PATCH_SHA='9cbdf93d3efe7743f591eaf5f623203b2b65dd12104afb1caf48b1ea6f67d6aa'
-APK_SIZE=525062849
+IPA_SHA='97426f5069319c083042706faacf5aac46031a613cf500a1d8819ece2438200d'
+IOS_LAUNCH_REF='c99e814e540a59e0efbe081966d9747af6ea8af7'
+IOS_LAUNCH_PATCH_SHA='83713958704e009a72680455360a2edc2aab11ef1c2db47d66e542947126de0d'
+APK_SIZE=525071041
 IPA_BASE_SIZE=511242249
-IPA_SIZE=510865940
+IPA_SIZE=510866000
 CHUNK=1024*1024
 
 def sha(path):
@@ -107,6 +111,7 @@ class FixedSource:
     def __init__(self,source,plan,literal):
         self.source=source;self.ops=plan['operations'];self.literal=literal;self.ends=[];total=0
         for op in self.ops:total+=op['size'];self.ends.append(total)
+    def read(self,offset,size):return b''.join(self.blocks(offset,size))
     def blocks(self,offset,size):
         while size:
             index=bisect.bisect_right(self.ends,offset);start=self.ends[index-1]if index else 0;op=self.ops[index];within=offset-start;count=min(size,op['size']-within,CHUNK)
@@ -117,25 +122,36 @@ def finish(temporary,output,size,digest):
     if temporary.stat().st_size!=size or sha(temporary)!=digest:raise ValueError('Final checksum mismatch; output was NOT accepted: '+output.name)
     os.replace(temporary,output);print('COMPLETE:',output,flush=True)
 
-def android(output,cache,workers):
-    target=output/'DB2-ENG-SPSSS-BoxInfo.apk'
+def android(output,cache,workers,source=None):
+    target=output/'DB2-ENG-SPSSS-PublicReady.apk'
     if ready(target,APK_SIZE,APK_SHA):return target
-    paths=parts(cache/'android',ANDROID_REF,ANDROID_MANIFEST,524284609,BASE_SHA,'APK',workers)
-    fix=fetch(RAW+'eac27239410d1251638431eb35e798dc00d89ba7/tools/legacy/APK-Install-Fix.zip',cache/'packaging.zip','7a6a3f74d7260a1024645808f5692d87bab238fb118c939897dd042f0c197e75')
-    client=fetch(RAW+'eng-sp-sss/Client-ENG-SPSSS-BoxInfo-Patch.zip',cache/'client.zip','dee7233a2ad07523b1aeaaed867917588b30ae4585117f7ae38a608dcf866b55')
-    first,lit1=load_patch(fix,BASE_SHA,FIXED_SHA);second,lit2=load_patch(client,FIXED_SHA,APK_SHA)
-    if first['old_size']!=524284609 or first['new_size']!=second['old_size']or second['new_size']!=APK_SIZE:raise ValueError('Unexpected reconstruction sizes')
-    temporary=target.with_name(target.name+'.downloading');print('APK: creating complete signed file...',flush=True)
+    if source is not None:
+        source=Path(source).expanduser().resolve()
+        if not source.is_file()or source.stat().st_size!=APK_BOXINFO_SIZE or sha(source)!=APK_BOXINFO_SHA:raise ValueError('Use the original signed BoxInfo APK as --apk-source, or omit to download automatically.')
+        paths=[source];first=lit1=second=lit2=None
+    else:
+        paths=parts(cache/'android',ANDROID_REF,ANDROID_MANIFEST,524284609,BASE_SHA,'APK',workers)
+        fix=fetch(RAW+'eac27239410d1251638431eb35e798dc00d89ba7/tools/legacy/APK-Install-Fix.zip',cache/'packaging.zip','7a6a3f74d7260a1024645808f5692d87bab238fb118c939897dd042f0c197e75')
+        client=fetch(RAW+'eng-sp-sss/Client-ENG-SPSSS-BoxInfo-Patch.zip',cache/'client.zip','dee7233a2ad07523b1aeaaed867917588b30ae4585117f7ae38a608dcf866b55')
+        first,lit1=load_patch(fix,BASE_SHA,FIXED_SHA);second,lit2=load_patch(client,FIXED_SHA,APK_BOXINFO_SHA)
+        if first['old_size']!=524284609 or first['new_size']!=second['old_size']or second['new_size']!=APK_BOXINFO_SIZE:raise ValueError('Unexpected APK base sizes')
+    patch=fetch(RAW+APK_PUBLIC_REF+'/Client-ENG-SPSSS-Android-PublicReady.zip',cache/'android-publicready.zip',APK_PUBLIC_PATCH_SHA)
+    plan,literal=load_patch(patch,APK_BOXINFO_SHA,APK_SHA)
+    if plan['old_size']!=APK_BOXINFO_SIZE or plan['new_size']!=APK_SIZE:raise ValueError('Unexpected APK reconstruction sizes')
+    temporary=target.with_name(target.name+'.downloading');print('APK: creating complete signed PublicReady file...',flush=True)
     with contextlib.ExitStack()as stack,temporary.open('wb')as dest:
-        source=FixedSource(PartSource(paths,stack),first,lit1)
-        for op in second['operations']:
-            if'literal'in op:dest.write(lit2[op['literal']:op['literal']+op['size']])
+        src=PartSource(paths,stack)
+        if first is not None:src=FixedSource(FixedSource(src,first,lit1),second,lit2)
+        for op in plan['operations']:
+            if'literal'in op:dest.write(literal[op['literal']:op['literal']+op['size']])
             else:
-                for block in source.blocks(op['copy'],op['size']):dest.write(block)
+                offset=op['copy'];remaining=op['size']
+                while remaining:
+                    count=min(remaining,CHUNK);dest.write(src.read(offset,count));offset+=count;remaining-=count
     finish(temporary,target,APK_SIZE,APK_SHA);return target
 
 def ios(output,cache,workers,source=None):
-    target=output/'DB2-ENG-SPSSS-BoxRestore-unsigned.ipa'
+    target=output/'DB2-ENG-SPSSS-PublicReady-unsigned.ipa'
     if ready(target,IPA_SIZE,IPA_SHA):return target
     if source is not None:
         source=Path(source).expanduser().resolve()
@@ -143,10 +159,10 @@ def ios(output,cache,workers,source=None):
             raise ValueError('Use the original unsigned BoxInfo IPA as --ipa-source, before Sideloadly signing. Omit this option to download automatically.')
         paths=[source];print('IPA: verified original unsigned BoxInfo input.',flush=True)
     else:paths=parts(cache/'ios',IOS_REF,IOS_MANIFEST,IPA_BASE_SIZE,IPA_BASE_SHA,'IPA',workers)
-    patch=fetch(RAW+IOS_LAUNCH_REF+'/Client-ENG-SPSSS-IOS-BoxRestore.zip',cache/'ios-boxrestore.zip',IOS_LAUNCH_PATCH_SHA)
+    patch=fetch(RAW+IOS_LAUNCH_REF+'/Client-ENG-SPSSS-IOS-PublicReady.zip',cache/'ios-publicready.zip',IOS_LAUNCH_PATCH_SHA)
     plan,literal=load_patch(patch,IPA_BASE_SHA,IPA_SHA)
     if plan['old_size']!=IPA_BASE_SIZE or plan['new_size']!=IPA_SIZE:raise ValueError('Unexpected IPA reconstruction sizes')
-    temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned BoxRestore file...',flush=True)
+    temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned PublicReady file...',flush=True)
     with contextlib.ExitStack()as stack,temporary.open('wb')as dest:
         source=PartSource(paths,stack)
         for op in plan['operations']:
@@ -158,12 +174,12 @@ def ios(output,cache,workers,source=None):
     finish(temporary,target,IPA_SIZE,IPA_SHA);return target
 
 def main():
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--only',choices=('both','apk','ipa'),default='both');parser.add_argument('--output',type=Path,default=Path(__file__).resolve().parent);parser.add_argument('--ipa-source',type=Path,help='Optional original unsigned BoxInfo IPA to avoid downloading it again');parser.add_argument('--workers',type=int,choices=range(1,9),default=4);args=parser.parse_args()
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--only',choices=('both','apk','ipa'),default='both');parser.add_argument('--output',type=Path,default=Path(__file__).resolve().parent);parser.add_argument('--apk-source',type=Path,help='Optional verified signed BoxInfo APK');parser.add_argument('--ipa-source',type=Path,help='Optional original unsigned BoxInfo IPA to avoid downloading it again');parser.add_argument('--workers',type=int,choices=range(1,9),default=4);args=parser.parse_args()
     output=args.output.expanduser().resolve();output.mkdir(parents=True,exist_ok=True);cache=output/'.longzhidao-download-cache'
-    print('DB2 ENG SSS/SP + GM VI - complete clients, BoxInfo + Speed 1x-10x. iOS BoxRestore is unsigned; sign again.',flush=True)
+    print('DB2 ENG SSS/SP + GM VI - complete clients, BoxInfo + Speed 1x-10x. iOS PublicReady is unsigned; sign again.',flush=True)
     print('Output:',output,'\nKeep this window open. Run again to reuse verified downloads.',flush=True)
     files=[]
-    if args.only in('both','apk'):files.append(android(output,cache,args.workers))
+    if args.only in('both','apk'):files.append(android(output,cache,args.workers,args.apk_source))
     if args.only in('both','ipa'):files.append(ios(output,cache,args.workers,args.ipa_source))
     (output/'CLIENT-SHA256SUMS.txt').write_text(''.join(sha(p)+'  '+p.name+'\n'for p in files))
     print('DONE. Use/upload the complete APK/IPA above; no manual joining is needed.',flush=True)

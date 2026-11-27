@@ -1,6 +1,6 @@
-# IPA BoxRestore mới nhất · server ENG v8
+# IPA PublicReady mới nhất · server ENG v9
 
-Bộ tải tạo **DB2-ENG-SPSSS-BoxRestore-unsigned.ipa**, 510.865.940 byte (~487 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
+Bộ tải tạo **DB2-ENG-SPSSS-PublicReady-unsigned.ipa**, 510.866.000 byte (~487 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
 
 ## Sửa lỗi mở đen rồi tự thoát
 
@@ -12,7 +12,7 @@ Log thiết bị cho thấy iOS chấp nhận chữ ký, sau đó `CombinedPlugi
 - Thử IP không tới được: chờ tối đa 8 giây rồi quay về màn đăng nhập, tự mở lại “Server riêng” với lỗi. Mạng lỗi/HTTP lỗi/địa chỉ trả HTML hoặc JSON không phải cấu hình DB2 đều trả về để sửa IP, không đứng mãi ở màn tải.
 - Bỏ nút “Nguồn và luật” khỏi IPA; thông tin nguồn vẫn nằm trong tài liệu/web quản trị.
 - Chữ Việt dùng font hệ thống Arial dự phòng khi font đóng gói thiếu dấu; không sửa font size hoặc ảnh chứa chữ. Cần kiểm hình ảnh thực tế trên iPhone sau cài.
-- Vẫn giữ sửa plugin tự thoát của LaunchFix. Ký/cài file **BoxRestore** mới bằng Sideloadly; không chọn lại IPA cũ.
+- Vẫn giữ sửa plugin tự thoát của LaunchFix. Ký/cài file **PublicReady** mới bằng Sideloadly; không chọn lại IPA cũ.
 
 ## Điều khiển mới · Controls
 
@@ -26,7 +26,7 @@ Kiểm tra thêm lifecycle `Label.onEnable` với nhãn ASCII/Việt/URL/số 0;
 
 ## Tải
 
-**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT. **Chọn file có chữ `BoxRestore` để ký, không chọn lại BoxInfo cũ.** Nếu đã có file BoxInfo gốc chưa ký, có thể tránh tải lại 488 MB bằng lệnh trong CMD tại thư mục bộ tải:
+**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT. **Chọn file có chữ `PublicReady` để ký, không chọn lại BoxInfo cũ.** Nếu đã có file BoxInfo gốc chưa ký, có thể tránh tải lại 488 MB bằng lệnh trong CMD tại thư mục bộ tải:
 
 ```bat
 Download-IPA.bat --ipa-source "C:\duong-dan\DB2-ENG-SPSSS-BoxInfo-unsigned.ipa"
@@ -45,7 +45,7 @@ Có thể dùng `python3 Download-Clients.py --only ipa`. Không cần file game
 SHA-256 IPA **trước khi ký**:
 
 ```text
-01ab9b9af0fa69f60b8ac61439a71caf9e931bd4d436d209856dc85b76439b86
+97426f5069319c083042706faacf5aac46031a613cf500a1d8819ece2438200d
 ```
 
 ## Ký và cài qua máy tính
@@ -69,3 +69,7 @@ Ví dụ định dạng: `http://100.101.102.103:20003`. Đây là địa chỉ 
 ## BoxRestore · rương và chữ Việt
 
 Khôi phục nút chọn/số lượng/xác nhận rương gốc, giữ số ×N và nút đóng. Nhãn bổ sung có khung cố định và font Canvas/system Arial; nhãn Việt cũ chuyển font cả khi đổi nội dung. 34 bảng client/server giữ trùng khớp, không đổi quà SP/SS/SSS. AutoPlans vẫn có. [Chi tiết và kiểm chứng](COMBAT-BOX-FIX.md). Chưa xác minh render/touch bản này trên iPhone.
+
+## PublicReady · HTTPS / không VPN
+
+Ẩn mặc định nút Time Peak thử nghiệm. Sau khi VPS đã cài HTTPS thành công, nhập `https://db2.teck.io.vn` trong nút Server, không thêm `/admin` hay `:20003`; không cần bật Tailscale khi chơi. Ký/cài đúng file PublicReady mới. [Hướng dẫn public và bảo vệ quản trị](PUBLIC-HTTPS.md).

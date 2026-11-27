@@ -6,8 +6,8 @@ Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS /
 
 **[Download-Clients.zip](Download-Clients.zip)** → giải nén → mở **Download-Clients.bat** (cần Python 3.10+). Công cụ tự tải, tạo và kiểm SHA-256 hai file nguyên vẹn:
 
-- `DB2-ENG-SPSSS-BoxInfo.apk`: đã ký phát triển, cài đè cùng package/chứng thư, có Speed 1–10×.
-- `DB2-ENG-SPSSS-BoxRestore-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
+- `DB2-ENG-SPSSS-PublicReady.apk`: đã ký phát triển, cài đè cùng package/chứng thư, có Speed 1–10×.
+- `DB2-ENG-SPSSS-PublicReady-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
 
 **Chỉ tải IPA:** [Download-IPA.zip](Download-IPA.zip) → giải nén → mở `Download-IPA.bat` trên Windows; trên Mac chạy `bash Download-IPA.command`. Xem [ký/cài IPA và nhập IP Tailscale](IPA-INSTALL.md). BAT tải file, không tự ký/cài.
 
@@ -21,7 +21,7 @@ Không cần APK cũ, Java, Git hoặc ghép tay. Cần khoảng 2,2 GB trống 
 2. Chạy `start.bat`. Thư mục mới tự tạo `data/game.sqlite3` và `data/admin-token`, không kèm tài khoản hoặc token của ai. Nếu cần dữ liệu cũ, tự giữ bản sao trước khi chuyển; server có snapshot SQLite trước đổi baseline.
 3. Đặt APK mới cạnh `Install-Android.bat`, bật BlueStacks → Android Debug Bridge rồi chạy BAT. Nhập đúng cổng ADB (thường `127.0.0.1:6610`). Không cần gỡ app hoặc xóa data Android.
 4. Trong game dùng server `http://127.0.0.1:20003`. Với database trắng, đăng ký tài khoản mới.
-5. Kiểm `/health`: **build `eng-sp-sss-combat-box-v8`, schema 30**. Dùng client ENG BoxInfo tương thích; nếu đã cài BoxInfo thì bản web này chỉ cần cập nhật server.
+5. Kiểm `/health`: **build `eng-sp-sss-public-game-v9`, schema 30**. Dùng client ENG BoxInfo tương thích; nếu đã cài BoxInfo thì bản web này chỉ cần cập nhật server.
 
 Web quản trị: **http://127.0.0.1:20003**; token nằm ở `data/admin-token` trong đúng thư mục server đang chạy.
 

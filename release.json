@@ -1,27 +1,28 @@
 {
-  "version": "8.0.0-dev",
+  "version": "9.0.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-combat-box-v8-dev",
+  "tag": "eng-sp-sss-public-ready-v9-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
-  "implementation_commit": "9aee53ee50ec2175e7bd74fd18da8458319bbe87",
+  "implementation_commit": "c99e814e540a59e0efbe081966d9747af6ea8af7",
   "distribution": "full-clients-via-verified-public-download-helper",
   "fresh_install": false,
   "bundled_player_database": false,
   "native_playable_verified": false,
   "android": {
-    "file": "DB2-ENG-SPSSS-BoxInfo.apk",
-    "bytes": 525062849,
-    "sha256": "20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47",
+    "file": "DB2-ENG-SPSSS-PublicReady.apk",
+    "bytes": 525071041,
+    "sha256": "88e3f90d8bc80c7271b36c9d560a5cc62575ee9858942c30d5722c703a480506",
     "package": "com.dp2.web.dev",
     "signed": true,
     "signing_identity": "development",
-    "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953"
+    "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953",
+    "time_peak_floating_button_default": false
   },
   "ios": {
-    "file": "DB2-ENG-SPSSS-BoxRestore-unsigned.ipa",
-    "bytes": 510865940,
-    "sha256": "01ab9b9af0fa69f60b8ac61439a71caf9e931bd4d436d209856dc85b76439b86",
+    "file": "DB2-ENG-SPSSS-PublicReady-unsigned.ipa",
+    "bytes": 510866000,
+    "sha256": "97426f5069319c083042706faacf5aac46031a613cf500a1d8819ece2438200d",
     "bundle_id": "com.j1dreamer.db2.private",
     "signed": false,
     "publication_authorized": true,
@@ -46,12 +47,13 @@
     "pause_resume": true,
     "x7_exact_equivalence_verified": false,
     "stock_box_selection_controls": true,
-    "vietnamese_canvas_font_on_text_change": true
+    "vietnamese_canvas_font_on_text_change": true,
+    "time_peak_floating_button_default": false
   },
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
     "port": 20003,
-    "build": "eng-sp-sss-combat-box-v8",
+    "build": "eng-sp-sss-public-game-v9",
     "profile_schema": 30,
     "routes": 342,
     "private_gm_routes": 3,
@@ -126,6 +128,26 @@
       "commit": "9aee53ee50ec2175e7bd74fd18da8458319bbe87",
       "file": "Client-ENG-SPSSS-IOS-BoxRestore.zip",
       "sha256": "9cbdf93d3efe7743f591eaf5f623203b2b65dd12104afb1caf48b1ea6f67d6aa"
+    },
+    "public_ready_patch": {
+      "commit": "c99e814e540a59e0efbe081966d9747af6ea8af7",
+      "file": "Client-ENG-SPSSS-IOS-PublicReady.zip",
+      "sha256": "83713958704e009a72680455360a2edc2aab11ef1c2db47d66e542947126de0d"
     }
+  },
+  "android_transport": {
+    "commit": "c99e814e540a59e0efbe081966d9747af6ea8af7",
+    "file": "Client-ENG-SPSSS-Android-PublicReady.zip",
+    "sha256": "cfdb54f1785665862c788735424b1ed438f6d06a8456731057b3e6745ba99e5c",
+    "base_boxinfo_sha256": "20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47"
+  },
+  "public_deployment": {
+    "domain": "db2.teck.io.vn",
+    "game_url": "https://db2.teck.io.vn",
+    "admin_url": "https://db2.teck.io.vn/admin",
+    "setup": "Setup-Public.sh",
+    "credentials_generated_on_vps": true,
+    "backend_bind": "127.0.0.1",
+    "live_verified": false
   }
 }
