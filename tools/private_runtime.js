@@ -97,7 +97,7 @@
         },
         openSpeed: function () {
             var U=window.DB2PrivateUI;if(!U)return;
-            if(window.DB2PrivateAuto){window.DB2PrivateAuto.finishRecord();window.DB2PrivateAuto.stop();}
+            if(window.DB2PrivateAuto){window.DB2PrivateAuto.finishRecord();if(window.DB2PrivateAuto.pause)window.DB2PrivateAuto.pause();else window.DB2PrivateAuto.stop();}
             var m=U.modal('DB2PrivateControls','Tốc độ game',430,270);if(!m)return;
             var b=m.box,width=b.width-64,read=U.text(b,rate+'×',28,0,42,100,40);
             var track=new cc.Node();track.parent=b;track.setPosition(0,-6);track.setContentSize(width,46);

@@ -45,7 +45,7 @@
     };
     U.modal = function(name,title,width,height) {
         var canvas=U.canvas();if(!canvas)return null;
-        if(window.DB2PrivateAuto){window.DB2PrivateAuto.finishRecord();window.DB2PrivateAuto.stop();}
+        if(window.DB2PrivateAuto){if(window.DB2PrivateAuto.beforeModal)window.DB2PrivateAuto.beforeModal();else{window.DB2PrivateAuto.finishRecord();window.DB2PrivateAuto.stop();}}
         U.destroy(canvas.getChildByName(name));
         var shade=new cc.Node(name);shade.parent=canvas;shade.zIndex=32500;shade.setContentSize(canvas.width,canvas.height);shade.addComponent(cc.BlockInputEvents);
         var bg=shade.addComponent(cc.Graphics);bg.fillColor=cc.color(5,10,18,170);bg.rect(-canvas.width/2,-canvas.height/2,canvas.width,canvas.height);bg.fill();

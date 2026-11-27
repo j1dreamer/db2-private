@@ -12,3 +12,13 @@ const vm=require('vm'),fs=require('fs'),assert=require('assert'),s=fs.readFileSy
 const g={},context={g,window:{DB2PrivateConnection:{isNetworkMessage:s=>/mạng|network/i.test(s),recover(){recover++;}}},cc:{director:{getScene(){original++;throw Error('original message box reached');}}}};
 vm.runInNewContext(s,context);g.addMessageBox('Mạng mất kết nối, hãy nhấp thử lại',()=>{throw Error('retry must not run');});g.addMessageBox('Network unavailable');assert.equal(recover,2);assert.equal(original,0);assert.throws(()=>g.addMessageBox('Nhận quà?'));assert.equal(original,1);
 '''],input=text[start:end],text=True,capture_output=True);self.assertEqual(r.returncode,0,r.stderr)
+
+ def test_plan_migration_storage_roundtrip_and_interrupted_record_recovery(self):
+  r=subprocess.run(['node','-e',r'''
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),source=fs.readFileSync('tools/private_auto.js','utf8');const stored={};let now=10000;
+const old={mode:'multi',points:[{x:.1,y:.2}],interval:600,cycles:2,record:[{kind:'start',x:0,y:0,ms:0},{kind:'end',x:0,y:0,ms:50}]};stored['db2.private.auto.v1']=JSON.stringify(old);
+function boot(){const context={window:{DB2PrivateUI:{}},cc:{sys:{localStorage:{getItem:k=>stored[k]||null,setItem:(k,v)=>stored[k]=v,removeItem:k=>delete stored[k]}},Canvas:{instance:null},director:{on(){}},Director:{},game:{}},Date:{now:()=>now},setTimeout,clearTimeout,isFinite};vm.runInNewContext(source,context);return context.window.DB2PrivateAuto;}
+let a=boot();assert.equal(a.listPlans().length,2);assert.equal(stored['db2.private.auto.v1'],JSON.stringify(old));a.loadPlan(a.listPlans()[0].id);a.updatePoint(0,{hold:80});assert.equal(a.listPlans()[0].points[0].hold,40);const id=a.savePlan('Saved');a=boot();assert.equal(a.listPlans().filter(p=>p.id===id)[0].points[0].hold,80);assert.equal(a.getDraft().name,'Saved');a.createPlan('New','single');assert.notEqual(a.getDraft().id,id);a.savePlan('New');assert.equal(a.listPlans().length,3);
+const pending=a.getDraft();pending.type='record';pending.actions=[{kind:'start',x:0,y:0,ms:0},{kind:'move',x:.1,y:.1,ms:80}];pending.points=[];stored['db2.private.auto.draft.v2']=JSON.stringify({plan:pending,dirty:true});a=boot();assert.equal(a.getDraft().actions[2].kind,'cancel');a.savePlan('Recovered');assert.equal(a.listPlans().length,3);
+assert.throws(()=>a.savePlan(''));console.log('OK');
+'''],cwd=ROOT,text=True,capture_output=True);self.assertEqual(r.returncode,0,r.stderr)
