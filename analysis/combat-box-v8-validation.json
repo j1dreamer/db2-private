@@ -149,5 +149,40 @@
   "gold_box_343_currency_limit_fixed": true,
   "ubuntu_vps_deployed_by_cloud": false,
   "native_iphone_verified": false,
-  "native_each_map_verified": false
+  "native_each_map_verified": false,
+  "public_ipa_reconstruction": {
+    "public_patch_downloaded": true,
+    "ipa_sha256": "01ab9b9af0fa69f60b8ac61439a71caf9e931bd4d436d209856dc85b76439b86",
+    "bytes": 510865940,
+    "zip_crc_passed": true,
+    "second_run_reused_verified_file": true,
+    "native_verified": false
+  },
+  "public_source_runtime_smoke": {
+    "public_installer_verified": true,
+    "source_commit": "9aee53ee50ec2175e7bd74fd18da8458319bbe87",
+    "installer_commit": "e24aabb6f3b62b1dfe3deb31ff7105114750f601",
+    "empty_PATH_explicit_DB2_NODE": true,
+    "actual_engine_replay": {
+      "tickNumber": 69,
+      "isWin": true
+    },
+    "health": {
+      "combat": {
+        "available": true,
+        "version": "v24.22.3",
+        "executable": "<verified build-environment Node executable>"
+      },
+      "status": "ok",
+      "stage": "protocol-development",
+      "playable_verified": false,
+      "build": "eng-sp-sss-combat-box-v8",
+      "profile_schema": 30,
+      "routes": {
+        "implemented": 342,
+        "target": 342
+      }
+    },
+    "user_vps_root_install_verified": false
+  }
 }
