@@ -1,0 +1,189 @@
+{
+  "date": "2026-11-27",
+  "status": "reference-research-complete-exact-interface-capture-needed",
+  "source_apk": {
+    "path": "/workspace/x7-research/x7-global-18344.apk",
+    "bytes": 758666864,
+    "sha256": "588c2104b4218f8090aafdc866c1962e721d51b778100372f10593d5305945ef",
+    "md5": "48fe5533ce96b0b8c3df52321174b7b8",
+    "url": "https://down.cmiip.cn/game/android/5/9033/18344_5_1-0-0_20261029113052_halo.apk",
+    "page": "https://www.x7game.com/game/app/18344",
+    "catalog_name": "Dragon Ball: Return of the Dragon",
+    "catalog_package": "com.mmxlz.x7sy"
+  },
+  "source_plugin": {
+    "file": "assets/plugin-release.zip",
+    "bytes": 210156471,
+    "crc32": 4013544587,
+    "compressed_bytes": 209975006,
+    "source": "https://down.cmiip.cn/game/android/5/9033/18344_5_1-0-0_20261029113052_halo.apk"
+  },
+  "inspection": "Read-only HTTP range retrieval; decoded nested appPlugin-plugin-release.apk inside assets/plugin-release.zip. No login or X7 server writes.",
+  "verified_global_module_classes": 287,
+  "selected_class_methods": {
+    "Lcom/smwl/smsdk/simulateclick/PlanSettingsPanel;": [
+      "asm",
+      "onClick",
+      "<clinit>",
+      "<init>",
+      "access$000",
+      "access$100",
+      "access$200",
+      "access$300",
+      "access$400",
+      "access$500",
+      "access$600",
+      "access$700",
+      "addPlan",
+      "asm",
+      "checkSaveBeforeExitPlan",
+      "close",
+      "enterDeleteMode",
+      "exitDeleteMode",
+      "exitPlan",
+      "exitPlanSettings",
+      "findViews",
+      "getContentView",
+      "getPanel",
+      "getUIPanelManager",
+      "initHorizontalAndVerticalStyles",
+      "initIndicatorAndViewPagerByConnectorPlanType",
+      "initListener",
+      "initView",
+      "jumpToClickSettingPanel",
+      "modifyProgram",
+      "onClick",
+      "onUIVisibleChanged",
+      "savePlan",
+      "setSavePlanViewStyle",
+      "showDialogBeforeSave"
+    ],
+    "Lcom/smwl/smsdk/simulateclick/SimulateClickSettingCenterPanel;": [
+      "aasm",
+      "absm",
+      "acsm",
+      "adsm",
+      "asm",
+      "<init>",
+      "aasm",
+      "absm",
+      "access$000",
+      "access$100",
+      "acsm",
+      "adsm",
+      "asm",
+      "changeTouchPointShowType",
+      "changeTouchPointSizeType",
+      "close",
+      "dealPowerSavingEt",
+      "findView",
+      "getContentView",
+      "getPanel",
+      "getUIPanelManager",
+      "initData",
+      "initFoleAndExpandHeight",
+      "initListener",
+      "initView",
+      "lambda$initListener$0",
+      "lambda$initListener$1",
+      "lambda$initListener$2",
+      "lambda$startPowerSavingClDrawerAnim$4",
+      "lambda$startShowClDrawerAnim$3",
+      "onClick",
+      "onCreate",
+      "onDestroy",
+      "onHiddenChanged",
+      "onResume",
+      "onUIVisibleChanged",
+      "setData",
+      "setPowerSavingStyle",
+      "setShowTypeStyle",
+      "setSizeTypeStyle",
+      "showSimulateExecuteModePrompt",
+      "showTouchPointSizePrompt",
+      "startPowerSavingClDrawerAnim",
+      "startShowClDrawerAnim",
+      "switchIntellectSimulateClickBtn",
+      "switchPowerSaving",
+      "switchSimulateExecuteMode",
+      "switchTouchPointShow"
+    ],
+    "Lcom/smwl/smsdk/bean/simulateclick/RecordEventBean;": [
+      "<init>",
+      "getPosition",
+      "setPosition"
+    ],
+    "Lcom/smwl/smsdk/bean/simulateclick/TouchSpotBean;": [
+      "<init>"
+    ],
+    "Lcom/smwl/smsdk/tk/simulateclick/panel/SimulateClickToolContainerPanel;": [
+      "<init>",
+      "getContent",
+      "getContentView",
+      "getUIPanelManager",
+      "initView",
+      "isContainerPanel",
+      "onDestroy",
+      "onHiddenChanged",
+      "onResume",
+      "onViewCreated",
+      "popBackStack"
+    ]
+  },
+  "verified_interface_concepts": [
+    "Separate simulateclick module, not the speedup native library",
+    "CreatePlan/CreateRecord and PlanSettings save/edit paths",
+    "RecordEventBean and TouchSpotBean models",
+    "Dedicated recording floating-window start/end strings",
+    "Guide animations with numbered touch locations"
+  ],
+  "current_client_gaps": [
+    "Only one mutable configuration/record; no named plan library",
+    "Point markers have no drag-to-edit handlers",
+    "Record starts directly from a modal and has no separate record manager",
+    "Only stop/start; no explicit playback pause/resume",
+    "One shared interval, no per-point timing editor"
+  ],
+  "reference_images_and_animation_metadata": {
+    "assets/images/img_simulate_click_presentation.png": {
+      "bytes": 675,
+      "sha256": "42ada6cb1a6b96fb8dd673256874cb74b23af9d5fd5850ae9578650ff401bf3a"
+    },
+    "assets/x7_anim_enter_intellect_simulate_click.json": {
+      "bytes": 28419,
+      "sha256": "52dfa5b9a23dfd5947a3f81f2508f103454d8996a04029ed48a6cdf232fef092"
+    },
+    "assets/x7_anim_enter_intellect_simulate_click_international.json": {
+      "bytes": 28171,
+      "sha256": "fa7bedcbec9760d84f925e4f9ab8be69371362ce5b1baf2ca828acd769f0ba40"
+    },
+    "assets/x7_anim_enter_simulate_click.json": {
+      "bytes": 18687,
+      "sha256": "57cc3e76800097c06b1cbfc55162a599f7e0162770bb0358d4e0e2643098da84"
+    },
+    "assets/x7_anim_enter_simulate_click_international.json": {
+      "bytes": 18031,
+      "sha256": "ad1fcac2d182c5359aa1406ae037ca5020688c41fab5c600d5e4f41d00325588"
+    },
+    "assets/x7_anim_simulate_click_presentation.json": {
+      "bytes": 290679,
+      "sha256": "16b8005f71415b8a0e5cb49797a44c4bcfb4d3f946fb67bd678d3d9562dcbb73"
+    },
+    "assets/x7_guide_simulate_click_finger.json": {
+      "bytes": 3398,
+      "sha256": "360a1601bb73d90faa15ad6c8cace10e92b9f5a04c70d0fa53cba1a8266e13ba"
+    }
+  },
+  "public_toolbox_image": {
+    "page": "https://ssrebirth2.wixsite.com/home/post/app-jogue-pelo-x7game",
+    "supports": "Toolbox entry named Auto click tool; does not show full editing/recording screens."
+  },
+  "not_verified": [
+    "Exact on-device X7 point editor layout",
+    "Full recording/save/replay interaction sequence",
+    "Native iPhone equivalence",
+    "Direct execution of X7 Android UI in this environment"
+  ],
+  "client_modified_this_research_turn": false,
+  "next_input": "A short recording of the exact X7 Auto click point editor and recording/replay workflow the user wants to reproduce."
+}
