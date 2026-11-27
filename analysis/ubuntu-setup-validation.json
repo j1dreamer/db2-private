@@ -1,0 +1,18 @@
+{
+  "shell_syntax_valid": true,
+  "pinned_public_archive_extract_verified": true,
+  "extracted_server_health": {
+    "status": "ok",
+    "stage": "protocol-development",
+    "playable_verified": false,
+    "build": "eng-sp-sss-event-goals-v6",
+    "profile_schema": 30,
+    "routes": {
+      "implemented": 342,
+      "target": 342
+    }
+  },
+  "admin_http_200": true,
+  "vps_root_install_tested": false,
+  "tailscale_auth_required_on_first_install": true
+}
