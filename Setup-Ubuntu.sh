@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
-# DB2 ENG v8: first install / repeat install with backup; no SSH backdoor.
+# DB2 ENG v9: first install / repeat install with backup; no SSH backdoor.
 set -Eeuo pipefail
 umask 077
-REF=9aee53ee50ec2175e7bd74fd18da8458319bbe87
+REF=c99e814e540a59e0efbe081966d9747af6ea8af7
 BASE=/opt/db2
 if (( EUID != 0 )); then exec sudo bash "$0" "$@"; fi
+NETWORK=private
+if [[ ${1:-} == --loopback ]]; then NETWORK=loopback; shift; fi
+[[ $# == 0 ]] || { echo 'Usage: Setup-Ubuntu.sh [--loopback]'; exit 1; }
 [[ -d /run/systemd/system ]] || { echo 'Run this on the Ubuntu VPS after SSH, not in iSH locally.'; exit 1; }
 . /etc/os-release
 [[ ${ID:-} == ubuntu || ${ID:-} == debian ]] || { echo 'Ubuntu/Debian required.'; exit 1; }
@@ -54,6 +57,9 @@ if [[ -z $nodebin ]] || ! "$nodebin" -e 'process.exit(Number(process.versions.no
  install -d -m 755 "$BASE/node"; cp -a "$work/node/." "$BASE/node/"
  nodebin=$BASE/node/bin/node
 fi
+if [[ $NETWORK == loopback ]]; then
+ bind=127.0.0.1
+else
 # Official Tailscale installer; reuse an existing installation/login.
 if ! command -v tailscale >/dev/null; then
  curl --fail --location --retry 3 https://tailscale.com/install.sh -o "$work/tailscale-install.sh"
@@ -70,13 +76,14 @@ python3 - "$bind" <<'PY'
 import ipaddress,sys
 assert ipaddress.ip_address(sys.argv[1]) in ipaddress.ip_network('100.64.0.0/10')
 PY
+fi
 # Extract only runtime files; do not install APK/IPA archives or old player data.
 curl --fail --location --retry 3 "https://codeload.github.com/j1dreamer/db2-private/tar.gz/$REF" -o "$work/source.tar.gz"
 mkdir "$work/app"
 tar -xzf "$work/source.tar.gz" --strip-components=1 -C "$work/app" \
  "db2-private-$REF/server" "db2-private-$REF/web" "db2-private-$REF/tables" \
  "db2-private-$REF/client" "db2-private-$REF/analysis/route-coverage.json" \
- "db2-private-$REF/deploy" "db2-private-$REF/requirements.txt"
+ "db2-private-$REF/deploy" "db2-private-$REF/requirements.txt" "db2-private-$REF/tools/public_proxy.py"
 id db2 >/dev/null 2>&1 || useradd --system --home-dir /var/lib/db2 --shell /usr/sbin/nologin db2
 install -d -m 700 -o db2 -g db2 /var/lib/db2
 install -d -m 700 /etc/db2 "$BASE/backups"
@@ -105,7 +112,7 @@ cp -a /var/lib/db2 "$backup/data"
 [[ ! -f /etc/systemd/system/db2.service ]] || cp -a /etc/systemd/system/db2.service "$backup/db2.service"
 ln -sfn "$new" "$BASE/app"
 switched=1
-printf 'DB2_BIND=%s\nDB2_NODE=%s\nPATH=%s:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n' "$bind" "$nodebin" "$(dirname "$nodebin")" >/etc/db2/server.env
+printf 'DB2_BIND=%s\nDB2_NODE=%s\nDB2_ADMIN_NETWORKS=127.0.0.0/8,::1/128,100.64.0.0/10\nPATH=%s:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n' "$bind" "$nodebin" "$(dirname "$nodebin")" >/etc/db2/server.env
 sed 's@/opt/db2/venv/bin/python@/opt/db2/app/.venv/bin/python@' "$new/deploy/db2.service" >/etc/systemd/system/db2.service
 systemctl daemon-reload
 systemctl enable --now db2
@@ -117,12 +124,16 @@ done
 if (( ! healthy )); then journalctl -u db2 -n 40 --no-pager; exit 1; fi
 python3 - "$work/health.json" <<'PY'
 import json,sys
-h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-combat-box-v8' and h.get('profile_schema')==30 and h.get('combat',{}).get('available'),h
+h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-public-game-v9' and h.get('profile_schema')==30 and h.get('combat',{}).get('available'),h
 print(json.dumps(h,ensure_ascii=False,indent=2))
 PY
 switched=0
+if [[ $NETWORK == loopback ]]; then
+ echo 'Backend ready on 127.0.0.1:20003; configure the HTTPS proxy before remote play.'
+else
 printf '\nDONE. APK/IPA server: http://%s:20003\nWeb admin: http://%s:20003/admin\n' "$bind" "$bind"
 echo 'Enable Tailscale on the phone in the same tailnet. ACL must allow TCP 20003.'
+fi
 echo 'Read admin token privately: sudo cat /var/lib/db2/admin-token'
 echo 'Status: sudo systemctl status db2 --no-pager'
 echo 'Logs: sudo journalctl -u db2 -n 80 --no-pager'

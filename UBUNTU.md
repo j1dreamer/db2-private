@@ -25,7 +25,7 @@ Kiểm từ máy đã vào cùng Tailscale:
 curl --fail http://IP_TAILSCALE:20003/health
 ```
 
-Phải có build `eng-sp-sss-combat-box-v8`, schema 30. Web quản trị cùng địa chỉ này, token trong `/var/lib/db2/admin-token`; chỉ đọc trên máy quản trị, không đăng token lên chat/repo. Trong APK/IPA BoxInfo nhập `http://IP_TAILSCALE:20003`. Tailscale cần bật cả trên VPS và máy chơi; bind riêng IP này không mở game ra Internet công cộng.
+Phải có build `eng-sp-sss-public-game-v9`, schema 30. Web quản trị cùng địa chỉ này, token trong `/var/lib/db2/admin-token`; chỉ đọc trên máy quản trị, không đăng token lên chat/repo. Trong APK/IPA BoxInfo nhập `http://IP_TAILSCALE:20003`. Tailscale cần bật cả trên VPS và máy chơi; bind riêng IP này không mở game ra Internet công cộng.
 
 ## Cập nhật / sao lưu
 
@@ -39,7 +39,7 @@ Cần địa chỉ VPS, cổng SSH và tên user có quyền cài dịch vụ. C
 
 ## Cài tự động từ terminal SSH
 
-Chạy trên VPS Ubuntu/Debian có systemd, không chạy tại dấu nhắc `localhost` của iSH. Tải `Setup-Ubuntu.sh` từ repo rồi chạy `sudo bash Setup-Ubuntu.sh`. Bộ cài lấy runtime cố định ở commit `9aee53ee50ec2175e7bd74fd18da8458319bbe87`, cài dependencies và Node 22 nếu cần (kiểm checksum upstream), cài Tailscale từ nguồn chính thức nếu thiếu.
+Chạy trên VPS Ubuntu/Debian có systemd, không chạy tại dấu nhắc `localhost` của iSH. Tải `Setup-Ubuntu.sh` từ repo rồi chạy `sudo bash Setup-Ubuntu.sh`. Bộ cài lấy runtime cố định ở commit `c99e814e540a59e0efbe081966d9747af6ea8af7`, cài dependencies và Node 22 nếu cần (kiểm checksum upstream), cài Tailscale từ nguồn chính thức nếu thiếu.
 
 Lần đầu Tailscale yêu cầu mở link đăng nhập trên điện thoại, cùng tài khoản/tailnet với máy chơi. Giữ terminal mở trong lúc cài. Có thể chạy lại nếu hết thời gian đăng nhập. Không cần cung cấp auth key vào chat. Sau cài, script in IP và địa chỉ web. Token giữ riêng tại `/var/lib/db2/admin-token`.
 
@@ -48,3 +48,5 @@ Source phiên bản nằm tại `/opt/db2/releases`, `/opt/db2/app` là symlink,
 Bộ cài chỉ bind IP Tailscale, không mở TCP 20003 công khai, không cài quyền truy cập SSH hay truy cập nền cho người hỗ trợ. Chưa chạy bộ cài với quyền root trên VPS thực; kiểm cú pháp và runtime nguồn đã được thực hiện trong môi trường build.
 
 Combat v8 kiểm Node 22+ và xuất `combat.available` trong `/health`. Bộ cài ghi `DB2_NODE` tuyệt đối, không dùng nvm trong home bị systemd chặn. Xem [COMBAT-BOX-FIX.md](COMBAT-BOX-FIX.md).
+
+Public HTTPS dùng `Setup-Public.sh db2.teck.io.vn`; bộ cài gọi Ubuntu với `--loopback`, không yêu cầu Tailscale. Xem [PUBLIC-HTTPS.md](PUBLIC-HTTPS.md).
