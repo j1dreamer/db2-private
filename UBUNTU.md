@@ -39,7 +39,7 @@ Cần địa chỉ VPS, cổng SSH và tên user có quyền cài dịch vụ. C
 
 ## Cài tự động từ terminal SSH
 
-Chạy trên VPS Ubuntu/Debian có systemd, không chạy tại dấu nhắc `localhost` của iSH. Tải `Setup-Ubuntu.sh` từ repo rồi chạy `sudo bash Setup-Ubuntu.sh`. Bộ cài lấy runtime cố định ở commit `743be6a90257f150b503ceb2d5905436f9fcd2d9`, cài dependencies và Node 22 nếu cần (kiểm checksum upstream), cài Tailscale từ nguồn chính thức nếu thiếu.
+Chạy trên VPS Ubuntu/Debian có systemd, không chạy tại dấu nhắc `localhost` của iSH. Tải `Setup-Ubuntu.sh` từ repo rồi chạy `sudo bash Setup-Ubuntu.sh`. Bộ cài lấy runtime cố định ở commit `37923336880e58cec5c709d7e84e9582252c8663`, cài dependencies và Node 22 nếu cần (kiểm checksum upstream), cài Tailscale từ nguồn chính thức nếu thiếu.
 
 Lần đầu Tailscale yêu cầu mở link đăng nhập trên điện thoại, cùng tài khoản/tailnet với máy chơi. Giữ terminal mở trong lúc cài. Có thể chạy lại nếu hết thời gian đăng nhập. Không cần cung cấp auth key vào chat. Sau cài, script in IP và địa chỉ web. Token giữ riêng tại `/var/lib/db2/admin-token`.
 

@@ -1,10 +1,10 @@
 {
-  "version": "6.5.0-dev",
+  "version": "7.0.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-ios-autoplans-dev",
+  "tag": "eng-sp-sss-sp-events-v7-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
-  "implementation_commit": null,
+  "implementation_commit": "37923336880e58cec5c709d7e84e9582252c8663",
   "distribution": "full-clients-via-verified-public-download-helper",
   "fresh_install": false,
   "bundled_player_database": false,
@@ -49,7 +49,7 @@
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
     "port": 20003,
-    "build": "eng-sp-sss-event-goals-v6",
+    "build": "eng-sp-sss-sp-events-v7",
     "profile_schema": 30,
     "routes": 342,
     "private_gm_routes": 3,
@@ -66,7 +66,21 @@
       "gem_spent",
       "adventure_wins",
       "summon_draws"
-    ]
+    ],
+    "sp_campaigns": {
+      "calendar": "UTC+7, nonoverlapping configurable banners",
+      "role_ticket_source": "ENG client wishSpClassId",
+      "rewards": [
+        "pool",
+        "login",
+        "battle_pass",
+        "topup_credit",
+        "gem_offers",
+        "ranking_mail"
+      ],
+      "authored_rules": true,
+      "native_verified": false
+    }
   },
   "download_helper": {
     "file": "Download-Clients.zip",
