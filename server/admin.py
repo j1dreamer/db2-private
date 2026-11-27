@@ -30,12 +30,13 @@ def page_args(req):
  return page,limit
 
 def stamp(store):
- now=time.time();rows=[(e['id'],liveops.window(e,now))for e in liveops.custom_events(store)]
+ from .sp_events import config
+ now=time.time();rows=[('sp:'+b['id'],liveops.window(b,now))for b in config(store)['banners']]+[(e['id'],liveops.window(e,now))for e in liveops.custom_events(store)]
  for key in liveops.TEMPLATES:
   cfg=liveops.configured(store,key)
   if 'start'in cfg:rows.append((key,liveops.window(cfg,now)))
  day=datetime.datetime.fromtimestamp(now,liveops.ZONE).date().isoformat()
- return hashlib.sha256(json.dumps([store.db.execute("SELECT coalesce(sum(version),0)FROM ops_records WHERE key LIKE 'activity:%'OR key LIKE 'event-revision:%'OR key='wheel-prizes'").fetchone()[0],day,rows],sort_keys=True).encode()).hexdigest()
+ return hashlib.sha256(json.dumps([store.db.execute("SELECT coalesce(sum(version),0)FROM ops_records WHERE key LIKE 'activity:%'OR key LIKE 'event-revision:%'OR key='wheel-prizes'OR key='sp-banners'").fetchone()[0],day,rows],sort_keys=True).encode()).hexdigest()
 
 class Admin:
  def __init__(self,store,token,online_ids,flush):self.store=store;self.token=token;self.online_ids=online_ids;self.flush=flush;self.started=time.time()
@@ -53,6 +54,8 @@ class Admin:
    if len(payload)>2:self.store.notify(p['userId'],'onSync',payload)
   self.flush()
  def tick(self):
+  from .sp_events import settle
+  settle(self.store)
   mark=stamp(self.store);before={pid:p for pid,p in self.snapshots().items()if p.get('privateOpsStamp')!=mark}
   if before:
    with self.store.transaction():self.sync(before)
@@ -95,7 +98,7 @@ class Admin:
   if path=='/admin/events':
    events=[self.event_view(e)for e in liveops.custom_events(s)if not e.get('deleted')];templates=self.templates()
    ids={int(r['entityId'])for event in events+templates for group in event['rewardGroups']for r in group['items']}
-   return {'events':events,'templates':templates,'rewardItems':[item_view(entities()[kind])for kind in sorted(ids)],'eventMetrics':[{'id':key,'label':label}for key,label in liveops.EVENT_METRICS.items()],'version':liveops.revision(s)}
+   return {'events':events,'templates':templates,'rewardItems':[item_view(entities()[kind])for kind in sorted(ids)],**self.sp_data(),'eventMetrics':[{'id':key,'label':label}for key,label in liveops.EVENT_METRICS.items()],'version':liveops.revision(s)}
   if path=='/admin/calendar':return {'items':liveops.calendar(s,int(req.query['start']),int(req.query['end'])),'timezone':'Asia/Ho_Chi_Minh'}
   if path=='/admin/gacha':return self.gacha()
   if path=='/admin/giftcodes':return {'items':self.codes()}
@@ -132,6 +135,12 @@ class Admin:
     groups=[{'label':f'Ô quay {i+1}','items':[{'entityId':kind,'count':count,'extra':{}}]}for i,(kind,count,weight)in enumerate(liveops.prizes(self.store))]
    result.append({'id':key,'title':title,'period':period,'enabled':cfg.get('enabled',True),'open':liveops.is_open(self.store,key),'description':cfg.get('description',''),'schedule':{k:cfg[k]for k in('start','end','repeat','until')}if'start'in cfg else None,'version':row[0]if row else 0,'rewards':reward_rows,'rewardGroups':groups,'options':options,'clientVisibility':'Nút vòng quay có thể còn hiện trên client cũ; server chặn lượt quay khi đóng'if key.startswith('dial:')else'Theo thời gian và dữ liệu activity của game'})
   return result
+ def sp_data(self):
+  from . import sp_events
+  cfg=sp_events.config(self.store);row=self.store.db.execute('SELECT version FROM ops_records WHERE key=?',(sp_events.KEY,)).fetchone()
+  roles=sp_events.role_catalog()
+  for r in roles:r['item']=item_view(entities()[r['roleId']]);r['ticket']=item_view(entities()[r['ticketId']])
+  return {'spBanners':[{**b,'settlement':liveops.record(self.store,'sp-settled:'+b['id'])}for b in cfg['banners']],'spVersion':row[0]if row else 0,'spRoles':roles,'spDefaults':sp_events.defaults(),'spCalendarSource':'private-server-rule'}
  def codes(self):
   rows=[]
   for r in self.store.db.execute('SELECT *FROM giftcodes ORDER BY rowid DESC'):
@@ -158,7 +167,7 @@ class Admin:
    body=await req.json();before=self.snapshots()
    with self.store.transaction():
     self.mutate(body);action=str(body.get('action'));self.store.audit(action if action in('giftcode','grant','set_gm','gacha_reset','gacha_entry','event')else'admin_'+action,body)
-    if action in('event','event_save','event_toggle','event_delete','activity_config','wheel_prizes','grant','grant_items','player_update','set_gm','send_mail'):self.sync(before)
+    if action in('event','event_save','event_toggle','event_delete','activity_config','sp_banner_save','sp_credit','wheel_prizes','grant','grant_items','player_update','set_gm','send_mail'):self.sync(before)
    return web.json_response({'ok':True,'version':liveops.revision(self.store)})
   except (ValueError,KeyError,TypeError,sqlite3.IntegrityError)as e:return web.json_response({'error':str(e)if isinstance(e,ValueError)else'Dữ liệu không hợp lệ hoặc mã đã tồn tại'},status=409 if'cửa sổ khác'in str(e)else 400)
  def mutate(self,b):
@@ -181,6 +190,18 @@ class Admin:
    if type(e['enabled'])is not bool:raise ValueError('Trạng thái không hợp lệ')
    if a=='event_delete':e['deleted']=True
    s.db.execute('UPDATE events SET data=?WHERE id=?',(json.dumps(e,ensure_ascii=False),b['id']));liveops.put(s,'event-revision:'+b['id'],{'updated':int(time.time())});return
+  if a=='sp_banner_save':
+   from .sp_events import save
+   save(s,b);return
+  if a=='sp_credit':
+   from . import sp_events
+   row=s.db.execute('SELECT account FROM players WHERE id=?',(integer(b.get('player'),'Nhân vật',1),)).fetchone()
+   if not row:raise ValueError('Không có người chơi')
+   p=s.player(row[0]);banner=sp_events.current(s)
+   if not banner:raise ValueError('Không có banner đang mở')
+   sp_events.state(p,banner)['credit']+=integer(b.get('amount'),'Điểm nạp riêng',1,10**9)
+   from .activities import refresh
+   refresh(s,p);s.save(p);return
   if a=='activity_config':
    cfg=liveops.validate_activity(b['id'],b)
    if 'rewards'in cfg:

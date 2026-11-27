@@ -31,7 +31,7 @@ class GMControlsTests(unittest.TestCase):
   self.call('setRole',{'teamIndex':1,'values':{'level':50}});p=self.store.player(1)
   self.assertEqual(p['team']['roles']['1']['level'],50);self.assertEqual(p['vip']['level'],16);self.assertEqual(p['vip']['topUpMoney'],0);self.assertEqual(p['timesMaxMap']['actionPoint'],159);self.assertEqual(p['gem'],777)
   self.assertEqual(self.store.player(2)['level'],1)
-  self.assertEqual(len(p['extra']['goodsList']),6);self.assertTrue(p['team']['roles']['1']['power']>0)
+  self.assertEqual(len(p['extra']['goodsList']),10);self.assertTrue(p['team']['roles']['1']['power']>0)
   for action,args in [('setPlayer',{'values':{'level':1}}),('setPlayer',{'values':{'level':101}}),('setPlayer',{'values':{'vipLevel':17}}),('setPlayer',{'values':{'privateGM':True}}),('setRole',{'teamIndex':999,'values':{'level':5}})]:
    before=copy.deepcopy(self.store.player(1))
    with self.assertRaises(ValueError):self.call(action,args)
@@ -39,7 +39,7 @@ class GMControlsTests(unittest.TestCase):
  def test_web_level_vip_update_push_consumes_actual_eng_home_and_vip_models(self):
   admin=Admin(self.store,'not-a-real-token',lambda:{1},lambda:None);before=admin.snapshots()
   with self.store.transaction():admin.mutate({'action':'player_update','player':1,'values':{'level':99,'vipLevel':16}});admin.sync(before)
-  push=json.loads(self.store.db.execute("SELECT data FROM notifications WHERE account=1 AND event='onSync' ORDER BY id DESC").fetchone()[0]);self.assertEqual(len(push['extra']['goodsList']),6)
+  push=json.loads(self.store.db.execute("SELECT data FROM notifications WHERE account=1 AND event='onSync' ORDER BY id DESC").fetchone()[0]);self.assertEqual(len(push['extra']['goodsList']),10)
   payload={'profile':before[1],'deltas':[push],'checkHome':True,'checkCommerce':True,'checkManagedEvents':True,'moduleOverrides':{'topUpPanel':patch_optional_vip_gifts((ROOT/'tests/fixtures/client_topUpPanel.js').read_text())}}
   r=subprocess.run(['node',str(ROOT/'tests/fixtures/client_profile.cjs')],input=json.dumps(payload),capture_output=True,text=True);self.assertEqual(r.returncode,0,r.stderr)
   data=json.loads(r.stdout);self.assertEqual(data['commerceViews']['goods']['vip'],16);self.assertEqual(len(data['commerceViews']['goods']['topUpItems']),6)

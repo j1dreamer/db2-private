@@ -54,12 +54,15 @@ def refresh(store,p):
     # This panel unconditionally reads advanced.reachMap even without a paid tier.
     task['advanced']={'reachMap':{'buyGoodsId_604_times':0},'rewards':[]}
     loginReach={'loginDays2':min(7,len(weekly['loginDays'])+weekly['filled']),'buyGoods_1':int(p['buyGoodsTimesMap'].get('1',0)>0)}
-    made('privateLogin','loginTopUp',week,loginReach,[('94x1',{'loginDays2':i})for i in range(1,8)]+[('95x1',{'loginDays2':i,'buyGoods_1':1})for i in range(1,8)],isDream=True,isUnlockMore=True)
+    made('privateLogin','loginTopUp',week,loginReach,[('94x1',{'loginDays2':i})for i in range(1,8)]+[('95x1',{'loginDays2':i,'buyGoods_1':1})for i in range(1,8)],isUnlockMore=True)
+    for entry in maps['privateLogin']['rewards'][7:]:entry['isAdvanced']=True
     made('upgradeVip','upgradeVip','lifetime',{'vipLevel':p['vip']['level']},[(f'119x1,112x{i*10}',{'vipLevel':i})for i in range(1,17)])
     selected=state.get('selected');made('privateSelect','selectDropList','lifetime',{'selected':int(selected is not None)},[(SELECT[selected]if selected is not None else SELECT[0],{'selected':1})],selectDropListDescs=SELECT,selectDropIdxs=[]if selected is None else [selected])
     repeatReach={f'buyGoods_{i}':int(p['buyGoodsTimesMap'].get(str(i),0)>0)for i in (1,2)};repeatReach['nextReceiveWaitTime']=now
     specs=[('101x10000',{'buyGoods_1':1,'nextReceiveWaitTime':daily['repeat'].get('0',0)}),('102x25',{'buyGoods_2':1,'nextReceiveWaitTime':daily['repeat'].get('1',0)})]
     maps['endless_reward']=event('endless_reward','repeatReceive',start,end,repeatReach,[reward(desc,need,False,repeatReach)for desc,need in specs])
+    card_fields=['monthCardExpire','bigMonthCardExpire','yearCardExpire','weekCardExpire']
+    made('buyCard7day','buyGoods',day,{k:p.get(k,0)for k in card_fields},[(f'102x{n}',{key:now})for key,n in zip(card_fields,[50,100,150,25])])
     made('dreamRollQuest','login',week,{'dreamRollTimes':weekly['dreamTimes']},[(f'93x{v*10}',{'dreamRollTimes':v})for v in (5,10,20)],isDream=True)
     spReach={'wishTimes':weekly['spLuck'],'spWishGemTimes':daily['spGem']}
     maps['privateSpWish']=event('privateSpWish','spWish',ws,we,spReach,[],spClassId=55,maxLuck=20,costGem=300,costGemMaxTiems=10,rdDropListDesc=SP_POOL)
@@ -73,6 +76,11 @@ def refresh(store,p):
     p['rankScores']['sp_wish_times']=weekly['spTimes']
     dream=weekly['dream'];p['activity']['dream']={**dream,'activityItem':{'start_time':ws,'end_time':we,'fillReward':'93x100','rewardMap':{str(i):'event'if i in EVENT_TILES else ['101x5000','20001x5','93x10','23001x5'][(i-1)%4]for i in range(1,59)}}}
     liveops.apply(store,p)
+    for index,ident in enumerate((902,903,904,901)):
+        goods=p['extra']['goodsList'].get(str(ident))
+        if goods:goods['dailyGem']=sum(r['count']for r in description(maps['buyCard7day']['rewards'][index]['dropListDesc'])if r['entityId']==102)
+    from . import sp_events
+    sp_events.refresh(store,p)
     return before!=json.dumps(p,sort_keys=True)
 
 def name_arg(args,allowed):
@@ -94,7 +102,10 @@ def claim_batch(store,account,names,indices):
         p=store.player(account);before=snapshot(p);day,_,_,week,_,_=periods();counts={};state=p['privateActivities'];now=time.time()
         for name,index in normalized:
             config=p['activity']['map'].get(name)
-            if config and name in ('saveGemUpgradeLevel','saveGemUpgradeLevelFree','task_active','privateLogin','upgradeVip','privateSelect','endless_reward','dreamRollQuest'):
+            if name.startswith('spEvent_'):
+                from .sp_events import claim
+                _merge(counts,claim(store,p,name,index))
+            elif config and name in ('saveGemUpgradeLevel','saveGemUpgradeLevelFree','task_active','privateLogin','upgradeVip','privateSelect','endless_reward','dreamRollQuest','buyCard7day'):
                 from .liveops import require_open
                 require_open(store,name)
                 if index>=len(config['rewards']):raise ValueError('Phần thưởng không tồn tại')
@@ -180,6 +191,16 @@ def handle(store,account,route,args):
             if state.get('selected')is not None:raise ValueError('Đã chốt lựa chọn')
             state['selected']=idx
         elif action=='fillTaskActive':
+            if str(args.get('activityName','')).startswith('spEvent_'):
+                from . import sp_events
+                banner=sp_events.current(store);dto=p['activity']['map'].get(args['activityName'])
+                if not banner or not dto or dto['type']!='taskActive':raise ValueError('Chiến lệnh không mở')
+                counter=sp_events.state(p,banner)
+                if not(counter.get('passUnlocked')or banner['passUnlockGem']==0):raise ValueError('Chưa mở tinh anh')
+                if banner['end']-time.time()>2*86400:raise ValueError('Chỉ bù trong 2 ngày cuối')
+                missing=max(0,banner['pass'][-1]['target']-dto['reachMap']['taskActivePoint'])
+                if missing:consume(p,102,missing*2);counter['passFilled']=counter.get('passFilled',0)+missing
+                refresh(store,p);store.save(p);return delta(before,p,route,{})
             name_arg(args,{'task_active'});cost=args.get('oneCostGem',2)
             if type(cost)is not int or cost!=2:raise ValueError('Giá event không khớp')
             missing=max(0,100-p['task']['dailyActivePoint']-daily['filled'])
@@ -216,18 +237,24 @@ def handle(store,account,route,args):
                 boxes[str(score)]=True;awards=description(info['activityItem']['boxDropListDescs'][json.loads(info['activityItem']['needScoresDesc']).index(score)])
         elif action=='spWish':
             name_arg(args,{'privateSpWish'});times=times_arg(args)
-            if stack_count(p,11)>=times:consume(p,11,times)
+            from . import sp_events
+            banner=sp_events.current(store)
+            if sp_events.config(store)['banners']and not banner:raise ValueError('Không có banner SP đang mở')
+            counter=sp_events.state(p,banner)if banner else weekly
+            luck_key='luck'if banner else'spLuck';times_key='times'if banner else'spTimes'
+            gem_counter=counter if banner else daily;gem_key='gemTimes'if banner else'spGem'
+            ticket=banner['ticketId']if banner else 11
+            if stack_count(p,ticket)>=times:consume(p,ticket,times)
             else:
-                if daily['spGem']+times>p['activity']['map']['privateSpWish']['costGemMaxTiems']:raise ValueError('Hết lượt quay SP bằng gem hôm nay')
-                consume(p,102,p['activity']['map']['privateSpWish']['costGem']*times);daily['spGem']+=times
+                if gem_counter[gem_key]+times>p['activity']['map']['privateSpWish']['costGemMaxTiems']:raise ValueError('Hết lượt quay SP bằng gem hôm nay')
+                consume(p,102,p['activity']['map']['privateSpWish']['costGem']*times);gem_counter[gem_key]+=times
+            from .gameplay import choose
+            pool=banner['pool']if banner else [{'entityId':105504,'count':1,'extra':{'star':3},'weight':5}]+[{'entityId':k,'count':n,'extra':{},'weight':w}for k,n,w in [(20001,20,25),(23001,20,25),(119,1,20),(120,1,10),(21001,5,15)]]
             for _ in range(times):
-                guaranteed=weekly['spLuck']>=p['activity']['map']['privateSpWish']['maxLuck']-1;role=guaranteed or secrets.randbelow(100)<5
-                if role:awards.append({'entityId':105504,'count':1,'extra':{'star':3}});weekly['spLuck']=0
-                else:
-                    # Weights conditional on not selecting the five-percent role.
-                    from .gameplay import choose
-                    row=choose([{'entityId':k,'count':n,'extra':{},'weight':w}for k,n,w in [(20001,20,25),(23001,20,25),(119,1,20),(120,1,10),(21001,5,15)]]);row.pop('weight');awards.append(row);weekly['spLuck']+=1
-                weekly['spTimes']+=1
+                guaranteed=counter[luck_key]>=p['activity']['map']['privateSpWish']['maxLuck']-1
+                row=copy.deepcopy(pool[0])if guaranteed else copy.deepcopy(choose(pool));row.pop('weight',None);awards.append(row)
+                counter[luck_key]=0 if row['entityId']==pool[0]['entityId']else counter[luck_key]+1
+                counter[times_key]+=1
         if action in ('dreamRoll','rollDial','scorePoint','spWish'):temp['dropList']=awards
         if awards:temp['entityCountMap']=grant(p,awards)
         refresh(store,p);store.save(p);store.audit('private_activity',{'player':p['id'],'route':route,'args':args,'rewards':awards})

@@ -1,0 +1,212 @@
+{
+  "build": "eng-sp-sss-sp-events-v7",
+  "profile_schema": 30,
+  "client_rebuild_required": false,
+  "native_playable_verified": false,
+  "focused_tests": {
+    "tests": 44,
+    "passed": true,
+    "scope": "activities, commerce, admin API, objectives, SP campaigns"
+  },
+  "followup_gm_and_sp_tests": {
+    "tests": 11,
+    "passed": true
+  },
+  "final_sp_tests": {
+    "tests": 8,
+    "passed": true
+  },
+  "full_suite_attempt": {
+    "tests": 303,
+    "passed": 301,
+    "failed": 2,
+    "failures": "Two GM assertions still expected 6 goods. Four real private Gem cards add 4 goods, so expected counts updated to 10. The GM suite then passed in the followup run; non-card topUpItems remain 6."
+  },
+  "browser": {
+    "passed": true,
+    "flows": [
+      "login",
+      "catalog-search-focus",
+      "real-item-detail",
+      "grant-item-to-persisted-player",
+      "per-instance-rolled-item-details",
+      "edit-player-currency",
+      "edit-player-level-and-vip",
+      "grant-gm-rights",
+      "system-mail-with-reward",
+      "giftcode-with-items",
+      "custom-spending-objective-config-and-card",
+      "event-selected-item-image",
+      "keyboard-combobox-and-escape",
+      "event-item-60-persists-and-card-preview",
+      "create-scheduled-event",
+      "pause-event",
+      "edit-live-SP-price-limit-pity",
+      "system-event-and-wheel-reward-images",
+      "item-autocomplete",
+      "gacha-weight-edit",
+      "eight-slot-wheel-config",
+      "all-18-system-event-editors",
+      "three-choice-gift-config",
+      "score-milestones-and-boxes",
+      "dream-board-and-lap-rewards",
+      "event-reward-images-mobile-no-overflow",
+      "server-goal-mobile-editor",
+      "source-provenance-desktop-and-mobile",
+      "item-source-and-new-vietnamese-attribution",
+      "calendar-desktop",
+      "calendar-mobile-list",
+      "sp-editor-real-images-role-ticket-migration",
+      "sp-custom-rewards-topup-milestones",
+      "sp-sequential-timeline",
+      "sp-mobile-editor"
+    ],
+    "errors": [],
+    "dataset": "isolated temporary SQLite, never the running user database"
+  },
+  "source_evidence": {
+    "main": "client/main.decoded.js",
+    "modules": [
+      "activityPanel",
+      "dreamExtActivityPanel",
+      "spActivityPanel",
+      "taskActiveTopUpPanel"
+    ],
+    "ticket_lookup": "dataApi.entity.findOneByExtra(\"wishSpClassId\", activity.spClassId)",
+    "original_timeline_found": false,
+    "schedule_origin": "private-server-rule",
+    "compatible_sp_classes": [
+      {
+        "roleId": 105504,
+        "classId": 55,
+        "ticketId": 11,
+        "name": "Broly "
+      },
+      {
+        "roleId": 105604,
+        "classId": 56,
+        "ticketId": 12,
+        "name": "Goku Vô Cực"
+      },
+      {
+        "roleId": 105704,
+        "classId": 57,
+        "ticketId": 13,
+        "name": "Vegito"
+      },
+      {
+        "roleId": 105804,
+        "classId": 58,
+        "ticketId": 14,
+        "name": "Gogeta"
+      },
+      {
+        "roleId": 106004,
+        "classId": 60,
+        "ticketId": 15,
+        "name": "Shanpa"
+      },
+      {
+        "roleId": 106104,
+        "classId": 61,
+        "ticketId": 16,
+        "name": "Beerus"
+      },
+      {
+        "roleId": 106204,
+        "classId": 62,
+        "ticketId": 17,
+        "name": "Whis"
+      },
+      {
+        "roleId": 107604,
+        "classId": 76,
+        "ticketId": 18,
+        "name": "Son Goku Bản Năng Vô Cực"
+      },
+      {
+        "roleId": 107704,
+        "classId": 77,
+        "ticketId": 19,
+        "name": "Broly Full Force"
+      },
+      {
+        "roleId": 107804,
+        "classId": 78,
+        "ticketId": 20,
+        "name": "Gogeta SSJ4"
+      },
+      {
+        "roleId": 107904,
+        "classId": 79,
+        "ticketId": 21,
+        "name": "Jiren Hồn Đỏ"
+      },
+      {
+        "roleId": 108004,
+        "classId": 80,
+        "ticketId": 22,
+        "name": "Vegito SSJ Blue"
+      },
+      {
+        "roleId": 108104,
+        "classId": 81,
+        "ticketId": 23,
+        "name": "Gogeta SSJ Blue"
+      },
+      {
+        "roleId": 108204,
+        "classId": 82,
+        "ticketId": 25,
+        "name": "Gohan BEAST"
+      },
+      {
+        "roleId": 108304,
+        "classId": 83,
+        "ticketId": 24,
+        "name": "Black Golden Frieza"
+      },
+      {
+        "roleId": 108404,
+        "classId": 84,
+        "ticketId": 26,
+        "name": "Vegeta Ultra Ego"
+      },
+      {
+        "roleId": 108504,
+        "classId": 85,
+        "ticketId": 27,
+        "name": "Vegito Vô Cực"
+      },
+      {
+        "roleId": 108604,
+        "classId": 86,
+        "ticketId": 28,
+        "name": "Trunks (XENO)"
+      },
+      {
+        "roleId": 108704,
+        "classId": 87,
+        "ticketId": 29,
+        "name": "Android 21"
+      },
+      {
+        "roleId": 108804,
+        "classId": 88,
+        "ticketId": 30,
+        "name": "Piccolo (Orange)"
+      }
+    ]
+  },
+  "reported_needMap_error": {
+    "cause": "privateLogin.isUnlockMore had no isAdvanced reward flags; sharing this mutable rewards list with dreamExt caused an additional consumer conflict",
+    "fixed_dto_and_original_generators_checked": true,
+    "native_user_retest_pending": true
+  },
+  "artifacts": [
+    "docs/sp-editor-desktop.png",
+    "docs/sp-timeline-mobile.png",
+    "docs/sp-editor-mobile.png"
+  ],
+  "deployment_on_user_vps_verified": false
+}

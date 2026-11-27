@@ -14,7 +14,7 @@ class CommerceTests(unittest.TestCase):
  def call(self,action,args=None):
   route='logic.playerHandler.'+action;r=commerce.handle(self.store,1,route,args or {});self.seen.add(route);return r
  def test_all_nine_routes_charge_owned_resources_and_persist_limits(self):
-  r=self.call('topUpGoodsList');self.assertEqual(len(r['extra']['goodsList']),6)
+  r=self.call('topUpGoodsList');self.assertEqual(len(r['extra']['goodsList']),10)
   self.call('buyGemGoods',{'id':1,'costGem':300});p=self.store.player(1);self.assertEqual(p['gem'],99700);self.assertEqual(stack_count(p,2),1);self.assertEqual(p['vip']['topUpMoney'],0)
   insert(p,1,20);insert(p,2,20);insert(p,113,20);insert(p,119,20);insert(p,105,1000);insert(p,116,1000);insert(p,107,1000);self.store.save(p)
   self.call('costTopUpPoint',{'goodsId':2});self.call('costTopUpPoint2',{'goodsId':3})

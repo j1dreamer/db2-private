@@ -28,6 +28,7 @@ TEMPLATES={
  'saveGemUpgradeLevelFree':('Quà gửi gem hằng ngày','daily'),
  'task_active':('Nhiệm vụ năng động','daily'),
  'privateLogin':('Đăng nhập 7 ngày','weekly'),
+ 'buyCard7day':('Quà thẻ Gem riêng','daily'),
  'upgradeVip':('Quà cấp VIP','lifetime'),
  'privateSelect':('Quà tự chọn','lifetime'),
  'endless_reward':('Quà nhận định kỳ','daily'),
@@ -218,7 +219,8 @@ def calendar(store,start,end):
  integer(start,'Từ ngày',0,4102444800);integer(end,'Đến ngày',0,4102444800)
  if not 0<end-start<=366*86400:raise ValueError('Xem lịch tối đa 366 ngày')
  events=[]
- rows=custom_events(store)+[{**cfg,'id':name,'name':title,'source':'builtin'}for name,(title,_)in TEMPLATES.items()if'start'in(cfg:=configured(store,name))]
+ from .sp_events import config
+ rows=[{**b,'name':b['name'],'source':'sp','repeat':'none'}for b in config(store)['banners']]+custom_events(store)+[{**cfg,'id':name,'name':title,'source':'builtin'}for name,(title,_)in TEMPLATES.items()if'start'in(cfg:=configured(store,name))]
  for e in rows:
   if e.get('deleted'):continue
   step={'daily':86400,'weekly':604800}.get(e.get('repeat'),0);i=max(0,(start-e['end'])//step)if step else 0

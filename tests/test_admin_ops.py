@@ -132,3 +132,28 @@ class ImageCodecTests(unittest.TestCase):
   p=next((Path(__file__).resolve().parents[1]/'web/assets/items').glob('*.png'));raw=p.read_bytes();key=b'test-image-key12';iv=b'test-image-iv123';key=key.ljust(16,b'0');iv=iv.ljust(16,b'0');enc=Cipher(algorithms.AES(key),modes.CBC(iv)).encryptor();encrypted=enc.update(raw[:64]+b'\x10'*16)+enc.finalize()+raw[64:]
   self.assertTrue(valid_png(raw));self.assertEqual(decode_png(encrypted,key,iv),raw)
   with self.assertRaises(ValueError):decode_png(encrypted[:-1]+bytes([encrypted[-1]^1]),key,iv)
+
+ async def test_sp_campaign_admin_images_calendar_credit_and_authentication(self):
+  from server import sp_events
+  now=int(time.time());b={**sp_events.defaults(),'action':'sp_banner_save','id':'qa_sp','name':'SP QA','start':now-10,'end':now+86400,'enabled':True,'version':0}
+  r=await self.client.post('/admin/api',json=b);self.assertEqual(r.status,401)
+  await self.post(b);d=await self.get('/admin/events');self.assertEqual(d['spVersion'],1);self.assertEqual(len(d['spBanners']),1)
+  for r in d['spRoles'][:2]:
+   for image in (r['item']['image'],r['ticket']['image']):self.assertEqual((await self.client.get(image)).status,200)
+  await self.post({**b,'name':'Stale'},409)
+  await self.post({'action':'sp_credit','player':1,'amount':20000});p=self.store.player(1)
+  self.assertEqual(p['activity']['map']['spEvent_qa_sp_topup']['rewards'][0]['status'],2);self.assertEqual(p['vip']['topUpMoney'],0)
+  claim_events(self.store,1,['spEvent_qa_sp_topup'],[0])
+  with self.assertRaises(ValueError):claim_events(self.store,1,['spEvent_qa_sp_topup'],[0])
+  cal=await self.get(f'/admin/calendar?start={now-100}&end={now+2*86400}');self.assertTrue(any(r['source']=='sp'for r in cal['items']))
+ async def test_sp_changes_push_to_online_player_and_tick_tracks_boundary(self):
+  from server.admin import Admin,stamp
+  from server import sp_events
+  now=int(time.time());control=Admin(self.store,'admin-test',lambda:{1},lambda:None);before=control.snapshots()
+  with self.store.transaction():
+   sp_events.save(self.store,{**sp_events.defaults(),'id':'starts_soon','start':now+10,'end':now+86400,'version':0});control.sync(before)
+  before_mark=stamp(self.store)
+  with patch('time.time',return_value=now+11):
+   self.assertNotEqual(before_mark,stamp(self.store));control.tick()
+   self.assertTrue(self.store.player(1)['activity']['map']['privateSpWish']['spClassId'])
+   self.assertGreater(self.store.db.execute("SELECT count(*)FROM notifications WHERE event='onSync'").fetchone()[0],0)

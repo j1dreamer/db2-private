@@ -103,5 +103,10 @@
     "id": "autoplans",
     "source": "private-client-implementation",
     "description": "Kịch bản auto có tên, điểm kéo và timing, ghi/lưu/phát riêng do dự án viết theo mô hình SDK X7 đọc tĩnh; không phải mã gameplay ENG hoặc SDK X7 được nhúng. Tương đương native chưa xác minh."
+  },
+  {
+    "id": "sp-campaign-v7",
+    "source": "private-server-rule",
+    "description": "Lịch SP do quản trị xếp; 6 ô pool, bảo hiểm, vé, quà đăng nhập/chiến lệnh, gói Gem và điểm nạp quản trị, kết toán BXH qua thư là luật riêng. Tướng/vé/ảnh và DTO màn dùng bảng ENG, không nhận là timeline hoặc luật backend gốc."
   }
 ]

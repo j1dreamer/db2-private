@@ -141,6 +141,21 @@ let entryViews;if(input.entryResponses){const responses=input.entryResponses;cac
 let tournamentReplay;if(input.tournamentReport)tournamentReplay=load('nvnBattleLogPanel').genData(input.tournamentReport);
 let tournamentViews;if(input.checkTournaments){cc.ScrollView={};for(const name of ['doubleBattleScene','worshipBattleScene'])delete cache[name];const double=load('doubleBattleScene'),worship=load('worshipBattleScene');tournamentViews={themes:double.genData(),double:double.genWorshipData(1),doubleBattle:double.genBattleData(),worship:worship.genData(),worshipBattle:worship.genBattleData()};}
 let eventViews;if(input.checkEvents){cc.ScrollView={};for(const name of ['dialPanel','dial2Panel','spActivityPanel','dreamExtActivityPanel','endlessRewardPanel','scorePointPanel'])delete cache[name];eventViews={dial:load('dialPanel').genData('luck'),pay:load('dial2Panel').genData(),sp:load('spActivityPanel').genData(),dream:load('dreamExtActivityPanel').genData(),repeat:load('endlessRewardPanel').genData(),score:load('scorePointPanel').genData()};}
+let eventContracts;
+if(input.checkEventContracts){
+ delete cache.activityPanel;const view=load('activityPanel').genData();
+ const login=view.activitys.find(x=>x.name==='privateLogin');
+ if(!login.advancedRewards.length||!login.advancedRewards[0].needMap)throw Error('Missing advanced login needMap');
+ const gate=Object.keys(login.advancedRewards[0].needMap)[1];
+ if(!player.extra.goodsList[gate.split('_')[1]])throw Error('Missing login unlock goods');
+ for(const v of view.activitys.filter(x=>x.name.startsWith('buyCard_')))if(v.goodsList.some(x=>!x))throw Error('Missing card goods');
+ const sp=load('spActivityPanel').genData();
+ for(const v of sp.activitys.filter(x=>x.type==='login'||x.type==='taskActive')){
+  if(!v.advanced||v.advanced.rewards.length!==v.rewards.length)throw Error('Advanced tiers mismatch');
+  for(const a of v.advanced.rewards)if(!Object.keys(a.needMap)[1])throw Error('Missing SP unlock key');
+ }
+ eventContracts={loginAdvanced:true,cardGoods:true,spAdvanced:true};
+}
 let managedEvents;if(input.checkManagedEvents){delete cache.playerItem;load('playerItem');delete cache.activityPanel;managedEvents=load('activityPanel').genData();}
 let activityCalls;if(input.checkActivityCallbacks){activityCalls=[];cache.baseView.addLoading=()=>{};cache.baseView.addMessageBox=(message,yes)=>yes();cache.playerHandler.fillTaskActive=(name,cost,callback)=>{activityCalls.push({name,cost});callback({});};cache.playerHandler.fillLoginTopUp=(name,callback)=>{activityCalls.push({name});callback({});};delete cache.activityPanel;delete cache.dreamExtActivityPanel;const task=new (load('activityPanel'))();task.update_=()=>activityCalls.push({updated:'task'});task.onTaskActiveBuyActive_({target:{data:{activityName:'privateTask',maxActive:100,curActive:20}}});const login=new (load('dreamExtActivityPanel'))();login.update_=()=>activityCalls.push({updated:'login'});login.onBuyActive_({target:{data:{activityName:'privateLogin',maxPoint:7,curPoint:1}}});}
 let boxViews;
@@ -155,4 +170,4 @@ if(input.checkBoxes){
 let point;
 if(input.checkPoint)point=load('pointScene').genData();
 let roles;if(input.checkRoles){if(!cache.roleItem.genData){delete cache.roleItem;load('roleItem');}roles=Object.values(player.team.roles).map(r=>load('roleItem').genData(r));}
-player.destroy();process.stdout.write(JSON.stringify({boxViews,snapshots,roleScenes,effects,topBar,quick,home,daily,point,roles,teamItems,friendship,arenaThree,guildView,bossViews,practiceViews,eyeView,endlessViews,expeditionViews,commerceViews,peakSelector,cooperativeViews,islandViews,guildWarViews,tournamentControls,resourceViews,entryViews,tournamentReplay,tournamentViews,eventViews,managedEvents,activityCalls,guildMemberIds:(player.guild?.members||[]).map(member=>member.playerId),rosterNavigationCount,rosterCachedIds:Object.keys(cache.sceneManager.teamData?.roleSceneMap||{}),gem:player.gem,bag:player.bag.items,team:player.team.roles}));
+player.destroy();process.stdout.write(JSON.stringify({eventContracts,boxViews,snapshots,roleScenes,effects,topBar,quick,home,daily,point,roles,teamItems,friendship,arenaThree,guildView,bossViews,practiceViews,eyeView,endlessViews,expeditionViews,commerceViews,peakSelector,cooperativeViews,islandViews,guildWarViews,tournamentControls,resourceViews,entryViews,tournamentReplay,tournamentViews,eventViews,managedEvents,activityCalls,guildMemberIds:(player.guild?.members||[]).map(member=>member.playerId),rosterNavigationCount,rosterCachedIds:Object.keys(cache.sceneManager.teamData?.roleSceneMap||{}),gem:player.gem,bag:player.bag.items,team:player.team.roles}));

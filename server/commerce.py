@@ -16,6 +16,10 @@ GOODS={
  5:{'name':'Xúc xắc thường ×1','cost':50,'point':1,'rewards':'94x1','limit':20},
  6:{'name':'Xúc xắc vàng ×1','cost':100,'point':2,'rewards':'95x1','limit':5},
 }
+# Private Gem cards fill the original client's mandatory week/month/year tabs.
+CARDS={901:('weekCardExpire','isWeekCard',7,25),902:('monthCardExpire','isMonthCard',30,50),903:('bigMonthCardExpire','isBigMonthCard',30,100),904:('yearCardExpire','isYearCard',365,150)}
+for ident,(field,flag,days,daily)in CARDS.items():GOODS[ident]={'name':'Thẻ Gem riêng · '+str(days)+' ngày','cost':days*daily,'point':days*daily,'rewards':'102x1','limit':1}
+
 EXCHANGES={
  'exchange':{'moneyId':113,'list':[{'id':1,'entityId':20001,'count':5,'price':1,'maxBuyTimes':10,'extra':{}}]},
  'exchange2':{'list':[{'id':1,'getDesc':'120x1','needDesc':'119x5','maxBuyTimes':1}]},
@@ -31,6 +35,8 @@ def catalog(p):
     counters=p.get('privateCommerce',{}).get('counts',{});result={}
     for ident,offer in GOODS.items():
         used=counters.get('goods:'+str(ident),0);result[str(ident)]={'id':ident,'name':offer['name'],'price':offer['cost'],'privateCostGem':offer['cost'],'needPoint':offer['point'],'imgId':ident,'show':'$1 Gem','gem':0,'gift':0,'firstGiftRate':0,'isFirstDouble':False,'priceRate':1,'isRecommend':False,'isMonthCard':False,'isBigMonthCard':False,'isYearCard':False,'isWeekCard':False,'dailyGem':0,'point':False,'desc':'Đổi bằng gem/phiếu trong game. Còn lại hôm nay: '+str(max(0,offer['limit']-used))}
+    for ident,(field,flag,days,daily)in CARDS.items():
+        result[str(ident)].update({flag:1,'gem':1,'dailyGem':daily})
     return result
 
 def refresh(p):
@@ -38,6 +44,7 @@ def refresh(p):
     before=json.dumps(p,sort_keys=True);private=p.setdefault('privateCommerce',{})
     today=p.get('privateDay')or datetime.datetime.fromtimestamp(time.time(),datetime.timezone(datetime.timedelta(hours=7))).date().isoformat()
     if private.get('day')!=today:private.update(day=today,counts={})
+    for field,flag,days,daily in CARDS.values():p.setdefault(field,0)
     p.setdefault('buyGoodsTimesMap',{});p['extra']['goodsList']=catalog(p);start,end=stamp_bounds()
     for name,config in EXCHANGES.items():
         value=copy.deepcopy(config);value.update(start_time=start,end_time=end)
@@ -64,6 +71,8 @@ def purchase(p,action,args):
         if sum(stack_count(p,kind)for kind in currencies)<required:raise ValueError('Không đủ phiếu riêng còn hạn')
         for kind in currencies:
             n=min(required,stack_count(p,kind));consume(p,kind,n);required-=n
+    if ident in CARDS:
+        field,flag,days,daily=CARDS[ident];p[field]=max(p.get(field,0),int(time.time()*1000))+days*86400000
     rewards=grant(p,description(offer['rewards']));p['privateCommerce']['counts'][key]=used+1;p['buyGoodsTimesMap'][str(ident)]=p['buyGoodsTimesMap'].get(str(ident),0)+1
     return rewards
 
@@ -88,7 +97,12 @@ def handle(store,account,route,args):
     action=route.rsplit('.',1)[-1]
     with store.transaction():
         p=store.player(account);before=snapshot(p);temp={'privateLocalPurchase':True}
-        if action in ('buyGemGoods','costTopUpPoint','costTopUpPoint2'):temp['entityCountMap']=purchase(p,action,args)
+        if action in ('buyGemGoods','costTopUpPoint','costTopUpPoint2'):
+            ident=args.get('id')if action=='buyGemGoods'else args.get('goodsId')
+            if str(ident)in p['extra']['goodsList']and p['extra']['goodsList'][str(ident)].get('spBannerId'):
+                from .sp_events import purchase as sp_purchase
+                temp['entityCountMap']=sp_purchase(store,p,action,args)
+            else:temp['entityCountMap']=purchase(p,action,args)
         elif action!='topUpGoodsList':temp['entityCountMap']=exchange(p,action,args)
         refresh(p)
         from .activities import refresh as refresh_activities
