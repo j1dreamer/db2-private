@@ -1,21 +1,24 @@
-DB2 ENG SSS/SP + GM V2 - MATCHED CLIENT AND SERVER
+DB2 ENG SSS/SP + GM - V6 SERVER EVENT OBJECTIVES
 
-1. Download the eng-sp-sss source ZIP into a NEW folder. Stop the old server.
-2. Install Python 3.10+ and Node.js LTS. Run start.bat from the new folder.
-3. Run Download-Clients.bat; it creates the complete APK and unsigned IPA automatically.
-   No old APK, Git or manual joining is required. Keep the cache to resume/reuse downloads.
-4. Put DB2-ENG-SPSSS-GM.apk beside Install-Android.bat. Start BlueStacks and enable ADB.
-   Run Install-Android.bat; enter the address BlueStacks shows (often 127.0.0.1:6610).
-5. Game server: http://127.0.0.1:20003. Register a NEW account if using a new database.
-6. Admin uses the same URL. Its token is in data/admin-token inside this NEW server folder.
-7. Grant GM in Admin > Players. The NEW client shows GM below Speed.
-   GM includes a searchable item/role list, quantities, player/role levels, VIP and resources.
+1. Stop the old server. Back up and preserve your data folder.
+2. Extract the eng-sp-sss source ZIP into a new folder, then copy your existing
+   ENG data folder there if you want to retain accounts and inventories.
+3. Install Python 3.10+ and Node.js LTS. Run start.bat from the new folder.
+4. Health must show eng-sp-sss-event-goals-v6, profile schema 30.
+5. Existing BoxInfo APK/IPA stay unchanged for this server/web update.
+   If you need the matched clients, Download-Clients.bat creates the full files:
+   DB2-ENG-SPSSS-BoxInfo.apk and DB2-ENG-SPSSS-BoxInfo-unsigned.ipa.
+6. For BlueStacks, enable ADB and run Install-Android.bat with the APK beside it.
+   Use the emulator's actual ADB port; game server is http://127.0.0.1:20003
+   when the matching adb reverse is active.
+7. Admin uses the same server URL. Its token is in data/admin-token.
+   Events now support Gem spending, adventure wins/sweeps and normal/advanced
+   draws. Select a goal/threshold and reward items with images in the event form.
+   Transactions count from the server upgrade forward, with no historical backfill.
+8. Ubuntu + systemd deployment: UBUNTU.md. Android server: TERMUX.md.
 
-Health must show build eng-sp-sss-gm-v2, schema 30. Update BOTH server and client.
-Native code and development signing identity stay original. IPA is unsigned and must
-be legitimately signed on your Mac. Use an actually reachable LAN/Tailscale address
-on an iPhone; 127.0.0.1 there does not refer to your laptop.
-
-Gameplay/data follow ENG, including original S/SS/SSS/SP groups. Private backend rules,
-GM, transport, translation additions and UI repairs are explicitly authored project code.
-Native end-to-end Android/iPhone gameplay is still unverified.
+IPA is unsigned and needs legitimate signing on your Mac. On an iPhone, use
+an actually reachable LAN/Tailscale server address; 127.0.0.1 is the phone itself.
+Gameplay/data follow ENG, including original S/SS/SSS/SP groups. Private backend
+rules and these event conditions are authored project code. Native end-to-end
+Android/iPhone play for this update remains unverified.

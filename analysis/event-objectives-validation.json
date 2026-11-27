@@ -1,0 +1,51 @@
+{
+  "build": "eng-sp-sss-event-goals-v6",
+  "profile_schema": 30,
+  "backend_tests": {
+    "passed": true,
+    "count": 281,
+    "seconds": 285.878,
+    "command": "python -m unittest discover -s tests -v"
+  },
+  "event_objective_targeted_tests": {
+    "passed": true,
+    "count": 6,
+    "seconds": 3.219
+  },
+  "browser": {
+    "passed": true,
+    "flows": 31,
+    "errors": [],
+    "report": "analysis/admin-browser-tests.json"
+  },
+  "verified": [
+    "Real gem-consuming gacha records 300 Gem; admin grants do not count",
+    "Normal/advanced ticket draws count without spending Gem",
+    "Successful sweeps count actual repetitions; forfeits and rejected sweeps do not count",
+    "Period reset, rollback and repeated profile saves do not create false progress",
+    "Existing recovered ENG activityPanel model accepts the event DTO and progress text",
+    "WebSocket RPC rejects client-forged progress and returns immediately updated legitimate progress",
+    "Reward claim persists 60 fragments and rejects duplicate claims",
+    "Goal/threshold editor works on desktop and mobile; reward pictures remain available"
+  ],
+  "metrics": [
+    "gem_spent",
+    "adventure_wins",
+    "summon_draws"
+  ],
+  "rules": "Project-authored server rules, not original ENG backend source. One objective and reward group per event ID per period. Transactions start collecting only after upgrade; no historical backfill. Pausing prevents claims but keeps metric collection.",
+  "sqlite_migration": "CREATE TABLE/INDEX IF NOT EXISTS event_metrics on startup; no profile schema increment or deletion",
+  "client_rebuild_required": false,
+  "native_android_ios_play_tested": false,
+  "user_database_used_for_tests": false,
+  "ubuntu_deployment": {
+    "ssh_connected": false,
+    "remote_runtime_verified": false,
+    "systemd_template": "deploy/db2.service",
+    "guide": "UBUNTU.md",
+    "capacity_benchmark": false
+  },
+  "screenshots": [
+    "docs/admin-event-objective-mobile.png"
+  ]
+}

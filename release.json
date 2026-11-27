@@ -1,7 +1,7 @@
 {
-  "version": "5.0.0-dev",
+  "version": "6.0.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-v5-dev",
+  "tag": "eng-sp-sss-v6-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
   "implementation_commit": null,
@@ -29,7 +29,7 @@
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
     "port": 20003,
-    "build": "eng-sp-sss-events-v5",
+    "build": "eng-sp-sss-event-goals-v6",
     "profile_schema": 30,
     "routes": 342,
     "private_gm_routes": 3,
@@ -41,7 +41,12 @@
       "tailscale_app_required_for_remote_clients": true,
       "native_device_verified": false
     },
-    "admin_event_reward_images": true
+    "admin_event_reward_images": true,
+    "event_objectives": [
+      "gem_spent",
+      "adventure_wins",
+      "summon_draws"
+    ]
   },
   "download_helper": {
     "file": "Download-Clients.zip",

@@ -1,0 +1,27 @@
+[Unit]
+Description=DB2 private game and administration server
+Wants=network-online.target
+After=network-online.target tailscaled.service
+
+[Service]
+Type=simple
+User=db2
+Group=db2
+WorkingDirectory=/opt/db2/app
+EnvironmentFile=/etc/db2/server.env
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/db2/venv/bin/python -m server.app --bind ${DB2_BIND} --public-host auto --port 20003 --data /var/lib/db2
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=45
+StateDirectory=db2
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

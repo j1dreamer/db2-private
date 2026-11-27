@@ -72,7 +72,7 @@ class Admin:
    return item_view(entity(int(req.match_info['id'])),True)
   if path=='/admin/overview':
    players=self.raw_players();online=self.online_ids();events=liveops.custom_events(s);recent=self.audit('',8);draws=0
-   for r in s.db.execute("SELECT detail FROM audit WHERE action='draw' AND created>?",(now-86400,)):
+   for r in s.db.execute("SELECT detail FROM audit WHERE action IN('draw','gacha') AND created>?",(now-86400,)):
     try:draws+=json.loads(r[0]).get('count',1)
     except (ValueError,TypeError):pass
    errors=s.db.execute("SELECT count(*)FROM audit WHERE action='client_error'AND created>?",(now-86400,)).fetchone()[0]
@@ -95,7 +95,7 @@ class Admin:
   if path=='/admin/events':
    events=[self.event_view(e)for e in liveops.custom_events(s)if not e.get('deleted')];templates=self.templates()
    ids={int(r['entityId'])for event in events+templates for group in event['rewardGroups']for r in group['items']}
-   return {'events':events,'templates':templates,'rewardItems':[item_view(entities()[kind])for kind in sorted(ids)],'version':liveops.revision(s)}
+   return {'events':events,'templates':templates,'rewardItems':[item_view(entities()[kind])for kind in sorted(ids)],'eventMetrics':[{'id':key,'label':label}for key,label in liveops.EVENT_METRICS.items()],'version':liveops.revision(s)}
   if path=='/admin/calendar':return {'items':liveops.calendar(s,int(req.query['start']),int(req.query['end'])),'timezone':'Asia/Ho_Chi_Minh'}
   if path=='/admin/gacha':return self.gacha()
   if path=='/admin/giftcodes':return {'items':self.codes()}
@@ -107,7 +107,7 @@ class Admin:
   w=liveops.window(e);now=time.time();count=self.store.db.execute('SELECT count(*)FROM event_claims WHERE event=?',(e['id'],)).fetchone()[0]+self.store.db.execute('SELECT count(*)FROM event_window_claims WHERE event=?',(e['id'],)).fetchone()[0]
   version=self.store.db.execute('SELECT version FROM ops_records WHERE key=?',('event-revision:'+e['id'],)).fetchone()
   loot=e.get('rewards')or([{'entityId':102,'count':e['gem'],'extra':{}}]if e.get('gem')else[])
-  return {**e,'version':version[0]if version else 0,'window':w,'claims':count,'status':'paused'if not e.get('enabled',True)else'active'if w['active']else'scheduled'if w['start']>now or e.get('repeat','none')!='none'and(not e.get('until')or e['until']>now)else'ended','rewards':loot,'rewardGroups':[{'label':'Mỗi kỳ · nhận một lần','items':loot}]}
+  return {**e,'requirement':liveops.requirement(e.get('requirement')),'objectiveLabel':liveops.objective_label(e),'version':version[0]if version else 0,'window':w,'claims':count,'status':'paused'if not e.get('enabled',True)else'active'if w['active']else'scheduled'if w['start']>now or e.get('repeat','none')!='none'and(not e.get('until')or e['until']>now)else'ended','rewards':loot,'rewardGroups':[{'label':'Mỗi kỳ · nhận một lần','items':loot}]}
  def templates(self):
   from .profile import new_profile
   from .activities import refresh,SCORES,BOXES,SELECT
@@ -168,9 +168,11 @@ class Admin:
    for k in('start','end','gem'):
     if k in data:data[k]=int(data[k])
    old=s.db.execute('SELECT data FROM events WHERE id=?',(str(b.get('id','')),)).fetchone();event=liveops.event_save(data,json.loads(old[0])if old else None)
-   if old and json.loads(old[0]).get('repeat','none')!=event['repeat']:
+   previous=json.loads(old[0])if old else None
+   metric_changed=previous and liveops.requirement(previous.get('requirement'))['metric']!=event['requirement']['metric']
+   if previous and(previous.get('repeat','none')!=event['repeat']or metric_changed):
     claimed=s.db.execute('SELECT count(*)FROM event_claims WHERE event=?',(event['id'],)).fetchone()[0]+s.db.execute('SELECT count(*)FROM event_window_claims WHERE event=?',(event['id'],)).fetchone()[0]
-    if claimed:raise ValueError('Sự kiện đã có lượt nhận. Tạo ID mới nếu muốn đổi chu kỳ lặp.')
+    if claimed:raise ValueError('Sự kiện đã có lượt nhận. Tạo ID mới nếu muốn đổi chu kỳ hoặc loại điều kiện.')
    s.db.execute('INSERT INTO events VALUES(?,?) ON CONFLICT(id)DO UPDATE SET data=excluded.data',(event['id'],json.dumps(event,ensure_ascii=False)));liveops.put(s,'event-revision:'+event['id'],{'updated':int(time.time())},b.get('version'));return
   if a in('event_toggle','event_delete'):
    row=s.db.execute('SELECT data FROM events WHERE id=?',(b['id'],)).fetchone()

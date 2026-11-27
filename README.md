@@ -1,4 +1,4 @@
-# DB2 ENG · SSS/SP + GM — v5 sự kiện / ảnh vật phẩm
+# DB2 ENG · SSS/SP + GM — v6 sự kiện tiêu Gem / cày nhận quà
 
 Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS / SSS / SP**. Không trộn startup override hoặc module gameplay Long Chi Đảo. Backend Python vẫn là mã tương thích của dự án; luật kín server gốc không có trong client vẫn dùng luật riêng có ghi nguồn.
 
@@ -19,7 +19,7 @@ Không cần APK cũ, Java, Git hoặc ghép tay. Cần khoảng 2,2 GB trống 
 2. Chạy `start.bat`. Thư mục mới tự tạo `data/game.sqlite3` và `data/admin-token`, không kèm tài khoản hoặc token của ai. Nếu cần dữ liệu cũ, tự giữ bản sao trước khi chuyển; server có snapshot SQLite trước đổi baseline.
 3. Đặt APK mới cạnh `Install-Android.bat`, bật BlueStacks → Android Debug Bridge rồi chạy BAT. Nhập đúng cổng ADB (thường `127.0.0.1:6610`). Không cần gỡ app hoặc xóa data Android.
 4. Trong game dùng server `http://127.0.0.1:20003`. Với database trắng, đăng ký tài khoản mới.
-5. Kiểm `/health`: **build `eng-sp-sss-events-v5`, schema 30**. Dùng client ENG BoxInfo tương thích; nếu đã cài BoxInfo thì bản web này chỉ cần cập nhật server.
+5. Kiểm `/health`: **build `eng-sp-sss-event-goals-v6`, schema 30**. Dùng client ENG BoxInfo tương thích; nếu đã cài BoxInfo thì bản web này chỉ cần cập nhật server.
 
 Web quản trị: **http://127.0.0.1:20003**; token nằm ở `data/admin-token` trong đúng thư mục server đang chạy.
 
@@ -32,6 +32,21 @@ Web quản trị: **http://127.0.0.1:20003**; token nằm ở `data/admin-token`
 - Kiểm tra tại [analysis/event-admin-validation.json](analysis/event-admin-validation.json). Các nhóm thưởng và giao diện quản trị bổ sung là mã dự án viết, không được nhận là web quản trị server gốc.
 
 Ảnh quản trị: [desktop](docs/admin-events-desktop.png) · [form điện thoại](docs/admin-event-editor-mobile.png).
+
+## Event tiêu phí / cày nhận quà — v6
+
+Web → Sự kiện → Tạo/Sửa → chọn **Điều kiện** và **Mốc nhận quà**: tiêu Gem, thắng màn (gồm quét màn), hoặc số lượt quay thường/cao cấp. Chọn phần thưởng từ danh sách có ảnh, ID, số lượng; đặt lịch, cấp tối thiểu và chu kỳ. Tiến độ hiện trong màn sự kiện hiện có của game. Ví dụ: tiêu 300 Gem → nhận 60 mảnh, thắng 10 màn → nhận vé quay.
+
+- Mỗi ID sự kiện có một mốc và một nhóm quà, nhận một lần mỗi kỳ. Muốn 3 mốc thì tạo 3 ID. Cùng một hoạt động có thể tính cho nhiều event đang có lịch phù hợp.
+- Server ghi tiến độ trong SQLite, kiểm tra trước khi phát thưởng và chống nhận lặp. Client không gửi số tiến độ hay số quà để server tin theo. Quay SP dùng hệ riêng, không tính vào điều kiện quay thường/cao cấp.
+- Chỉ tính giao dịch sau khi nâng cấp server, nằm trong thời gian kỳ hiện tại; không hồi tố lịch sử. Cấp Gem qua quản trị không tính là tiêu Gem; tiêu số Gem đã cấp vẫn tính bình thường. Thua/bỏ trận không cộng thắng.
+- Tạm tắt event chặn nhận quà, không xóa tiến độ. Sổ giao dịch vẫn ghi khi tạm tắt; bật lại tính những giao dịch nằm trong lịch đó. Sửa ngưỡng không xóa lịch sử đã nhận; sau khi có người nhận không được đổi loại điều kiện/chu kỳ trên cùng ID.
+- **Chỉ cập nhật server + web; giữ APK/IPA BoxInfo đang dùng.** Giữ thư mục `data`, sao lưu trước khi cập nhật và khởi động lại server. Server tự tạo bảng `event_metrics`, schema profile vẫn 30.
+- Đây là luật event dự án viết thêm, không phải source backend ENG gốc. Xem [kiểm chứng](analysis/event-objectives-validation.json) và [ảnh form điện thoại](docs/admin-event-objective-mobile.png). Chưa kiểm chơi native Android/iPhone cho bản này.
+
+## VPS Ubuntu
+
+Ubuntu 24.04 LTS **1 vCPU / 2 GB RAM** dùng được để thử nghiệm hoặc nhóm nhỏ; chưa có benchmark để cam kết số người chơi đồng thời. Cần Python 3.10+, Node.js LTS để chạy engine trận, ổ đĩa cho source/dữ liệu/backup và Tailscale nếu chơi qua mạng riêng. Client APK/IPA không cần nằm trên VPS. Xem [UBUNTU.md](UBUNTU.md) và mẫu systemd trong `deploy/`.
 
 ## Rương SP và Speed lần này
 

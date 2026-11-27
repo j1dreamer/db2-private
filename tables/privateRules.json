@@ -73,5 +73,10 @@
     "id": "box-quantity-speed-controls",
     "source": "private-server-implementation",
     "description": "Nút số lượng rương, số thưởng theo lượt mở, nút đóng và Speed nhỏ/kéo/lưu vị trí là mã dự án viết thêm. Tướng trùng vẫn đổi hồn theo bảng ENG; server sửa mở nhiều bản sao trong một giao dịch, không thay pool thưởng gốc. Mô tả rương được dự án tạo từ cấu hình client (chọn/toàn bộ/ngẫu nhiên, số lượng), giữ mô tả gốc; không tự bịa tỷ lệ nhận."
+  },
+  {
+    "id": "event-objectives",
+    "source": "private-server-rule",
+    "description": "Tiêu Gem được tính bằng phần tăng costGem đã lưu; thắng/quét màn và quay thường/cao cấp lấy từ giao dịch server thành công. Tiến độ ghi SQLite theo khoảng lịch, bắt đầu thu thập sau nâng cấp, không hồi tố. Mỗi ID sự kiện một mốc và một nhóm quà mỗi kỳ. Đây là luật dự án, không phải luật server ENG gốc."
   }
 ]

@@ -17,6 +17,8 @@ class Store:
         CREATE TABLE IF NOT EXISTS events(id TEXT PRIMARY KEY,data TEXT NOT NULL);
         CREATE TABLE IF NOT EXISTS ops_records(key TEXT PRIMARY KEY,data TEXT NOT NULL,version INTEGER NOT NULL,updated INTEGER NOT NULL);
         CREATE TABLE IF NOT EXISTS event_window_claims(event TEXT REFERENCES events(id),player INTEGER REFERENCES players(id),period TEXT NOT NULL,PRIMARY KEY(event,player,period));
+        CREATE TABLE IF NOT EXISTS event_metrics(player INTEGER REFERENCES players(id),metric TEXT NOT NULL,amount INTEGER NOT NULL CHECK(amount>0),created INTEGER NOT NULL);
+        CREATE INDEX IF NOT EXISTS event_metrics_window ON event_metrics(player,metric,created);
         CREATE TABLE IF NOT EXISTS activity_claims(player INTEGER REFERENCES players(id),name TEXT NOT NULL,period TEXT NOT NULL,idx INTEGER NOT NULL,PRIMARY KEY(player,name,period,idx));
         CREATE TABLE IF NOT EXISTS event_claims(event TEXT REFERENCES events(id),player INTEGER REFERENCES players(id),PRIMARY KEY(event,player));
         CREATE TABLE IF NOT EXISTS pool_entries(pool INTEGER NOT NULL,entity INTEGER NOT NULL,data TEXT NOT NULL,PRIMARY KEY(pool,entity));
@@ -177,7 +179,16 @@ class Store:
             from .activities import refresh as refresh_activities
             refresh_activities(self,profile);self.save(profile)
             return profile
-    def save(self,player):self.db.execute('UPDATE players SET data=? WHERE id=?',(json.dumps(player,ensure_ascii=False),player['id']))
+    def save(self,player):
+        if not self.db.in_transaction:
+            with self.transaction():return self.save(player)
+        prior=self.db.execute('SELECT data FROM players WHERE id=?',(player['id'],)).fetchone()
+        if prior:
+            spent=player.get('costGem',0)-json.loads(prior[0]).get('costGem',0)
+            if spent>0:self.record_event_metric(player['id'],'gem_spent',spent)
+        self.db.execute('UPDATE players SET data=? WHERE id=?',(json.dumps(player,ensure_ascii=False),player['id']))
+    def record_event_metric(self,player,metric,amount):
+        if amount>0:self.db.execute('INSERT INTO event_metrics(player,metric,amount,created)VALUES(?,?,?,?)',(player,metric,amount,int(time.time())))
     def redeem(self,player,code,return_counts=False):
         with self.transaction():
             row=self.db.execute('SELECT * FROM giftcodes WHERE code=?',(code,)).fetchone()
@@ -199,6 +210,12 @@ class Store:
     def notify(self,account,event,data):
         self.db.execute('INSERT INTO notifications(account,event,data) VALUES(?,?,?)',(account,event,json.dumps(data,ensure_ascii=False)))
     def audit(self,action,detail):
+        if not self.db.in_transaction:
+            with self.transaction():return self.audit(action,detail)
         self.db.execute('INSERT INTO audit(created,action,detail) VALUES(?,?,?)',(int(time.time()),action,json.dumps(detail,ensure_ascii=False)))
+        if detail.get('player'):
+            if action=='end_smap'and detail.get('star',0)>0:self.record_event_metric(detail['player'],'adventure_wins',1)
+            elif action=='skip_smap':self.record_event_metric(detail['player'],'adventure_wins',detail.get('count',0))
+            elif action=='gacha':self.record_event_metric(detail['player'],'summon_draws',detail.get('count',0))
         from .tasks import record
         record(self,action,detail)

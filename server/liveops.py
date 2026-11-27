@@ -2,6 +2,27 @@
 import copy,datetime,json,re,time
 from .state import integer
 ZONE=datetime.timezone(datetime.timedelta(hours=7))
+EVENT_METRICS={'none':'Quà theo lịch','gem_spent':'Tiêu Gem','adventure_wins':'Vượt màn thắng (gồm quét màn)','summon_draws':'Quay thường / cao cấp'}
+
+def requirement(value):
+ if value is None:return {'metric':'none','target':0}
+ if not isinstance(value,dict)or value.get('metric')not in EVENT_METRICS:raise ValueError('Điều kiện sự kiện không hợp lệ')
+ metric=value['metric']
+ return {'metric':metric,'target':integer(value.get('target'),'Mốc nhận quà',1,10**9)if metric!='none'else 0}
+
+def event_progress(store,p,item,now=None):
+ goal=requirement(item.get('requirement'))
+ if goal['metric']=='none':return 0
+ now=time.time()if now is None else now;w=window(item,now)
+ if store is None:return 0
+ return store.db.execute('SELECT coalesce(sum(amount),0)FROM event_metrics WHERE player=?AND metric=?AND created>=?AND created<?AND created<=?',(p['id'],goal['metric'],w['start'],w['end'],now)).fetchone()[0]
+
+def objective_label(item):
+ goal=requirement(item.get('requirement'))
+ return EVENT_METRICS[goal['metric']]+(' · mốc '+format(goal['target'],',').replace(',','.')if goal['metric']!='none'else'')
+
+def progress_events(store,p):
+ return {e['id']:p['activity']['map'][e['id']]for e in custom_events(store)if not e.get('deleted')and requirement(e.get('requirement'))['metric']!='none'and e['id']in p['activity']['map']}
 TEMPLATES={
  'saveGemUpgradeLevel':('Gửi gem · thưởng lên cấp','lifetime'),
  'saveGemUpgradeLevelFree':('Quà gửi gem hằng ngày','daily'),
@@ -156,8 +177,9 @@ def apply(store,p):
   if item.get('deleted'):continue
   key=item['id'];ids.append(key);w=window(item,now);claimed=store.db.execute('SELECT 1 FROM event_claims WHERE event=? AND player=?',(key,p['id'])).fetchone()if w['period']=='once'else store.db.execute('SELECT 1 FROM event_window_claims WHERE event=? AND player=? AND period=?',(key,p['id'],w['period'])).fetchone()
   loot=item.get('rewards')or([{'entityId':102,'count':item['gem'],'extra':{}}]if item.get('gem')else[])
-  level=item.get('minLevel',1);eligible=p['level']>=level
-  maps[key]={'name':key,'title':item.get('name',key),'type':'login','desc':item.get('description')or item.get('name',key),'resId':126,'priority':item.get('priority',200),'start_time':w['start']*1000 if item.get('enabled',True)else 0,'end_time':w['end']*1000 if item.get('enabled',True)else 1,'reachMap':{'playerLevel':p['level']},'rewards':[{'dropListDesc':desc(loot),'needMap':{'playerLevel':level},'status':3 if claimed else 2 if w['active']and eligible else 1,'desc':item.get('name',key)}]}
+  level=item.get('minLevel',1);goal=requirement(item.get('requirement'));progress=event_progress(store,p,item,now);eligible=p['level']>=level and progress>=goal['target']
+  text=item.get('name',key)if goal['metric']=='none'else EVENT_METRICS[goal['metric']]+': '+str(progress)+' / '+str(goal['target'])
+  maps[key]={'name':key,'title':item.get('name',key),'type':'login','desc':item.get('description')or item.get('name',key),'resId':126,'priority':item.get('priority',200),'start_time':w['start']*1000 if item.get('enabled',True)else 0,'end_time':w['end']*1000 if item.get('enabled',True)else 1,'reachMap':{'playerLevel':p['level']},'rewards':[{'dropListDesc':desc(loot),'needMap':{'playerLevel':level},'status':3 if claimed else 2 if w['active']and eligible else 1,'desc':text,'desci18n':text}]}
  p['privateManagedEventIds']=ids
 
 
@@ -168,6 +190,7 @@ def event_save(body,existing=None):
  title=str(body.get('name','')).strip()
  if not title or len(title)>100:raise ValueError('Tên sự kiện cần 1–100 ký tự')
  out={'id':name,'name':title,**schedule(body),'enabled':body.get('enabled',True),'description':str(body.get('description',''))[:1000],'minLevel':integer(body.get('minLevel',1),'Cấp tối thiểu',1,200),'priority':integer(body.get('priority',200),'Thứ tự',1,10000)}
+ out['requirement']=requirement(body.get('requirement',(existing or {}).get('requirement')))
  if type(out['enabled'])is not bool:raise ValueError('Trạng thái không hợp lệ')
  if 'rewards'in body:out.update(rewards=rewards(body['rewards']),gem=0)
  else:out['gem']=integer(int(body.get('gem',0)),'Gem thưởng',0)
@@ -182,6 +205,8 @@ def claim_custom(store,p,name,index):
  if not row:raise ValueError('Event không tồn tại')
  item=json.loads(row[0]);w=window(item)
  if not w['active']or p['level']<item.get('minLevel',1):raise ValueError('Sự kiện đóng hoặc chưa đủ cấp')
+ goal=requirement(item.get('requirement'))
+ if event_progress(store,p,item)<goal['target']:raise ValueError('Chưa đạt mốc sự kiện: '+objective_label(item))
  if w['period']=='once':store.db.execute('INSERT INTO event_claims VALUES(?,?)',(name,p['id']))
  else:store.db.execute('INSERT INTO event_window_claims VALUES(?,?,?)',(name,p['id'],w['period']))
  from .adventure import grant
