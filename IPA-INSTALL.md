@@ -1,6 +1,6 @@
-# IPA TextFix mới nhất · server ENG v6
+# IPA AutoPlans mới nhất · server ENG v6
 
-Bộ tải tạo **DB2-ENG-SPSSS-TextFix-unsigned.ipa**, 510.862.012 byte (~487 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
+Bộ tải tạo **DB2-ENG-SPSSS-AutoPlans-unsigned.ipa**, 510.865.944 byte (~487 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
 
 ## Sửa lỗi mở đen rồi tự thoát
 
@@ -12,11 +12,11 @@ Log thiết bị cho thấy iOS chấp nhận chữ ký, sau đó `CombinedPlugi
 - Thử IP không tới được: chờ tối đa 8 giây rồi quay về màn đăng nhập, tự mở lại “Server riêng” với lỗi. Mạng lỗi/HTTP lỗi/địa chỉ trả HTML hoặc JSON không phải cấu hình DB2 đều trả về để sửa IP, không đứng mãi ở màn tải.
 - Bỏ nút “Nguồn và luật” khỏi IPA; thông tin nguồn vẫn nằm trong tài liệu/web quản trị.
 - Chữ Việt dùng font hệ thống Arial dự phòng khi font đóng gói thiếu dấu; không sửa font size hoặc ảnh chứa chữ. Cần kiểm hình ảnh thực tế trên iPhone sau cài.
-- Vẫn giữ sửa plugin tự thoát của LaunchFix. Ký/cài file **TextFix** mới bằng Sideloadly; không chọn lại IPA cũ.
+- Vẫn giữ sửa plugin tự thoát của LaunchFix. Ký/cài file **AutoPlans** mới bằng Sideloadly; không chọn lại IPA cũ.
 
 ## Điều khiển mới · Controls
 
-Hộp server nhỏ, đóng được popup mất mạng và hủy vòng reconnect cũ. Nút tròn kéo được; giữ 2 giây mở thanh tốc độ 1–10×; chạm nhanh mở Auto/Ghi. Có auto một điểm, nhiều điểm và ghi/phát lại chạm/kéo trong cùng cảnh. Nút Dừng hiện khi đang chạy/ghi/chọn điểm; tự dừng khi mất mạng, chuyển cảnh hoặc xuống nền. Xem [CLIENT-CONTROLS.md](CLIENT-CONTROLS.md). Các điều khiển cần thử thực tế sau khi ký/cài trên iPhone.
+Hộp server nhỏ, thoát vòng reconnect khi mất mạng. Nút tròn kéo được; giữ 2 giây mở tốc độ 1–10×; chạm nhanh mở thư viện kịch bản có tên. AutoPlans thêm điểm kéo được, sửa thời gian chờ/giữ từng điểm, ghi–lưu–phát riêng, tạm dừng/tiếp tục và bản nháp tách khỏi bản lưu. Xem [CLIENT-CONTROLS.md](CLIENT-CONTROLS.md). Tiếp tục qua cảnh khi app mở; xuống nền tạm dừng. Được viết theo mô hình X7 đã đọc tĩnh, chưa xác minh tương đương hoàn toàn trên iPhone.
 
 ## Sửa chữ bị trống · TextFix
 
@@ -26,7 +26,7 @@ Kiểm tra thêm lifecycle `Label.onEnable` với nhãn ASCII/Việt/URL/số 0;
 
 ## Tải
 
-**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT. **Chọn file có chữ `TextFix` để ký, không chọn lại BoxInfo cũ.** Nếu đã có file BoxInfo gốc chưa ký, có thể tránh tải lại 488 MB bằng lệnh trong CMD tại thư mục bộ tải:
+**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT. **Chọn file có chữ `AutoPlans` để ký, không chọn lại BoxInfo cũ.** Nếu đã có file BoxInfo gốc chưa ký, có thể tránh tải lại 488 MB bằng lệnh trong CMD tại thư mục bộ tải:
 
 ```bat
 Download-IPA.bat --ipa-source "C:\duong-dan\DB2-ENG-SPSSS-BoxInfo-unsigned.ipa"
@@ -45,7 +45,7 @@ Có thể dùng `python3 Download-Clients.py --only ipa`. Không cần file game
 SHA-256 IPA **trước khi ký**:
 
 ```text
-36fe32b8fadabbe73f1f9b17c3e66ce829645e9258a56f9fff2d53708f548ad4
+69d10badf560a776d3f744e4d9ff843c61c709ebedf7e6f83b18b5abb3dd4608
 ```
 
 ## Ký và cài qua máy tính

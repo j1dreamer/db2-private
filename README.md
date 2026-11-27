@@ -7,7 +7,7 @@ Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS /
 **[Download-Clients.zip](Download-Clients.zip)** → giải nén → mở **Download-Clients.bat** (cần Python 3.10+). Công cụ tự tải, tạo và kiểm SHA-256 hai file nguyên vẹn:
 
 - `DB2-ENG-SPSSS-BoxInfo.apk`: đã ký phát triển, cài đè cùng package/chứng thư, có Speed 1–10×.
-- `DB2-ENG-SPSSS-TextFix-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
+- `DB2-ENG-SPSSS-AutoPlans-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
 
 **Chỉ tải IPA:** [Download-IPA.zip](Download-IPA.zip) → giải nén → mở `Download-IPA.bat` trên Windows; trên Mac chạy `bash Download-IPA.command`. Xem [ký/cài IPA và nhập IP Tailscale](IPA-INSTALL.md). BAT tải file, không tự ký/cài.
 
@@ -109,3 +109,7 @@ Nhánh có đủ 342 handler hợp đồng gốc, cộng 3 RPC GM riêng (`catal
 ## Công cụ kiểm tra server APK cũ
 
 [Legacy-GM-Test.zip](Legacy-GM-Test.zip) là client chẩn đoán riêng, không thay server đang chạy. Chạy từ máy có Tailscale tới server cũ; cần Python 3.8+. Trên iPhone xem [iSH](IPHONE-GM.md). Công cụ đăng ký theo luồng bình thường, chỉ thử một lệnh cấp 100 vé thường (119), đăng nhập lại và kiểm số lượng bền vững. Không tự cấp quyền GM; nếu bị từ chối quyền/mã mời thì dừng. Tài khoản/mật khẩu sinh trên máy chạy tool, không được đóng gói trong ZIP. Kết quả kiểm thử hiện tại chỉ trên backend cục bộ: [báo cáo](analysis/legacy-gm-client-validation.json).
+
+## AutoPlans · cập nhật iOS
+
+Thư viện kịch bản có tên, điểm kéo được và thời gian chờ/giữ từng điểm; ghi–lưu–phát riêng, Pause/Resume và bản nháp không ghi đè bản lưu. [Cách dùng](CLIENT-CONTROLS.md). Dựng theo mô hình SDK X7 đã kiểm tĩnh; chưa xác minh tương đương hoàn toàn trên iPhone. APK/server không đổi.

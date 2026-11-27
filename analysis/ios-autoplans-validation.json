@@ -1,0 +1,100 @@
+{
+  "build": {
+    "ipa_sha256": "69d10badf560a776d3f744e4d9ff843c61c709ebedf7e6f83b18b5abb3dd4608",
+    "ipa_bytes": 510865944,
+    "native_launch_fix": {
+      "removed_dependencies": [
+        "@executable_path/CombinedPlugin.dylib",
+        "@executable_path/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "removed_ordinals": [
+        50,
+        51
+      ],
+      "imported_plugin_symbols": false,
+      "bytes_after_original_load_commands_unchanged": true,
+      "native_instructions_patched": false,
+      "requires_resigning": true,
+      "source_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+      "ipa_sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732",
+      "ipa_bytes": 510859616,
+      "native_executable_sha256": "bd791a92795afc1c27bf20c7eed378249ed194e666e0419b2d34996ebf69d715",
+      "removed_files": [
+        "Payload/dragonball.app/CombinedPlugin.dylib",
+        "Payload/dragonball.app/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "unchanged_entries": 17260,
+      "jsc_and_settings_unchanged": true,
+      "native_device_tested": false
+    },
+    "only_additional_modified_entry": "Payload/dragonball.app/assets/main/index.jsc",
+    "source_button_removed": true,
+    "connection_timeout_ms": 8000,
+    "font_fallback": "Arial/system for Vietnamese labels",
+    "requires_resigning": true,
+    "native_device_tested": false,
+    "packaged_login_runtime": {
+      "unconfigured_opens_account_form": true,
+      "timeout_returns_to_login": true,
+      "network_error_returns_to_login": true,
+      "timeout_ms": 8000,
+      "duplicate_callbacks_ignored": true,
+      "wrong_service_rejected": true,
+      "successful_config_continues": true,
+      "original_username_password_register_login_work": true
+    },
+    "packaged_plan_runtime": {
+      "named_plan_library": true,
+      "separate_saved_and_draft_data": true,
+      "draggable_numbered_points": true,
+      "per_point_delay_and_hold": true,
+      "press_release_use_distinct_times": true,
+      "pause_resume_restarts_interrupted_gesture": true,
+      "explicit_record_start_save_and_load": true,
+      "record_swipe_replay": true,
+      "foreground_scene_transition_supported": true,
+      "background_pauses": true,
+      "discard_keeps_saved_plan": true,
+      "network_popup_removed_without_retry": true,
+      "long_hold_slider_preserved": true
+    },
+    "packaged_label_lifecycle": {
+      "label_enable_runs_only_after_configuration": true,
+      "fixed_nonzero_bounds": true,
+      "no_shrink_mode": true,
+      "canvas_text_path": true,
+      "ascii_vietnamese_url_and_zero_labels": 7,
+      "input_labels_configured": true,
+      "activation_count": 9
+    },
+    "patch_file": "Client-ENG-SPSSS-IOS-AutoPlans.zip",
+    "patch_sha256": "d174309a86a19a815a03346cb996c7e8be5dac1f88216c4157810400a1c93d19",
+    "patch_bytes": 9729836
+  },
+  "download_proof": {
+    "downloaded_public_patch": true,
+    "reconstructed_ipa_sha256": "69d10badf560a776d3f744e4d9ff843c61c709ebedf7e6f83b18b5abb3dd4608",
+    "bytes": 510865944,
+    "zip_crc_passed": true,
+    "latest_scripts_embedded": true,
+    "second_run_reuses_verified_output": true,
+    "native_device_tested": false
+  },
+  "focused_tests_passed": 24,
+  "test_scope": [
+    "controls",
+    "runtime",
+    "login",
+    "labels",
+    "native launch repair",
+    "IPA transport",
+    "IPA inspection",
+    "server endpoint"
+  ],
+  "x7_reference": "analysis/x7-auto-reference.json",
+  "authored_cocos_implementation": true,
+  "x7_sdk_embedded": false,
+  "exact_x7_equivalence_verified": false,
+  "native_device_tested": false,
+  "previews": "docs/autoplans-*.png are simulated node-tree layout previews, not native screenshots"
+}

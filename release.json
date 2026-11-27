@@ -1,7 +1,7 @@
 {
-  "version": "6.4.0-dev",
+  "version": "6.5.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-ios-textfix-dev",
+  "tag": "eng-sp-sss-ios-autoplans-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
   "implementation_commit": null,
@@ -19,9 +19,9 @@
     "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953"
   },
   "ios": {
-    "file": "DB2-ENG-SPSSS-TextFix-unsigned.ipa",
-    "bytes": 510862012,
-    "sha256": "36fe32b8fadabbe73f1f9b17c3e66ce829645e9258a56f9fff2d53708f548ad4",
+    "file": "DB2-ENG-SPSSS-AutoPlans-unsigned.ipa",
+    "bytes": 510865944,
+    "sha256": "69d10badf560a776d3f744e4d9ff843c61c709ebedf7e6f83b18b5abb3dd4608",
     "bundle_id": "com.j1dreamer.db2.private",
     "signed": false,
     "publication_authorized": true,
@@ -39,7 +39,12 @@
     "touch_record_replay": true,
     "network_popup_recovery": true,
     "control_label_canvas_fallback": true,
-    "control_label_configured_before_activation": true
+    "control_label_configured_before_activation": true,
+    "named_auto_plans": true,
+    "per_point_delay_hold": true,
+    "record_plan_library": true,
+    "pause_resume": true,
+    "x7_exact_equivalence_verified": false
   },
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
@@ -94,6 +99,11 @@
       "commit": "68958aef01e5c0b3fd3fa58f5651e4672476d56e",
       "file": "Client-ENG-SPSSS-IOS-TextFix.zip",
       "sha256": "81e38ad77c2e0f090035bd94db8147b4881bf2d43e6695d0439361877b206a5f"
+    },
+    "auto_plans_patch": {
+      "commit": "af1924a43fbd518c44c9fd7995365ae5a469ec54",
+      "file": "Client-ENG-SPSSS-IOS-AutoPlans.zip",
+      "sha256": "d174309a86a19a815a03346cb996c7e8be5dac1f88216c4157810400a1c93d19"
     }
   }
 }

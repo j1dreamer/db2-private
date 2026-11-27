@@ -19,3 +19,7 @@ Xác nhận được mô-đun `simulateclick`, các model kịch bản/điểm/s
 Các hướng làm lại trong bảng là đề xuất triển khai của dự án, không được nhận là chi tiết giao diện X7 đã quan sát đầy đủ. Không có bản IPA “clone X7” nào được phát hành từ đợt nghiên cứu này.
 
 Để khớp đúng bản người dùng quen sử dụng, còn cần video ngắn mở Auto click → tạo/chỉnh điểm → ghi → lưu → phát lại. Không thể xác minh trải nghiệm “giống hệt” chỉ từ tên lớp, chuỗi và animation giới thiệu. Phần chạy trên iPhone sẽ cần mã Cocos/iOS tương thích; thư viện Android của X7 không phải binary có thể chép trực tiếp vào IPA.
+
+## Triển khai tiếp theo: AutoPlans
+
+AutoPlans bổ sung mã Cocos do dự án viết theo mô hình plan/point/record ở trên. Không nhúng SDK X7. Xem [cách dùng](../CLIENT-CONTROLS.md); tương đương native và hình thức chính xác chờ người dùng kiểm sau cài.
