@@ -28,10 +28,6 @@ def build(source,out,server='http://db2-server.invalid:20003',bundle_id='com.j1d
         shared=json.loads((temp/'shared.json').read_text())
         text,data_report=patch_client((temp/'shared.js').read_text(),source,server)
         text=patch(text,'c.clientConfigUrl = o.url + "/user/clientConfig?platform=android";','c.clientConfigUrl = o.url + "/user/clientConfig?platform=ios";')
-        # First launch must reach the editable server panel without contacting a
-        # dummy URL. After saving a real endpoint/restarting, normal login runs.
-        text=patch(text,'http.request(actUrl, null, function(data) {','if (/\\.invalid(?::|\\/|$)/.test(serverMain.url)) { baseView.removeLoading(); self.next2_(); return; }\nhttp.request(actUrl, null, function(data) {')
-        text=patch(text,'initAssetsManager_: function() {','initAssetsManager_: function() {\nif (/\\.invalid(?::|\\/|$)/.test(l.url)) return;')
         changed_jsc=encrypt(gzip.compress(text.encode(),mtime=0))
         info['CFBundleIdentifier']=bundle_id
         info['CFBundleDisplayName']='DB2 Private Dev'

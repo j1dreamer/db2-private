@@ -442,3 +442,8 @@ def patch_box_quantities(text):
     replace('exchangeBoxPanel','count: a[u] || 0,','count: a[u] || 0,\nprivateRewardCount: c[u].count,')
     replace('exchangeBoxPanel','r.replaceLabel(this.descRichText, [ o, a.canUseCount ]);','r.replaceLabel(this.descRichText, [ o, a.canUseCount ]);\nwindow.DB2PrivateBox && window.DB2PrivateBox.attachExchange(this);')
     return text
+
+
+def patch_private_startup(text):
+    start=text.index('logoScene: [ function(');begin=text.index('next_: function next_() {',start);end=text.index('next2_: function() {',begin)
+    return text[:begin]+'next_: function next_() {\nvar self = this;\nsdkApi.next = null;\nbaseView.removeLoading();\nbaseView.addLoading("Đang kết nối server...", !0);\nwindow.DB2PrivateConnection.probe(serverMain.url, function(error, data) {\nbaseView.removeLoading();\nwindow.DB2_PRIVATE_CONNECTION_ERROR = error || null;\nif (!error) { serverMain.clientConfig = data; buildExt.inReview = false; serverConfig.MSG_CRYPTO = !1; }\nself.next2_();\n});\n},\n'+text[end:]

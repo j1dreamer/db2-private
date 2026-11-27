@@ -5,7 +5,7 @@ window.DB2PrivateSettings = function () {
     function text(parent, value, size, y) {
         var node = new cc.Node(); node.parent = parent; node.y = y || 0;
         var label = node.addComponent(cc.Label); label.string = value;
-        label.fontSize = size; label.lineHeight = size + 5; return label;
+        label.fontFamily = 'Arial'; label.useSystemFont = true; label.fontSize = size; label.lineHeight = size + 5; return label;
     }
     function button(parent, value, width, x, y, cb) {
         var node = new cc.Node(); node.parent = parent; node.setContentSize(width, 50);
@@ -27,7 +27,8 @@ window.DB2PrivateSettings = function () {
         var edit=field.addComponent(cc.EditBox);edit.inputMode=cc.EditBox.InputMode.ANY;
         edit.maxLength=160;edit.textLabel=text(field,'',23);edit.placeholderLabel=text(field,'http://127.0.0.1:20003',23);
         edit.string=cc.sys.localStorage.getItem('db2.private.server')||window.DB2_PRIVATE_DEFAULT_SERVER;
-        var hint=text(panel,'Lưu sẽ khởi động lại game.',18,-60);
+        var hint=text(panel,window.DB2_PRIVATE_CONNECTION_ERROR || 'Lưu sẽ khởi động lại game.',18,-60);
+        hint.node.setContentSize(580,65); hint.overflow=cc.Label.Overflow.SHRINK; hint.enableWrapText=true; hint.fontFamily='Arial'; hint.useSystemFont=true;
         button(panel,'Lưu và khởi động lại',270,-100,-125,function(){
             var value=edit.string.trim().replace(/\/$/,'');
             if(!/^https?:\/\/[^\s/:?#]+(?::\d{1,5})?$/.test(value)) {hint.string='Địa chỉ cần có dạng http(s)://HOST:PORT';return;}
@@ -36,10 +37,6 @@ window.DB2PrivateSettings = function () {
         button(panel,'Đóng',130,150,-125,function(){panel.destroy();});
     });
     trigger.name='DB2PrivateServerButton';trigger.zIndex=31000;
-    var sourceButton=button(canvas,'Nguồn và luật',160,-canvas.width/2+280,-canvas.height/2+40,function(){
-        window.__require('baseView').addMessageBox('Gameplay: client ENG gốc. Tướng S/SS/SSS/SP theo bảng gốc.\nTiếng Việt: dùng lại bản ENG và bổ sung bản dịch mới.\nLuật chỉ có ở server gốc: bản server mình tự định nghĩa, có ghi nhãn riêng.\nXem mục Nguồn và bản dịch trong web quản trị để biết chi tiết.',function(){});
-    });
-    sourceButton.name='DB2PrivateSourceButton';sourceButton.zIndex=31000;
     var endpoint=cc.sys.localStorage.getItem('db2.private.server')||window.DB2_PRIVATE_DEFAULT_SERVER;
-    if (/\.invalid(?::|\/|$)/.test(endpoint)) trigger.emit(cc.Node.EventType.TOUCH_END);
+    if (window.DB2_PRIVATE_CONNECTION_ERROR || /\.invalid(?::|\/|$)/.test(endpoint)) trigger.emit(cc.Node.EventType.TOUCH_END);
 };
