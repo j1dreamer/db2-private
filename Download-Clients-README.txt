@@ -4,7 +4,7 @@ Windows: install Python 3.10+ (enable Add Python to PATH).
 Extract this ZIP to a NEW folder and double-click Download-Clients.bat.
 The program automatically downloads and checks every part, then creates:
   DB2-ENG-SPSSS-BoxInfo.apk        (525,062,849 bytes; signed)
-  DB2-ENG-SPSSS-AutoPlans-unsigned.ipa   (510,865,944 bytes; unsigned)
+  DB2-ENG-SPSSS-BoxRestore-unsigned.ipa   (510,865,940 bytes; unsigned)
 Both include Speed 1x-10x and the original ENG gameplay, Vietnamese and permission-checked GM.
 No old APK, Git, Java, Node or manual file joining is needed for downloading.
 
@@ -25,7 +25,7 @@ Source/provenance and implementation limits are documented in that repository.
 
 GM: Admin > Players > Grant GM. New client shows GM below Speed.
 GM has item/role lists and player/role level, VIP and resource controls.
-Use the current eng-sp-sss-event-goals-v6 server (schema 30).
+Use the current eng-sp-sss-combat-box-v8 server (schema 30).
 The v6 event update keeps these same BoxInfo clients.
 IPA-only: double-click Download-IPA.bat; on Mac run bash Download-IPA.command.
 Signing/install and later Tailscale IP setup: see IPA-INSTALL.md.
@@ -39,7 +39,7 @@ One SP box with x60 fragments shows x60 on the reward cell (not chest count).
 
 IOS LAUNCHFIX: removes two startup plugins after the device log showed
 [sjcode] disabled/not-found; kill now, followed by a voluntary process exit.
-Select the AutoPlans IPA in Sideloadly and sign/install again.
+Select the BoxRestore IPA in Sideloadly and sign/install again.
 Native instructions are unchanged; JSC includes the new controls. Native validation is pending.
 Optional: Download-IPA.bat --ipa-source "C:\path\DB2-ENG-SPSSS-BoxInfo-unsigned.ipa"
 Use the old ORIGINAL unsigned file, not a signed/edited IPA.
@@ -47,7 +47,7 @@ Use the old ORIGINAL unsigned file, not a signed/edited IPA.
 IOS LOGINFIX: original username/password form restored when unconfigured.
 Connection failure returns to editable server settings within 8 seconds.
 Source/rules button removed; Vietnamese labels use system font fallback.
-The earlier startup plugin repair stays included. Re-sign the AutoPlans IPA.
+The earlier startup plugin repair stays included. Re-sign the BoxRestore IPA.
 
 IOS CONTROLS: compact server dialog; network popup exits the retry loop.
 Round speed button: drag to move, hold 2 seconds for 1-10x slider, tap for Auto/Record.
@@ -57,3 +57,7 @@ See CLIENT-CONTROLS.md. iPhone native interaction remains pending.
 
 AutoPlans is project-authored from the statically inspected X7 plan/point/record model.
 Pixel/native equivalence is not verified; user validates on iPhone after signing.
+
+IOS BOXRESTORE: stock selection/count/confirm controls restored.
+Canvas/system font for Vietnamese labels; source SP/SS/SSS box rewards unchanged.
+Ubuntu v8 requires combat.available=true in /health. Read COMBAT-BOX-FIX.md.

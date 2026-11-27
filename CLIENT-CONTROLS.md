@@ -1,6 +1,6 @@
 # Điều khiển trong game · IPA AutoPlans
 
-Cài `DB2-ENG-SPSSS-AutoPlans-unsigned.ipa` đã ký bằng Sideloadly. Server ENG v6 và APK không đổi trong lần cập nhật này.
+Cài `DB2-ENG-SPSSS-BoxRestore-unsigned.ipa` đã ký bằng Sideloadly. Server ENG v6 và APK không đổi trong lần cập nhật này.
 
 ## Nút tròn và kết nối
 
@@ -31,3 +31,7 @@ Auto và ghi tiếp tục qua chuyển cảnh khi app còn mở, chờ ổn đ�
 Đây là mã Cocos do dự án viết, dựa trên mô hình plan/point/record đọc tĩnh từ SDK X7. Không nhúng SDK Android X7 hoặc ảnh giao diện X7; chưa xác minh giống từng điểm ảnh hay đầy đủ hành vi native. Người dùng đối chiếu cách dùng sau khi ký/cài. Không gọi API cấp vật phẩm hoặc bỏ qua kiểm quyền server.
 
 24 kiểm tra tập trung đã qua; có kiểm script thật được đóng gói trong IPA và checksum toàn file. Xem [báo cáo](analysis/ios-autoplans-validation.json) và [nguồn tham chiếu X7](docs/x7-auto-reference.md). Ảnh `docs/autoplans-*.png` là bản dựng bố cục từ cây node mô phỏng, **không phải ảnh chạy trên iPhone**. Chữ, touch và cảm giác dùng trên iPhone vẫn cần xác nhận.
+
+## Rương trong BoxRestore
+
+Dùng lại chọn thưởng, số lượng và xác nhận gốc ENG, giữ số lượng ×N/nút đóng. Xem [COMBAT-BOX-FIX.md](COMBAT-BOX-FIX.md).

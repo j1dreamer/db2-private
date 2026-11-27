@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# DB2 ENG v7: first install / repeat install with backup; no SSH backdoor.
+# DB2 ENG v8: first install / repeat install with backup; no SSH backdoor.
 set -Eeuo pipefail
 umask 077
-REF=37923336880e58cec5c709d7e84e9582252c8663
+REF=9aee53ee50ec2175e7bd74fd18da8458319bbe87
 BASE=/opt/db2
 if (( EUID != 0 )); then exec sudo bash "$0" "$@"; fi
 [[ -d /run/systemd/system ]] || { echo 'Run this on the Ubuntu VPS after SSH, not in iSH locally.'; exit 1; }
@@ -41,6 +41,8 @@ python3 -c 'import sys; assert sys.version_info >= (3,10), "Python 3.10+ require
 install -d -m 755 "$BASE" "$BASE/releases"
 # Use supported Node 22 with upstream checksum, without replacing system Node.
 nodebin=$(command -v node || true)
+# The service cannot read login-shell nvm installs under ProtectHome=true.
+case "$nodebin" in /root/*|/home/*|/run/user/*) nodebin=;; esac
 if [[ -z $nodebin ]] || ! "$nodebin" -e 'process.exit(Number(process.versions.node.split(".")[0])>=22?0:1)'; then
  case $(uname -m) in x86_64) arch=x64;; aarch64|arm64) arch=arm64;; *) echo 'Unsupported CPU'; exit 1;; esac
  curl --fail --location --retry 3 https://nodejs.org/dist/latest-v22.x/SHASUMS256.txt -o "$work/node-shas"
@@ -103,7 +105,7 @@ cp -a /var/lib/db2 "$backup/data"
 [[ ! -f /etc/systemd/system/db2.service ]] || cp -a /etc/systemd/system/db2.service "$backup/db2.service"
 ln -sfn "$new" "$BASE/app"
 switched=1
-printf 'DB2_BIND=%s\nPATH=%s:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n' "$bind" "$(dirname "$nodebin")" >/etc/db2/server.env
+printf 'DB2_BIND=%s\nDB2_NODE=%s\nPATH=%s:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n' "$bind" "$nodebin" "$(dirname "$nodebin")" >/etc/db2/server.env
 sed 's@/opt/db2/venv/bin/python@/opt/db2/app/.venv/bin/python@' "$new/deploy/db2.service" >/etc/systemd/system/db2.service
 systemctl daemon-reload
 systemctl enable --now db2
@@ -115,7 +117,7 @@ done
 if (( ! healthy )); then journalctl -u db2 -n 40 --no-pager; exit 1; fi
 python3 - "$work/health.json" <<'PY'
 import json,sys
-h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-sp-events-v7' and h.get('profile_schema')==30,h
+h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-combat-box-v8' and h.get('profile_schema')==30 and h.get('combat',{}).get('available'),h
 print(json.dumps(h,ensure_ascii=False,indent=2))
 PY
 switched=0

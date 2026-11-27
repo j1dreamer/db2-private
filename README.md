@@ -7,7 +7,7 @@ Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS /
 **[Download-Clients.zip](Download-Clients.zip)** → giải nén → mở **Download-Clients.bat** (cần Python 3.10+). Công cụ tự tải, tạo và kiểm SHA-256 hai file nguyên vẹn:
 
 - `DB2-ENG-SPSSS-BoxInfo.apk`: đã ký phát triển, cài đè cùng package/chứng thư, có Speed 1–10×.
-- `DB2-ENG-SPSSS-AutoPlans-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
+- `DB2-ENG-SPSSS-BoxRestore-unsigned.ipa`: có cùng sửa lỗi/GM/speed và bản sửa plugin tự thoát lúc khởi động; **chưa ký**, cần ký hợp lệ trên Mac.
 
 **Chỉ tải IPA:** [Download-IPA.zip](Download-IPA.zip) → giải nén → mở `Download-IPA.bat` trên Windows; trên Mac chạy `bash Download-IPA.command`. Xem [ký/cài IPA và nhập IP Tailscale](IPA-INSTALL.md). BAT tải file, không tự ký/cài.
 

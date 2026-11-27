@@ -1,10 +1,10 @@
 {
-  "version": "7.0.0-dev",
+  "version": "8.0.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-sp-events-v7-dev",
+  "tag": "eng-sp-sss-combat-box-v8-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
-  "implementation_commit": "37923336880e58cec5c709d7e84e9582252c8663",
+  "implementation_commit": "9aee53ee50ec2175e7bd74fd18da8458319bbe87",
   "distribution": "full-clients-via-verified-public-download-helper",
   "fresh_install": false,
   "bundled_player_database": false,
@@ -19,9 +19,9 @@
     "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953"
   },
   "ios": {
-    "file": "DB2-ENG-SPSSS-AutoPlans-unsigned.ipa",
-    "bytes": 510865944,
-    "sha256": "69d10badf560a776d3f744e4d9ff843c61c709ebedf7e6f83b18b5abb3dd4608",
+    "file": "DB2-ENG-SPSSS-BoxRestore-unsigned.ipa",
+    "bytes": 510865940,
+    "sha256": "01ab9b9af0fa69f60b8ac61439a71caf9e931bd4d436d209856dc85b76439b86",
     "bundle_id": "com.j1dreamer.db2.private",
     "signed": false,
     "publication_authorized": true,
@@ -44,12 +44,14 @@
     "per_point_delay_hold": true,
     "record_plan_library": true,
     "pause_resume": true,
-    "x7_exact_equivalence_verified": false
+    "x7_exact_equivalence_verified": false,
+    "stock_box_selection_controls": true,
+    "vietnamese_canvas_font_on_text_change": true
   },
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
     "port": 20003,
-    "build": "eng-sp-sss-sp-events-v7",
+    "build": "eng-sp-sss-combat-box-v8",
     "profile_schema": 30,
     "routes": 342,
     "private_gm_routes": 3,
@@ -80,7 +82,8 @@
       ],
       "authored_rules": true,
       "native_verified": false
-    }
+    },
+    "combat_runtime_diagnostics": true
   },
   "download_helper": {
     "file": "Download-Clients.zip",
@@ -118,6 +121,11 @@
       "commit": "af1924a43fbd518c44c9fd7995365ae5a469ec54",
       "file": "Client-ENG-SPSSS-IOS-AutoPlans.zip",
       "sha256": "d174309a86a19a815a03346cb996c7e8be5dac1f88216c4157810400a1c93d19"
+    },
+    "box_restore_patch": {
+      "commit": "9aee53ee50ec2175e7bd74fd18da8458319bbe87",
+      "file": "Client-ENG-SPSSS-IOS-BoxRestore.zip",
+      "sha256": "9cbdf93d3efe7743f591eaf5f623203b2b65dd12104afb1caf48b1ea6f67d6aa"
     }
   }
 }
