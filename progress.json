@@ -1,30 +1,31 @@
 {
-  "stage": "ios-controls-native-interaction-validation-pending",
+  "stage": "ios-textfix-native-render-confirmation-pending",
   "branch": "eng-sp-sss",
   "build": "eng-sp-sss-event-goals-v6",
   "profile_schema": 30,
   "source_rpc_contracts": 342,
   "implemented_rpc_handlers": 342,
   "private_gm_rpc_routes": 3,
-  "tests_passed": 22,
+  "tests_passed": 23,
   "admin_browser_flows_passed": 31,
   "playable_verified": false,
   "baseline": "eng-sp-sss",
   "rarity": "unchanged original S/SS/SSS/SP role groups",
   "long_gameplay_ports_active": false,
   "android_sha256": "20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47",
-  "ios_sha256": "9a17a6c16495b08fbd296ad155ab1df349c2f150adb051b561a8d80ca60c23ba",
+  "ios_sha256": "36fe32b8fadabbe73f1f9b17c3e66ce829645e9258a56f9fff2d53708f548ad4",
   "ios_signed": false,
-  "validation_report": "analysis/ios-controls-validation.json",
+  "validation_report": "analysis/ios-text-fix-validation.json",
   "remaining": [
     "Native BlueStacks replay of user-reported screens",
     "Legitimate iOS signing and native iPhone gameplay",
     "Termux/Tailscale device validation",
-    "Native iPhone check: network recovery, compact controls, hold/slider, single/multi auto and record/replay"
+    "Native iPhone check: network recovery, compact controls, hold/slider, single/multi auto and record/replay",
+    "Confirm TextFix control labels and IP input visible on iPhone"
   ],
   "targeted_box_runtime_tests_passed": 13,
   "event_admin_targeted_tests_passed": 24,
-  "tests_scope": "focused client controls, runtime, login, native launch repair, transport and endpoint suites",
+  "tests_scope": "focused labels, controls, runtime, login, native repair, transport and endpoint suites",
   "previous_full_suite_passed": 281,
   "event_objective_targeted_tests_passed": 6
 }

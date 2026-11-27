@@ -4,7 +4,7 @@ Windows: install Python 3.10+ (enable Add Python to PATH).
 Extract this ZIP to a NEW folder and double-click Download-Clients.bat.
 The program automatically downloads and checks every part, then creates:
   DB2-ENG-SPSSS-BoxInfo.apk        (525,062,849 bytes; signed)
-  DB2-ENG-SPSSS-Controls-unsigned.ipa   (510,861,884 bytes; unsigned)
+  DB2-ENG-SPSSS-TextFix-unsigned.ipa   (510,862,012 bytes; unsigned)
 Both include Speed 1x-10x and the original ENG gameplay, Vietnamese and permission-checked GM.
 No old APK, Git, Java, Node or manual file joining is needed for downloading.
 
@@ -39,7 +39,7 @@ One SP box with x60 fragments shows x60 on the reward cell (not chest count).
 
 IOS LAUNCHFIX: removes two startup plugins after the device log showed
 [sjcode] disabled/not-found; kill now, followed by a voluntary process exit.
-Select the Controls IPA in Sideloadly and sign/install again.
+Select the TextFix IPA in Sideloadly and sign/install again.
 Native instructions and JSC remain unchanged; signed-device launch is pending.
 Optional: Download-IPA.bat --ipa-source "C:\path\DB2-ENG-SPSSS-BoxInfo-unsigned.ipa"
 Use the old ORIGINAL unsigned file, not a signed/edited IPA.

@@ -1,6 +1,6 @@
-# IPA Controls mới nhất · server ENG v6
+# IPA TextFix mới nhất · server ENG v6
 
-Bộ tải tạo **DB2-ENG-SPSSS-Controls-unsigned.ipa**, 510.861.884 byte (~487 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
+Bộ tải tạo **DB2-ENG-SPSSS-TextFix-unsigned.ipa**, 510.862.012 byte (~487 MiB). Đây là client BoxInfo hiện tại có Speed 1–10×, chọn server, GM có kiểm quyền và giao diện rương mới. Server event v6 không cần một IPA khác. Công cụ tải kiểm SHA-256 toàn file trước khi báo COMPLETE; tải lỗi có thể chạy lại để dùng cache đã kiểm.
 
 ## Sửa lỗi mở đen rồi tự thoát
 
@@ -12,15 +12,21 @@ Log thiết bị cho thấy iOS chấp nhận chữ ký, sau đó `CombinedPlugi
 - Thử IP không tới được: chờ tối đa 8 giây rồi quay về màn đăng nhập, tự mở lại “Server riêng” với lỗi. Mạng lỗi/HTTP lỗi/địa chỉ trả HTML hoặc JSON không phải cấu hình DB2 đều trả về để sửa IP, không đứng mãi ở màn tải.
 - Bỏ nút “Nguồn và luật” khỏi IPA; thông tin nguồn vẫn nằm trong tài liệu/web quản trị.
 - Chữ Việt dùng font hệ thống Arial dự phòng khi font đóng gói thiếu dấu; không sửa font size hoặc ảnh chứa chữ. Cần kiểm hình ảnh thực tế trên iPhone sau cài.
-- Vẫn giữ sửa plugin tự thoát của LaunchFix. Ký/cài file **Controls** mới bằng Sideloadly; không chọn lại IPA cũ.
+- Vẫn giữ sửa plugin tự thoát của LaunchFix. Ký/cài file **TextFix** mới bằng Sideloadly; không chọn lại IPA cũ.
 
 ## Điều khiển mới · Controls
 
 Hộp server nhỏ, đóng được popup mất mạng và hủy vòng reconnect cũ. Nút tròn kéo được; giữ 2 giây mở thanh tốc độ 1–10×; chạm nhanh mở Auto/Ghi. Có auto một điểm, nhiều điểm và ghi/phát lại chạm/kéo trong cùng cảnh. Nút Dừng hiện khi đang chạy/ghi/chọn điểm; tự dừng khi mất mạng, chuyển cảnh hoặc xuống nền. Xem [CLIENT-CONTROLS.md](CLIENT-CONTROLS.md). Các điều khiển cần thử thực tế sau khi ký/cài trên iPhone.
 
+## Sửa chữ bị trống · TextFix
+
+Ảnh iPhone cho thấy khung và nút đã vẽ nhưng nhãn mới bị trống. TextFix tạo Label khi node chưa hiện, cấu hình font/nội dung/kích thước xong rồi mới kích hoạt; bỏ SHRINK trên các ô mới, dùng CLAMP và đường vẽ Canvas như các đoạn RichText trong engine. Áp dụng cho tiêu đề, nút, nhãn nhập liệu và placeholder. Các tính năng Controls vẫn giữ nguyên.
+
+Kiểm tra thêm lifecycle `Label.onEnable` với nhãn ASCII/Việt/URL/số 0; không coi mô phỏng là phép thử render iPhone. Cần ký/cài đúng file TextFix và xác nhận chữ hiển thị trên thiết bị.
+
 ## Tải
 
-**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT. **Chọn file có chữ `Controls` để ký, không chọn lại BoxInfo cũ.** Nếu đã có file BoxInfo gốc chưa ký, có thể tránh tải lại 488 MB bằng lệnh trong CMD tại thư mục bộ tải:
+**Windows:** cài Python 3.10+, giải nén toàn bộ `Download-IPA.zip`, mở `Download-IPA.bat`. Không kéo riêng BAT ra khỏi thư mục. Chương trình chỉ tải IPA, không tải APK. IPA hoàn chỉnh nằm cạnh BAT. **Chọn file có chữ `TextFix` để ký, không chọn lại BoxInfo cũ.** Nếu đã có file BoxInfo gốc chưa ký, có thể tránh tải lại 488 MB bằng lệnh trong CMD tại thư mục bộ tải:
 
 ```bat
 Download-IPA.bat --ipa-source "C:\duong-dan\DB2-ENG-SPSSS-BoxInfo-unsigned.ipa"
@@ -39,7 +45,7 @@ Có thể dùng `python3 Download-Clients.py --only ipa`. Không cần file game
 SHA-256 IPA **trước khi ký**:
 
 ```text
-9a17a6c16495b08fbd296ad155ab1df349c2f150adb051b561a8d80ca60c23ba
+36fe32b8fadabbe73f1f9b17c3e66ce829645e9258a56f9fff2d53708f548ad4
 ```
 
 ## Ký và cài qua máy tính

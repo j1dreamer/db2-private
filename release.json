@@ -1,7 +1,7 @@
 {
-  "version": "6.3.0-dev",
+  "version": "6.4.0-dev",
   "branch": "eng-sp-sss",
-  "tag": "eng-sp-sss-ios-controls-dev",
+  "tag": "eng-sp-sss-ios-textfix-dev",
   "repository": "j1dreamer/db2-private",
   "gameplay_baseline": "eng-sp-sss",
   "implementation_commit": null,
@@ -19,9 +19,9 @@
     "certificate_sha256": "1e08a903aef9c3a721510b64ec764d01d3d094eb954161b62544ea8f187b5953"
   },
   "ios": {
-    "file": "DB2-ENG-SPSSS-Controls-unsigned.ipa",
-    "bytes": 510861884,
-    "sha256": "9a17a6c16495b08fbd296ad155ab1df349c2f150adb051b561a8d80ca60c23ba",
+    "file": "DB2-ENG-SPSSS-TextFix-unsigned.ipa",
+    "bytes": 510862012,
+    "sha256": "36fe32b8fadabbe73f1f9b17c3e66ce829645e9258a56f9fff2d53708f548ad4",
     "bundle_id": "com.j1dreamer.db2.private",
     "signed": false,
     "publication_authorized": true,
@@ -37,7 +37,9 @@
       "multi"
     ],
     "touch_record_replay": true,
-    "network_popup_recovery": true
+    "network_popup_recovery": true,
+    "control_label_canvas_fallback": true,
+    "control_label_configured_before_activation": true
   },
   "server": {
     "file": "DB2-ENG-SPSSS-GM-Server.zip",
@@ -87,6 +89,11 @@
       "commit": "6da0c69357c8ef8e3af45683bbf3d2d57a384e05",
       "file": "Client-ENG-SPSSS-IOS-Controls.zip",
       "sha256": "6f82f0a3cd5c52e36a00520718885ebf2dc3e97492cce0e4990d77f1a2f863f6"
+    },
+    "text_fix_patch": {
+      "commit": "68958aef01e5c0b3fd3fa58f5651e4672476d56e",
+      "file": "Client-ENG-SPSSS-IOS-TextFix.zip",
+      "sha256": "81e38ad77c2e0f090035bd94db8147b4881bf2d43e6695d0439361877b206a5f"
     }
   }
 }

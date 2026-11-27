@@ -1,6 +1,6 @@
 # Điều khiển trong game · IPA Controls
 
-Cài bản `DB2-ENG-SPSSS-Controls-unsigned.ipa` đã ký bằng Sideloadly. Bộ tải IPA hiện tạo file này; không chọn lại LoginFix hoặc LaunchFix cũ. Server và APK đang dùng không bị thay đổi bởi bản IPA này.
+Cài bản `DB2-ENG-SPSSS-TextFix-unsigned.ipa` đã ký bằng Sideloadly. Bộ tải IPA hiện tạo file này; không chọn lại LoginFix hoặc LaunchFix cũ. Server và APK đang dùng không bị thay đổi bởi bản IPA này.
 
 ## Mất mạng / đổi server
 

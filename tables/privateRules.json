@@ -93,5 +93,10 @@
     "id": "client-automation-controls",
     "source": "private-client-implementation",
     "description": "Nút tròn giữ 2 giây/slider tốc độ, auto chạm một/nhiều điểm, ghi/phát chạm/kéo và khôi phục lỗi mạng là mã client dự án. Dùng sự kiện chạm của game, không gọi RPC cấp đồ; thời gian/thưởng server không đổi. Dừng khi đổi cảnh, mất mạng, mở điều khiển hoặc app nền. Bản phát hành hiện cập nhật IPA, chưa kiểm native iPhone."
+  },
+  {
+    "id": "control-text-rendering",
+    "source": "private-client-repair",
+    "description": "TextFix cấu hình nhãn khi node chưa hiện, kích thước cố định, CLAMP và Canvas text fallback của engine; áp dụng cho UI dự án. Kiểm tra lifecycle mô phỏng, cần người dùng xác nhận render iPhone."
   }
 ]

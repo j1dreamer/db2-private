@@ -12,12 +12,12 @@ BASE_SHA='a198837ccae5a3ad662d2489c4e1748016aebe77359e84f4bc4734c5f389f430'
 FIXED_SHA='d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f'
 APK_SHA='20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47'
 IPA_BASE_SHA='c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b'
-IPA_SHA='9a17a6c16495b08fbd296ad155ab1df349c2f150adb051b561a8d80ca60c23ba'
-IOS_LAUNCH_REF='6da0c69357c8ef8e3af45683bbf3d2d57a384e05'
-IOS_LAUNCH_PATCH_SHA='6f82f0a3cd5c52e36a00520718885ebf2dc3e97492cce0e4990d77f1a2f863f6'
+IPA_SHA='36fe32b8fadabbe73f1f9b17c3e66ce829645e9258a56f9fff2d53708f548ad4'
+IOS_LAUNCH_REF='68958aef01e5c0b3fd3fa58f5651e4672476d56e'
+IOS_LAUNCH_PATCH_SHA='81e38ad77c2e0f090035bd94db8147b4881bf2d43e6695d0439361877b206a5f'
 APK_SIZE=525062849
 IPA_BASE_SIZE=511242249
-IPA_SIZE=510861884
+IPA_SIZE=510862012
 CHUNK=1024*1024
 
 def sha(path):
@@ -135,7 +135,7 @@ def android(output,cache,workers):
     finish(temporary,target,APK_SIZE,APK_SHA);return target
 
 def ios(output,cache,workers,source=None):
-    target=output/'DB2-ENG-SPSSS-Controls-unsigned.ipa'
+    target=output/'DB2-ENG-SPSSS-TextFix-unsigned.ipa'
     if ready(target,IPA_SIZE,IPA_SHA):return target
     if source is not None:
         source=Path(source).expanduser().resolve()
@@ -143,10 +143,10 @@ def ios(output,cache,workers,source=None):
             raise ValueError('Use the original unsigned BoxInfo IPA as --ipa-source, before Sideloadly signing. Omit this option to download automatically.')
         paths=[source];print('IPA: verified original unsigned BoxInfo input.',flush=True)
     else:paths=parts(cache/'ios',IOS_REF,IOS_MANIFEST,IPA_BASE_SIZE,IPA_BASE_SHA,'IPA',workers)
-    patch=fetch(RAW+IOS_LAUNCH_REF+'/Client-ENG-SPSSS-IOS-Controls.zip',cache/'ios-controls.zip',IOS_LAUNCH_PATCH_SHA)
+    patch=fetch(RAW+IOS_LAUNCH_REF+'/Client-ENG-SPSSS-IOS-TextFix.zip',cache/'ios-textfix.zip',IOS_LAUNCH_PATCH_SHA)
     plan,literal=load_patch(patch,IPA_BASE_SHA,IPA_SHA)
     if plan['old_size']!=IPA_BASE_SIZE or plan['new_size']!=IPA_SIZE:raise ValueError('Unexpected IPA reconstruction sizes')
-    temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned Controls file...',flush=True)
+    temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned TextFix file...',flush=True)
     with contextlib.ExitStack()as stack,temporary.open('wb')as dest:
         source=PartSource(paths,stack)
         for op in plan['operations']:
@@ -160,7 +160,7 @@ def ios(output,cache,workers,source=None):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--only',choices=('both','apk','ipa'),default='both');parser.add_argument('--output',type=Path,default=Path(__file__).resolve().parent);parser.add_argument('--ipa-source',type=Path,help='Optional original unsigned BoxInfo IPA to avoid downloading it again');parser.add_argument('--workers',type=int,choices=range(1,9),default=4);args=parser.parse_args()
     output=args.output.expanduser().resolve();output.mkdir(parents=True,exist_ok=True);cache=output/'.longzhidao-download-cache'
-    print('DB2 ENG SSS/SP + GM VI - complete clients, BoxInfo + Speed 1x-10x. iOS Controls is unsigned; sign again.',flush=True)
+    print('DB2 ENG SSS/SP + GM VI - complete clients, BoxInfo + Speed 1x-10x. iOS TextFix is unsigned; sign again.',flush=True)
     print('Output:',output,'\nKeep this window open. Run again to reuse verified downloads.',flush=True)
     files=[]
     if args.only in('both','apk'):files.append(android(output,cache,args.workers))

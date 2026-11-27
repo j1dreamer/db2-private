@@ -1,0 +1,103 @@
+{
+  "build": "ios-textfix",
+  "reported_symptom": "All new fixed-size UI text absent on iPhone while card backgrounds and original speed text render.",
+  "changes": [
+    "Create control Label on inactive node; configure before activation",
+    "Fixed nonzero bounds, CLAMP rather than SHRINK",
+    "Canvas text path already used by the original engine RichText segments",
+    "Explicit system font, color, alignment and opacity",
+    "Configure input labels before activating EditBox parent"
+  ],
+  "build_details": {
+    "ipa_sha256": "36fe32b8fadabbe73f1f9b17c3e66ce829645e9258a56f9fff2d53708f548ad4",
+    "ipa_bytes": 510862012,
+    "native_launch_fix": {
+      "removed_dependencies": [
+        "@executable_path/CombinedPlugin.dylib",
+        "@executable_path/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "removed_ordinals": [
+        50,
+        51
+      ],
+      "imported_plugin_symbols": false,
+      "bytes_after_original_load_commands_unchanged": true,
+      "native_instructions_patched": false,
+      "requires_resigning": true,
+      "source_sha256": "c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b",
+      "ipa_sha256": "4514f6867cd2954ee55ce6f51ba95da1b7cc069f24100474ba1f6b2093f75732",
+      "ipa_bytes": 510859616,
+      "native_executable_sha256": "bd791a92795afc1c27bf20c7eed378249ed194e666e0419b2d34996ebf69d715",
+      "removed_files": [
+        "Payload/dragonball.app/CombinedPlugin.dylib",
+        "Payload/dragonball.app/Frameworks/AppRuntime/ATHelper.dylib"
+      ],
+      "unchanged_entries": 17260,
+      "jsc_and_settings_unchanged": true,
+      "native_device_tested": false
+    },
+    "only_additional_modified_entry": "Payload/dragonball.app/assets/main/index.jsc",
+    "source_button_removed": true,
+    "connection_timeout_ms": 8000,
+    "font_fallback": "Arial/system for Vietnamese labels",
+    "requires_resigning": true,
+    "native_device_tested": false,
+    "packaged_controls": {
+      "compact_server_card": [
+        520,
+        276
+      ],
+      "circle_diameter": 46,
+      "hold_ms": 2000,
+      "slider_applies_immediately": true,
+      "drag_does_not_open_panel": true,
+      "single_clicks": 3,
+      "multipoint_clicks": 4,
+      "record_swipe_replay": true,
+      "stops_on_scene_background_and_network": true,
+      "network_popup_removed_without_retry": true,
+      "small_status_hidden_when_idle": true
+    },
+    "packaged_label_activation": {
+      "label_enable_runs_only_after_configuration": true,
+      "fixed_nonzero_bounds": true,
+      "no_shrink_mode": true,
+      "canvas_text_path": true,
+      "ascii_vietnamese_url_and_zero_labels": 7,
+      "input_labels_configured": true,
+      "activation_count": 9
+    },
+    "patch_file": "Client-ENG-SPSSS-IOS-TextFix.zip",
+    "patch_sha256": "81e38ad77c2e0f090035bd94db8147b4881bf2d43e6695d0439361877b206a5f",
+    "patch_bytes": 9726348
+  },
+  "public_download_proof": {
+    "passed": true,
+    "public_patch_downloaded_and_checked": true,
+    "full_ipa_checksum_and_crc_verified": true,
+    "embedded_ui_verified": true,
+    "packaged_label_lifecycle": {
+      "label_enable_runs_only_after_configuration": true,
+      "fixed_nonzero_bounds": true,
+      "no_shrink_mode": true,
+      "canvas_text_path": true,
+      "ascii_vietnamese_url_and_zero_labels": 7,
+      "input_labels_configured": true,
+      "activation_count": 9
+    },
+    "repeat_run_reuses_verified_output": true,
+    "native_iphone_render_tested": false
+  },
+  "tests": {
+    "passed": true,
+    "count": 23,
+    "seconds": 2.385,
+    "scope": "Focused controls, label lifecycle, runtime, login, native launch repair, downloader, format and endpoint suites"
+  },
+  "regression_scope": "Original Cocos Label.onEnable executed against an instrumented component/node model; not native GPU rasterization.",
+  "native_iphone_render_verified": false,
+  "root_cause_native_retest_pending": true,
+  "existing_controls_preserved": true,
+  "server_and_apk_changed": false,
+  "resigning_required": true
+}
