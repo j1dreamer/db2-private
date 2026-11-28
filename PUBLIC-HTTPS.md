@@ -44,3 +44,9 @@ Bộ cài cũ dùng `umask 077` rồi `cp -a` thư mục giải nén Node; thao 
 Nếu gặp lỗi này, chạy lại **Setup-Public.sh bản đã sửa**; giữ database và backup như trước. Không dùng đường dẫn commit bộ cài cũ vì nó vẫn ghim Setup-Ubuntu.sh cũ. Không cần ký/cài lại APK/IPA cho lỗi Node trên VPS. Sau khi cài thành công kiểm `/health`: `combat.available` phải là `true`. HTTPS chỉ sẵn sàng khi bộ cài xác minh chứng chỉ thành công.
 
 Kiểm hồi quy: `python3 -m unittest tests.test_ubuntu_node_install tests.test_node_runtime -v` (5 test). Test tái hiện mode 0700 bằng `cp -a` thật dưới umask 077 và kiểm quyền sau sửa; không coi kiểm cục bộ là đã xác minh systemd trên VPS người dùng.
+
+## Ubuntu báo Unable to locate package caddy
+
+Một số mirror/cấu hình Ubuntu tối giản không có gói Caddy. Setup-Public.sh mới thêm kho stable chính thức theo https://caddyserver.com/docs/install#debian-ubuntu-raspbian trước khi cài khi chưa có Caddy. Khóa GPG được dearmor vào keyring riêng, repository dùng signed-by; không tắt xác minh APT/TLS. Keyring và file sources được cài mode 0644 để APT đọc được ngay cả dưới umask 077. Nếu đã có Caddy, giữ nguyên cấu hình kho hiện có.
+
+Chạy lại Setup-Public.sh mới, giữ nguyên database. Kiểm hồi quy: `python3 -m unittest tests.test_public_install tests.test_ubuntu_node_install tests.test_node_runtime -v` (7 test). Đã tải khóa và kiểm chữ ký InRelease thật của kho stable trong thư mục tạm; chưa chạy APT hoặc cấp chứng chỉ trên VPS người dùng.

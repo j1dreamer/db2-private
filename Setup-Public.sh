@@ -34,6 +34,19 @@ curl --fail --location --retry 3 "https://raw.githubusercontent.com/j1dreamer/db
 bash "$work/setup.sh" --loopback
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
+# Caddy official stable repository: minimal Ubuntu mirrors may omit Caddy.
+# Download first, then install explicit readable modes despite umask 077.
+# https://caddyserver.com/docs/install#debian-ubuntu-raspbian
+if ! command -v caddy >/dev/null; then
+ apt-get install -y ca-certificates curl gnupg debian-keyring debian-archive-keyring apt-transport-https
+ curl --fail --location --retry 3 https://dl.cloudsmith.io/public/caddy/stable/gpg.key -o "$work/caddy.key"
+ gpg --batch --yes --dearmor -o "$work/caddy-keyring.gpg" "$work/caddy.key"
+ curl --fail --location --retry 3 https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt -o "$work/caddy-stable.list"
+ install -d -m 755 /usr/share/keyrings /etc/apt/sources.list.d
+ install -m 644 "$work/caddy-keyring.gpg" /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+ install -m 644 "$work/caddy-stable.list" /etc/apt/sources.list.d/caddy-stable.list
+ apt-get update
+fi
 apt-get install -y caddy apache2-utils
 install -d -m 700 /etc/db2
 if [[ ! -f /etc/db2/public-admin-login.json ]]; then
