@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# DB2 ENG v12: first install / repeat install with backup; no SSH backdoor.
+# DB2 ENG v13: first install / repeat install with backup; no SSH backdoor.
 set -Eeuo pipefail
 umask 077
-REF=a2be031b5915d6df4e61ca009faededa9b978c23
+REF=ba3a63116d668f9cf054f098da74fbb852cdec2e
 BASE=/opt/db2
 if (( EUID != 0 )); then exec sudo bash "$0" "$@"; fi
 NETWORK=private
@@ -133,7 +133,7 @@ done
 if (( ! healthy )); then journalctl -u db2 -n 40 --no-pager; exit 1; fi
 python3 - "$work/health.json" <<'PY'
 import json,sys
-h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-training-boxes-v12' and h.get('profile_schema')==30 and h.get('combat',{}).get('available'),h
+h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-slots-snake-v13' and h.get('profile_schema')==30 and h.get('combat',{}).get('available'),h
 print(json.dumps(h,ensure_ascii=False,indent=2))
 PY
 switched=0
