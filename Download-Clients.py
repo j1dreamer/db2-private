@@ -12,16 +12,16 @@ BASE_SHA='a198837ccae5a3ad662d2489c4e1748016aebe77359e84f4bc4734c5f389f430'
 FIXED_SHA='d3dd3db256d550667eba386217e969327c82cc37985e2b503adea3673f883c3f'
 APK_BOXINFO_SHA='20b1bb238e2c5687c163b6ab75b0afca3679e8d1a800670d835b2430a833bc47'
 APK_BOXINFO_SIZE=525062849
-APK_PUBLIC_REF='c99e814e540a59e0efbe081966d9747af6ea8af7'
-APK_PUBLIC_PATCH_SHA='cfdb54f1785665862c788735424b1ed438f6d06a8456731057b3e6745ba99e5c'
-APK_SHA='88e3f90d8bc80c7271b36c9d560a5cc62575ee9858942c30d5722c703a480506'
+APK_PUBLIC_REF='7f8f1d1dbc62f79663fec257d1e1b39b7dbeda80'
+APK_PUBLIC_PATCH_SHA='9a8eb4545290d55de91a070cca60374eb914df4bcd7d8fd05833e1463cdc924d'
+APK_SHA='1ea45760723a4b653dd205382ed66c419057374aafdfc0b1810274ecc2921a37'
 IPA_BASE_SHA='c6c324ce858b2e5d7106246882f80479458af713e4bdbf16e13b04e882dac10b'
-IPA_SHA='97426f5069319c083042706faacf5aac46031a613cf500a1d8819ece2438200d'
-IOS_LAUNCH_REF='c99e814e540a59e0efbe081966d9747af6ea8af7'
-IOS_LAUNCH_PATCH_SHA='83713958704e009a72680455360a2edc2aab11ef1c2db47d66e542947126de0d'
+IPA_SHA='c20e9ce1cd71ed65a1350bfff7f6f595a41a5a2b6b701c110fd9807d9a5d53b7'
+IOS_LAUNCH_REF='7f8f1d1dbc62f79663fec257d1e1b39b7dbeda80'
+IOS_LAUNCH_PATCH_SHA='b52cfdf5fcf25ec38ce1417e62c57f3820a19828faca2a622ec9f1a2a78d03ad'
 APK_SIZE=525071041
 IPA_BASE_SIZE=511242249
-IPA_SIZE=510866000
+IPA_SIZE=510866848
 CHUNK=1024*1024
 
 def sha(path):
@@ -123,7 +123,7 @@ def finish(temporary,output,size,digest):
     os.replace(temporary,output);print('COMPLETE:',output,flush=True)
 
 def android(output,cache,workers,source=None):
-    target=output/'DB2-ENG-SPSSS-PublicReady.apk'
+    target=output/'DB2-ENG-SPSSS-v15.apk'
     if ready(target,APK_SIZE,APK_SHA):return target
     if source is not None:
         source=Path(source).expanduser().resolve()
@@ -135,7 +135,7 @@ def android(output,cache,workers,source=None):
         client=fetch(RAW+'eng-sp-sss/Client-ENG-SPSSS-BoxInfo-Patch.zip',cache/'client.zip','dee7233a2ad07523b1aeaaed867917588b30ae4585117f7ae38a608dcf866b55')
         first,lit1=load_patch(fix,BASE_SHA,FIXED_SHA);second,lit2=load_patch(client,FIXED_SHA,APK_BOXINFO_SHA)
         if first['old_size']!=524284609 or first['new_size']!=second['old_size']or second['new_size']!=APK_BOXINFO_SIZE:raise ValueError('Unexpected APK base sizes')
-    patch=fetch(RAW+APK_PUBLIC_REF+'/Client-ENG-SPSSS-Android-PublicReady.zip',cache/'android-publicready.zip',APK_PUBLIC_PATCH_SHA)
+    patch=fetch(RAW+APK_PUBLIC_REF+'/Client-ENG-SPSSS-Android-v15.zip',cache/'android-publicready.zip',APK_PUBLIC_PATCH_SHA)
     plan,literal=load_patch(patch,APK_BOXINFO_SHA,APK_SHA)
     if plan['old_size']!=APK_BOXINFO_SIZE or plan['new_size']!=APK_SIZE:raise ValueError('Unexpected APK reconstruction sizes')
     temporary=target.with_name(target.name+'.downloading');print('APK: creating complete signed PublicReady file...',flush=True)
@@ -151,7 +151,7 @@ def android(output,cache,workers,source=None):
     finish(temporary,target,APK_SIZE,APK_SHA);return target
 
 def ios(output,cache,workers,source=None):
-    target=output/'DB2-ENG-SPSSS-PublicReady-unsigned.ipa'
+    target=output/'DB2-ENG-SPSSS-v15-unsigned.ipa'
     if ready(target,IPA_SIZE,IPA_SHA):return target
     if source is not None:
         source=Path(source).expanduser().resolve()
@@ -159,7 +159,7 @@ def ios(output,cache,workers,source=None):
             raise ValueError('Use the original unsigned BoxInfo IPA as --ipa-source, before Sideloadly signing. Omit this option to download automatically.')
         paths=[source];print('IPA: verified original unsigned BoxInfo input.',flush=True)
     else:paths=parts(cache/'ios',IOS_REF,IOS_MANIFEST,IPA_BASE_SIZE,IPA_BASE_SHA,'IPA',workers)
-    patch=fetch(RAW+IOS_LAUNCH_REF+'/Client-ENG-SPSSS-IOS-PublicReady.zip',cache/'ios-publicready.zip',IOS_LAUNCH_PATCH_SHA)
+    patch=fetch(RAW+IOS_LAUNCH_REF+'/Client-ENG-SPSSS-IOS-v15.zip',cache/'ios-publicready.zip',IOS_LAUNCH_PATCH_SHA)
     plan,literal=load_patch(patch,IPA_BASE_SHA,IPA_SHA)
     if plan['old_size']!=IPA_BASE_SIZE or plan['new_size']!=IPA_SIZE:raise ValueError('Unexpected IPA reconstruction sizes')
     temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned PublicReady file...',flush=True)
