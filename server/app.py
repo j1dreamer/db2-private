@@ -76,7 +76,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     async def health(req):
         from .node_runtime import runtime_status
         combat={k:v for k,v in runtime_status().items()if k!='executable'}
-        return web.json_response({'combat':combat,'status':'ok'if combat['available']else'degraded','stage':'protocol-development','playable_verified':False,'build':'eng-sp-sss-training-boxes-v12','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
+        return web.json_response({'combat':combat,'status':'ok'if combat['available']else'degraded','stage':'protocol-development','playable_verified':False,'build':'eng-sp-sss-slots-snake-v13','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
     async def config(req):
         from .economy import client_script
         return web.json_response({'runScriptInfo':{'script':client_script(store)},'inReviewPackageInfos':[]})

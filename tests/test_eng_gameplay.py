@@ -18,12 +18,12 @@ class EngGameplayTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.path=Path(self.tmp.name)/'game.sqlite3';self.store=Store(self.path);self.store.register('tester','password');self.player=self.store.create_player(1,'Tester')
  def tearDown(self):self.store.db.close();self.tmp.cleanup()
- def test_source_awakening_reaches_ten_then_rejects_without_consumption(self):
-  p=self.player;p.update(level=100,coin=10**9,gem=10000);r=character(102207,1,20);r.update(level=100,awakeLevel=9);learn_skills(r);p['team']['roles']={'1':r};add_reward(p,50220,400);recalculate(p,r);self.store.save(p)
+ def test_selected_x7_awakening_limit_reaches_twenty_then_rejects_without_consumption(self):
+  p=self.player;p.update(level=100,coin=10**9,gem=10000);r=character(102207,1,20);r.update(level=100,awakeLevel=19);learn_skills(r);p['team']['roles']={'1':r};add_reward(p,50220,400);recalculate(p,r);self.store.save(p)
   with patch('server.team_actions.secrets.randbelow',return_value=0):
    result=handle(self.store,1,'logic.teamHandler.upgradeRoleAwakeLevel',{'teamIndex':1})
-  self.assertTrue(result['_temp']['isSuccess']);p=self.store.player(1);self.assertEqual(p['team']['roles']['1']['awakeLevel'],10)
-  self.assertEqual(max(s['maxLevel']for s in p['team']['roles']['1']['awakeSkills'].values()),100)
+  self.assertTrue(result['_temp']['isSuccess']);p=self.store.player(1);self.assertEqual(p['team']['roles']['1']['awakeLevel'],20)
+  self.assertEqual(max(s['maxLevel']for s in p['team']['roles']['1']['awakeSkills'].values()),200)
   before=copy.deepcopy(p)
   with self.assertRaises(ValueError):handle(self.store,1,'logic.teamHandler.upgradeRoleAwakeLevel',{'teamIndex':1})
   after=self.store.player(1);self.assertEqual(after['coin'],before['coin']);self.assertEqual(after['bag'],before['bag'])

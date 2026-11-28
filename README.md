@@ -1,8 +1,8 @@
 # DB2 ENG · SSS/SP + GM — v6 sự kiện tiêu Gem / cày nhận quà
 
-Bản server v12: [Tu luyện, rương SP và xếp hạng sảnh](TRAINING-BOXES-V12.md). Bản v11: [Shop, vé, xúc xắc, thưởng hằng ngày & thu hồi](ECONOMY-V11.md). [Phương án ký/cài IPA từ VPS](IOS-VPS-SIGNING.md) cần bộ ký iOS hợp lệ; chưa phải OTA đã triển khai.
+Bản server v13: [5 ô nhộng/bảo vật, thức tỉnh 20 và Xà Đạo](FIVE-SLOTS-V13.md). Bản v12: [Tu luyện, rương SP và xếp hạng sảnh](TRAINING-BOXES-V12.md). Bản v11: [Shop, vé, xúc xắc, thưởng hằng ngày & thu hồi](ECONOMY-V11.md). [Phương án ký/cài IPA từ VPS](IOS-VPS-SIGNING.md) cần bộ ký iOS hợp lệ; chưa phải OTA đã triển khai.
 
-Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS / SSS / SP**. Không trộn startup override hoặc module gameplay Long Chi Đảo. Backend Python vẫn là mã tương thích của dự án; luật kín server gốc không có trong client vẫn dùng luật riêng có ghi nguồn.
+Bản này **giữ gameplay/data client ENG** và hệ tướng gốc **S / SS / SSS / SP**. Chọn riêng 5 ô nhộng/bảo vật và thức tỉnh tối đa 20 từ cấu hình X7; không nhập toàn bộ override hoặc module gameplay Long Chi Đảo. Backend Python vẫn là mã tương thích của dự án; luật kín server gốc không có trong client vẫn dùng luật riêng có ghi nguồn.
 
 ## Tải đúng bộ mới
 
@@ -23,7 +23,7 @@ Không cần APK cũ, Java, Git hoặc ghép tay. Cần khoảng 2,2 GB trống 
 2. Chạy `start.bat`. Thư mục mới tự tạo `data/game.sqlite3` và `data/admin-token`, không kèm tài khoản hoặc token của ai. Nếu cần dữ liệu cũ, tự giữ bản sao trước khi chuyển; server có snapshot SQLite trước đổi baseline.
 3. Đặt APK mới cạnh `Install-Android.bat`, bật BlueStacks → Android Debug Bridge rồi chạy BAT. Nhập đúng cổng ADB (thường `127.0.0.1:6610`). Không cần gỡ app hoặc xóa data Android.
 4. Trong game dùng server `http://127.0.0.1:20003`. Với database trắng, đăng ký tài khoản mới.
-5. Kiểm `/health`: **build `eng-sp-sss-training-boxes-v12`, schema 30**. Dùng client ENG BoxInfo tương thích; nếu đã cài BoxInfo thì bản web này chỉ cần cập nhật server.
+5. Kiểm `/health`: **build `eng-sp-sss-slots-snake-v13`, schema 30**. Dùng client ENG BoxInfo tương thích; nếu đã cài BoxInfo thì bản web này chỉ cần cập nhật server.
 
 Web quản trị: **http://127.0.0.1:20003**; token nằm ở `data/admin-token` trong đúng thư mục server đang chạy.
 

@@ -10,7 +10,11 @@ from tools.client_patches import patch_endless_transport,patch_adventure_transpo
 class EndlessTests(unittest.IsolatedAsyncioTestCase):
  async def asyncSetUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.store=Store(Path(self.tmp.name)/'db');self.store.register('tester','password');p=self.store.create_player(1,'Tester');p.update(level=100,gem=10000);p['team']['roles']['1']['attr'].update(hp=10**9,atk=10**8);self.store.save(p);self.seen=set()
- async def asyncTearDown(self):self.store.db.close();self.tmp.cleanup()
+ async def asyncTearDown(self):
+  from server.combat_prefetch import _cache
+  tasks=[entry[2]for entry in _cache(self.store).values()]
+  if tasks:await asyncio.gather(*tasks,return_exceptions=True)
+  self.store.db.close();self.tmp.cleanup()
  async def call(self,action,args=None):
   route='logic.endlessHandler.'+action;r=await endless.handle(self.store,1,route,args or {});self.seen.add(route);return r
  async def pass_floor(self,bmap=401,indices=None):

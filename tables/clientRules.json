@@ -6,5 +6,21 @@
     "isShowCenterIOS": true,
     "isNoRemoveHideData": true
   },
-  "config": {}
+  "config": {
+    "EQUIPMENTS.CONSTS.ARTIFACT_ITEM_TYPES": [
+      "artifactItem_1",
+      "artifactItem_2",
+      "artifactItem_3",
+      "artifactItem_4",
+      "artifactItem_5"
+    ],
+    "EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES": [
+      "capsuleItem_1",
+      "capsuleItem_2",
+      "capsuleItem_3",
+      "capsuleItem_4",
+      "capsuleItem_5"
+    ],
+    "ROLE.CONSTS.MAX_AWAKE_LEVEL": 20
+  }
 }

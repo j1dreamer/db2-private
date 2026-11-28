@@ -22,7 +22,7 @@ class ClientDataTests(unittest.TestCase):
     p=subprocess.run(['node','-e',node],input=json.dumps({'script':script}),text=True,capture_output=True,check=True)
     result=json.loads(p.stdout);self.assertEqual(result['data']['entityExt'],tables['entityExt']);self.assertEqual(result['data']['untouched'],1)
     self.assertEqual({k:result['maps'][k]for k in maps},maps)
-    self.assertEqual(report['baseline'],'eng-sp-sss');self.assertNotIn('MAX_AWAKE_LEVEL',result['maps']);self.assertEqual(set(result['maps']),set(maps))
+    self.assertEqual(report['baseline'],'eng-sp-sss');self.assertEqual(result['maps']['MAX_AWAKE_LEVEL'],20);self.assertEqual(set(result['maps']),set(maps)|{'MAX_AWAKE_LEVEL'})
  def test_patch_rejects_missing_or_ambiguous_logo_boundary(self):
   self.assertIn('applyRaw(data);\ndataApi.init();',patch_bundle(ANCHOR,'//overlay\n'))
   for source in ('',ANCHOR+ANCHOR):

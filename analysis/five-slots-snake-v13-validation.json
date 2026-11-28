@@ -1,0 +1,48 @@
+{
+  "build": "eng-sp-sss-slots-snake-v13",
+  "profileSchema": 30,
+  "selectedSource": "X7 longzhidaoOverrides.json: three config paths only; ENG slot-awake thresholds",
+  "equipment": {
+    "maxArtifacts": 5,
+    "maxCapsules": 5,
+    "maxAwake": 20,
+    "thresholdTests": [
+      0,
+      9,
+      10,
+      14,
+      15,
+      19,
+      20
+    ],
+    "warSoulRequired": false,
+    "tenEquipmentMatchEngBattleBuilder": true,
+    "realPvpEngineRan": true,
+    "engRoleGeneratorFiveItemsEach": true,
+    "reopenAndUnequipPassed": true,
+    "awake10to20AndCapPassed": true,
+    "repeatedHotConfigResetPassed": true
+  },
+  "snakeWay": {
+    "prefetch": true,
+    "exactInputsAndRecordsRequired": true,
+    "winAndTickChecked": true,
+    "duplicateSettlementRejected": true,
+    "disabledFallbackSupported": true,
+    "benchmark": {
+      "environment": "local test, not user VPS",
+      "coldComputeMs": 1383.7,
+      "cachedSettlementMs": 45.8
+    }
+  },
+  "tests": {
+    "equipmentProgressionClientBoxes": 31,
+    "endlessAndPrefetch": 8,
+    "total": 39,
+    "passed": true
+  },
+  "limits": {
+    "nativeIphoneVisualVerified": false,
+    "vpsDeployedByAgent": false
+  }
+}

@@ -7,7 +7,12 @@
   {
     "id": "client-data",
     "source": "eng-client",
-    "description": "34 bảng và gameplay từ client ENG; giữ nguyên nhóm tướng S/SS/SSS/SP. Không dùng override khởi động hay module gameplay Long Chi Đảo."
+    "description": "34 bảng và nền gameplay client ENG; giữ nguyên nhóm S/SS/SSS/SP. Chỉ chọn riêng mở rộng 5 ô trang bị và thức tỉnh 20 từ cấu hình X7, không nhập toàn bộ override."
+  },
+  {
+    "id": "equipment-five-slots",
+    "source": "longzhidao-client",
+    "description": "Chọn ba cấu hình X7: 5 ô bảo vật, 5 ô nhộng và thức tỉnh tối đa 20. Mốc mở ô theo map ENG/X7: nhộng 3 ở thức tỉnh 10; ô 4/5 cả hai loại ở 15/20. Không phụ thuộc Chiến Hồn; áp dụng đồng bộ Python, engine và clientConfig."
   },
   {
     "id": "client-shell",
@@ -17,7 +22,7 @@
   {
     "id": "battle",
     "source": "eng-client",
-    "description": "Dùng engine chiến đấu khôi phục từ client ENG đã đối chiếu AST với bản Trung; dữ liệu và serverConfig lấy Long Chi Đảo. Cách xác minh và điều phối trận ở backend là mã dự án."
+    "description": "Engine chiến đấu và bảng tướng từ client ENG, đã đối chiếu AST với bản Trung. Chỉ ba cấu hình mở rộng 5 ô/ thức tỉnh 20 được chọn từ X7; xác minh và điều phối trận ở backend là mã dự án."
   },
   {
     "id": "gacha",
@@ -118,5 +123,10 @@
     "id": "public-ready-v9",
     "source": "private-client-implementation",
     "description": "Nút Time Peak thử nghiệm do dự án thêm, không có scene native ENG tương ứng; ẩn mặc định trên PublicReady và không gắn vào cảnh chiến đấu. Bảo vệ HTTPS/proxy/web là triển khai riêng, không đổi luật trận hoặc bảng vật phẩm."
+  },
+  {
+    "id": "snake-way-prefetch",
+    "source": "private-server-implementation",
+    "description": "Xà Đạo tính trước trận tự động trong nền (tối đa một tác vụ nền cùng lúc, cache 16). Chỉ dùng lại khi đội hình, tầng, seed và bản ghi khớp; vẫn kiểm tra thắng/tick và nhận thưởng một lần. Nhật ký endless_pass ghi verificationMs/prefetched. Không đổi phần thưởng hay luật vượt tầng."
   }
 ]

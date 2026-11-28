@@ -4,7 +4,7 @@ from functools import lru_cache
 from .profile import table
 from .state import integer,snapshot,delta,consume,vip_data
 from .rules import constants
-from .battle import validate_team,build_team,validate_records,simulate_async
+from .battle import validate_team,build_team,validate_records
 from .adventure import grant,reward_plan
 ROUTES={'logic.endlessHandler.'+a for a in ('begin','pass','skip','setPursuitTeamIndexs','resetSetPursuitTeamTimes','buyFruitMapTimes')}
 def cfg():return constants('server.MAP.CONSTS')
@@ -57,11 +57,16 @@ def begin(store,account,args):
         prior=store.db.execute("SELECT *FROM pvp_runs WHERE player=?AND mode='endless'",(p['id'],)).fetchone()
         if prior and prior['expires']>time.time():
             run=json.loads(prior['data'])
-            if run['day']==p['privateDay']and run['smapId']==smap['kindId']and run['bmapId']==bmap and run['indices']==indices and run['ships']==ships:return delta(before,p,'logic.endlessHandler.begin',{'seed':run['seed']})
+            if run['day']==p['privateDay']and run['smapId']==smap['kindId']and run['bmapId']==bmap and run['indices']==indices and run['ships']==ships:
+                from .combat_prefetch import begin as prefetch
+                prefetch(store,p['id'],run)
+                return delta(before,p,'logic.endlessHandler.begin',{'seed':run['seed']})
         typ=check(p,bmap,smap,indices)
         if typ in ('fruit','starSign'):p['endless'][typ+'MapChallengeTimes']+=1
         run={'day':p['privateDay'],'smapId':smap['kindId'],'bmapId':bmap,'indices':indices,'ships':ships,'team':team,'seed':secrets.randbelow(2**31-1)+1,'rewards':plan(smap,bmap)}
         store.db.execute('INSERT INTO pvp_runs VALUES(?,?,?,?)ON CONFLICT(player,mode)DO UPDATE SET data=excluded.data,expires=excluded.expires',(p['id'],'endless',json.dumps(run),int(time.time())+900));store.save(p)
+        from .combat_prefetch import begin as prefetch
+        prefetch(store,p['id'],run)
         return delta(before,p,'logic.endlessHandler.begin',{'seed':run['seed']})
 
 async def finish(store,account,args):
@@ -71,7 +76,9 @@ async def finish(store,account,args):
     if not isinstance(ships,list)or validate_team(p,args.get('teamIndexs'))!=run['indices']or list(map(str,ships))!=run['ships']or args.get('smapId')!=run['smapId']or args.get('bmapId')!=run['bmapId']or type(args.get('seed'))is not int or args['seed']!=run['seed']or p['privateDay']!=run['day']:raise ValueError('Trận không khớp tầng đã chọn')
     first=args.get('manualRecordMap1',{});second=args.get('manualRecordMap2',{});validate_records(first);validate_records(second);integer(args.get('tickNumber'),'Tick',1,10000)
     if maps()[run['smapId']]['mobZoneCount']==1:first,second=second,{}
-    out=await simulate_async({'team':run['team'],'smapId':run['smapId'],'seed':run['seed'],'manualRecordMap1':first,'manualRecordMap2':second})
+    check_started=time.monotonic()
+    from .combat_prefetch import outcome as checked_outcome
+    out,prefetched=await checked_outcome(store,p['id'],run,{'team':run['team'],'smapId':run['smapId'],'seed':run['seed'],'manualRecordMap1':first,'manualRecordMap2':second})
     if not out['isWin']or out['tickNumber']!=args['tickNumber']:raise ValueError('Tầng chưa được vượt đúng engine server')
     with store.transaction():
         current=store.db.execute("SELECT *FROM pvp_runs WHERE player=?AND mode='endless'",(p['id'],)).fetchone()
@@ -81,7 +88,9 @@ async def finish(store,account,args):
         set_top(p,run['bmapId'],smap['no']);rewards=grant(p,run['rewards']);typ=family(run['bmapId'])
         if typ in ('fruit','starSign'):
             state=p['endless'];state[typ+'MapUseRolesNo']+=1;key=typ+'MapPassTimesMap';state.setdefault(key,{})[str(run['bmapId'])]=state.get(key,{}).get(str(run['bmapId']),0)+1
-        store.db.execute("DELETE FROM pvp_runs WHERE player=?AND mode='endless'",(p['id'],));store.save(p);store.audit('endless_pass',{'player':p['id'],'bmapId':run['bmapId'],'floor':smap['no']})
+        store.db.execute("DELETE FROM pvp_runs WHERE player=?AND mode='endless'",(p['id'],));store.save(p);store.audit('endless_pass',{'player':p['id'],'bmapId':run['bmapId'],'floor':smap['no'],'verificationMs':round((time.monotonic()-check_started)*1000),'prefetched':prefetched})
+        from .combat_prefetch import finish as finish_prefetch
+        finish_prefetch(store,p['id'],run['seed'])
         return delta(before,p,'logic.endlessHandler.pass',{'entityCountMap':rewards})
 
 async def handle(store,account,route,args):
