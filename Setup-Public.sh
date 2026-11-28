@@ -29,7 +29,7 @@ fi
 work=$(mktemp -d /tmp/db2-public.XXXXXX)
 trap 'rm -rf "$work"' EXIT
 # Filled with an immutable reviewed installer ref at release time.
-REF=d7682b678d5fda2b20b9fa8e2bed9cfeaf573d8e
+REF=b035362e8279e35395397f42c7ead34abec73fcf
 curl --fail --location --retry 3 "https://raw.githubusercontent.com/j1dreamer/db2-private/$REF/Setup-Ubuntu.sh" -o "$work/setup.sh"
 bash "$work/setup.sh" --loopback
 export DEBIAN_FRONTEND=noninteractive
