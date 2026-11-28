@@ -35,7 +35,7 @@ class AdminOpsTests(unittest.IsolatedAsyncioTestCase):
   claim_events(self.store,1,['SUMMER'],[0]);self.assertEqual(stack_count(self.store.player(1),50570),60)
   with self.assertRaises(sqlite3.IntegrityError):claim_events(self.store,1,['SUMMER'],[0])
  async def test_every_admin_read_requires_token_and_catalog_uses_real_icons(self):
-  for path in ('api','catalog','catalog/119','overview','players','players/1','events','calendar?start=1&end=2','gacha','giftcodes','audit','provenance'):
+  for path in ('api','box-presets','catalog','catalog/119','overview','players','players/1','events','calendar?start=1&end=2','gacha','giftcodes','audit','provenance'):
    self.assertEqual((await self.client.get('/admin/'+path)).status,401,path)
   d=await self.get('/admin/catalog?type=role&limit=3');self.assertEqual(len(d['items']),3);self.assertTrue(all(r['type']=='role'for r in d['items']));self.assertGreater(d['total'],100)
   it=await self.get('/admin/catalog/119');self.assertEqual(it['imgId'],119);self.assertTrue(it['image'].startswith('/assets/items/'));png=await self.client.get(it['image']);self.assertTrue((await png.read()).startswith(b'\x89PNG'))

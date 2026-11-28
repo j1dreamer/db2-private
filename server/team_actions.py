@@ -171,11 +171,16 @@ def refund(player,entries):
     return {'entityCountMap':result,'getSkillPoint':points}
 
 def train(player,role,action,args):
-    cfg=constants('server.ROLE.CONSTS');typ=str(integer(args.get('type'),'Mục tu luyện',1,15))
+    cfg=constants('server.ROLE.CONSTS');raw=args.get('type')
+    # ENG genData uses object keys, so unlockRoleTrain sends a string ID.
+    if isinstance(raw,str)and raw in cfg['TRAIN_ITEM_IDS_MAP']:raw=int(raw)
+    typ=str(integer(raw,'Mục tu luyện',1,15))
+    if typ not in cfg['TRAIN_ITEM_IDS_MAP']:raise ValueError('Mục tu luyện không tồn tại')
     if role['awakeLevel']<10:raise ValueError('Tu luyện cần thức tỉnh cấp 10')
     level=role['trainLevelMap'].get(typ,0);group='train_'+typ
     if action=='unlockRoleTrain':
         if role['trainUnlockMap'].get(typ):raise ValueError('Đã mở mục tu luyện')
+        if int(typ)>1 and not role['trainUnlockMap'].get(str(int(typ)-1)):raise ValueError('Hãy mở mục tu luyện trước đó trước')
         spend(player,role,cfg['TRAIN_UNLOCK_COST']['ID'],cfg['TRAIN_UNLOCK_COST']['COUNT']);role['trainUnlockMap'][typ]=True
     elif action=='resetRoleTrain':
         if not level:raise ValueError('Chưa có tu luyện để đặt lại')

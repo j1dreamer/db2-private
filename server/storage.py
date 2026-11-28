@@ -163,6 +163,8 @@ class Store:
         changed=refresh_cooperative(self,data)or changed
         from .time_peak import refresh as refresh_time_peak
         if refresh_time_peak(data)or changed:self.save(data)
+        from .lobby import refresh as refresh_lobby
+        if refresh_lobby(self,data):self.save(data)
         return data
     def create_player(self,account,name):
         from .profile import new_profile

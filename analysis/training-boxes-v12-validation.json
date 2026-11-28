@@ -1,0 +1,41 @@
+{
+  "build": "eng-sp-sss-training-boxes-v12",
+  "schema": 30,
+  "training": {
+    "nativeStringIds": true,
+    "all15UnlockTrainReset": true,
+    "invalidAndSequentialGuards": true
+  },
+  "boxes": {
+    "preset": "sp60",
+    "choices": 20,
+    "perChestSoulCount": 60,
+    "original727Unchanged": true,
+    "realEngGeneratorPassed": true,
+    "wholeRoleNamesAndFontHookFixturePassed": true
+  },
+  "arenaLobby": {
+    "championDtos": 3,
+    "rankAndAvatarChanges": true,
+    "positivePrivateIdsArePlayers": true
+  },
+  "powerAudit": {
+    "engineFunction": "ENG ROLE.FUNS.getPower",
+    "rows": 1760,
+    "randomSeed": 42,
+    "mismatches": 0,
+    "scope": "sampled level/star/awake attrs, does not validate all private attribute-composition rules"
+  },
+  "validation": {
+    "serverArenaTeamAdminTests": 37,
+    "boxRuntimeTests": 15,
+    "clientContractModelLabelTests": 25,
+    "newRegressionTests": 8,
+    "browserReport": "admin-economy-browser-tests.json"
+  },
+  "limits": {
+    "nativeIphoneVisualVerified": false,
+    "vpsDeployedByAgent": false,
+    "ssh": "103.232.122.74:22 connection refused"
+  }
+}

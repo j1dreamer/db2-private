@@ -41,7 +41,8 @@ def stamp(store):
   cfg=liveops.configured(store,key)
   if 'start'in cfg:rows.append((key,liveops.window(cfg,now)))
  day=datetime.datetime.fromtimestamp(now,liveops.ZONE).date().isoformat()
- return hashlib.sha256(json.dumps([store.db.execute("SELECT coalesce(sum(version),0)FROM ops_records WHERE key LIKE 'activity:%'OR key LIKE 'event-revision:%'OR key='wheel-prizes'OR key='sp-banners'OR key LIKE 'economy:%'").fetchone()[0],day,rows],sort_keys=True).encode()).hexdigest()
+ from .lobby import stamp as lobby_stamp
+ return hashlib.sha256(json.dumps([lobby_stamp(store),store.db.execute("SELECT coalesce(sum(version),0)FROM ops_records WHERE key LIKE 'activity:%'OR key LIKE 'event-revision:%'OR key='wheel-prizes'OR key='sp-banners'OR key LIKE 'economy:%'").fetchone()[0],day,rows],sort_keys=True).encode()).hexdigest()
 
 class Admin:
  def __init__(self,store,token,online_ids,flush):self.store=store;self.token=token;self.online_ids=online_ids;self.flush=flush;self.started=time.time()
@@ -74,6 +75,9 @@ class Admin:
  def raw_players(self):return [json.loads(r[0])for r in self.store.db.execute('SELECT data FROM players ORDER BY id DESC')]
  def read(self,req):
   s=self.store;path=req.path;now=int(time.time())
+  if path=='/admin/box-presets':
+   from .box_presets import presets
+   return {'presets':[{**r,'choices':[{**v,'item':item_view(entities()[v['entityId']])}for v in r['choices']]}for r in presets().values()]}
   if path=='/admin/catalog':
    q=search_key(req.query.get('q','').strip()[:100]);typ=req.query.get('type','');color=req.query.get('color','');page,limit=page_args(req)
    all_rows=list(entities().values());matches=[r for r in all_rows if(not typ or r['type']==typ)and(not color or str(r.get('color'))==color)and(not q or q in search_key(str(r['kindId'])+' '+r['kindName']+' '+labels().get(str(r['kindId']),{}).get('name','')))];matches.sort(key=lambda r:r['kindId'])
@@ -199,7 +203,7 @@ class Admin:
    body=await req.json();before=self.snapshots()
    with self.store.transaction():
     self.mutate(body);action=str(body.get('action'));self.store.audit(action if action in('giftcode','grant','set_gm','gacha_reset','gacha_entry','event')else'admin_'+action,body)
-    if action in('event','event_save','event_toggle','event_delete','activity_config','sp_banner_save','sp_schedule_create','sp_credit','economy_save','inventory_recall','inventory_restore','wheel_prizes','grant','grant_items','player_update','set_gm','send_mail'):self.sync(before)
+    if action in('event','event_save','event_toggle','event_delete','activity_config','sp_banner_save','sp_schedule_create','sp_credit','economy_save','inventory_recall','inventory_restore','wheel_prizes','grant','grant_items','grant_box_preset','player_update','set_gm','send_mail'):self.sync(before)
    return web.json_response({'ok':True,'version':liveops.revision(self.store)})
   except (ValueError,KeyError,TypeError,sqlite3.IntegrityError)as e:return web.json_response({'error':str(e)if isinstance(e,ValueError)else'Dữ liệu không hợp lệ hoặc mã đã tồn tại'},status=409 if'cửa sổ khác'in str(e)else 400)
  def mutate(self,b):
@@ -277,7 +281,7 @@ class Admin:
    else:
     pool,r=validate_pool_entry(b);s.db.execute('INSERT INTO pool_entries VALUES(?,?,?)ON CONFLICT(pool,entity)DO UPDATE SET data=excluded.data',(pool,r['entityId'],json.dumps(r)))
    liveops.put(s,'pool-revision:'+str(pool),{'updated':int(time.time())});return
-  if a in('grant','grant_items','player_update','set_gm','send_mail'):
+  if a in('grant','grant_items','grant_box_preset','player_update','set_gm','send_mail'):
    if a=='send_mail'and b.get('all'):ids=[r[0]for r in s.db.execute('SELECT id FROM players')]
    else:ids=[int(b['player'])]
    if len(ids)>1000:raise ValueError('Gửi tối đa 1.000 người chơi mỗi đợt')
@@ -290,6 +294,9 @@ class Admin:
     elif a=='set_gm':
      if type(b.get('enabled'))is not bool:raise ValueError('Quyền GM không hợp lệ')
      p['privateGM']=b['enabled']
+    elif a=='grant_box_preset':
+     from .box_presets import grant as grant_preset
+     grant_preset(p,b.get('preset'),b.get('count'))
     elif a=='grant_items':
      from .adventure import grant
      grant(p,loot)

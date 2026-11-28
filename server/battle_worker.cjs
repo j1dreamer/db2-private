@@ -41,6 +41,10 @@ if(input.mode==='progression'){
  for(const key of new Set([...role.getPower.toString().matchAll(/e\.(\w+)/g)].map(m=>m[1])))values.powerFactors[key]=role.getPower({...base,[key]:1},0,0);
  process.stdout.write(JSON.stringify(values));process.exit(0);
 }
+if(input.mode==='rolePowerAudit'){
+ const R=load('serverConfig').ROLE;
+ fs.writeFileSync(1,JSON.stringify(input.cases.map(c=>({power:Math.floor(R.FUNS.getPower(c.attr,c.skillLevels,c.evolveSkills)),breakAttr:R.FUNS.getBreakAttr(c.star)}))));process.exit(0);
+}
 if(input.mode==='practiceRewards'){
  const cfg=load('serverConfig');
  process.stdout.write(JSON.stringify(input.cases.map(c=>c.mode==='practice'?cfg.PRACTICE.FUNS.getRewardDropList(c.type,c.level,c.trainingLevel,c.ratio,c.raid):cfg.SIX_PRACTICE.FUNS.getRewardDropList(c.vip,c.ratio))));process.exit(0);

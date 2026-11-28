@@ -1,6 +1,7 @@
 {
   "passed": true,
   "flows": [
+    "sp-box-catalog-20-icons-and-grant",
     "trial-star-and-expedition-reward-editor",
     "voucher-expiry-editor",
     "shop-item-image-price-and-currency-editor",

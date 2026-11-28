@@ -130,4 +130,7 @@ def client_script(store):
 
  # Hide the obsolete floating prototype on older clients too, using their existing hot script hook.
  script+='''try{(function(){if(typeof cc==='undefined')return;function hide(){try{var root=cc.Canvas.instance&&cc.Canvas.instance.node;['PrivateTimePeakButton','PrivateTimePeakPanel'].forEach(function(name){var n=root&&root.getChildByName(name);if(n)n.destroy();});}catch(e){}}var P=window.DB2PrivateTimePeak;if(P){P.mount=hide;P.show=hide;}hide();if(!window.__db2HideTimePeak&&cc.director){window.__db2HideTimePeak=true;cc.director.on(cc.Director.EVENT_AFTER_SCENE_LAUNCH,hide);}})();}catch(e){}'''
+ script+='''try{(function(){var R=window.__require||(typeof require==="function"?require:null),C=R("serverConfig");C.PLAYER.FUNS.isRobot=function(id){return Number(id)<=0;};})();}catch(e){}'''
+ from pathlib import Path
+ script+='try{'+(Path(__file__).with_name('native_compat.js')).read_text()+'}catch(e){}'
  return script
