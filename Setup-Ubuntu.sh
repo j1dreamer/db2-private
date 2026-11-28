@@ -2,7 +2,7 @@
 # DB2 ENG v11: first install / repeat install with backup; no SSH backdoor.
 set -Eeuo pipefail
 umask 077
-REF=a143bfd59487ef67aad0e6d70bcb2fe326de91c1
+REF=ee32d3edfdfd3b39bcbed079a36742e442a8155d
 BASE=/opt/db2
 if (( EUID != 0 )); then exec sudo bash "$0" "$@"; fi
 NETWORK=private
