@@ -1,5 +1,7 @@
 # Sửa cập nhật runtime cho APK/IPA BoxInfo đang cài
 
+> Đính chính v15: APK/IPA private đã phát hành chặn chạy script tải về và tin hệ thống. Các sửa hiển thị qua script mô tả dưới đây không chạy trên các bản đó. Cần client v15 có bridge cấu hình dữ liệu; xem [NATIVE-CONFIG-V15.md](NATIVE-CONFIG-V15.md).
+
 Build `eng-sp-sss-native-update-v14`, schema 30; giữ mở rộng 5 ô và Xà Đạo v13.
 
 ## Lỗi v12/v13

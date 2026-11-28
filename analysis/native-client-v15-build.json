@@ -1,0 +1,64 @@
+{
+  "build": 15,
+  "source_commit_before_changes": "1df992943aad1ddee1d069a948084fe3035d0885",
+  "packagedBridgeAndAwake20Verified": true,
+  "downloadedJavaScriptRemainsDisabled": true,
+  "reconstructedPatchesMatchFullFiles": true,
+  "iosRequiresResigning": true,
+  "nativeDeviceTested": false,
+  "files": {
+    "DB2-ENG-SPSSS-v15-unsigned.ipa": {
+      "bytes": 510866848,
+      "sha256": "c20e9ce1cd71ed65a1350bfff7f6f595a41a5a2b6b701c110fd9807d9a5d53b7"
+    },
+    "DB2-ENG-SPSSS-v15.apk": {
+      "bytes": 525071041,
+      "sha256": "1ea45760723a4b653dd205382ed66c419057374aafdfc0b1810274ecc2921a37"
+    },
+    "Client-ENG-SPSSS-IOS-v15.zip": {
+      "bytes": 9730796,
+      "sha256": "b52cfdf5fcf25ec38ce1417e62c57f3820a19828faca2a622ec9f1a2a78d03ad"
+    },
+    "Client-ENG-SPSSS-Android-v15.zip": {
+      "bytes": 5297228,
+      "sha256": "9a8eb4545290d55de91a070cca60374eb914df4bcd7d8fd05833e1463cdc924d"
+    }
+  },
+  "packagedStartupTests": [
+    {
+      "file": "DB2-ENG-SPSSS-v15-unsigned.ipa",
+      "actualPackedStartupTest": {
+        "unconfigured_opens_account_form": true,
+        "timeout_returns_to_login": true,
+        "network_error_returns_to_login": true,
+        "timeout_ms": 8000,
+        "duplicate_callbacks_ignored": true,
+        "wrong_service_rejected": true,
+        "successful_config_continues": true,
+        "original_username_password_register_login_work": true
+      },
+      "decodedSha256": "9838f8a94159479d113d510036fc09b96d3c3fa6f882494d3854d7622f22a69e"
+    },
+    {
+      "file": "DB2-ENG-SPSSS-v15.apk",
+      "actualPackedStartupTest": {
+        "unconfigured_opens_account_form": true,
+        "timeout_returns_to_login": true,
+        "network_error_returns_to_login": true,
+        "timeout_ms": 8000,
+        "duplicate_callbacks_ignored": true,
+        "wrong_service_rejected": true,
+        "successful_config_continues": true,
+        "original_username_password_register_login_work": true
+      },
+      "decodedSha256": "afe478d85d41cd3baebe8ff0fffc154f10752ed135d1b0cccefa3608751d9035"
+    }
+  ],
+  "sourceHashes": {
+    "tools/build_client.py": "2bb0850a9fa4dcfa284462488c96ed98d55291761279f5ea9b60c288469215c8",
+    "tools/client_patches.py": "20f750c410af2b127671089d482610e341cd1fc52fbf4a33c741073a49f4d6b3",
+    "tools/private_server_config.js": "993c75b58144f4a7344ba03d1d45bb8c8760eb3848b091c28aeddd4deba29158",
+    "tables/clientRules.json": "01e826c99f76e4ae367997083317754279945f4bfb96ca63ee3f4c5ae32f2a40",
+    "server/native_compat.js": "131e5e21ccd8945247fab8d5544ab1eb86c5202255fddbab20f63085eb716dd2"
+  }
+}

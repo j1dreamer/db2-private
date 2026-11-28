@@ -133,5 +133,10 @@
     "id": "native-runtime-delivery",
     "source": "private-server-implementation",
     "description": "Bản BoxInfo cũ bỏ qua runScriptInfo khi khởi động. v14 gửi script do server tạo qua onNewMsg hệ thống gốc ENG trước phản hồi vào nhân vật; chỉ sau xác thực/chọn nhân vật hợp lệ. Không lấy nội dung script từ request hay chat người chơi. Build client sau này cũng thực thi clientConfig lúc probe. Tắt isSimpleAwake để điều kiện hiện nút nâng dùng MAX_AWAKE_LEVEL=20."
+  },
+  {
+    "id": "native-config-v15",
+    "source": "private-server-implementation",
+    "description": "Client đóng gói chặn script từ server nên v14 system push không chạy trên bản thực tế. v15 cần cài lại client có bridge runtimeConfig dạng dữ liệu, không eval JavaScript. Chọn giới hạn 20, 5 ô và bản xem trước thưởng sao qua danh sách trường cho phép; bản vá tên/font rương được đóng sẵn trong client."
   }
 ]

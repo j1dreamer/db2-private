@@ -1,5 +1,7 @@
 # 5 ô nhộng / bảo vật và thức tỉnh 20
 
+> Đính chính v15: APK/IPA private đã phát hành chặn chạy script tải về và tin hệ thống. Các sửa hiển thị qua script mô tả dưới đây không chạy trên các bản đó. Cần client v15 có bridge cấu hình dữ liệu; xem [NATIVE-CONFIG-V15.md](NATIVE-CONFIG-V15.md).
+
 Build `eng-sp-sss-slots-snake-v13`, schema 30. Mở rộng này được chọn riêng từ cấu hình X7 trong `longzhidaoOverrides.json`, không phải mặc định ENG. Chỉ thay ba đường dẫn trong `clientRules.json`: hai danh sách ô và `ROLE.CONSTS.MAX_AWAKE_LEVEL`.
 
 | Thức tỉnh của tướng | Ô nhộng dùng được | Ô bảo vật dùng được |

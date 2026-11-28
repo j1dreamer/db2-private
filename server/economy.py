@@ -136,3 +136,16 @@ def client_script(store):
  script+="try{(function(config){var R=window.__require||(typeof require==='function'?require:null),C=R('serverConfig'),E=R('buildExt'),G=window.__db2StartupRules||(window.__db2StartupRules={});G.config=config;function apply(){E.isSimpleAwake=false;var all=G.config;for(var key in all){var parts=key.split('.'),target=C;for(var i=0;i<parts.length-1;i++)target=target[parts[i]];target[parts[parts.length-1]]=JSON.parse(JSON.stringify(all[key]));}}apply();if(!E.__db2StartupRules){var old=E.hackDataApi;E.hackDataApi=function(){var out=old?old.apply(this,arguments):undefined;apply();return out;};E.__db2StartupRules=1;}})("+json.dumps(startup,separators=(',',':'))+');}catch(e){}'
  script+='try{'+(Path(__file__).with_name('native_compat.js')).read_text()+'}catch(e){}'
  return script
+
+
+def runtime_config(store):
+ """Data-only configuration for the v15 native bridge, never evaluated as code."""
+ from .rules import constants
+ cfg=reward_settings(store);boxes={}
+ for row in table('bmap'):
+  if not any(row.get('box'+str(i))for i in (1,2,3)):continue
+  boxes[str(row['kindId'])]={}
+  for threshold,index in ((14,2),(21,3)):
+   base=row.get('box'+str(index))or'';bonus=liveops.desc(cfg['stars'+str(threshold)])
+   boxes[str(row['kindId'])]['box'+str(index)]=base+(','if base and bonus else'')+bonus
+ return {'version':15,'maxAwake':constants('server.ROLE.CONSTS.MAX_AWAKE_LEVEL'),'equipmentSlots':len(constants('server.EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES')),'chapterBoxes':boxes}

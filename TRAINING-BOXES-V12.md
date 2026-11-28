@@ -1,5 +1,7 @@
 # Tu luyện, rương SP và xếp hạng sảnh — v12
 
+> Đính chính v15: APK/IPA private đã phát hành chặn chạy script tải về và tin hệ thống. Các sửa hiển thị qua script mô tả dưới đây không chạy trên các bản đó. Cần client v15 có bridge cấu hình dữ liệu; xem [NATIVE-CONFIG-V15.md](NATIVE-CONFIG-V15.md).
+
 Build: `eng-sp-sss-training-boxes-v12`, schema 30. Dữ liệu người chơi và token quản trị được giữ khi chạy installer. Không cần ký lại APK/IPA BoxInfo đang dùng; thoát hẳn game và mở lại sau cập nhật để tải clientConfig mới.
 
 ## Tu luyện
