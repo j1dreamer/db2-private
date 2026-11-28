@@ -67,6 +67,9 @@ def add_reward(player,reward):
         return {str(entity):count}
     from .inventory import insert
     insert(player,entity,count,reward.get('extra',{}))
+    if entity in(1,2):
+        from .state import stack_count
+        player['topUpPoint']=stack_count(player,1)+stack_count(player,2)
     return {str(entity):count}
 
 def point_default():return {'normalTimes':0,'advancedTimes':0,'dailyNormalUseGemTimes':0,'selectAdvancedIdx':0,'advancedLuck':0,'advancedLuckClassId':1,'advancedSpecialInfo':None}

@@ -76,8 +76,10 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     async def health(req):
         from .node_runtime import runtime_status
         combat={k:v for k,v in runtime_status().items()if k!='executable'}
-        return web.json_response({'combat':combat,'status':'ok'if combat['available']else'degraded','stage':'protocol-development','playable_verified':False,'build':'eng-sp-sss-sp-schedule-v10','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
-    async def config(req):return web.json_response({'runScriptInfo':{'script':''},'inReviewPackageInfos':[]})
+        return web.json_response({'combat':combat,'status':'ok'if combat['available']else'degraded','stage':'protocol-development','playable_verified':False,'build':'eng-sp-sss-economy-recall-v11','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
+    async def config(req):
+        from .economy import client_script
+        return web.json_response({'runScriptInfo':{'script':client_script(store)},'inReviewPackageInfos':[]})
     async def account(req):
         fields=await req.post();name=fields.get('name','');password=fields.get('password','')
         try:
@@ -300,7 +302,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     app.router.add_post('/user/register',account);app.router.add_post('/user/login',account)
     app.router.add_route('*','/user/serverInfo',servers);app.router.add_get('/notice.json',notice)
     app.router.add_route('*','/admin/api',admin);app.router.add_get('/admin/catalog',admin)
-    for endpoint in ('overview','players','events','calendar','gacha','giftcodes','audit','provenance'):app.router.add_get('/admin/'+endpoint,admin)
+    for endpoint in ('overview','players','events','calendar','gacha','giftcodes','audit','provenance','economy','inventory'):app.router.add_get('/admin/'+endpoint,admin)
     app.router.add_get('/admin/players/{id}',admin);app.router.add_get('/admin/catalog/{id}',admin)
     async def admin_css(req):return web.FileResponse(ROOT/'web/admin.css')
     async def admin_js(req):return web.FileResponse(ROOT/'web/admin.js')

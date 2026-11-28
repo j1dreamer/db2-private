@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# DB2 ENG v10: first install / repeat install with backup; no SSH backdoor.
+# DB2 ENG v11: first install / repeat install with backup; no SSH backdoor.
 set -Eeuo pipefail
 umask 077
 REF=a143bfd59487ef67aad0e6d70bcb2fe326de91c1
@@ -133,7 +133,7 @@ done
 if (( ! healthy )); then journalctl -u db2 -n 40 --no-pager; exit 1; fi
 python3 - "$work/health.json" <<'PY'
 import json,sys
-h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-sp-schedule-v10' and h.get('profile_schema')==30 and h.get('combat',{}).get('available'),h
+h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-economy-recall-v11' and h.get('profile_schema')==30 and h.get('combat',{}).get('available'),h
 print(json.dumps(h,ensure_ascii=False,indent=2))
 PY
 switched=0

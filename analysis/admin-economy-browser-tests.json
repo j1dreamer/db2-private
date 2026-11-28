@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "flows": [
+    "trial-star-and-expedition-reward-editor",
+    "voucher-expiry-editor",
+    "shop-item-image-price-and-currency-editor",
+    "shop-refresh-hour-editor",
+    "offer-gem-voucher-cost-reward-and-schedule",
+    "exchange-cost-reward-and-new-row",
+    "economy-mobile",
+    "inventory-real-slots-and-preview",
+    "single-player-recall",
+    "recall-history-and-restore",
+    "server-wide-per-player-count-recall-and-restore",
+    "inventory-mobile"
+  ],
+  "errors": [],
+  "dataset": "isolated temporary SQLite, never the running user database"
+}

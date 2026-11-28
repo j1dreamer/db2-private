@@ -1,4 +1,4 @@
-# Game public và web quản trị HTTPS · v9
+# Game public và web quản trị HTTPS · v11
 
 Tên miền đã xác nhận: **db2.teck.io.vn**, DNS A trỏ **103.232.122.74**. Game và web dùng cùng hostname; không cần Tailscale cho người chơi sau khi triển khai HTTPS thành công. Trên APK/IPA nhập `https://db2.teck.io.vn` (không thêm `/admin` hoặc `:20003`). Địa chỉ cũ vẫn được lưu trên thiết bị; cần đổi một lần trong nút Server.
 
@@ -70,3 +70,7 @@ Sau khi cập nhật, /health có build `eng-sp-sss-sp-schedule-v10`. Web → S�
 Username/password của Caddy không được lưu bằng JavaScript của web. Có thể lưu riêng trong ứng dụng Mật khẩu/Passwords hoặc password manager của trình duyệt cho `https://db2.teck.io.vn`; khả năng tự điền hộp HTTP Basic tùy trình duyệt. Không gộp token vào password Caddy.
 
 Kiểm thực tế Chromium: `python3 -m tools.check_admin_browser --script admin_login.cjs`: 9 luồng, gồm tab mới, tải lại, đăng xuất trên mobile, hết hạn, token sai, dữ liệu JSON lỗi, không chọn ghi nhớ và storage bị chặn. Xem `analysis/admin-login-browser-tests.json`. Chưa kiểm trực tiếp Safari trên iPhone.
+
+## v11 · Kinh tế và kho đồ
+
+Build hiện tại `eng-sp-sss-economy-recall-v11`. Xem ECONOMY-V11.md cho 14 shop, ưu đãi, giờ vé/xúc xắc, thưởng nguồn 57 ải hằng ngày, tính trước replay và thu hồi có preview/phục hồi. Thay server/web, giữ token và mật khẩu; chưa cần ký lại IPA cho các thay đổi này. Quy trình OTA chỉ chuẩn bị ở tài liệu IOS-VPS-SIGNING.md, chưa có bộ ký hoặc cài native để xác minh.

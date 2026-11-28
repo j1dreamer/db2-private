@@ -36,3 +36,7 @@
 
 /* ENG roster schedule: readable on narrow phones with explicit reorder controls. */
 .sp-roster{display:grid;gap:8px;margin:16px 0}.sp-roster-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px;border:1px solid var(--border);border-radius:10px}.sp-roster-hero{display:flex;align-items:center;gap:8px;min-width:0;cursor:pointer}.sp-roster-hero span{min-width:0}.sp-roster-hero strong,.sp-roster-hero small{display:block;overflow-wrap:anywhere}.sp-roster-hero small{color:var(--muted);font-size:11px}.sp-roster-controls{display:flex;align-items:center;gap:4px;flex-shrink:0}.sp-roster-controls .btn{min-width:36px}.sp-roster-hero input{width:18px;height:18px;flex-shrink:0}@media(max-width:480px){.sp-roster-row{flex-wrap:wrap}.sp-roster-controls{margin-left:auto}}
+
+#nav{min-height:0;overflow-y:auto}.eco-exchange-row{padding:14px 0;border-top:1px solid var(--border)}
+
+.inventory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}.inventory-entry{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px;border:1px solid var(--border);border-radius:9px;min-width:0}.inventory-entry .detail-hero{min-width:0;gap:10px}.inventory-entry span{min-width:0;overflow-wrap:anywhere}.inventory-entry small{display:block}.inventory-entry strong{font-size:13px}.inventory-preview{display:grid;gap:12px;margin:16px 0}.inventory-preview span{min-width:0;overflow-wrap:anywhere}@media(max-width:760px){.inventory-grid{grid-template-columns:minmax(0,1fr)}}

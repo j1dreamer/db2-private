@@ -59,6 +59,15 @@ def consume_attempt(player,bmap,smap,count=1):
     key=str(smap['kindId']);counters[key]=counters.get(key,0)+count
     refresh_time(player)
 
+@lru_cache(None)
+def daily_drop_classes():
+    daily={r['kindId']for r in table('bmap')if r.get('type')in(3,4,5)}
+    mobs={r['kindId']:r for r in table('mob')};result={}
+    for smap in table('smap'):
+        if smap.get('bmapId')in daily:
+            result[smap['kindId']]=[mobs[mid]['dropClassId']for mid in(smap.get('mobZone1')or[])+(smap.get('mobZone2')or[])if mobs[mid].get('dropClassId')]
+    return result
+
 def reward_plan(smap):
     # starSignSmapScene renders these table values as item counts. Use the same
     # table quantity interpretation here; normal-map drop timing remains a
@@ -66,6 +75,8 @@ def reward_plan(smap):
     result=[]
     for entity,value in zip(smap.get('specifyDropEntityIds') or [],smap.get('specifyDropValues') or []):
         if entity and value>0:result.append({'entityId':entity,'count':int(value),'extra':{}})
+    from .gameplay import drops
+    for class_id in daily_drop_classes().get(smap['kindId'],[]):result+=drops(class_id)
     return result
 
 def grant(player,rewards):
@@ -103,6 +114,8 @@ def begin(store,account,args):
         consume_attempt(p,bmap,smap);seed=secrets.randbelow(2**31-1)+1;rewards=reward_plan(smap)
         entry={'smapId':smap['kindId'],'indices':indices,'team':build_team(p,indices),'snapshot':copy.deepcopy(p),'rewards':rewards,'seed':seed}
         store.db.execute('INSERT INTO adventure_runs(player,data,expires) VALUES(?,?,?) ON CONFLICT(player) DO UPDATE SET data=excluded.data,expires=excluded.expires',(p['id'],json.dumps(entry),int(time.time())+900))
+        from .combat_prefetch import begin as prefetch
+        prefetch(store,p['id'],entry)
         store.save(p);store.audit('begin_smap',{'player':p['id'],'smap':smap['kindId']})
         show={str((smap.get('mobZone2') or smap['mobZone1'])[-1]):[r['entityId'] for r in rewards]}
         return delta(before,p,'logic.smapHandler.beginSmap',{'seed':seed,'showEntityIdsMap':show})
@@ -123,8 +136,10 @@ async def end(store,account,args):
     # belong to this account. Role stats remain the committed start snapshot.
     team['roles']=run['team']['roles']
     if maps()[1][run['smapId']]['mobZoneCount']==1:first,second=second,{}
+    check_started=time.monotonic();prefetched=False
     if reported:
-        outcome=await simulate_async({'team':team,'smapId':run['smapId'],'seed':run['seed'],'manualRecordMap1':first,'manualRecordMap2':second})
+        from .combat_prefetch import outcome as checked_outcome
+        outcome,prefetched=await checked_outcome(store,p['id'],run,{'team':team,'smapId':run['smapId'],'seed':run['seed'],'manualRecordMap1':first,'manualRecordMap2':second})
         if not outcome['isWin'] or outcome['star']!=reported or outcome['tickNumber']!=args.get('tickNumber'):raise ValueError('Kết quả trận không khớp mô phỏng')
     with store.transaction():
         p=store.player(account);before=snapshot(p)
@@ -137,7 +152,9 @@ async def end(store,account,args):
             rewards=run['rewards'];entities=grant(p,rewards)
             p['coin']+=smap['coin'] or 0;add_experience(p,smap['actionPoint'] or 0,smap['roleExp'] or 0,indices)
         store.db.execute('DELETE FROM adventure_runs WHERE player=?',(p['id'],));store.save(p)
-        store.audit('end_smap',{'player':p['id'],'smap':smap['kindId'],'star':reported})
+        from .combat_prefetch import finish as finish_prefetch
+        finish_prefetch(store,p['id'],run['seed'])
+        store.audit('end_smap',{'player':p['id'],'smap':smap['kindId'],'star':reported,'verificationMs':round((time.monotonic()-check_started)*1000),'prefetched':prefetched})
         return delta(before,p,'logic.smapHandler.endSmap',{'entityCountMap':entities,'star':reported})
 
 def skip(store,account,args):
@@ -177,6 +194,8 @@ def receive_box(store,account,args):
             descriptor,count=part.split('x');pieces=descriptor.split('_');extra={}
             if len(pieces)==3:extra[pieces[1]]=int(pieces[2])
             rewards.append({'entityId':int(pieces[0]),'count':int(count),'extra':extra})
+        from .economy import star_bonus
+        if any(bmap.get('box'+str(i))for i in(1,2,3)):rewards+=star_bonus(store,threshold)
         entities=grant(p,rewards);received[str(threshold)]=True;store.save(p)
         store.audit('bmap_box',{'player':p['id'],'bmap':bid,'star':threshold})
         return delta(before,p,'logic.smapHandler.receiveBmapAward',{'entityCountMap':entities})

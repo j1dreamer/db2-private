@@ -27,8 +27,8 @@ async def main(script='admin_flow.cjs'):
    process=await asyncio.create_subprocess_exec('node',str(ROOT/'tests/browser'/script),env=env,cwd=ROOT)
    status=await process.wait()
    if status:raise SystemExit(status)
-   report=json.loads((output/'report.json').read_text());report['dataset']='isolated temporary SQLite, never the running user database';(ROOT/('analysis/admin-login-browser-tests.json'if script=='admin_login.cjs'else'analysis/admin-browser-tests.json')).write_text(json.dumps(report,indent=2)+'\n')
+   report=json.loads((output/'report.json').read_text());report['dataset']='isolated temporary SQLite, never the running user database';(ROOT/('analysis/admin-economy-browser-tests.json'if script=='admin_economy.cjs'else'analysis/admin-login-browser-tests.json'if script=='admin_login.cjs'else'analysis/admin-browser-tests.json')).write_text(json.dumps(report,indent=2)+'\n')
   finally:await server.close()
 if __name__=='__main__':
  import argparse
- parser=argparse.ArgumentParser();parser.add_argument('--script',choices=['admin_flow.cjs','admin_login.cjs'],default='admin_flow.cjs');args=parser.parse_args();asyncio.run(main(args.script))
+ parser=argparse.ArgumentParser();parser.add_argument('--script',choices=['admin_flow.cjs','admin_login.cjs','admin_economy.cjs'],default='admin_flow.cjs');args=parser.parse_args();asyncio.run(main(args.script))

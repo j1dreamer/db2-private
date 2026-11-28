@@ -1,0 +1,71 @@
+{
+  "build": "eng-sp-sss-economy-recall-v11",
+  "passed": true,
+  "full_regression": {
+    "tests": 341,
+    "seconds": 387.018,
+    "passed": true
+  },
+  "additional_cases_after_full_run": [
+    "4 daily reward/replay cases",
+    "runtime hot config and Time Peak removal case",
+    "missing-definition inventory recall case"
+  ],
+  "latest_focused_modules_passed": [
+    "economy",
+    "commerce",
+    "inventory_admin",
+    "daily_rewards",
+    "runtime_economy",
+    "combat_prefetch"
+  ],
+  "web_flows": {
+    "economy_and_recall": 12,
+    "remembered_login": 9,
+    "errors": []
+  },
+  "shop_types": 14,
+  "shop_rows": 295,
+  "offer_count": 10,
+  "exchange_groups": 5,
+  "managed_event_templates": 18,
+  "restored_daily_stage_count": 57,
+  "reward_default_source": "private-server-rule",
+  "daily_drop_source": "ENG mob.dropClassId -> dropData",
+  "shop_currency_compatibility": {
+    "shopType": 13,
+    "sourceCurrency": 84,
+    "effectiveCurrency": 97,
+    "affectedRows": [
+      130001,
+      130002,
+      130003
+    ]
+  },
+  "trial_rewards": {
+    "star14": {
+      "kindId": 2,
+      "count": 1
+    },
+    "star21": {
+      "kindId": 2,
+      "count": 2
+    },
+    "normalExpeditionLast": {
+      "kindId": 2,
+      "count": 1
+    },
+    "sixExpeditionLast": {
+      "kindId": 2,
+      "count": 1
+    }
+  },
+  "prefetch_local_benchmark": {
+    "cold_ms": 2327.0,
+    "settlement_ms_when_cache_ready": 58.7,
+    "user_vps_latency_verified": false
+  },
+  "user_vps_deployed": false,
+  "native_iphone_verified": false,
+  "ota_signing_performed": false
+}

@@ -72,14 +72,20 @@ def ship_attrs(item):
     item['attr']=attrs
     item['power']=round(.1*attrs['hp']+attrs['atk']+attrs['def']+attrs['mdef']+30*item['skillLevel'])
 
+def voucher_expiry(player,now=None):
+    import datetime
+    clock=datetime.datetime.fromtimestamp(time.time()if now is None else now,datetime.timezone(datetime.timedelta(hours=7)))
+    minute=player.get('privateVoucherExpiryMinute',1439)
+    end=clock.replace(hour=minute//60,minute=minute%60,second=59,microsecond=999000)
+    if end<=clock:end+=datetime.timedelta(days=1)
+    return int(end.timestamp()*1000)
+
 def insert(player,kind,count,extra=None):
     row=entity(kind);bag=player['bag'];limit=row.get('maxNum',-1)
     if limit==1 and count>1000:raise ValueError('Quá nhiều vật phẩm riêng lẻ')
     extra=extra or {}
     if kind==1 and not extra.get('expireTime'):
-        import datetime
-        clock=datetime.datetime.fromtimestamp(time.time(),datetime.timezone(datetime.timedelta(hours=7)));end=clock.replace(hour=0,minute=0,second=0,microsecond=0)+datetime.timedelta(days=1)
-        extra={**extra,'expireTime':int(end.timestamp()*1000)-1}
+        extra={**extra,'expireTime':voucher_expiry(player)}
     if kind==351 and 'id'in extra:
         config=player['shop'].get('randomBoxList',{}).get(str(extra['id']))
         if not config:raise ValueError('Mã cấu hình rương riêng không tồn tại')

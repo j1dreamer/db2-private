@@ -1,0 +1,503 @@
+{
+  "baseline": "eng-sp-sss",
+  "source_table_rows": 295,
+  "types": {
+    "1": 97,
+    "2": 11,
+    "3": 10,
+    "4": 8,
+    "5": 14,
+    "6": 6,
+    "7": 5,
+    "8": 80,
+    "9": 6,
+    "10": 12,
+    "11": 35,
+    "12": 3,
+    "13": 3,
+    "14": 5
+  },
+  "invalid_effective_entity_references": [],
+  "source_fields_preserved": true,
+  "private_overrides_stored_in_sqlite": true,
+  "events": {
+    "saveGemUpgradeLevel": [
+      "Gửi gem · thưởng lên cấp",
+      "lifetime"
+    ],
+    "saveGemUpgradeLevelFree": [
+      "Quà gửi gem hằng ngày",
+      "daily"
+    ],
+    "task_active": [
+      "Nhiệm vụ năng động",
+      "daily"
+    ],
+    "privateLogin": [
+      "Đăng nhập 7 ngày",
+      "weekly"
+    ],
+    "buyCard7day": [
+      "Quà thẻ Gem riêng",
+      "daily"
+    ],
+    "upgradeVip": [
+      "Quà cấp VIP",
+      "lifetime"
+    ],
+    "privateSelect": [
+      "Quà tự chọn",
+      "lifetime"
+    ],
+    "endless_reward": [
+      "Quà nhận định kỳ",
+      "daily"
+    ],
+    "dreamRollQuest": [
+      "Nhiệm vụ xúc xắc",
+      "weekly"
+    ],
+    "privateSpWish": [
+      "Điều ước SP",
+      "weekly"
+    ],
+    "scorePoint1": [
+      "Tích điểm vòng quay",
+      "weekly"
+    ],
+    "scorePointStarSign": [
+      "Tích điểm cung mệnh",
+      "weekly"
+    ],
+    "dream": [
+      "Bàn cờ mộng ước",
+      "weekly"
+    ],
+    "dial:luck": [
+      "Vòng quay may mắn",
+      "weekly"
+    ],
+    "dial:vip": [
+      "Vòng quay VIP",
+      "weekly"
+    ],
+    "dial:svip": [
+      "Vòng quay SVIP",
+      "weekly"
+    ],
+    "dial:shen": [
+      "Vòng quay thần",
+      "weekly"
+    ],
+    "dial:pay": [
+      "Vòng quay đặc biệt",
+      "weekly"
+    ]
+  },
+  "missing_original_backend_rules": [
+    "official release calendar",
+    "original server-only offer prices/season rules",
+    "unprovided real payment verification"
+  ],
+  "daily_stages": [
+    {
+      "smapId": 30101,
+      "bmapId": 301,
+      "dropClassIds": [
+        613
+      ]
+    },
+    {
+      "smapId": 30102,
+      "bmapId": 301,
+      "dropClassIds": [
+        614
+      ]
+    },
+    {
+      "smapId": 30103,
+      "bmapId": 301,
+      "dropClassIds": [
+        615
+      ]
+    },
+    {
+      "smapId": 30104,
+      "bmapId": 301,
+      "dropClassIds": [
+        616
+      ]
+    },
+    {
+      "smapId": 30105,
+      "bmapId": 301,
+      "dropClassIds": [
+        617
+      ]
+    },
+    {
+      "smapId": 30106,
+      "bmapId": 301,
+      "dropClassIds": [
+        618
+      ]
+    },
+    {
+      "smapId": 30107,
+      "bmapId": 301,
+      "dropClassIds": [
+        619
+      ]
+    },
+    {
+      "smapId": 30201,
+      "bmapId": 302,
+      "dropClassIds": [
+        613
+      ]
+    },
+    {
+      "smapId": 30202,
+      "bmapId": 302,
+      "dropClassIds": [
+        614
+      ]
+    },
+    {
+      "smapId": 30203,
+      "bmapId": 302,
+      "dropClassIds": [
+        615
+      ]
+    },
+    {
+      "smapId": 30204,
+      "bmapId": 302,
+      "dropClassIds": [
+        616
+      ]
+    },
+    {
+      "smapId": 30205,
+      "bmapId": 302,
+      "dropClassIds": [
+        617
+      ]
+    },
+    {
+      "smapId": 30206,
+      "bmapId": 302,
+      "dropClassIds": [
+        618
+      ]
+    },
+    {
+      "smapId": 30207,
+      "bmapId": 302,
+      "dropClassIds": [
+        620
+      ]
+    },
+    {
+      "smapId": 30301,
+      "bmapId": 303,
+      "dropClassIds": [
+        613
+      ]
+    },
+    {
+      "smapId": 30302,
+      "bmapId": 303,
+      "dropClassIds": [
+        614
+      ]
+    },
+    {
+      "smapId": 30303,
+      "bmapId": 303,
+      "dropClassIds": [
+        615
+      ]
+    },
+    {
+      "smapId": 30304,
+      "bmapId": 303,
+      "dropClassIds": [
+        616
+      ]
+    },
+    {
+      "smapId": 30305,
+      "bmapId": 303,
+      "dropClassIds": [
+        617
+      ]
+    },
+    {
+      "smapId": 30306,
+      "bmapId": 303,
+      "dropClassIds": [
+        618
+      ]
+    },
+    {
+      "smapId": 30307,
+      "bmapId": 303,
+      "dropClassIds": [
+        621
+      ]
+    },
+    {
+      "smapId": 30401,
+      "bmapId": 304,
+      "dropClassIds": [
+        601
+      ]
+    },
+    {
+      "smapId": 30402,
+      "bmapId": 304,
+      "dropClassIds": [
+        602
+      ]
+    },
+    {
+      "smapId": 30403,
+      "bmapId": 304,
+      "dropClassIds": [
+        603
+      ]
+    },
+    {
+      "smapId": 30404,
+      "bmapId": 304,
+      "dropClassIds": [
+        604
+      ]
+    },
+    {
+      "smapId": 30405,
+      "bmapId": 304,
+      "dropClassIds": [
+        605
+      ]
+    },
+    {
+      "smapId": 30406,
+      "bmapId": 304,
+      "dropClassIds": [
+        606
+      ]
+    },
+    {
+      "smapId": 30501,
+      "bmapId": 305,
+      "dropClassIds": [
+        607
+      ]
+    },
+    {
+      "smapId": 30502,
+      "bmapId": 305,
+      "dropClassIds": [
+        608
+      ]
+    },
+    {
+      "smapId": 30503,
+      "bmapId": 305,
+      "dropClassIds": [
+        609
+      ]
+    },
+    {
+      "smapId": 30504,
+      "bmapId": 305,
+      "dropClassIds": [
+        610
+      ]
+    },
+    {
+      "smapId": 30505,
+      "bmapId": 305,
+      "dropClassIds": [
+        611
+      ]
+    },
+    {
+      "smapId": 30506,
+      "bmapId": 305,
+      "dropClassIds": [
+        612
+      ]
+    },
+    {
+      "smapId": 30601,
+      "bmapId": 306,
+      "dropClassIds": [
+        634
+      ]
+    },
+    {
+      "smapId": 30602,
+      "bmapId": 306,
+      "dropClassIds": [
+        635
+      ]
+    },
+    {
+      "smapId": 30603,
+      "bmapId": 306,
+      "dropClassIds": [
+        636
+      ]
+    },
+    {
+      "smapId": 30604,
+      "bmapId": 306,
+      "dropClassIds": [
+        637
+      ]
+    },
+    {
+      "smapId": 30701,
+      "bmapId": 307,
+      "dropClassIds": [
+        638
+      ]
+    },
+    {
+      "smapId": 30702,
+      "bmapId": 307,
+      "dropClassIds": [
+        639
+      ]
+    },
+    {
+      "smapId": 30703,
+      "bmapId": 307,
+      "dropClassIds": [
+        640
+      ]
+    },
+    {
+      "smapId": 30704,
+      "bmapId": 307,
+      "dropClassIds": [
+        641
+      ]
+    },
+    {
+      "smapId": 30801,
+      "bmapId": 308,
+      "dropClassIds": [
+        642
+      ]
+    },
+    {
+      "smapId": 30802,
+      "bmapId": 308,
+      "dropClassIds": [
+        643
+      ]
+    },
+    {
+      "smapId": 30803,
+      "bmapId": 308,
+      "dropClassIds": [
+        644
+      ]
+    },
+    {
+      "smapId": 30804,
+      "bmapId": 308,
+      "dropClassIds": [
+        645
+      ]
+    },
+    {
+      "smapId": 30901,
+      "bmapId": 309,
+      "dropClassIds": [
+        646
+      ]
+    },
+    {
+      "smapId": 30902,
+      "bmapId": 309,
+      "dropClassIds": [
+        647
+      ]
+    },
+    {
+      "smapId": 30903,
+      "bmapId": 309,
+      "dropClassIds": [
+        648
+      ]
+    },
+    {
+      "smapId": 30904,
+      "bmapId": 309,
+      "dropClassIds": [
+        649
+      ]
+    },
+    {
+      "smapId": 31001,
+      "bmapId": 310,
+      "dropClassIds": [
+        650
+      ]
+    },
+    {
+      "smapId": 31002,
+      "bmapId": 310,
+      "dropClassIds": [
+        651
+      ]
+    },
+    {
+      "smapId": 31003,
+      "bmapId": 310,
+      "dropClassIds": [
+        652
+      ]
+    },
+    {
+      "smapId": 31004,
+      "bmapId": 310,
+      "dropClassIds": [
+        653
+      ]
+    },
+    {
+      "smapId": 31101,
+      "bmapId": 311,
+      "dropClassIds": [
+        654
+      ]
+    },
+    {
+      "smapId": 31102,
+      "bmapId": 311,
+      "dropClassIds": [
+        655
+      ]
+    },
+    {
+      "smapId": 31103,
+      "bmapId": 311,
+      "dropClassIds": [
+        656
+      ]
+    },
+    {
+      "smapId": 31104,
+      "bmapId": 311,
+      "dropClassIds": [
+        657
+      ]
+    }
+  ]
+}

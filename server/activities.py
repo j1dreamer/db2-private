@@ -32,11 +32,18 @@ def event(name,typ,start,end,reach,rewards,**extra):
     return {'name':name,'type':typ,'desc':TEMPLATES.get(name,(name,''))[0],'resId':126,'priority':300,'start_time':start,'end_time':end,'reachMap':reach,'rewards':rewards,**extra}
 
 def refresh(store,p):
+    from . import liveops
     before=json.dumps(p,sort_keys=True);day,start,end,week,ws,we=periods();now=int(time.time()*1000)
     state=p.setdefault('privateActivities',{});daily=state.setdefault('daily',{})
     if daily.get('day')!=day:daily.clear();daily.update(day=day,filled=0,spGem=0,dial={},repeat={})
     weekly=state.setdefault('weekly',{})
     if weekly.get('week')!=week:weekly.clear();weekly.update(week=week,loginDays=[],filled=0,score={},boxes={},dream={'curPos':0,'logs':[]},dreamTimes=0,spLuck=0,spTimes=0)
+    dream_cfg=liveops.configured(store,'dream');dream_window=liveops.window(dream_cfg)if 'start'in dream_cfg else None
+    if dream_window:
+        managed=state.setdefault('managedDream',{})
+        cycle=str(dream_window['start'])
+        if managed.get('cycle')!=cycle:managed.clear();managed.update(cycle=cycle,dream={'curPos':0,'logs':[]},times=0)
+        weekly['dream']=managed['dream'];weekly['dreamTimes']=managed['times']
     if day not in weekly['loginDays']:weekly['loginDays'].append(day)
     claims=state.setdefault('claims',{});maps=p['activity']['map']
     def made(name,typ,period,reach,specs,**extra):
@@ -76,6 +83,11 @@ def refresh(store,p):
     p['rankScores']['sp_wish_times']=weekly['spTimes']
     dream=weekly['dream'];p['activity']['dream']={**dream,'activityItem':{'start_time':ws,'end_time':we,'fillReward':'93x100','rewardMap':{str(i):'event'if i in EVENT_TILES else ['101x5000','20001x5','93x10','23001x5'][(i-1)%4]for i in range(1,59)}}}
     liveops.apply(store,p)
+    if dream_window and 'start'not in liveops.configured(store,'dreamRollQuest'):
+        quest=maps['dreamRollQuest'];period='dream:'+str(dream_window['start']);quest['privateClaimPeriod']=period
+        quest.update(start_time=dream_window['start']*1000,end_time=dream_window['end']*1000)
+        received=claims.get('dreamRollQuest',{}).get(period,[])
+        for i,row in enumerate(quest['rewards']):row['status']=3 if i in received else 2 if dream_window['active']and weekly['dreamTimes']>=row['needMap']['dreamRollTimes']else 1
     for index,ident in enumerate((902,903,904,901)):
         goods=p['extra']['goodsList'].get(str(ident))
         if goods:goods['dailyGem']=sum(r['count']for r in description(maps['buyCard7day']['rewards'][index]['dropListDesc'])if r['entityId']==102)
@@ -167,6 +179,7 @@ def dream_roll(p,args):
     dream['curPos']=pos;w['dreamTimes']+=1
     for row in awards:dream['logs'].append({'time':int(time.time()*1000),'dropDesc':f"{row['entityId']}x{row['count']}",'isFill':row['entityId']==93 and row['count']==100})
     dream['logs']=dream['logs'][-100:]
+    if p['privateActivities'].get('managedDream')and p['privateActivities']['managedDream'].get('dream')is dream:p['privateActivities']['managedDream']['times']=w['dreamTimes']
     # The client applies its saved movement multiplier to this raw dice value.
     return awards,{'point':raw,'event':event_id,'authoritativePos':pos,'fromPos':old,'stepMultiplier':point//raw,'skipReward':bool(skip)}
 

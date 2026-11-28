@@ -57,7 +57,7 @@ def reset(p,six):
     p.setdefault('privateExpeditions',{})[mode(six)]={'teams':opponents(p,six)};next_team(p,six)
     if six:state['sixPlayerInfos']=[{k:team[k]for k in ('playerId','playerName','playerLevel','playerPhotoInfo','serverId')}for team in state_for(p,six)['teams']]
 
-def reward(p,six,floor):
+def reward(p,six,floor,store=None):
     config=cfg(six)
     if six:
         result=drops(config['LEVEL_85_REWARD_CLASS_ID']if p['level']>=85 else config['LEVEL_80_REWARD_CLASS_ID']);x=floor/2;coin=math.floor((15000+100*p['level'])*(.00195*x**3-.02403*x**2+.12922*x+.89286)*p['level']/25+.5)
@@ -65,6 +65,8 @@ def reward(p,six,floor):
         result=drops(config['REWARD_CLASS_ID_MAP'][str(floor)]);x=floor;coin=math.floor((15000+100*p['level'])*(.00195*x**3-.02403*x**2+.12922*x+.89286)*p['level']/25*2+.5)
         extra=config['REWARD_EXPEDITION_MONEY_MAP'].get(str(floor),0)
         if extra:result.append({'entityId':105,'count':extra,'extra':{}})
+    from .economy import expedition_bonus
+    result+=expedition_bonus(store,six,floor)
     result.append({'entityId':101,'count':coin,'extra':{}});return result
 
 def begin(store,account,args):
@@ -125,12 +127,12 @@ async def handle(store,account,route,args):
             state_for(p,six);floor=state[key(six,'passId')]
             if action=='receive':
                 if state[key(six,'status')]!=2 or floor>=cfg(six)['CHALLENGER_COUNT']:raise ValueError('Chưa có rương viễn chinh để nhận')
-                temp['entityCountMap']=grant(p,reward(p,six,floor+1));state[key(six,'passId')]=floor+1;state[key(six,'prePassId')]=max(state[key(six,'prePassId')],floor+1);state[key(six,'status')]=1;next_team(p,six)
+                temp['entityCountMap']=grant(p,reward(p,six,floor+1,store));state[key(six,'passId')]=floor+1;state[key(six,'prePassId')]=max(state[key(six,'prePassId')],floor+1);state[key(six,'status')]=1;next_team(p,six)
             else:
                 maximum=state[key(six,'prePassId')]
                 if p['vip'][counter(six)]<2 or maximum<=floor or state[key(six,'status')]!=1:raise ValueError('Càn quét cần lần đặt lại thứ hai và mốc đã vượt')
                 rewards=[]
-                for number in range(floor+1,maximum+1):rewards+=reward(p,six,number)
+                for number in range(floor+1,maximum+1):rewards+=reward(p,six,number,store)
                 temp['entityCountMap']=grant(p,rewards);state[key(six,'passId')]=maximum;next_team(p,six)
             store.db.execute('DELETE FROM pvp_runs WHERE player=?AND mode=?',(p['id'],'expedition:'+mode(six)))
         store.save(p);return delta(before,p,route,temp)

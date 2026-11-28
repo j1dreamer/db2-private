@@ -124,7 +124,9 @@ class Store:
         from .social import refresh as refresh_friend
         changed=refresh_friend(self,data)or changed
         from .shops import refresh_due
-        changed=refresh_due(data)or changed
+        from .economy import reward_settings
+        data['privateVoucherExpiryMinute']=reward_settings(self)['voucherExpiryMinute']
+        changed=refresh_due(data,store=self)or changed
         from .tasks import refresh as refresh_tasks
         changed=refresh_tasks(self,data)or changed
         from .arena import refresh as refresh_arena
@@ -144,7 +146,7 @@ class Store:
         from .expedition import refresh as refresh_expedition
         changed=refresh_expedition(data)or changed
         from .commerce import refresh as refresh_commerce
-        changed=refresh_commerce(data)or changed
+        changed=refresh_commerce(data,self)or changed
         from .activities import refresh as refresh_activities
         changed=refresh_activities(self,data)or changed
         from .tournaments import refresh as refresh_tournaments

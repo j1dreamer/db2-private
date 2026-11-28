@@ -6,16 +6,18 @@ from .state import integer,snapshot,delta,consume
 from .gameplay import choose,add_reward
 ROUTES={'logic.shopHandler.buy','logic.shopHandler.refresh'}
 
-def slot(kind,now=None):
+def slot(kind,now=None,store=None):
     now=now or datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=7)))
-    hours=constants('server.SHOP.CONSTS.REFRESH_HOURS_MAP')[str(kind)]
+    from .economy import shop_settings
+    hours=shop_settings(store,kind)['hours']
     available=[hour for hour in hours if hour<=now.hour]
     day=now.date() if available else now.date()-datetime.timedelta(days=1)
     return day.isoformat()+'_'+str(max(available)if available else max(hours))
 
-def stock(player,kind):
+def stock(player,kind,store=None):
     groups={}
-    for row in table('shop'):
+    from .economy import shop_rows
+    for row in shop_rows(store,kind):
         if row['type']==kind and row['minLevel']<=player['level']<=row['maxLevel']:groups.setdefault(row['group'],[]).append(row)
     result={}
     for group,rows in groups.items():
@@ -24,7 +26,7 @@ def stock(player,kind):
         # Private fallback, disclosed in provenance: use the declared minimum.
         low=row['minCount'];high=max(low,row['maxCount'])
         amount=low+secrets.randbelow(high-low+1)
-        result[str(row['kindId'])]={'entityId':row['entityId'],'moneyId':row['requireEntityId'],'count':amount,'price':row['price']*amount,'isSaleOut':False,'requireVip':row['requireVip'],'shopType':kind,'priority':row['priority'],'isUnlimit':bool(row['isUnlimit'])}
+        result[str(row['kindId'])]={'entityId':row['entityId'],'moneyId':row['requireEntityId'],'count':amount,'price':row['price']*amount,'isSaleOut':False,'requireVip':row['requireVip'],'shopType':kind,'priority':row['priority'],'isUnlimit':bool(row['isUnlimit']),'privateGroup':row['group']}
     return result
 
 def initialize(player):
@@ -32,13 +34,22 @@ def initialize(player):
     shop.setdefault('refreshTimesMap',{str(kind):0 for kind in range(1,15)})
     player['privateShopSlots']={str(kind):slot(kind)for kind in range(1,15)};player['privateShopStockVersion']=1
 
-def refresh_due(player,now=None):
-    if not player.get('privateShopStockVersion'):initialize(player);return True
-    changed=False
+def refresh_due(player,now=None,store=None):
+    initialized=not player.get('privateShopStockVersion')
+    if initialized:initialize(player)
+    from .economy import shop_stamp
+    changed=initialized;stamps=player.setdefault('privateShopConfigStamps',{})
     for kind in range(1,15):
-        value=slot(kind,now);key=str(kind)
-        if player['privateShopSlots'].get(key)!=value:
-            player['shop']['goodsMap'][key]=stock(player,kind);player['privateShopSlots'][key]=value;changed=True
+        value=slot(kind,now,store);key=str(kind);stamp=shop_stamp(store,kind)
+        if player['privateShopSlots'].get(key)!=value or stamps.get(key)!=stamp:
+            same_slot=player['privateShopSlots'].get(key)==value
+            source_groups={str(r['kindId']):r['group']for r in table('shop')if r['type']==kind}
+            bought={r.get('privateGroup',source_groups.get(ident))for ident,r in player['shop']['goodsMap'].get(key,{}).items()if r.get('isSaleOut')}if same_slot else set()
+            fresh=stock(player,kind,store)
+            for ident,row in fresh.items():
+                prior=player['shop']['goodsMap'].get(key,{}).get(ident,{})
+                if same_slot and (prior.get('isSaleOut')or row.get('privateGroup')in bought):row['isSaleOut']=True
+            player['shop']['goodsMap'][key]=fresh;player['privateShopSlots'][key]=value;stamps[key]=stamp;changed=True
     return changed
 
 def allowed(player,kind):
@@ -54,7 +65,7 @@ def refresh(store,account,args):
         currency=constants('server.SHOP.CONSTS.REFRESH_MONEY_ID_MAP').get(key,102)
         count=p['shop']['refreshTimesMap'].get(key,0)
         consume(p,currency,costs[min(count+1,len(costs)-1)])
-        p['shop']['goodsMap'][key]=stock(p,kind);p['shop']['refreshTimesMap'][key]=count+1;p['privateShopSlots'][key]=slot(kind)
+        p['shop']['goodsMap'][key]=stock(p,kind,store);p['shop']['refreshTimesMap'][key]=count+1;p['privateShopSlots'][key]=slot(kind,store=store)
         store.save(p);store.audit('refresh_shop',{'player':p['id'],'type':kind})
         return delta(before,p,'logic.shopHandler.refresh')
 
