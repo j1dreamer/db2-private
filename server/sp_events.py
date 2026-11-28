@@ -1,5 +1,5 @@
 """Authored SP campaign rules over existing ENG client panels; no original launch calendar."""
-import copy,datetime,hashlib,time
+import copy,datetime,hashlib,secrets,time
 from .state import integer,consume
 from .inventory import entities,entity
 from . import liveops
@@ -67,12 +67,33 @@ def save(store,body):
  old=next((r for r in cfg['banners']if r['id']==b['id']),None)
  if old and len(b['offers'])<len(old['offers']):raise ValueError('Giữ số gói đã tạo để bảo toàn lịch sử mua; tăng giá/giảm giới hạn để đóng gói')
  rows=[r for r in cfg['banners']if r['id']!=b['id']]+[b]
+ store_banners(store,rows,body.get('version'))
+
+def store_banners(store,rows,version=None):
  if len({goods_ids(r)for r in rows})!=len(rows):raise ValueError('Mã gói bị trùng; hãy dùng ID banner khác')
  if len(rows)>100:raise ValueError('Tối đa 100 banner')
  rows.sort(key=lambda r:(r['start'],r['id']))
  active=[r for r in rows if r['enabled']]
  if any(a['end']>b['start']for a,b in zip(active,active[1:])):raise ValueError('Lịch SP bị chồng nhau; mỗi thời điểm chỉ một tướng')
- liveops.put(store,KEY,{'banners':rows},body.get('version'))
+ liveops.put(store,KEY,{'banners':rows},version)
+
+def create_schedule(store,body):
+ """Use ENG's verified roster, never imply its ID order is a release calendar."""
+ if body.get('source')!='eng-client':raise ValueError('Chưa có lịch X7 được xác minh; chỉ dùng danh sách ENG')
+ roles=body.get('roleIds')
+ if not isinstance(roles,list)or not 1<=len(roles)<=20:raise ValueError('Chọn 1–20 tướng SP')
+ allowed={r['roleId']for r in role_catalog()}
+ roles=[integer(r,'Tướng SP',1)for r in roles]
+ if len(set(roles))!=len(roles)or any(r not in allowed for r in roles):raise ValueError('Tướng không thuộc danh sách ENG hoặc bị trùng')
+ days=integer(body.get('days'),'Số ngày mỗi banner',1,30)
+ start=integer(body.get('start'),'Bắt đầu',1,4102444800)
+ if start+len(roles)*days*86400>4102444800:raise ValueError('Lịch quá dài')
+ token=secrets.token_hex(6);rows=copy.deepcopy(config(store)['banners'])
+ from .admin import item_view
+ for i,role in enumerate(roles):
+  banner=validate({**defaults(role),'id':'ENG_'+token+'_'+str(i+1),'name':'SP · '+item_view(entity(role))['name'].strip(),'start':start+i*days*86400,'end':start+(i+1)*days*86400,'enabled':True})
+  rows.append(banner)
+ store_banners(store,rows,body.get('version'))
 
 def current(store,now=None):
  now=time.time()if now is None else now

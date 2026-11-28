@@ -58,3 +58,7 @@ Chạy lại Setup-Public.sh mới, giữ nguyên database. Kiểm hồi quy: `p
 Chạy bằng sudo trên VPS. Kiểm HTTP qua HTTPS hostname thật nhưng resolve tới loopback 127.0.0.1: không phụ thuộc kết nối hairpin qua IP public. Thành công khi không credential trả 401 và credential trong file trả 200 ở `/admin`; JSON có `edge_login_verified: true`. Credential curl nằm trong file tạm 0600, không xuất hiện trong argv hoặc report. Nếu kiểm thành công mà Safari vẫn hỏi lại, dùng tab Riêng tư và nhập lại đúng giá trị từ `/etc/db2/public-admin-login.json`. Token chỉ nhập sau khi qua lớp username/password. Không gửi file credential vào chat.
 
 Test: `python3 -m unittest tests.test_admin_login_check -v` (5 test, subprocess được giả lập; không coi đây là xác minh đăng nhập thực tế trên VPS).
+
+## v10 · Danh sách SP ENG và tạo lịch hàng loạt
+
+Sau khi cập nhật, /health có build `eng-sp-sss-sp-schedule-v10`. Web → Sự kiện → Lịch SP & vé → Tạo lịch từ danh sách ENG. Không cần thay APK/IPA chỉ để thay lịch/thưởng. Không tự thêm hoặc thay lịch khi chạy bộ cập nhật. Username/password Caddy và token hiện có được giữ nguyên. Xem SP-EVENTS.md cho nguồn và giới hạn lịch gốc.

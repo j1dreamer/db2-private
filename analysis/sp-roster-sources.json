@@ -1,0 +1,174 @@
+{
+  "engRosterVerified": true,
+  "engCanonicalBundleSha256": "83a3761665ed8da5216169be245466534f42e7b1c153b32d6d4713747f922c0f",
+  "calendarSource": "private-server-rule",
+  "originalReleaseOrderVerified": false,
+  "catalogDefaultOrder": "ascending classId, not claimed release order",
+  "defaultDaysPerBanner": 5,
+  "defaultDurationSource": "private-server-rule",
+  "x7Reference": "https://www.x7sy.com/game/app/17327",
+  "x7CalendarVerified": false,
+  "x7ResearchNote": "Known Long Chi Dao listing could not be read by search tool; public search did not establish a dated SP banner sequence. Unrelated One Piece games and topup rebate notices were excluded.",
+  "roles": [
+    {
+      "roleId": 105504,
+      "classId": 55,
+      "ticketId": 11,
+      "name": "Broly",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 105604,
+      "classId": 56,
+      "ticketId": 12,
+      "name": "Goku Vô Cực",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 105704,
+      "classId": 57,
+      "ticketId": 13,
+      "name": "Vegito",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 105804,
+      "classId": 58,
+      "ticketId": 14,
+      "name": "Gogeta",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 106004,
+      "classId": 60,
+      "ticketId": 15,
+      "name": "Shanpa",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 106104,
+      "classId": 61,
+      "ticketId": 16,
+      "name": "Beerus",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 106204,
+      "classId": 62,
+      "ticketId": 17,
+      "name": "Whis",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 107604,
+      "classId": 76,
+      "ticketId": 18,
+      "name": "Son Goku Bản Năng Vô Cực",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 107704,
+      "classId": 77,
+      "ticketId": 19,
+      "name": "Broly Full Force",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 107804,
+      "classId": 78,
+      "ticketId": 20,
+      "name": "Gogeta SSJ4",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 107904,
+      "classId": 79,
+      "ticketId": 21,
+      "name": "Jiren Hồn Đỏ",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 108004,
+      "classId": 80,
+      "ticketId": 22,
+      "name": "Vegito SSJ Blue",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 108104,
+      "classId": 81,
+      "ticketId": 23,
+      "name": "Gogeta SSJ Blue",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 108204,
+      "classId": 82,
+      "ticketId": 25,
+      "name": "Gohan BEAST",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 108304,
+      "classId": 83,
+      "ticketId": 24,
+      "name": "Black Golden Frieza",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 108404,
+      "classId": 84,
+      "ticketId": 26,
+      "name": "Vegeta Ultra Ego",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 108504,
+      "classId": 85,
+      "ticketId": 27,
+      "name": "Vegito Vô Cực",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 108604,
+      "classId": 86,
+      "ticketId": 28,
+      "name": "Trunks (XENO)",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 108704,
+      "classId": 87,
+      "ticketId": 29,
+      "name": "Android 21",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    },
+    {
+      "roleId": 108804,
+      "classId": 88,
+      "ticketId": 30,
+      "name": "Piccolo (Orange)",
+      "rosterSource": "eng-client",
+      "releaseDate": null
+    }
+  ]
+}

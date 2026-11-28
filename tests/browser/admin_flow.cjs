@@ -53,6 +53,17 @@ await p.locator('#view [data-act="sp-list"]').first().click();await p.locator('[
 await p.locator('[name="name"]').fill('QA next SP');await save();
 await p.locator('#view [data-act="sp-list"]').first().click();await p.setViewportSize({width:390,height:844});await p.screenshot({path:path.join(out,'sp-timeline-mobile.png')});await p.locator('[data-act="sp-edit"]').first().click();if(await p.locator('#modalBody').evaluate(e=>e.scrollWidth>e.clientWidth+3))throw Error('SP editor mobile overflow');await p.screenshot({path:path.join(out,'sp-editor-mobile.png')});await p.locator('#closeModal').click();
 done.push('sp-editor-real-images-role-ticket-migration','sp-custom-rewards-topup-milestones','sp-sequential-timeline','sp-mobile-editor');
+await p.setViewportSize({width:390,height:844});await p.locator('#view [data-act="sp-list"]').first().click();await p.locator('[data-act="sp-schedule"]').click();
+await p.locator('.sp-roster-row').first().waitFor();if(await p.locator('.sp-roster-row').count()!==20)throw Error('ENG roster should include 20 compatible SP heroes');
+await p.locator('#spRosterClear').click();const rosterIds=await p.locator('.sp-roster-row').evaluateAll(rows=>rows.map(r=>Number(r.dataset.role)));
+await p.locator('.sp-roster-row input').nth(0).check();await p.locator('.sp-roster-row input').nth(2).check();
+await p.locator('[data-move="2"][data-step="-1"]').click();await p.locator('[data-move="1"][data-step="-1"]').click();
+await p.locator('#editForm [name="days"]').fill('2');if(!(await p.locator('#spSchedulePreview').innerText()).includes('2 banner'))throw Error('Schedule preview not updated');
+if(await p.locator('#modalBody').evaluate(e=>e.scrollWidth>e.clientWidth+3))throw Error('Schedule roster mobile overflow');
+await imageReady('.sp-roster-row img');await p.screenshot({path:path.join(out,'sp-roster-mobile.png')});await save();
+const bulk=(await read('/admin/events')).spBanners.slice(2);if(bulk.length!==2||bulk[0].roleId!==rosterIds[2]||bulk[1].roleId!==rosterIds[0]||bulk[0].end-bulk[0].start!==2*86400||bulk[1].start!==bulk[0].end)throw Error('Bulk schedule order/dates did not persist');
+done.push('sp-ENG-roster-20-with-images','sp-roster-selection-reorder-mobile','sp-bulk-schedule-preview-and-persist');
+
 
 await p.setViewportSize({width:1440,height:1000});await go('catalog','Kho vật phẩm');await p.locator('#searchInput').fill('727');await p.waitForTimeout(650);await p.locator('#view [data-act="item"][data-id="727"]').first().click();
 await p.locator('.box-catalog-grid').first().waitFor();const box727=await read('/admin/catalog/727');if(await p.locator('.box-catalog-grid [data-act="item"]').count()!==box727.box.groups[0].items.length)throw Error('Missing hero box reward choices');

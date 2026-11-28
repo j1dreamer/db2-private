@@ -33,3 +33,6 @@
 .sp-tier .head-actions{flex-wrap:wrap}
 
 .box-catalog-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.box-catalog-grid .instance-item{min-width:0;text-align:left;background:transparent;overflow-wrap:anywhere}.box-catalog-grid .instance-item>div{min-width:0}@media(max-width:600px){.box-catalog-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ENG roster schedule: readable on narrow phones with explicit reorder controls. */
+.sp-roster{display:grid;gap:8px;margin:16px 0}.sp-roster-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px;border:1px solid var(--border);border-radius:10px}.sp-roster-hero{display:flex;align-items:center;gap:8px;min-width:0;cursor:pointer}.sp-roster-hero span{min-width:0}.sp-roster-hero strong,.sp-roster-hero small{display:block;overflow-wrap:anywhere}.sp-roster-hero small{color:var(--muted);font-size:11px}.sp-roster-controls{display:flex;align-items:center;gap:4px;flex-shrink:0}.sp-roster-controls .btn{min-width:36px}.sp-roster-hero input{width:18px;height:18px;flex-shrink:0}@media(max-width:480px){.sp-roster-row{flex-wrap:wrap}.sp-roster-controls{margin-left:auto}}

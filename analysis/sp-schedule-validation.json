@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "build": "eng-sp-sss-sp-schedule-v10",
+  "server_and_installer_tests": 42,
+  "web_flows": 41,
+  "web_errors": [],
+  "checks": [
+    "ENG roster of 20 roles and matching tickets",
+    "role selection and mobile reorder",
+    "preview and contiguous schedule creation",
+    "duplicate/unsupported role and X7 unverified source rejection",
+    "overlap and stale version leave all existing rows intact",
+    "admin authentication",
+    "persistence on database reopen",
+    "original ENG SP panel contract regression"
+  ],
+  "original_calendar_verified": false,
+  "calendar_source": "private-server-rule",
+  "user_vps_updated": false,
+  "native_client_tested": false
+}

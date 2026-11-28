@@ -25,7 +25,7 @@ Kiểm từ máy đã vào cùng Tailscale:
 curl --fail http://IP_TAILSCALE:20003/health
 ```
 
-Phải có build `eng-sp-sss-public-game-v9`, schema 30. Web quản trị cùng địa chỉ này, token trong `/var/lib/db2/admin-token`; chỉ đọc trên máy quản trị, không đăng token lên chat/repo. Trong APK/IPA BoxInfo nhập `http://IP_TAILSCALE:20003`. Tailscale cần bật cả trên VPS và máy chơi; bind riêng IP này không mở game ra Internet công cộng.
+Phải có build `eng-sp-sss-sp-schedule-v10`, schema 30. Web quản trị cùng địa chỉ này, token trong `/var/lib/db2/admin-token`; chỉ đọc trên máy quản trị, không đăng token lên chat/repo. Trong APK/IPA BoxInfo nhập `http://IP_TAILSCALE:20003`. Tailscale cần bật cả trên VPS và máy chơi; bind riêng IP này không mở game ra Internet công cộng.
 
 ## Cập nhật / sao lưu
 

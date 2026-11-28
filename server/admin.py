@@ -147,7 +147,7 @@ class Admin:
   cfg=sp_events.config(self.store);row=self.store.db.execute('SELECT version FROM ops_records WHERE key=?',(sp_events.KEY,)).fetchone()
   roles=sp_events.role_catalog()
   for r in roles:r['item']=item_view(entities()[r['roleId']]);r['ticket']=item_view(entities()[r['ticketId']])
-  return {'spBanners':[{**b,'settlement':liveops.record(self.store,'sp-settled:'+b['id'])}for b in cfg['banners']],'spVersion':row[0]if row else 0,'spRoles':roles,'spDefaults':sp_events.defaults(),'spCalendarSource':'private-server-rule'}
+  return {'spBanners':[{**b,'settlement':liveops.record(self.store,'sp-settled:'+b['id'])}for b in cfg['banners']],'spVersion':row[0]if row else 0,'spRoles':roles,'spDefaults':sp_events.defaults(),'spCalendarSource':'private-server-rule','spScheduleSources':{'eng':{'source':'eng-client','count':len(roles),'orderSource':'classId-catalog-order-not-release-order','calendarVerified':False},'x7':{'source':'longzhidao-client','calendarVerified':False,'reference':'https://www.x7sy.com/game/app/17327'}}}
  def codes(self):
   rows=[]
   for r in self.store.db.execute('SELECT *FROM giftcodes ORDER BY rowid DESC'):
@@ -174,7 +174,7 @@ class Admin:
    body=await req.json();before=self.snapshots()
    with self.store.transaction():
     self.mutate(body);action=str(body.get('action'));self.store.audit(action if action in('giftcode','grant','set_gm','gacha_reset','gacha_entry','event')else'admin_'+action,body)
-    if action in('event','event_save','event_toggle','event_delete','activity_config','sp_banner_save','sp_credit','wheel_prizes','grant','grant_items','player_update','set_gm','send_mail'):self.sync(before)
+    if action in('event','event_save','event_toggle','event_delete','activity_config','sp_banner_save','sp_schedule_create','sp_credit','wheel_prizes','grant','grant_items','player_update','set_gm','send_mail'):self.sync(before)
    return web.json_response({'ok':True,'version':liveops.revision(self.store)})
   except (ValueError,KeyError,TypeError,sqlite3.IntegrityError)as e:return web.json_response({'error':str(e)if isinstance(e,ValueError)else'Dữ liệu không hợp lệ hoặc mã đã tồn tại'},status=409 if'cửa sổ khác'in str(e)else 400)
  def mutate(self,b):
@@ -200,6 +200,9 @@ class Admin:
   if a=='sp_banner_save':
    from .sp_events import save
    save(s,b);return
+  if a=='sp_schedule_create':
+   from .sp_events import create_schedule
+   create_schedule(s,b);return
   if a=='sp_credit':
    from . import sp_events
    row=s.db.execute('SELECT account FROM players WHERE id=?',(integer(b.get('player'),'Nhân vật',1),)).fetchone()
