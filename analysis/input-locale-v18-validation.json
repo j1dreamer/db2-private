@@ -25,5 +25,20 @@
   },
   "nativeDeviceTested": false,
   "packagedFilesVerified": true,
-  "serverV17Compatible": true
+  "serverV17Compatible": true,
+  "fullRegression": {
+    "tests": 380,
+    "passed": true,
+    "seconds": 439.363
+  },
+  "additionalSourceBoxModelChecks": {
+    "tests": 5,
+    "passed": true,
+    "languages": [
+      "en",
+      "vi"
+    ],
+    "choices": 20
+  },
+  "callbackAstMatchesShippedIosEngine": true
 }

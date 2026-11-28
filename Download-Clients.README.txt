@@ -1,6 +1,6 @@
-DB2 Private v17
+DB2 Private v18
 Windows: run Download-Clients.bat. Or run: python3 Download-Clients.py --only ipa
-The downloader verifies every transport part and reconstructs the complete v17 file.
-Outputs: DB2-ENG-SPSSS-v17.apk and DB2-ENG-SPSSS-v17-unsigned.ipa.
+The downloader verifies every transport part and reconstructs the complete v18 file.
+Outputs: DB2-ENG-SPSSS-v18.apk and DB2-ENG-SPSSS-v18-unsigned.ipa.
 IPA is unsigned. Sign using your legitimate device certificate/profile before installing.
-Update the VPS server too. Details: UI-CONTROLS-V17.md and X7-CONTENT-V16.md.
+Existing v17 server remains compatible. Details: INPUT-LOCALE-V18.md.

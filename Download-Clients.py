@@ -31,10 +31,17 @@ APK_V16_SIZE=525095617
 IPA_V16_SIZE=510880829
 APK_V17_PATCH_SHA='e9b416b2d506caa37879922b0de5fe8c944b36f679f1f1eedebf3ea713dededf'
 IPA_V17_PATCH_SHA='dddb255a4affebc429e1ce910a3612c54d3a01c428c91c5fa945c1c21bb71251'
-APK_SHA='0759f93d287312b5d5f550fdee831ef547dcd9b66129212334ec0ab34702b677'
-IPA_SHA='a3027cd42e0cad3d386edf2183b87a6d8f5b6dd7b984d4400520363b96abf85a'
-APK_SIZE=525095617
-IPA_SIZE=510881941
+APK_V17_SHA='0759f93d287312b5d5f550fdee831ef547dcd9b66129212334ec0ab34702b677'
+IPA_V17_SHA='a3027cd42e0cad3d386edf2183b87a6d8f5b6dd7b984d4400520363b96abf85a'
+APK_V17_SIZE=525095617
+IPA_V17_SIZE=510881941
+V18_REF='6d31aefb32cd38ea89e5de312ec88a892a3ce211'
+APK_V18_PATCH_SHA='9387a709b7ed7f4e3b01355511190fac251fdfce9c8eed3b117fafb35a2e583a'
+IPA_V18_PATCH_SHA='799c8d81b307fd69db33b6e7d2c9129049a9df26323ca1a0656d86993df7dea7'
+APK_SHA='1a475ee920d22e3ba6db2914f74665899ec80b199f73c8af03f899d649fe8bc2'
+IPA_SHA='03b6125f3665f946db421bef05e0b090dbc0145ecd00f3dbe65b53bc2916621d'
+APK_SIZE=525362076
+IPA_SIZE=511149926
 CHUNK=1024*1024
 
 def sha(path):
@@ -136,7 +143,7 @@ def finish(temporary,output,size,digest):
     os.replace(temporary,output);print('COMPLETE:',output,flush=True)
 
 def android(output,cache,workers,source=None):
-    target=output/'DB2-ENG-SPSSS-v17.apk'
+    target=output/'DB2-ENG-SPSSS-v18.apk'
     if ready(target,APK_SIZE,APK_SHA):return target
     if source is not None:
         source=Path(source).expanduser().resolve()
@@ -155,13 +162,16 @@ def android(output,cache,workers,source=None):
     middle_plan,middle_literal=load_patch(patch,APK_V15_SHA,APK_V16_SHA)
     if middle_plan['old_size']!=APK_V15_SIZE or middle_plan['new_size']!=APK_V16_SIZE:raise ValueError('Unexpected APK v16 sizes')
     patch=fetch(RAW+V16_REF+'/Client-ENG-SPSSS-Android-v17.zip',cache/'android-v17.zip',APK_V17_PATCH_SHA)
-    plan,literal=load_patch(patch,APK_V16_SHA,APK_SHA)
-    if plan['old_size']!=APK_V16_SIZE or plan['new_size']!=APK_SIZE:raise ValueError('Unexpected APK reconstruction sizes')
+    last_plan,last_literal=load_patch(patch,APK_V16_SHA,APK_V17_SHA)
+    if last_plan['old_size']!=APK_V16_SIZE or last_plan['new_size']!=APK_V17_SIZE:raise ValueError('Unexpected APK v17 sizes')
+    patch=fetch(RAW+V18_REF+'/Client-ENG-SPSSS-Android-v18.zip',cache/'android-v18.zip',APK_V18_PATCH_SHA)
+    plan,literal=load_patch(patch,APK_V17_SHA,APK_SHA)
+    if plan['old_size']!=APK_V17_SIZE or plan['new_size']!=APK_SIZE:raise ValueError('Unexpected APK reconstruction sizes')
     temporary=target.with_name(target.name+'.downloading');print('APK: creating complete signed PublicReady file...',flush=True)
     with contextlib.ExitStack()as stack,temporary.open('wb')as dest:
         src=PartSource(paths,stack)
         if first is not None:src=FixedSource(FixedSource(src,first,lit1),second,lit2)
-        src=FixedSource(FixedSource(src,base_plan,base_literal),middle_plan,middle_literal)
+        src=FixedSource(FixedSource(FixedSource(src,base_plan,base_literal),middle_plan,middle_literal),last_plan,last_literal)
         for op in plan['operations']:
             if'literal'in op:dest.write(literal[op['literal']:op['literal']+op['size']])
             else:
@@ -171,7 +181,7 @@ def android(output,cache,workers,source=None):
     finish(temporary,target,APK_SIZE,APK_SHA);return target
 
 def ios(output,cache,workers,source=None):
-    target=output/'DB2-ENG-SPSSS-v17-unsigned.ipa'
+    target=output/'DB2-ENG-SPSSS-v18-unsigned.ipa'
     if ready(target,IPA_SIZE,IPA_SHA):return target
     if source is not None:
         source=Path(source).expanduser().resolve()
@@ -186,11 +196,14 @@ def ios(output,cache,workers,source=None):
     middle_plan,middle_literal=load_patch(patch,IPA_V15_SHA,IPA_V16_SHA)
     if middle_plan['old_size']!=IPA_V15_SIZE or middle_plan['new_size']!=IPA_V16_SIZE:raise ValueError('Unexpected IPA v16 sizes')
     patch=fetch(RAW+V16_REF+'/Client-ENG-SPSSS-IOS-v17.zip',cache/'ios-v17.zip',IPA_V17_PATCH_SHA)
-    plan,literal=load_patch(patch,IPA_V16_SHA,IPA_SHA)
-    if plan['old_size']!=IPA_V16_SIZE or plan['new_size']!=IPA_SIZE:raise ValueError('Unexpected IPA reconstruction sizes')
+    last_plan,last_literal=load_patch(patch,IPA_V16_SHA,IPA_V17_SHA)
+    if last_plan['old_size']!=IPA_V16_SIZE or last_plan['new_size']!=IPA_V17_SIZE:raise ValueError('Unexpected IPA v17 sizes')
+    patch=fetch(RAW+V18_REF+'/Client-ENG-SPSSS-IOS-v18.zip',cache/'ios-v18.zip',IPA_V18_PATCH_SHA)
+    plan,literal=load_patch(patch,IPA_V17_SHA,IPA_SHA)
+    if plan['old_size']!=IPA_V17_SIZE or plan['new_size']!=IPA_SIZE:raise ValueError('Unexpected IPA reconstruction sizes')
     temporary=target.with_name(target.name+'.downloading');print('IPA: creating complete unsigned PublicReady file...',flush=True)
     with contextlib.ExitStack()as stack,temporary.open('wb')as dest:
-        source=FixedSource(FixedSource(PartSource(paths,stack),base_plan,base_literal),middle_plan,middle_literal)
+        source=FixedSource(FixedSource(FixedSource(PartSource(paths,stack),base_plan,base_literal),middle_plan,middle_literal),last_plan,last_literal)
         for op in plan['operations']:
             if 'literal'in op:dest.write(literal[op['literal']:op['literal']+op['size']])
             else:
