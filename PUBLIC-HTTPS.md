@@ -50,3 +50,11 @@ Kiểm hồi quy: `python3 -m unittest tests.test_ubuntu_node_install tests.test
 Một số mirror/cấu hình Ubuntu tối giản không có gói Caddy. Setup-Public.sh mới thêm kho stable chính thức theo https://caddyserver.com/docs/install#debian-ubuntu-raspbian trước khi cài khi chưa có Caddy. Khóa GPG được dearmor vào keyring riêng, repository dùng signed-by; không tắt xác minh APT/TLS. Keyring và file sources được cài mode 0644 để APT đọc được ngay cả dưới umask 077. Nếu đã có Caddy, giữ nguyên cấu hình kho hiện có.
 
 Chạy lại Setup-Public.sh mới, giữ nguyên database. Kiểm hồi quy: `python3 -m unittest tests.test_public_install tests.test_ubuntu_node_install tests.test_node_runtime -v` (7 test). Đã tải khóa và kiểm chữ ký InRelease thật của kho stable trong thư mục tạm; chưa chạy APT hoặc cấp chứng chỉ trên VPS người dùng.
+
+## Safari cứ hỏi lại username/password
+
+`tools/check_admin_login.py db2.teck.io.vn` kiểm tra mật khẩu trong file root-only có khớp bcrypt trong cấu hình DB2 hay không. Thêm `--repair` để đồng bộ hash nếu sai và reload Caddy ngay cả khi hash trên đĩa đúng nhưng cấu hình đang chạy chưa cập nhật. Giữ nguyên password/token/database. Công cụ chỉ chấp nhận entrypoint do DB2 quản lý và đúng một dòng username/bcrypt; backup cấu hình trước khi sửa, validate trước khi thay, không bỏ kiểm TLS.
+
+Chạy bằng sudo trên VPS. Kiểm HTTP qua HTTPS hostname thật nhưng resolve tới loopback 127.0.0.1: không phụ thuộc kết nối hairpin qua IP public. Thành công khi không credential trả 401 và credential trong file trả 200 ở `/admin`; JSON có `edge_login_verified: true`. Credential curl nằm trong file tạm 0600, không xuất hiện trong argv hoặc report. Nếu kiểm thành công mà Safari vẫn hỏi lại, dùng tab Riêng tư và nhập lại đúng giá trị từ `/etc/db2/public-admin-login.json`. Token chỉ nhập sau khi qua lớp username/password. Không gửi file credential vào chat.
+
+Test: `python3 -m unittest tests.test_admin_login_check -v` (5 test, subprocess được giả lập; không coi đây là xác minh đăng nhập thực tế trên VPS).
