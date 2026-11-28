@@ -4,7 +4,8 @@
     "isShowTimeLabel": true,
     "isShowCenterAndroid": true,
     "isShowCenterIOS": true,
-    "isNoRemoveHideData": true
+    "isNoRemoveHideData": true,
+    "isSimpleAwake": false
   },
   "config": {
     "EQUIPMENTS.CONSTS.ARTIFACT_ITEM_TYPES": [

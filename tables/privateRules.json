@@ -128,5 +128,10 @@
     "id": "snake-way-prefetch",
     "source": "private-server-implementation",
     "description": "Xà Đạo tính trước trận tự động trong nền (tối đa một tác vụ nền cùng lúc, cache 16). Chỉ dùng lại khi đội hình, tầng, seed và bản ghi khớp; vẫn kiểm tra thắng/tick và nhận thưởng một lần. Nhật ký endless_pass ghi verificationMs/prefetched. Không đổi phần thưởng hay luật vượt tầng."
+  },
+  {
+    "id": "native-runtime-delivery",
+    "source": "private-server-implementation",
+    "description": "Bản BoxInfo cũ bỏ qua runScriptInfo khi khởi động. v14 gửi script do server tạo qua onNewMsg hệ thống gốc ENG trước phản hồi vào nhân vật; chỉ sau xác thực/chọn nhân vật hợp lệ. Không lấy nội dung script từ request hay chat người chơi. Build client sau này cũng thực thi clientConfig lúc probe. Tắt isSimpleAwake để điều kiện hiện nút nâng dùng MAX_AWAKE_LEVEL=20."
   }
 ]

@@ -76,7 +76,7 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
     async def health(req):
         from .node_runtime import runtime_status
         combat={k:v for k,v in runtime_status().items()if k!='executable'}
-        return web.json_response({'combat':combat,'status':'ok'if combat['available']else'degraded','stage':'protocol-development','playable_verified':False,'build':'eng-sp-sss-slots-snake-v13','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
+        return web.json_response({'combat':combat,'status':'ok'if combat['available']else'degraded','stage':'protocol-development','playable_verified':False,'build':'eng-sp-sss-native-update-v14','profile_schema':SCHEMA_VERSION,'routes':{'implemented':route_coverage['implemented_routes'],'target':342}})
     async def config(req):
         from .economy import client_script
         return web.json_response({'runScriptInfo':{'script':client_script(store)},'inReviewPackageInfos':[]})
@@ -280,6 +280,12 @@ def create_app(data_dir,public_host='127.0.0.1',game_port=20003,admin_token=None
                                     from .liveops import progress_events
                                     progress=progress_events(store,current)
                                     if progress:result.setdefault('activity',{}).setdefault('map',{}).update(progress)
+                            if route in ('connector.playerHandler.createPlayer','connector.playerHandler.entry')and result.get('code')==200:
+                                # Private BoxInfo startup bypasses logoScene's runScriptInfo eval.
+                                # The recovered authenticated system-message handler still applies
+                                # server-owned updates, before entry builds the client Player model.
+                                from .economy import client_script
+                                await ws.send_bytes(push('onNewMsg',{'msg':{'type':'执行代码','body':client_script(store)}}))
                             annotate_online(result)
                             encoded=response(ident,result);recent[ident]=(body,encoded)
                             if len(recent)>256:del recent[next(iter(recent))]

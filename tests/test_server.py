@@ -56,7 +56,10 @@ class ServerTests(unittest.IsolatedAsyncioTestCase):
   async def call(ws,route,body):
    nonlocal next_id
    next_id+=1
-   r=route.encode();await ws.send_bytes(package(4,bytes([0,next_id])+bytes([len(r)])+r+json.dumps(body).encode()));return json.loads(list(packages((await ws.receive()).data))[0][1][2:])
+   r=route.encode();await ws.send_bytes(package(4,bytes([0,next_id])+bytes([len(r)])+r+json.dumps(body).encode()))
+   while True:
+    kind,packet=list(packages((await ws.receive()).data))[0]
+    if kind==4 and packet[0]==4:return json.loads(packet[2:])
   ws=await connect();self.assertEqual((await call(ws,'connector.entryHandler.entry',{'token':login['token'],'serverId':1}))['code'],200)
   self.assertEqual((await call(ws,'connector.playerHandler.getPlayers',{}))['players'],[])
   result=await call(ws,'connector.playerHandler.createPlayer',{'name':'Son Goku'});p=json.loads(gzip.decompress(base64.b64decode(result['player'])));self.assertEqual(p['gem'],50)
@@ -78,7 +81,9 @@ class ServerTests(unittest.IsolatedAsyncioTestCase):
    nonlocal next_id
    next_id+=1;r=route.encode()
    await ws.send_bytes(package(4,bytes([0,next_id,len(r)])+r+json.dumps(body).encode()))
-   return json.loads(list(packages((await ws.receive()).data))[0][1][2:])
+   while True:
+    kind,packet=list(packages((await ws.receive()).data))[0]
+    if kind==4 and packet[0]==4:return json.loads(packet[2:])
   self.assertEqual((await call('logic.playerHandler.rename',{'name':'Goku'}))['code'],500)
   await call('connector.entryHandler.entry',{'token':login['token'],'serverId':1})
   await call('connector.playerHandler.createPlayer',{'name':'tester'})

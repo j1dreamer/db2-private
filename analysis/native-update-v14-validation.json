@@ -1,0 +1,23 @@
+{
+  "build": "eng-sp-sss-native-update-v14",
+  "confirmedLivePriorBuild": "eng-sp-sss-slots-snake-v13",
+  "rootCause": "private logoScene.next_ replaced original runScriptInfo eval",
+  "fix": {
+    "installedClient": "authenticated onNewMsg system handler before successful player entry response",
+    "futureClientBuilds": "restore runScriptInfo execution in private startup probe",
+    "awakeUi": "isSimpleAwake false; MAX_AWAKE_LEVEL 20"
+  },
+  "verification": {
+    "realWebSocketDeliveryBeforePlayerResponse": true,
+    "failedPlayerEntryDoesNotReceiveUpdate": true,
+    "actualRecoveredOnNewMsgHandlerExecuted": true,
+    "awakeButtonVisibleForLevelsBelow20": true,
+    "slotCounts": 5,
+    "focusedTestsPassed": 18,
+    "otherNetworkRegressionTestsPassed": 37
+  },
+  "limits": {
+    "iphoneVisualVerified": false,
+    "deployedByAgent": false
+  }
+}

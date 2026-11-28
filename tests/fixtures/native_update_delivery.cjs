@@ -1,0 +1,11 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),input=JSON.parse(fs.readFileSync(0,'utf8'));
+const source=fs.readFileSync('client/main.decoded.js','utf8'),start=source.indexOf('socket.on("onNewMsg", function(data) {'),end=source.indexOf('socket.on("io-error"',start);
+assert(start>=0&&end>start);
+const C=JSON.parse(fs.readFileSync('tables/clientConstants.json','utf8')).server,E={isSimpleAwake:true},D={},main={},callbacks={};
+const context={socket:{on:(name,fn)=>callbacks[name]=fn},window:{__require:n=>n==='serverConfig'?C:n==='buildExt'?E:D},serverMain:main};
+vm.runInNewContext(source.slice(start,end),context);callbacks.onNewMsg(input);
+assert.equal(C.ROLE.CONSTS.MAX_AWAKE_LEVEL,20);assert.equal(C.EQUIPMENTS.CONSTS.ARTIFACT_ITEM_TYPES.length,5);assert.equal(C.EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES.length,5);assert.equal(E.isSimpleAwake,false);
+const expression='p.isSimpleAwake ? l.green < 5 : n.awakeLevel < P.MAX_AWAKE_LEVEL';
+assert(source.includes(expression));
+for(const level of [5,10,14,15,19,20])assert.equal(vm.runInNewContext(expression,{p:E,l:{green:5},n:{awakeLevel:level},P:C.ROLE.CONSTS}),level<20);
+console.log('Actual onNewMsg executes update; awake button visible below 20; five slots configured');

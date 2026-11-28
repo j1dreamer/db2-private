@@ -446,7 +446,7 @@ def patch_box_quantities(text):
 
 def patch_private_startup(text):
     start=text.index('logoScene: [ function(');begin=text.index('next_: function next_() {',start);end=text.index('next2_: function() {',begin)
-    return text[:begin]+'next_: function next_() {\nvar self = this;\nsdkApi.next = null;\nbaseView.removeLoading();\nbaseView.addLoading("Đang kết nối server...", !0);\nwindow.DB2PrivateConnection.probe(serverMain.url, function(error, data) {\nbaseView.removeLoading();\nwindow.DB2_PRIVATE_CONNECTION_ERROR = error || null;\nif (!error) { serverMain.clientConfig = data; buildExt.inReview = false; serverConfig.MSG_CRYPTO = !1; }\nself.next2_();\n});\n},\n'+text[end:]
+    return text[:begin]+'next_: function next_() {\nvar self = this;\nsdkApi.next = null;\nbaseView.removeLoading();\nbaseView.addLoading("Đang kết nối server...", !0);\nwindow.DB2PrivateConnection.probe(serverMain.url, function(error, data) {\nbaseView.removeLoading();\nwindow.DB2_PRIVATE_CONNECTION_ERROR = error || null;\nif (!error) { serverMain.clientConfig = data; try { var privateScript = data.runScriptInfo && data.runScriptInfo.script; if (privateScript) eval(privateScript); } catch (privateUpdateError) { console.error(privateUpdateError); } buildExt.inReview = false; serverConfig.MSG_CRYPTO = !1; }\nself.next2_();\n});\n},\n'+text[end:]
 
 
 def patch_private_recovery(text):
