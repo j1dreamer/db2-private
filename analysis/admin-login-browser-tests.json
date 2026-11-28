@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "flows": [
+    "remember-device-30-days",
+    "new-tab-auto-login",
+    "reload-auto-login",
+    "logout-clears-device-and-tab",
+    "expired-device-token-cleared",
+    "unchecked-does-not-persist",
+    "server-rejected-token-cleared",
+    "malformed-storage-does-not-crash",
+    "storage-unavailable-login-still-works"
+  ],
+  "errors": [],
+  "dataset": "isolated temporary SQLite, never the running user database"
+}

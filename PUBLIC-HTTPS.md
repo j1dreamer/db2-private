@@ -62,3 +62,11 @@ Test: `python3 -m unittest tests.test_admin_login_check -v` (5 test, subprocess 
 ## v10 · Danh sách SP ENG và tạo lịch hàng loạt
 
 Sau khi cập nhật, /health có build `eng-sp-sss-sp-schedule-v10`. Web → Sự kiện → Lịch SP & vé → Tạo lịch từ danh sách ENG. Không cần thay APK/IPA chỉ để thay lịch/thưởng. Không tự thêm hoặc thay lịch khi chạy bộ cập nhật. Username/password Caddy và token hiện có được giữ nguyên. Xem SP-EVENTS.md cho nguồn và giới hạn lịch gốc.
+
+## Ghi nhớ token trên thiết bị
+
+Ô đăng nhập token hiện có lựa chọn **Lưu token trên thiết bị này (30 ngày)**. Chỉ lưu sau khi server chấp nhận token, trong localStorage của đúng origin HTTPS đang mở. Tab mới/tải lại có thể dùng token đã lưu; hết hạn, token bị server từ chối hoặc bấm Đăng xuất sẽ xóa dữ liệu ghi nhớ (kể cả sessionStorage cũ). Nếu trình duyệt chặn storage, đăng nhập vẫn dùng được trong bộ nhớ tab và có thông báo không lưu được. 30 ngày là hạn lưu trên trình duyệt, không phải thay đổi hạn hoặc quyền của token server. Không chọn sẽ chỉ giữ trong bộ nhớ hiện tại. Dùng trên thiết bị riêng và Safari thường; tab Riêng tư/xóa dữ liệu website không giữ được lâu dài.
+
+Username/password của Caddy không được lưu bằng JavaScript của web. Có thể lưu riêng trong ứng dụng Mật khẩu/Passwords hoặc password manager của trình duyệt cho `https://db2.teck.io.vn`; khả năng tự điền hộp HTTP Basic tùy trình duyệt. Không gộp token vào password Caddy.
+
+Kiểm thực tế Chromium: `python3 -m tools.check_admin_browser --script admin_login.cjs`: 9 luồng, gồm tab mới, tải lại, đăng xuất trên mobile, hết hạn, token sai, dữ liệu JSON lỗi, không chọn ghi nhớ và storage bị chặn. Xem `analysis/admin-login-browser-tests.json`. Chưa kiểm trực tiếp Safari trên iPhone.

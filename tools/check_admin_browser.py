@@ -9,7 +9,7 @@ from server.app import create_app
 from server.storage import Store
 from server.admin import Admin
 ROOT=Path(__file__).resolve().parents[1]
-async def main():
+async def main(script='admin_flow.cjs'):
  with tempfile.TemporaryDirectory(prefix='db2-admin-browser-')as folder:
   path=Path(folder);store=Store(path/'game.sqlite3');token=secrets.token_urlsafe(24)
   for i,name in enumerate(('Son Goku','Vegeta','Trunks'),1):
@@ -24,9 +24,11 @@ async def main():
   try:
    output=ROOT/'artifacts/admin-browser';env={**os.environ,'DB2_QA_URL':str(server.make_url('/')).rstrip('/'),'DB2_QA_TOKEN':token,'DB2_QA_OUTPUT':str(output)}
    if shutil.which('chromium'):env['DB2_QA_BROWSER']=shutil.which('chromium')
-   process=await asyncio.create_subprocess_exec('node',str(ROOT/'tests/browser/admin_flow.cjs'),env=env,cwd=ROOT)
+   process=await asyncio.create_subprocess_exec('node',str(ROOT/'tests/browser'/script),env=env,cwd=ROOT)
    status=await process.wait()
    if status:raise SystemExit(status)
-   report=json.loads((output/'report.json').read_text());report['dataset']='isolated temporary SQLite, never the running user database';(ROOT/'analysis/admin-browser-tests.json').write_text(json.dumps(report,indent=2)+'\n')
+   report=json.loads((output/'report.json').read_text());report['dataset']='isolated temporary SQLite, never the running user database';(ROOT/('analysis/admin-login-browser-tests.json'if script=='admin_login.cjs'else'analysis/admin-browser-tests.json')).write_text(json.dumps(report,indent=2)+'\n')
   finally:await server.close()
-if __name__=='__main__':asyncio.run(main())
+if __name__=='__main__':
+ import argparse
+ parser=argparse.ArgumentParser();parser.add_argument('--script',choices=['admin_flow.cjs','admin_login.cjs'],default='admin_flow.cjs');args=parser.parse_args();asyncio.run(main(args.script))
