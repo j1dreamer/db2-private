@@ -9,9 +9,14 @@ class IpaDownloadTests(unittest.TestCase):
    root=Path(td);source=root/'old.ipa';source.write_bytes(b'ORIGINAL-INPUT');expected=b'ORIGINAL-FIX';archive=root/'patch.zip'
    plan={'old_size':14,'new_size':12,'old_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'new_sha256':hashlib.sha256(expected).hexdigest(),'operations':[{'copy':0,'size':9},{'literal':0,'size':3}]}
    with zipfile.ZipFile(archive,'w')as z:z.writestr('plan.json',json.dumps(plan));z.writestr('literals.bin',b'FIX')
-   with patch.multiple(d,IPA_BASE_SIZE=14,IPA_SIZE=12,IPA_BASE_SHA=plan['old_sha256'],IPA_SHA=plan['new_sha256']),patch.object(d,'fetch',return_value=archive)as fetch,patch.object(d,'parts')as parts:
+   old_sha=plan['new_sha256'];middle=root/'v16.zip';mid=expected+b'!';middle_plan={'old_size':12,'new_size':13,'old_sha256':old_sha,'new_sha256':hashlib.sha256(mid).hexdigest(),'operations':[{'copy':0,'size':12},{'literal':0,'size':1}]}
+   with zipfile.ZipFile(middle,'w')as z:z.writestr('plan.json',json.dumps(middle_plan));z.writestr('literals.bin',b'!')
+   last=root/'v17.zip';new=mid+b'?';final={'old_size':13,'new_size':14,'old_sha256':middle_plan['new_sha256'],'new_sha256':hashlib.sha256(new).hexdigest(),'operations':[{'copy':0,'size':13},{'literal':0,'size':1}]}
+   with zipfile.ZipFile(last,'w')as z:z.writestr('plan.json',json.dumps(final));z.writestr('literals.bin',b'?')
+   expected=new
+   with patch.multiple(d,IPA_BASE_SIZE=14,IPA_V15_SIZE=12,IPA_V16_SIZE=13,IPA_SIZE=14,IPA_BASE_SHA=plan['old_sha256'],IPA_V15_SHA=old_sha,IPA_V16_SHA=middle_plan['new_sha256'],IPA_SHA=final['new_sha256']),patch.object(d,'fetch',side_effect=lambda url,*args:last if 'v17.zip'in url else middle if 'v16.zip'in url else archive)as fetch,patch.object(d,'parts')as parts:
     target=d.ios(root,root/'cache',1,source);self.assertEqual(target.read_bytes(),expected);self.assertFalse(parts.called)
-    d.ios(root,root/'cache',1,source);self.assertEqual(fetch.call_count,1)
+    d.ios(root,root/'cache',1,source);self.assertEqual(fetch.call_count,3)
     target.unlink();parts.return_value=[source];self.assertEqual(d.ios(root,root/'cache',1).read_bytes(),expected);parts.assert_called_once_with(root/'cache'/'ios',d.IOS_REF,d.IOS_MANIFEST,14,plan['old_sha256'],'IPA',1)
  def test_signed_or_other_input_rejected_without_network(self):
   with tempfile.TemporaryDirectory()as td,patch.object(d,'fetch')as fetch:
@@ -31,7 +36,12 @@ class IpaDownloadTests(unittest.TestCase):
    root=Path(td);source=root/'old.apk';source.write_bytes(b'BOXINFO-INPUT');expected=b'BOXINFO-V9';archive=root/'android-patch.zip'
    plan={'old_size':13,'new_size':10,'old_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'new_sha256':hashlib.sha256(expected).hexdigest(),'operations':[{'copy':0,'size':8},{'literal':0,'size':2}]}
    with zipfile.ZipFile(archive,'w')as z:z.writestr('plan.json',json.dumps(plan));z.writestr('literals.bin',b'V9')
-   with patch.multiple(d,APK_BOXINFO_SIZE=13,APK_SIZE=10,APK_BOXINFO_SHA=plan['old_sha256'],APK_SHA=plan['new_sha256']),patch.object(d,'fetch',return_value=archive),patch.object(d,'parts')as parts:
+   old_sha=plan['new_sha256'];middle=root/'v16.zip';mid=expected+b'!';middle_plan={'old_size':10,'new_size':11,'old_sha256':old_sha,'new_sha256':hashlib.sha256(mid).hexdigest(),'operations':[{'copy':0,'size':10},{'literal':0,'size':1}]}
+   with zipfile.ZipFile(middle,'w')as z:z.writestr('plan.json',json.dumps(middle_plan));z.writestr('literals.bin',b'!')
+   last=root/'v17.zip';new=mid+b'?';final={'old_size':11,'new_size':12,'old_sha256':middle_plan['new_sha256'],'new_sha256':hashlib.sha256(new).hexdigest(),'operations':[{'copy':0,'size':11},{'literal':0,'size':1}]}
+   with zipfile.ZipFile(last,'w')as z:z.writestr('plan.json',json.dumps(final));z.writestr('literals.bin',b'?')
+   expected=new
+   with patch.multiple(d,APK_BOXINFO_SIZE=13,APK_V15_SIZE=10,APK_V16_SIZE=11,APK_SIZE=12,APK_BOXINFO_SHA=plan['old_sha256'],APK_V15_SHA=old_sha,APK_V16_SHA=middle_plan['new_sha256'],APK_SHA=final['new_sha256']),patch.object(d,'fetch',side_effect=lambda url,*args:last if 'v17.zip'in url else middle if 'v16.zip'in url else archive),patch.object(d,'parts')as parts:
     target=d.android(root,root/'cache',1,source);self.assertEqual(target.read_bytes(),expected);self.assertFalse(parts.called)
    with patch.object(sys,'argv',['Download-Clients.py','--only','apk','--apk-source',str(source),'--output',str(root)]),patch.object(d,'android',return_value=target)as android:
     d.main();self.assertEqual(android.call_args.args[-1],source)

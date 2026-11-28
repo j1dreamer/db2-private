@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# DB2 ENG v15: first install / repeat install with backup; no SSH backdoor.
+# DB2 ENG v17: first install / repeat install with backup; no SSH backdoor.
 set -Eeuo pipefail
 umask 077
-REF=7f8f1d1dbc62f79663fec257d1e1b39b7dbeda80
+REF=3a1fd3306f6edd0f4b48917e63efe85e4a1bfc6d
 BASE=/opt/db2
 if (( EUID != 0 )); then exec sudo bash "$0" "$@"; fi
 NETWORK=private
@@ -133,7 +133,7 @@ done
 if (( ! healthy )); then journalctl -u db2 -n 40 --no-pager; exit 1; fi
 python3 - "$work/health.json" <<'PY'
 import json,sys
-h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-native-config-v15' and h.get('profile_schema')==30 and h.get('combat',{}).get('available'),h
+h=json.load(open(sys.argv[1]));assert h.get('status')=='ok' and h.get('build')=='eng-sp-sss-x7-ui-v17' and h.get('profile_schema')==30 and h.get('combat',{}).get('available'),h
 print(json.dumps(h,ensure_ascii=False,indent=2))
 PY
 switched=0
