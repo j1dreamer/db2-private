@@ -5,17 +5,6 @@
     if(!R)return;
     var Panel=R('rewardPanel'),D=R('dataApi');
     if(!Panel||!Panel.prototype||Panel.prototype.__db2BoxNames)return;
-    function font(label){
-        if(!label)return;
-        label._forceUseCanvas=true;label.font=null;label.fontFamily='Arial';label.useSystemFont=true;
-        if(label.spacingX!==undefined)label.spacingX=0;
-        if(label._forceUpdateRenderData)label._forceUpdateRenderData(true);
-    }
-    function textTree(node){
-        if(!node)return;
-        font(node.getComponent(cc.Label));
-        (node.children||[]).forEach(textTree);
-    }
     var previous=Panel.prototype.update_;
     Panel.prototype.update_=function(){
         var result=previous.apply(this,arguments),view=this;
@@ -27,7 +16,7 @@
             var row=data._data||D.findEntityById(data.kindId);
             if(label&&row)label.string=row.kindName;
         });
-        textTree(this.node);
+
         return result;
     };
     Panel.prototype.__db2BoxNames=true;

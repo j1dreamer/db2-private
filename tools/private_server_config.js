@@ -25,7 +25,7 @@
                 if(/\.selectBoxReward2?$/.test(route)){
                     var main=R('serverMain'),item=main.player&&main.player.bag.getItemByIdx(args.bagIndex);
                     if(item&&item.kindId===724&&(!latest||latest.contentRevision!==16)){
-                        var base=R('baseView');base.removeLoading();base.addHintPanel('Cập nhật server v16 trước khi mở rương SP X7.');return;
+                        var base=R('baseView');base.removeLoading();base.addHintPanel(window.DB2PrivateI18n.t("server_config.001"));return;
                     }
                     args.clientContentRevision=16;
                 }

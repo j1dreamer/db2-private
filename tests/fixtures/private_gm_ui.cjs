@@ -7,7 +7,7 @@ const catalog={items:[{id:120,name:'Vé cao cấp',type:'item'},{id:100801,name:
 let fail=false;const server={player:p,url:'http://127.0.0.1:20003'},socket={request(route,args,cb){requests.push({route,args});if(fail)return cb({code:500,msg:'Server từ chối'});cb({code:200,_temp:{gmCatalog:catalog}});}};
 const cc={Node,Label,EditBox,Graphics,Sprite,Canvas:{instance:{node:canvas}},color:()=>({}),BlockInputEvents:class{},Director:{EVENT_AFTER_SCENE_LAUNCH:'launch'},director:{on:(event,cb)=>callbacks[event]=cb}};Node.EventType={TOUCH_END:'end'};
 const context={cc,window:{__require(name){if(name==='serverMain')return server;if(name==='socket')return socket;if(name==='dataApi')return{findEntityById:()=>({kindName:'Goku'})};throw Error(name);}}};
-vm.runInNewContext(fs.readFileSync(__dirname+'/../../tools/private_gm.js','utf8'),context);
+context.window.DB2_PRIVATE_UI_LOCALES=JSON.parse(fs.readFileSync(__dirname+'/../../tables/localization/private-ui.json'));context.cc.sys={localStorage:{getItem:()=> 'vi'}};vm.runInNewContext(fs.readFileSync(__dirname+'/../../tools/private_i18n.js','utf8'),context);vm.runInNewContext(fs.readFileSync(__dirname+'/../../tools/private_gm.js','utf8'),context);
 const api=context.window.DB2PrivateGM;
 function all(root=canvas){return[root,...root.children.flatMap(n=>all(n))];}
 function button(text){const n=all().find(n=>n.listeners.end&&n.children.some(c=>c.components.some(l=>l instanceof Label&&l.string===text)));assert(n,'Missing button '+text);return n;}

@@ -7,6 +7,7 @@ const cc={Component:{},sys:{isNative:true,os:'ios',OS_IOS:'ios',OS_ANDROID:'andr
 function XHR(){xhr=this;this.open=(method,url)=>{this.url=url;};this.send=()=>{};this.abort=()=>{};}
 const ctx=vm.createContext({window:{},cc,console,sdkApi:{},storage:{getItem:k=>stored[k]||'',setItem:(k,v)=>stored[k]=v},XMLHttpRequest:XHR,setTimeout(fn,ms){assert.equal(ms,8000);pending.push(fn);return fn;},clearTimeout(fn){pending=pending.filter(x=>x!==fn);}});
 function load(name){if(name in cache)return cache[name];const source=input.modules[name];assert(source,'missing '+name);const mod={exports:{}};cache[name]=mod.exports;vm.runInContext('('+source.slice(source.indexOf('function('),source.lastIndexOf('}, {'))+'})',ctx)(load,mod,mod.exports);return cache[name]=mod.exports;}
+ctx.cc.sys.localStorage={getItem:()=> 'vi'};ctx.window.DB2_PRIVATE_UI_LOCALES=JSON.parse(fs.readFileSync(__dirname+'/../../tables/localization/private-ui.json'));vm.runInContext(fs.readFileSync(__dirname+'/../../tools/private_i18n.js','utf8'),ctx);
 ctx.window.DB2PrivateServerConfig={apply:data=>{ctx.runtimeApplied=data.runtimeConfig;}};
 vm.runInContext(input.connection,ctx);
 const logo=load('logoScene'),login=load('loginScene');const sdk=load('sdkApi');ctx.sdkApi=ctx.window.sdkApi;ctx.sdkApi.init();ctx.sdkApi.verifyToken=()=>verifies++;

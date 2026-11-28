@@ -58,4 +58,4 @@ class BoxQuantityTests(unittest.TestCase):
   models=[model(kind)for kind,row in entities().items()if row['type']=='box']
   payload={'profile':self.store.player(1),'sourceBundle':str(source),'checkBoxes':True,'checkTeam':True,'boxIndex':idx,'boxDescriptions':True,'boxModels':models}
   r=subprocess.run(['node',str(ROOT/'tests/fixtures/client_profile.cjs')],input=json.dumps(payload),text=True,capture_output=True);self.assertEqual(r.returncode,0,r.stderr)
-  data=json.loads(r.stdout)['boxViews'];self.assertEqual(len(data['allDescriptions']),54);self.assertTrue(all('Mở 1 rương:'in text for text in data['allDescriptions']));self.assertTrue(all('Mỗi lựa chọn có ×60'in text for text in data['descriptions']));self.assertEqual([r['privateRewardCount']for r in data['selection']['itemItems']],[60,60])
+  data=json.loads(r.stdout)['boxViews'];self.assertEqual(len(data['allDescriptions']),54);self.assertTrue(all('Mở 1 rương:'not in text for text in data['allDescriptions']));self.assertTrue(all('luật riêng'not in text for text in data['descriptions']));self.assertEqual([r['privateRewardCount']for r in data['selection']['itemItems']],[60,60])

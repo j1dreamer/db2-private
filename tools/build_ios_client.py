@@ -45,6 +45,7 @@ def build(source,out,server='http://db2-server.invalid:20003',bundle_id='com.j1d
                 elif entry.filename==app+'Info.plist':raw=plistlib.dumps(info,fmt=plistlib.FMT_BINARY);changed.append(entry.filename)
                 else:unchanged+=1
                 zout.writestr(entry,raw)
+            for font in (ROOT/'client/fonts').iterdir():zout.write(font,app+'db2/fonts/'+font.name)
     # Independently read back all preserved entries; compare native bytes too.
     with zipfile.ZipFile(source)as a,zipfile.ZipFile(out)as b:
         for entry in a.infolist():

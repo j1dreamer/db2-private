@@ -1,0 +1,14 @@
+{
+  "nodeJ": "function(t, e) {\nvar i = t.getLocation(), n = this.owner;\nif (n._hitTest(i, this)) {\ne.type = H.TOUCH_START;\ne.touch = t;\ne.bubbles = !0;\nn.dispatchEvent(e);\nreturn !0;\n}\nreturn !1;\n}",
+  "nodeZ": "function(t, e) {\nvar i = this.owner;\ne.type = H.TOUCH_MOVE;\ne.touch = t;\ne.bubbles = !0;\ni.dispatchEvent(e);\n}",
+  "nodeK": "function(t, e) {\nvar i = t.getLocation(), n = this.owner;\nn._hitTest(i, this) ? e.type = H.TOUCH_END : e.type = H.TOUCH_CANCEL;\ne.touch = t;\ne.bubbles = !0;\nn.dispatchEvent(e);\n}",
+  "nodeQ": "function(t, e) {\nt.getLocation();\nvar i = this.owner;\ne.type = H.TOUCH_CANCEL;\ne.touch = t;\ne.bubbles = !0;\ni.dispatchEvent(e);\n}",
+  "_onTouchBegan": "function(t) {\nif (this.interactable && this.enabledInHierarchy) {\nthis._pressed = !0;\nthis._updateState();\nt.stopPropagation();\n}\n}",
+  "_onTouchEnded": "function(t) {\nif (this.interactable && this.enabledInHierarchy) {\nif (this._pressed) {\ncc.Component.EventHandler.emitEvents(this.clickEvents, t);\nthis.node.emit(\"click\", this);\n}\nthis._pressed = !1;\nthis._updateState();\nt.stopPropagation();\n}\n}",
+  "_onTouchCancel": "function() {\nif (this.interactable && this.enabledInHierarchy) {\nthis._pressed = !1;\nthis._updateState();\n}\n}",
+  "source": "Original iOS cocos2d-jsb Node touch callbacks and Button methods; engine unchanged in client",
+  "sourceArchiveEntry": "Payload/dragonball.app/src/cocos2d-jsb.jsc",
+  "sourceArchiveEntrySha256": "e6781523f25aaab838c4f3b4c08fef39aa0277f04cadb2ac8bc37e30e94951f0",
+  "formattedSourceSha256": "63a6617cc067781e72a5da77e5097c8664e8361136914c02f20d7bd2b2d8e78f",
+  "callbackAstMatchesShippedEngine": true
+}

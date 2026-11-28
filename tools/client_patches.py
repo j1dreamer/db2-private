@@ -410,7 +410,7 @@ def patch_eng_ui_repairs(text):
         text=text[:start]+part.replace(old,new,1)+text[end:]
     module_replace('topUpPanel','this.isFadeIn = !0;','this.isFadeIn = !0;\nthis.update_();')
     module_replace('baseView','g.addRewardEffectPanel = function(a, t, n, r) {','g.addRewardEffectPanel = function(a, t, n, r) {\nif (!a || Object.keys(a).length === 0) return;')
-    module_replace('bagScene','e.chatSkinIds && i.addHintPanel(g.t("解锁了新的聊天对话框"));','e.titleInfoMap && i.addHintPanel("Đã mở danh hiệu. Chọn trong hồ sơ nhân vật để dùng.");\ne.frameIds && i.addHintPanel("Đã mở khung ảnh mới.");\ne.chatSkinIds && i.addHintPanel(g.t("解锁了新的聊天对话框"));')
+    module_replace('bagScene','e.chatSkinIds && i.addHintPanel(g.t("解锁了新的聊天对话框"));','e.titleInfoMap && i.addHintPanel(window.DB2PrivateI18n.t("bag.titleUnlocked"));\ne.frameIds && i.addHintPanel(window.DB2PrivateI18n.t("bag.frameUnlocked"));\ne.chatSkinIds && i.addHintPanel(g.t("解锁了新的聊天对话框"));')
     module_replace('endlessRewardPanel','if (!e) return !1;','if (!e || !e.rewards || e.rewards.length < 2 || !s.player.extra || !s.player.extra.goodsList) return !1;')
     module_replace('serverMain','this.player.update(e);','this.player.update(e);\nwindow.DB2PrivateGM && window.DB2PrivateGM.refresh();')
     module_replace('serverMain','if (e.level) {','if (e.level && !(e._temp && /(?:gmHandler\\.setPlayer|admin\\.sync)$/.test(e._temp.route || ""))) {')
@@ -428,14 +428,15 @@ def patch_box_quantities(text):
     replace('rewardPanel','b.idx = Number(f);','b.privateRewardCount = y.count;\nb.idx = Number(f);')
     replace('rewardPanel','v.idx = Number(f);','v.privateRewardCount = y.count;\nv.idx = Number(f);')
     replace('rewardPanel','return {\ntitle: e,\nitemItems: r,\ncb: n\n};','for (var privateRewardIdx = 0; privateRewardIdx < r.length; privateRewardIdx++) r[privateRewardIdx].privateRewardCount = s[privateRewardIdx].count;\nreturn {\ntitle: e,\nitemItems: r,\ncb: n\n};')
-    replace('rewardPanel','if (!r) return null;','if (!r) return null;\nvar privateBoxName = r.kindName || o.findEntityById(r.kindId).kindName;')
+    replace('rewardPanel','if (!r) return null;','if (!r) return null;\nvar privateBoxMeta = window.DB2PrivateI18n && window.DB2PrivateI18n.boxMeta(r);\nvar privateBoxName = privateBoxMeta ? privateBoxMeta.name : r.kindName || o.findEntityById(r.kindId).kindName;')
     replace('rewardPanel','a.selectCount = h, a.count = r.count,','a.selectCount = h, a.count = r.count, a.boxName = privateBoxName,')
     for item_module in ('itemItem','itemItem2'):
-        replace(item_module,'var g = u.extra && u.extra.selectCount, p = null;', 'if (u.type == o.CONSTS.ENTITY_TYPE.BOX && window.DB2PrivateBox) { u = r.clone(u); u.desc = window.DB2PrivateBox.describe(u.extra, u.desc); }\nvar g = u.extra && u.extra.selectCount, p = null;')
+        replace(item_module,'u.kindName = e.kindName;\nu.desc = e.desc;', 'var privateMeta=window.DB2PrivateI18n && window.DB2PrivateI18n.boxMeta(e);\nu.kindName = privateMeta ? privateMeta.name : e.kindName;\nu.desc = privateMeta ? privateMeta.desc : e.desc;')
+        replace(item_module,'var g = u.extra && u.extra.selectCount, p = null;', 'var privateMeta=window.DB2PrivateI18n && window.DB2PrivateI18n.boxMeta(e); if (privateMeta) { u=r.clone(u); u.kindName=privateMeta.name; u.desc=privateMeta.desc; }\nif (u.type == o.CONSTS.ENTITY_TYPE.BOX && window.DB2PrivateBox) { u = r.clone(u); u.desc = window.DB2PrivateBox.describe(u.extra, u.desc); }\nvar g = u.extra && u.extra.selectCount, p = null;')
     replace('bagScene','i.addRewardPanel(s, r);','i.addRewardPanel(s, r, null, t.name, false, { bagIndex: t._item.idx, count: t.count, selectCount: n.selectCount || 0, isExchange: !!n.isExchange });')
     replace('baseView','g.addRewardPanel = function(a, t, n, i, r) {','g.addRewardPanel = function(a, t, n, i, r, privateBoxInfo) {')
     replace('baseView','c.boxName = i;','c.boxName = i;\nc.privateBoxInfo = privateBoxInfo;')
-    replace('baseView','var r = e("rewardPanel").genData2(a);','var r = e("rewardPanel").genData2(a);\nif (!r) { this.removePanel(n); this.addHintPanel("Rương đã hết hoặc không còn trong túi."); return; }')
+    replace('baseView','var r = e("rewardPanel").genData2(a);','var r = e("rewardPanel").genData2(a);\nif (!r) { this.removePanel(n); this.addHintPanel(window.DB2PrivateI18n.t("box.unavailable")); return; }')
     replace('rewardEffectPanel','u.getChildByName("role_item").getComponent("roleItem").update_(m);','u.getChildByName("role_item").getComponent("roleItem").update_(m);\nu.data = { privateRewardCount: h.count };')
     replace('rewardEffectPanel','g.getComponent("itemItem").update_(p);','g.getComponent("itemItem").update_(p);\ng.data = { privateRewardCount: h.count };')
     replace('rewardEffectPanel','l.instance && l.instance.node.active && this.scheduleOnce(function() {','window.DB2PrivateBox && window.DB2PrivateBox.attachEffect(this);\nl.instance && l.instance.node.active && this.scheduleOnce(function() {')
@@ -446,7 +447,7 @@ def patch_box_quantities(text):
 
 def patch_private_startup(text):
     start=text.index('logoScene: [ function(');begin=text.index('next_: function next_() {',start);end=text.index('next2_: function() {',begin)
-    return text[:begin]+'next_: function next_() {\nvar self = this;\nsdkApi.next = null;\nbaseView.removeLoading();\nbaseView.addLoading("Đang kết nối server...", !0);\nwindow.DB2PrivateConnection.probe(serverMain.url, function(error, data) {\nbaseView.removeLoading();\nwindow.DB2_PRIVATE_CONNECTION_ERROR = error || null;\nif (!error) { serverMain.clientConfig = data; window.DB2PrivateServerConfig && window.DB2PrivateServerConfig.apply(data); buildExt.inReview = false; serverConfig.MSG_CRYPTO = !1; }\nself.next2_();\n});\n},\n'+text[end:]
+    return text[:begin]+'next_: function next_() {\nvar self = this;\nsdkApi.next = null;\nbaseView.removeLoading();\nbaseView.addLoading(window.DB2PrivateI18n.t("connection.loading"), !0);\nwindow.DB2PrivateConnection.probe(serverMain.url, function(error, data) {\nbaseView.removeLoading();\nwindow.DB2_PRIVATE_CONNECTION_ERROR = error || null;\nif (!error) { serverMain.clientConfig = data; window.DB2PrivateServerConfig && window.DB2PrivateServerConfig.apply(data); buildExt.inReview = false; serverConfig.MSG_CRYPTO = !1; }\nself.next2_();\n});\n},\n'+text[end:]
 
 
 def patch_private_recovery(text):

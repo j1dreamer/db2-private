@@ -60,7 +60,7 @@
                 var battle = window.__require('battleScene').instance;
                 if (battle && battle.areaNode) battle.areaNode.updateSpinesSpeed_();
             } catch (ignored) {}
-            if (label) label.string = rate + '×';
+            if (label) label.string = rate + '×';if(window.DB2PrivateFonts)window.DB2PrivateFonts.custom(label);
         },
         mount: function () {
             var canvas = cc.Canvas.instance && cc.Canvas.instance.node;
@@ -75,7 +75,7 @@
             graphics.fillColor = cc.color(20, 30, 48, 235);
             graphics.circle(0, 0, 23);graphics.fill();
             var text = new cc.Node();text.parent = node;
-            label = text.addComponent(cc.Label);label.fontSize = 16;label.lineHeight = 20;label.fontFamily='Arial';label.useSystemFont=true;label.string = rate + '×';
+            label = text.addComponent(cc.Label);label.fontSize = 16;label.lineHeight = 20;label.string = rate + '×';if(window.DB2PrivateFonts)window.DB2PrivateFonts.custom(label);
             var touch = null, holdTimer = null, held = false;
             function holdCheck(){if(!touch||touch.moved)return;var left=2000-(Date.now()-touch.began);if(left>5){holdTimer=setTimeout(holdCheck,left);return;}held=true;api.openSpeed();}
             function clearHold(){clearTimeout(holdTimer);holdTimer=null;}
@@ -98,7 +98,7 @@
         openSpeed: function () {
             var U=window.DB2PrivateUI;if(!U)return;
             if(window.DB2PrivateAuto){window.DB2PrivateAuto.finishRecord();if(window.DB2PrivateAuto.pause)window.DB2PrivateAuto.pause();else window.DB2PrivateAuto.stop();}
-            var m=U.modal('DB2PrivateControls','Tốc độ game',430,270);if(!m)return;
+            var m=U.modal('DB2PrivateControls',window.DB2PrivateI18n.t("runtime.002"),430,270);if(!m)return;
             var b=m.box,width=b.width-64,read=U.text(b,rate+'×',28,0,42,100,40);
             var track=new cc.Node();track.parent=b;track.setPosition(0,-6);track.setContentSize(width,46);
             var g=track.addComponent(cc.Graphics);g.fillColor=cc.color(70,87,110);g.roundRect(-width/2,-4,width,8,4);g.fill();
@@ -108,7 +108,7 @@
             track.on(cc.Node.EventType.TOUCH_START,slide);track.on(cc.Node.EventType.TOUCH_MOVE,slide);track.on(cc.Node.EventType.TOUCH_END,stop);
             U.text(b,'1×',15,-width/2,-38,40,24);U.text(b,'10×',15,width/2,-38,40,24);
             U.button(b,'−',65,-126,-91,function(){api.setSpeed(Math.max(1,rate-1));refresh();},true);
-            U.button(b,'Auto / Ghi',155,0,-91,function(){if(window.DB2PrivateAuto)window.DB2PrivateAuto.open('auto');});
+            U.button(b,window.DB2PrivateI18n.t('speed.auto'),155,0,-91,function(){if(window.DB2PrivateAuto)window.DB2PrivateAuto.open('auto');});
             U.button(b,'+',65,126,-91,function(){api.setSpeed(Math.min(10,rate+1));refresh();},true);refresh();
         },
         getPosition: function () { return savedPosition ? {x:savedPosition.x,y:savedPosition.y} : null; },

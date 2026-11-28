@@ -11,6 +11,7 @@
             language.vi = JSON.parse(JSON.stringify(window.DB2_PRIVATE_VI));
             var selected = store.getItem('defaultLanguage') || 'vi';
             window.__require('buildExt').setLanguage(selected);
+            if(window.DB2PrivateFonts)window.DB2PrivateFonts.prepare();
         },
         choose: function (language) {
             store.setItem('defaultLanguage', language);

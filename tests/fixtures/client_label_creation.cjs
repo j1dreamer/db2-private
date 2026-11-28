@@ -21,10 +21,10 @@ class EditBox{constructor(){this.enabled=true;}onEnable(){}}EditBox.InputMode={A
 const root=new Node();Object.defineProperty(root,'activeInHierarchy',{get:()=>true});cc.Canvas={instance:{node:root}};const ctx=vm.createContext({cc,window:{}});vm.runInContext(supplied,ctx);
 const ui=ctx.window.DB2PrivateUI;
 for(const text of ['Server riêng','Đóng','Tốc độ','Auto','Ghi','0','http://100.1.2.3:20003']){
- const l=ui.text(root,text,18,0,0,240,36);const snapshot=first[first.length-1];assert.equal(snapshot.string,text);assert.equal(snapshot.width,240);assert.equal(snapshot.height,36);assert.equal(snapshot.overflow,1);assert(snapshot.canvas);assert.equal(l.fontSize,18);assert.equal(l.node.opacity,255);
+ const l=ui.text(root,text,18,0,0,240,36);const snapshot=first[first.length-1];assert.equal(snapshot.string,text);assert.equal(snapshot.width,240);assert.equal(snapshot.height,36);assert.equal(snapshot.overflow,1);assert(!snapshot.canvas);assert.equal(l.fontSize,18);assert.equal(l.node.opacity,255);
 }
-const edit=ui.edit(root,0,240,0,0);assert.equal(edit.string,'0');assert(edit.textLabel._forceUseCanvas);assert(edit.placeholderLabel._forceUseCanvas);assert(edit.textLabel.node.width>0);assert(edit.placeholderLabel.node.height>0);
+const edit=ui.edit(root,0,240,0,0);assert.equal(edit.string,'0');assert(!edit.textLabel._forceUseCanvas);assert(!edit.placeholderLabel._forceUseCanvas);assert(edit.textLabel.node.width>0);assert(edit.placeholderLabel.node.height>0);
 vm.runInContext(fs.readFileSync(__dirname+'/../../tools/private_box.js','utf8'),ctx);
 ctx.window.DB2PrivateBox.attach({node:root,data:{count:12,useCount:1,selectCount:1},canSelect:true,selectBagIdxs:[],roleItemNodeMap:{},itemItemMap:{},useCountNode:{},yesBt:{},useCountlabel:{},onClose_(){},onYes_(){}});
-for(const snapshot of first){assert(snapshot.width>0&&snapshot.height>0);assert(snapshot.canvas);assert.equal(snapshot.overflow,1);}
+for(const snapshot of first){assert(snapshot.width>0&&snapshot.height>0);assert(!snapshot.canvas);assert.equal(snapshot.overflow,1);}
 console.log(JSON.stringify({label_enable_runs_only_after_configuration:true,fixed_nonzero_bounds:true,no_shrink_mode:true,canvas_text_path:true,box_labels_configured_before_activation:true,ascii_vietnamese_url_and_zero_labels:7,input_labels_configured:true,activation_count:activated}));

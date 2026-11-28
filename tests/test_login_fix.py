@@ -6,9 +6,10 @@ class LoginFixTests(unittest.TestCase):
  def test_vietnamese_font_fallback_and_source_button_removed(self):
   settings=(ROOT/'tools/private_settings.js').read_text();self.assertNotIn('Nguồn và luật',settings);self.assertNotIn('DB2PrivateSourceButton',settings)
   result=subprocess.run(['node','-e',r'''
-const fs=require('fs'),vm=require('vm'),assert=require('assert');let draws=0;
-class Label{constructor(){this.string='Tài khoản';this.fontSize=24;this.system=false;}set useSystemFont(v){this.system=v;this._forceUpdateRenderData();} _forceUpdateRenderData(){draws++;}}
-const cc={Label,sys:{localStorage:{getItem:()=> 'vi'}}};vm.runInNewContext(fs.readFileSync('tools/private_font.js','utf8'),{window:{},cc});const label=new Label();label._forceUpdateRenderData();assert.equal(label.system,true);assert.equal(label.fontFamily,'Arial');assert.equal(label.fontSize,24);assert(draws<10);console.log('OK');
+const fs=require('fs'),vm=require('vm'),assert=require('assert');let draws=0,selected='vi',loads=[];
+class Label{constructor(){this.string='Tài khoản';this.fontSize=24;this.font={source:true};this.useSystemFont=false;} _forceUpdateRenderData(){draws++;}}
+Label.CacheMode={NONE:0};const cc={Label,sys:{localStorage:{getItem:()=>selected}},assetManager:{loadRemote(url,cb){loads.push(url);cb(null,{url});}}};const window={};vm.runInNewContext(fs.readFileSync('tools/private_font.js','utf8'),{window,cc,console});window.DB2PrivateFonts.prepare();const label=new Label();label._forceUpdateRenderData();assert(label.font.url.includes('NotoSans'));assert.equal(label.fontSize,24);assert.equal(label.useSystemFont,false);assert.notEqual(label.fontFamily,'Arial');selected='en';const source=new Label();source.string='Choose item';const original=source.font;source._forceUpdateRenderData();assert.equal(source.font,original);window.DB2PrivateFonts.custom(source);assert(source.font.url.endsWith('/font.ttf'));assert.equal(loads.length,2);assert(draws<10);
+
 '''],cwd=ROOT,text=True,capture_output=True);self.assertEqual(result.returncode,0,result.stderr)
  def test_bounded_startup_probe_and_actual_account_controls(self):
   text=(ROOT/'client/main.decoded.js').read_text();text=patch_private_startup(text)

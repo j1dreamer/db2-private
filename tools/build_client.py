@@ -85,7 +85,7 @@ def patch_client(text,source,server):
     text=patch(text,'onSkip_: function() {\nthis.skipMove = !this.skipMove;','onSkip_: function() {\nthis.skipMove = !this.skipMove;\ncc.sys.localStorage.setItem("db2.private.fastSummon", this.skipMove ? "1" : "0");')
     from tools.client_patches import patch_eng_ui_repairs,patch_box_quantities,patch_private_startup,patch_private_recovery
     text=patch_private_recovery(patch_private_startup(patch_box_quantities(patch_eng_ui_repairs(text))))
-    settings=(Path(__file__).parent/'private_ui.js').read_text()+'\n'+(Path(__file__).parent/'private_connection.js').read_text()+'\n'+(Path(__file__).parent/'private_font.js').read_text()+'\n'+(Path(__file__).parent/'private_settings.js').read_text()
+    settings='window.DB2_PRIVATE_UI_LOCALES='+json.dumps(json.loads((Path(__file__).resolve().parents[1]/'tables/localization/private-ui.json').read_text()),ensure_ascii=False,separators=(',',':'))+';\n'+(Path(__file__).parent/'private_i18n.js').read_text()+'\n'+(Path(__file__).parent/'private_ui.js').read_text()+'\n'+(Path(__file__).parent/'private_connection.js').read_text()+'\n'+(Path(__file__).parent/'private_font.js').read_text()+'\n'+(Path(__file__).parent/'private_settings.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_runtime.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_auto.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_gm.js').read_text()
@@ -120,6 +120,7 @@ def build(source,bundle,out,server,keep_package=False):
             # Android 11+ rejects compressed resources.arsc for target SDK >= 30.
             compression=zipfile.ZIP_STORED if name=='resources.arsc' else zipfile.ZIP_DEFLATED
             zout.writestr(name,data,compress_type=compression)
+        for font in (Path(__file__).resolve().parents[1]/'client/fonts').iterdir():zout.write(font,'db2/fonts/'+font.name)
     report={'stage':'development-client-not-device-tested','server':server,'source_sha256':file_hash(source),'patched_bundle_sha256':hashlib.sha256(text.encode()).hexdigest(),'apk_sha256':file_hash(out),'package':app_package,'sdk_login':'local-account','tutorial':False,'speed_range':[1,10],'response_error_recovery':True,'hot_update':False,'server_script_execution':False}
     report['canonical_data']=data_report
     out.with_suffix('.json').write_text(json.dumps(report,indent=2));out.with_suffix('.patched.js').write_text(text)

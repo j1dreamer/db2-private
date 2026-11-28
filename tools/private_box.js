@@ -4,11 +4,11 @@
     function label(parent,text,size,x,y,width,height) {
         var n=new cc.Node();n.active=false;n.setPosition(x||0,y||0);
         var l=n.addComponent(cc.Label);l.enabled=false;
-        l._forceUseCanvas=true;l.font=null;l.fontFamily='Arial';l.useSystemFont=true;
+
         l.fontSize=size||18;l.lineHeight=(size||18)+4;l.overflow=cc.Label.Overflow.CLAMP;l.enableWrapText=true;
         l.horizontalAlign=1;l.verticalAlign=1;l.cacheMode=cc.Label.CacheMode?cc.Label.CacheMode.NONE:0;
         l.string=String(text);n.color=cc.color(238,245,255,255);n.opacity=255;
-        n.setContentSize(width||680,height||(size||18)+10);n.parent=parent;l.enabled=true;n.active=true;return l;
+        n.setContentSize(width||680,height||(size||18)+10);n.parent=parent;l.enabled=true;n.active=true;if(window.DB2PrivateFonts)window.DB2PrivateFonts.custom(l);return l;
     }
     function button(parent,text,x,y,width,cb) {
         var n=new cc.Node();n.parent=parent;n.setPosition(x,y);n.setContentSize(width,36);var g=n.addComponent(cc.Graphics);g.fillColor=cc.color(27,48,70,245);g.roundRect(-width/2,-18,width,36,5);g.fill();
@@ -20,7 +20,7 @@
         var l=original&&original.countLabel;
         if(l){
             original.setCountLabelActive_&&original.setCountLabelActive_(true);
-            l.string='×'+value;l.font=null;l.useSystemFont=true;l.fontFamily='Arial';
+            l.string='×'+value;
             l.fontSize=17;l.lineHeight=20;
             return;
         }
@@ -37,7 +37,7 @@
             var node=view[map][k],target=node.getChildByName('item_item')||node.getChildByName('role_item');
             if(!node.active||!target)return;
             var nameNode=node.getChildByName('name_label'),l=nameNode&&nameNode.getComponent(cc.Label);
-            if(l){l.string=String(l.string||'').replace(/^Mảnh\s+/,'');l.fontSize=14;l.lineHeight=17;l.enableWrapText=true;
+            if(l){l.string=String(l.string||'');l.fontSize=14;l.lineHeight=17;l.enableWrapText=true;
                 l.overflow=cc.Label.Overflow.SHRINK===undefined?cc.Label.Overflow.CLAMP:cc.Label.Overflow.SHRINK;
                 nameNode.setContentSize(node.width||100,42);nameNode.setPosition(target.x||0,(target.y||0)-(target.height||80)/2-23);}
             var select=node.getChildByName('select_bt');
@@ -68,16 +68,7 @@
         var size=dimensions(view);if(!view.onClose_)button(root,'×',size.w/2-33,size.h/2-33,42,closeAction);return {root:root,size:size};
     }
     function description(extra,original) {
-        extra=extra||{};
-        var fixed=extra.dropListDesc||'',random=extra.rdDropListDesc||'',select=Number(extra.selectCount)||0;
-        var rule=!fixed&&!random?'Chưa có cấu hình thưởng để xác định nội dung rương.':select?'Mở 1 rương: chọn '+select+' loại phần thưởng.':random?'Mở 1 rương: nhận thưởng ngẫu nhiên theo cấu hình rương.':'Mở 1 rương: nhận toàn bộ phần thưởng liệt kê.';
-        if(fixed&&random&&!select)rule='Mở 1 rương: nhận phần thưởng cố định và phần thưởng ngẫu nhiên theo cấu hình.';
-        var counts=[],parts=String(select?fixed:fixed||random).split(',');
-        parts.forEach(function(part){var m=part.trim().match(/x(\d+)(?:_[WR][\d.]+)?$/);if(m&&counts.indexOf(Number(m[1]))<0)counts.push(Number(m[1]));});
-        if(counts.length===1)rule+=' Mỗi '+(select?'lựa chọn':'ô thưởng')+' có ×'+counts[0]+'.';
-        else if(counts.length>1)rule+=' Số lượng từng phần thưởng ghi ×N trên mỗi ô.';
-        if(random&&!select)rule+=' Các ô ngẫu nhiên là khả năng nhận, không đảm bảo nhận tất cả.';
-        return rule+(original?'\n'+original:'');
+        return original||'';
     }
     var api=window.DB2PrivateBox={
         describe:description,
@@ -94,8 +85,8 @@
                 if(box){
                     var preview=new cc.Node();preview.parent=ui.root;preview.setPosition(0,-ui.size.h/2+67);preview.scale=Math.min(1,(ui.size.w-36)/680);
                     var owned=Number(box.bagIndex)>0 && Number(box.count)>0;
-                    label(preview,owned?'Đang có '+box.count+' rương · Số trên ô là thưởng của 1 rương.':'Số trên mỗi ô là phần thưởng của 1 rương.',18,0,25);
-                    if(owned && box.selectCount)button(preview,'Chọn phần thưởng & mở',0,-17,330,function(){
+                    label(preview,owned?window.DB2PrivateI18n.t("box.014")+box.count+window.DB2PrivateI18n.t("box.015"):window.DB2PrivateI18n.t("box.016"),18,0,25);
+                    if(owned && box.selectCount)button(preview,window.DB2PrivateI18n.t("box.017"),0,-17,330,function(){
                         var idx=box.bagIndex;close(view);var base=window.__require('baseView');
                         if(box.isExchange)base.addExchangeBoxPanel(idx);else base.addSelectRewardPanel(idx);
                     });
@@ -106,8 +97,8 @@
         refresh:function(view) {
             if(!view||!view.data)return;
             var amount=Math.max(1,Number(view.data.useCount)||1),selected=(view.selectBagIdxs||[]).length;
-            if(view._db2BoxInfo)view._db2BoxInfo.string='Đang có: '+view.data.count+' rương · Mở: '+amount+' · Đã chọn: '+selected+'/'+view.data.selectCount;
-            if(view._db2BoxOpen)view._db2BoxOpen.string='Mở '+amount+' rương';
+            if(view._db2BoxInfo)view._db2BoxInfo.string=window.DB2PrivateI18n.t("box.018")+view.data.count+window.DB2PrivateI18n.t("box.019")+amount+window.DB2PrivateI18n.t("box.020")+selected+'/'+view.data.selectCount;
+            if(view._db2BoxOpen)view._db2BoxOpen.string=window.DB2PrivateI18n.t("box.021")+amount+window.DB2PrivateI18n.t("box.022");
             rowQuantities(view,view.canSelect?amount:1);
         },
         attachEffect:function(view){tools(view,function(){view.onTouch_();});rowQuantities(view,1);},

@@ -1,0 +1,24 @@
+{
+  "original": {
+    "assetPath": "assets/main/native/77/770a9fbb-5dde-487b-bec4-e3824b4924c5/font.ttf",
+    "sha256": "39eeca91616025c60a9c0897dde080f95a093ccfaf3d13021cb8ff98d65e68b1",
+    "family": "FZZhunYuan-M02",
+    "missingVietnamese": [
+      "ã",
+      "Đ",
+      "ơ",
+      "ư",
+      "ả",
+      "ế",
+      "ệ",
+      "ọ"
+    ]
+  },
+  "vietnamese": {
+    "font": "Noto Sans Regular",
+    "license": "SIL OFL 1.1",
+    "file": "NotoSans-Regular.ttf",
+    "sha256": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d"
+  },
+  "x7CacheFix": "baseView.fixFont disables Label cache; it does not add Vietnamese glyphs."
+}

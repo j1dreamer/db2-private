@@ -1,0 +1,29 @@
+{
+  "originalEngineCallbackTest": {
+    "twoCompletedButtonClicks": true,
+    "pressBeforeRelease": true,
+    "emptyTargetDoesNotClick": true,
+    "timerDispatchOnlyIsNotSuccess": true,
+    "multiplePointButtonsActivated": true,
+    "recordedGestureActivatesButton": true
+  },
+  "languageTests": {
+    "EnglishControlsNoVietnamese": true,
+    "VietnameseSelectedExplicitly": true,
+    "generatedPlanNamesLocalize": true,
+    "oldSpBoxUsesDataIdentity": true,
+    "customNamesPreserved": true
+  },
+  "fontTests": {
+    "VietnameseCmapComplete": true,
+    "originalRegularFontRetained": "client/fonts/provenance.json",
+    "noForcedArialOrCanvas": true
+  },
+  "focusedTests": {
+    "count": 40,
+    "passed": true
+  },
+  "nativeDeviceTested": false,
+  "packagedFilesVerified": true,
+  "serverV17Compatible": true
+}

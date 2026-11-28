@@ -9,22 +9,22 @@
         var n = new cc.Node(); n.active=false; n.setPosition(x || 0,y || 0);
         var l = n.addComponent(cc.Label); l.enabled=false;
         // This is the same fallback path used by this engine's RichText segments.
-        l._forceUseCanvas=true;
+
         l.overflow=cc.Label.Overflow.CLAMP; l.enableWrapText=true;
-        l.fontFamily='Arial'; l.useSystemFont=true;
+
         l.cacheMode=cc.Label.CacheMode?cc.Label.CacheMode.NONE:0;
         l.horizontalAlign=1; l.verticalAlign=1;
         l.fontSize=size; l.lineHeight=size+5; l.string=String(value===null||value===undefined?'':value);
         n.color=cc.color(238,245,255,255);n.opacity=255;
         n.setContentSize(width || 420,height || size + 10);
-        n.parent=parent;l.enabled=true;n.active=true;
+        n.parent=parent;l.enabled=true;n.active=true;if(window.DB2PrivateFonts)window.DB2PrivateFonts.custom(l);
         return l;
     };
     U.button = function (parent, title, width, x, y, action, dark) {
         var n=new cc.Node(); n.parent=parent; n.setContentSize(width,44); n.setPosition(x,y);
         var g=n.addComponent(cc.Graphics); g.fillColor=dark?cc.color(45,57,76,255):cc.color(245,174,68,255);
         g.roundRect(-width/2,-22,width,44,8);g.fill();
-        var l=U.text(n,title,18,0,0,width-12,36);l.node.color=dark?cc.color(235,241,250):cc.color(20,25,35);
+        var l=U.text(n,title,17,0,0,width-12,36);l.enableWrapText=false;l.overflow=cc.Label.Overflow.SHRINK;l.node.color=dark?cc.color(235,241,250):cc.color(20,25,35);
         n.on(cc.Node.EventType.TOUCH_START,function(e){if(e&&e.stopPropagation)e.stopPropagation();n.opacity=190;});
         n.on(cc.Node.EventType.TOUCH_CANCEL,function(){n.opacity=255;});
         n.on(cc.Node.EventType.TOUCH_END,function(e){if(e&&e.stopPropagation)e.stopPropagation();n.opacity=255;action();});return n;

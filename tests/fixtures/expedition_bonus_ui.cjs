@@ -4,7 +4,7 @@ Node.EventType={TOUCH_END:'touch'};class Label{}
 function Normal(){}function Six(){}let updates=0,preview;
 for(const T of [Normal,Six])T.prototype.update_=function(){updates++;return 7;};
 const cc={Node,Label,Canvas:{instance:{node:{width:960,height:640}}}},window={__require:n=>({expeditionScene:Normal,sixType3Scene:Six,dataApi:{findEntityById:()=>({kindName:'Phiếu nạp thường'})},baseView:{addRewardPanel:(title,rewards)=>preview={title,rewards}}})[n]};
-vm.runInNewContext(fs.readFileSync('tools/private_expedition.js','utf8'),{window,cc,console});
+window.DB2_PRIVATE_UI_LOCALES=JSON.parse(fs.readFileSync('tables/localization/private-ui.json'));cc.sys={localStorage:{getItem:()=> 'vi'}};vm.runInNewContext(fs.readFileSync('tools/private_i18n.js','utf8'),{window,cc});vm.runInNewContext(fs.readFileSync('tools/private_expedition.js','utf8'),{window,cc,console});
 const config={normal:{floor:13,rewards:[{entityId:2,count:1}]},six:{floor:12,rewards:[{entityId:2,count:2}]}};
 window.DB2PrivateExpeditionBonus.apply(config);const wrapped=Normal.prototype.update_;window.DB2PrivateExpeditionBonus.apply(config);assert.equal(wrapped,Normal.prototype.update_);
 const a=new Normal();a.node=new Node('normal');assert.equal(a.update_(),7);assert(a._db2BonusLabel.string.includes('13'));assert(a._db2BonusLabel.string.includes('×1'));a._db2BonusLabel.node.events.touch();assert.equal(preview.rewards[0].entityId,2);
