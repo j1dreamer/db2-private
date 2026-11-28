@@ -1,0 +1,27 @@
+{
+  "build": 17,
+  "source_commit_before_changes": "71b6987a9625a551c0053bd95667505a318d5872",
+  "packagedBridgeAndAwake20Verified": true,
+  "downloadedJavaScriptRemainsDisabled": true,
+  "reconstructedPatchesMatchFullFiles": true,
+  "iosRequiresResigning": true,
+  "nativeDeviceTested": false,
+  "files": {
+    "DB2-ENG-SPSSS-v17-unsigned.ipa": {
+      "bytes": 510881941,
+      "sha256": "a3027cd42e0cad3d386edf2183b87a6d8f5b6dd7b984d4400520363b96abf85a"
+    },
+    "DB2-ENG-SPSSS-v17.apk": {
+      "bytes": 525095617,
+      "sha256": "0759f93d287312b5d5f550fdee831ef547dcd9b66129212334ec0ab34702b677"
+    },
+    "Client-ENG-SPSSS-IOS-v17.zip": {
+      "bytes": 3640931,
+      "sha256": "dddb255a4affebc429e1ce910a3612c54d3a01c428c91c5fa945c1c21bb71251"
+    },
+    "Client-ENG-SPSSS-Android-v17.zip": {
+      "bytes": 5318099,
+      "sha256": "e9b416b2d506caa37879922b0de5fe8c944b36f679f1f1eedebf3ea713dededf"
+    }
+  }
+}

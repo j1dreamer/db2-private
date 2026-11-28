@@ -1,0 +1,20 @@
+{
+  "environment": "local build workspace; concurrent full regression/build running; not VPS latency",
+  "expedition": {
+    "verificationMs": 5712.2,
+    "cachedSettlementMs": 173.7,
+    "sameTrustedSnapshotAndSkillTrace": true,
+    "duplicateSettlementRejected": true
+  },
+  "snakeWay": {
+    "verificationMs": 2101.5,
+    "cachedSettlementMs": 84.3
+  },
+  "coldWorkerSpeedupClaimed": false,
+  "persistentWorker": {
+    "maxOldSpaceMiB": 384,
+    "defaultCount": 1,
+    "freshVMPerJob": true
+  },
+  "nativeDeviceTested": false
+}

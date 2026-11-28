@@ -4,7 +4,7 @@
     var store=cc.sys.localStorage,KEY='db2.private.auto.plans.v2',DRAFT='db2.private.auto.draft.v2';
     var plans=[],draft=null,dirty=false,editing=false,status='idle',timer=null,run=null,touch=null,injecting=false,listener=null;
     var markers=null,bar=null,statusLabel=null,recordStart=0,recordId=null,lastMove=0,recordLast=null,sceneResume=false,sceneBusy=false,page=0,idCounter=0;
-    var ui=window.DB2PrivateUI;
+    var ui=window.DB2PrivateUI,collapsed=false,quickPanel=null;
     function clone(x){return JSON.parse(JSON.stringify(x));}
     function finite(x){return typeof x==='number'&&isFinite(x);}
     function point(p){return p&&finite(p.x)&&finite(p.y)&&Math.abs(p.x)<=0.5&&Math.abs(p.y)<=0.5;}
@@ -41,9 +41,9 @@
         }catch(ignoredMigration){}persist();
     }
     try{var pending=JSON.parse(store.getItem(DRAFT)||'null');if(pending&&validPlan(pending.plan)){draft=pending.plan;dirty=!!pending.dirty;if(draft.type==='record'&&draft.actions.length){try{validateRecord(draft.actions);}catch(unfinished){var last=draft.actions[draft.actions.length-1];if(last&&point(last)&&integer(last.ms,0,125000)&&['start','move'].indexOf(last.kind)>=0)draft.actions.push({kind:'cancel',x:last.x,y:last.y,ms:Math.min(125000,last.ms+1)});try{validateRecord(draft.actions);}catch(corrupt){draft.actions=[];}dirty=true;}}}}catch(ignoredDraft){}
-    function hideDialog(){var c=canvas();if(c)ui.destroy(c.getChildByName('DB2PrivateControls'));}
+    function hideDialog(){var c=canvas();if(c){ui.destroy(c.getChildByName('DB2PrivateControls'));ui.destroy(c.getChildByName('DB2PrivateAutoQuick'));}quickPanel=null;}
     function normalize(p){var c=canvas(),q=ui.point(c,p);return{x:Math.max(-0.48,Math.min(0.48,q.x/c.width)),y:Math.max(-0.46,Math.min(0.46,q.y/c.height))};}
-    function world(p){var c=canvas(),q={x:p.x*c.width,y:p.y*c.height};return c.convertToWorldSpaceAR?c.convertToWorldSpaceAR(q):q;}
+    function world(p){var c=canvas(),q={x:p.x*c.width,y:p.y*c.height};return ui.screen?ui.screen(c,q):c.convertToWorldSpaceAR?c.convertToWorldSpaceAR(q):q;}
     function inject(kind,p){
         if(!canvas()||!point(p))throw Error('Điểm chạm không hợp lệ.');
         var q=world(p),ET=cc.Event.EventTouch;
@@ -88,13 +88,13 @@
     function colorButton(parent,title,width,x,y,fn,selected){
         var n=new cc.Node();n.parent=parent;n.setPosition(x,y);n.setContentSize(width,44);
         var g=n.addComponent(cc.Graphics);g.fillColor=selected?cc.color(16,191,166,255):cc.color(43,55,62,255);g.roundRect(-width/2,-22,width,44,7);g.fill();
-        ui.text(n,title,17,0,0,width-8,36);
+        var label=ui.text(n,title,17,0,0,width-8,36);if(selected)label.node.color=cc.color(10,27,36,255);
         n.on(cc.Node.EventType.TOUCH_START,function(e){if(e&&e.stopPropagation)e.stopPropagation();});
         n.on(cc.Node.EventType.TOUCH_END,function(e){if(e&&e.stopPropagation)e.stopPropagation();safe(fn)();});return n;
     }
     function isControl(p){
         var c=canvas();if(!c)return true;
-        for(var i=0,names=['DB2PrivateControls','DB2PrivateServerPanel','DB2PrivateAutoBar','DB2PrivateSpeed','DB2PrivateServerButton'];i<names.length;i++){
+        for(var i=0,names=['DB2PrivateControls','DB2PrivateServerPanel','DB2PrivateAutoBar','DB2PrivateAutoQuick','DB2PrivateSpeed','DB2PrivateServerButton'];i<names.length;i++){
             var n=c.getChildByName(names[i]);if(!n||n.active===false)continue;
             if(names[i]==='DB2PrivateControls'||names[i]==='DB2PrivateServerPanel')return true;
             var q=n.convertToNodeSpaceAR?n.convertToNodeSpaceAR(p):{x:p.x-n.x,y:p.y-n.y};if(Math.abs(q.x)<=n.width/2&&Math.abs(q.y)<=n.height/2)return true;
@@ -122,14 +122,20 @@
     function redraw(rebuild){
         var c=canvas();if(!c)return;
         if(!editing){ui.destroy(bar);bar=null;ui.destroy(markers);markers=null;return;}
+        if(collapsed){
+            if(rebuild||!bar||bar.name!=='DB2PrivateAutoBar'||bar.width!==64){
+                ui.destroy(bar);bar=new cc.Node('DB2PrivateAutoBar');bar.parent=c;bar.zIndex=31600;bar.setContentSize(64,52);bar.setPosition(-c.width/2+48,0);
+                colorButton(bar,status==='running'?'Ⅱ':'Auto',56,0,0,function(){collapsed=false;redraw(true);},true);
+            }return;
+        }
         if(rebuild||!bar||!bar.parent||cc.isValid&&!cc.isValid(bar)){
             var previous=bar&&bar.parent?{x:bar.x,y:bar.y}:null;ui.destroy(bar);bar=new cc.Node('DB2PrivateAutoBar');bar.parent=c;bar.zIndex=31600;bar.setContentSize(386,50);bar.setPosition(previous?previous.x:0,previous?previous.y:-c.height/2+42);
             var g=bar.addComponent(cc.Graphics);g.fillColor=cc.color(18,29,34,245);g.roundRect(-193,-25,386,50,10);g.fill();dragBar(bar);
-            var playTitle=status==='recording'?'■':status==='armed'?'●':status==='running'?'Ⅱ':'▶';
+            var playTitle=status==='recording'?'Xong':status==='armed'?'Ghi':status==='running'?'II':'Chạy';
             colorButton(bar,playTitle,44,-130,0,function(){if(status==='recording'){api.finishRecord();api.openSave();}else if(status==='armed')api.beginRecord();else if(status==='running')api.pause();else if(status==='paused')api.resume();else api.playCurrent();},true);
-            colorButton(bar,'■',44,-82,0,function(){if(status==='recording'){api.finishRecord();api.openSave();}else api.stop();});
+            colorButton(bar,'Dừng',44,-82,0,function(){if(status==='recording'){api.finishRecord();api.openSave();}else api.stop();});
             colorButton(bar,'+',44,-34,0,function(){api.addPoint();});colorButton(bar,'−',44,14,0,function(){if(!draft||draft.type==='record')return;api.deletePoint(draft.points.length-1);});
-            colorButton(bar,'⚙',44,62,0,function(){api.openPlanSettings();});colorButton(bar,'Lưu',52,114,0,function(){api.openSave();});colorButton(bar,'×',42,164,0,function(){api.requestClose();});
+            colorButton(bar,'Sửa',44,62,0,function(){api.openPlanSettings();});colorButton(bar,'Lưu',52,114,0,function(){api.openSave();});colorButton(bar,'Ẩn',44,164,0,function(){collapsed=true;redraw(true);});
             statusLabel=ui.text(bar,'',13,0,42,370,26);
         }
         if(statusLabel&&statusLabel.node&&statusLabel.node.parent&&(!cc.isValid||cc.isValid(statusLabel.node)))statusLabel.string=(draft?draft.name:'')+' · '+(status==='running'?'Đang chạy · lượt '+(run.loops+1):status==='paused'?'Tạm dừng':status==='recording'?'Đang ghi '+draft.actions.length+' thao tác':status==='armed'?'Bấm ● để bắt đầu ghi':dirty?'Bản nháp · chưa lưu':'Sẵn sàng');
@@ -176,9 +182,29 @@
             if(recordId!==null&&recordLast)draft.actions.push({kind:'cancel',x:recordLast.x,y:recordLast.y,ms:Math.min(125000,Date.now()-recordStart)});recordId=null;status='idle';dirty=true;persistDraft();redraw(true);
         }},
         beforeModal:function(){api.finishRecord();api.pause();},
-        open:function(tab){api.beforeModal();api.openLibrary();},finishPick:function(){return false;},
+        open:function(tab){api.openQuick();},finishPick:function(){return false;},
+        minimize:function(){collapsed=true;hideDialog();redraw(true);},
+        openQuick:function(){
+            try{var scenes=window.__require('sceneManager');if(scenes.getCurSceneInfo().name===scenes.NAME.LOGIN_SCENE){hint('Vào game trước khi dùng Auto.');return;}}catch(ignored){}
+            api.beforeModal();hideDialog();var c=canvas();if(!c)return;
+            var b=new cc.Node('DB2PrivateAutoQuick');b.parent=c;b.zIndex=32400;b.setContentSize(288,304);b.setPosition(-c.width/2+168,0);quickPanel=b;
+            if(cc.BlockInputEvents)b.addComponent(cc.BlockInputEvents);
+            var g=b.addComponent(cc.Graphics);g.fillColor=cc.color(16,25,40,250);g.roundRect(-144,-152,288,304,12);g.fill();
+            ui.text(b,'Auto trong game',20,-18,119,218,32);
+            colorButton(b,'×',44,112,119,hideDialog);
+            ui.text(b,'Chọn chế độ, rồi kéo điểm tới nút.',15,0,76,260,34);
+            ['single','multi','record'].forEach(function(type,i){colorButton(b,['Một điểm','Đa điểm','Ghi lại'][i],80,-88+i*88,30,function(){
+                api.guardDraft(function(){api.createPlan(type==='record'?'Ghi thao tác':'Auto '+(type==='single'?'một điểm':'đa điểm'),type);draft.cycles=0;changed();collapsed=false;redraw(true);if(type==='record')api.beginRecord();});
+            },true);});
+            if(draft){
+                ui.text(b,draft.name+' · '+(status==='paused'?'Đang dừng':'Sẵn sàng'),15,0,-18,260,34);
+                colorButton(b,status==='paused'?'Tiếp tục':'Chạy',120,-66,-65,function(){collapsed=false;hideDialog();if(status==='paused')api.resume();else api.playCurrent();},true);
+                colorButton(b,'Dừng',120,66,-65,function(){api.stop();api.openQuick();});
+            }else ui.text(b,'Chỉ bấm trong app. Dừng khi ra nền.',15,0,-52,260,44);
+            colorButton(b,'Thư viện đã lưu',252,0,-121,function(){api.openLibrary();});
+        },
         openLibrary:function(){
-            api.beforeModal();var m=ui.modal('DB2PrivateControls','Auto click · Kịch bản',540,366);if(!m)return;var b=m.box,rows=plans.slice(page*4,page*4+4);
+            api.beforeModal();hideDialog();var m=ui.modal('DB2PrivateControls','Auto click · Kịch bản',540,366);if(!m)return;var b=m.box,rows=plans.slice(page*4,page*4+4);
             colorButton(b,'+ Tạo mới',130,-174,117,function(){api.openCreate();},true);
             if(draft)colorButton(b,dirty?'Bản nháp':'Tiếp tục sửa',140,-26,117,function(){editing=true;hideDialog();redraw(true);});
             colorButton(b,'Tốc độ',112,132,117,function(){window.DB2PrivateRuntime.openSpeed();});

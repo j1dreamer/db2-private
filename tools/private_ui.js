@@ -25,14 +25,15 @@
         var g=n.addComponent(cc.Graphics); g.fillColor=dark?cc.color(45,57,76,255):cc.color(245,174,68,255);
         g.roundRect(-width/2,-22,width,44,8);g.fill();
         var l=U.text(n,title,18,0,0,width-12,36);l.node.color=dark?cc.color(235,241,250):cc.color(20,25,35);
-        n.on(cc.Node.EventType.TOUCH_START,function(e){if(e&&e.stopPropagation)e.stopPropagation();});
-        n.on(cc.Node.EventType.TOUCH_END,function(e){if(e&&e.stopPropagation)e.stopPropagation();action();});return n;
+        n.on(cc.Node.EventType.TOUCH_START,function(e){if(e&&e.stopPropagation)e.stopPropagation();n.opacity=190;});
+        n.on(cc.Node.EventType.TOUCH_CANCEL,function(){n.opacity=255;});
+        n.on(cc.Node.EventType.TOUCH_END,function(e){if(e&&e.stopPropagation)e.stopPropagation();n.opacity=255;action();});return n;
     };
     U.edit = function(parent,value,width,x,y,password) {
         var n=new cc.Node();n.active=false;n.setPosition(x,y);n.setContentSize(width,44);
         var g=n.addComponent(cc.Graphics);g.fillColor=cc.color(35,46,65,255);g.roundRect(-width/2,-22,width,44,7);g.fill();
         var label=U.text(n,'',18,0,0,width-18,36),placeholder=U.text(n,'',18,0,0,width-18,36);
-        var e=n.addComponent(cc.EditBox);e.inputMode=cc.EditBox.InputMode.ANY;e.maxLength=160;
+        var e=n.addComponent(cc.EditBox);e.inputMode=cc.EditBox.InputMode.SINGLE_LINE===undefined?cc.EditBox.InputMode.ANY:cc.EditBox.InputMode.SINGLE_LINE;e.maxLength=160;
         e.textLabel=label;e.placeholderLabel=placeholder;e.string=String(value===null||value===undefined?'':value);e.lineHeight=24;
         if(cc.EditBox.LineType)e.lineType=cc.EditBox.LineType.SINGLE_LINE;
         if(cc.EditBox.InputFlag&&cc.EditBox.InputFlag.DEFAULT!==undefined)e.inputFlag=cc.EditBox.InputFlag.DEFAULT;
@@ -41,6 +42,13 @@
         e.fontSize=18;e.fontColor=cc.color(240,245,255);e.placeholderFontSize=16;e.placeholderFontColor=cc.color(155,171,192);
         label.node.setContentSize(width-18,36);placeholder.node.setContentSize(width-18,36);
         n.parent=parent;n.active=true;
+        // Cocos EditBox changes label anchors to (0,1), including on native onLoad.
+        // Keep that anchor, and position the text from the field's left/top inset.
+        [label,placeholder].forEach(function(l){
+            if(l.node.setAnchorPoint)l.node.setAnchorPoint(0,1);
+            l.horizontalAlign=0;l.verticalAlign=1;l.enableWrapText=false;
+            l.node.setPosition(-width/2+12,18);l.node.setContentSize(width-24,36);
+        });
         return e;
     };
     U.modal = function(name,title,width,height) {
@@ -55,5 +63,14 @@
         U.button(box,'×',44,box.width/2-30,box.height/2-29,function(){U.destroy(shade);},true);
         return {shade:shade,box:box};
     };
-    U.point = function(canvas,p) { return canvas.convertToNodeSpaceAR ? canvas.convertToNodeSpaceAR(p) : p; };
+    U.point = function(canvas,p) {
+        var camera=cc.Camera&&cc.Camera.findCamera&&cc.Camera.findCamera(canvas);
+        if(camera&&camera.getScreenToWorldPoint)p=camera.getScreenToWorldPoint(p);
+        return canvas.convertToNodeSpaceAR ? canvas.convertToNodeSpaceAR(p) : p;
+    };
+    U.screen = function(canvas,p) {
+        var world=canvas.convertToWorldSpaceAR?canvas.convertToWorldSpaceAR(p):p;
+        var camera=cc.Camera&&cc.Camera.findCamera&&cc.Camera.findCamera(canvas);
+        return camera&&camera.getWorldToScreenPoint?camera.getWorldToScreenPoint(world):world;
+    };
 }());

@@ -120,6 +120,7 @@ def handle(store,account,route,args):
             if action=='useItem':rewards=use(p,item,amount)
             else:
                 if entity(item['kindId'])['type']!='box':raise ValueError('Vật phẩm không phải rương')
+                if item['kindId']==724 and args.get('clientContentRevision')!=16:raise ValueError('Cài client v16 để mở rương chọn SP X7, tránh hiển thị sai phần thưởng.')
                 cfg=box_config(item);select=cfg.get('selectCount',0);choices=description(cfg.get('dropListDesc'))
                 if not select or not choices:raise ValueError('Rương không hỗ trợ chọn phần thưởng')
                 counts={}

@@ -148,4 +148,5 @@ def runtime_config(store):
   for threshold,index in ((14,2),(21,3)):
    base=row.get('box'+str(index))or'';bonus=liveops.desc(cfg['stars'+str(threshold)])
    boxes[str(row['kindId'])]['box'+str(index)]=base+(','if base and bonus else'')+bonus
- return {'version':15,'maxAwake':constants('server.ROLE.CONSTS.MAX_AWAKE_LEVEL'),'equipmentSlots':len(constants('server.EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES')),'chapterBoxes':boxes}
+ from .expedition import cfg as expedition_cfg
+ return {'version':15,'contentRevision':16,'maxAwake':constants('server.ROLE.CONSTS.MAX_AWAKE_LEVEL'),'equipmentSlots':len(constants('server.EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES')),'chapterBoxes':boxes,'expeditionBonuses':{key:{'floor':expedition_cfg(six)['CHALLENGER_COUNT'],'rewards':expedition_bonus(store,six,expedition_cfg(six)['CHALLENGER_COUNT'])}for key,six in (('normal',False),('six',True))}}

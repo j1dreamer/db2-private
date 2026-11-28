@@ -109,7 +109,7 @@ def offers(store,p,b):
  for i,row in enumerate(b['offers']+[{'costGem':b['loginUnlockGem'],'limit':1,'rewards':[]},{'costGem':b['passUnlockGem'],'limit':1,'rewards':[]}]):
   ident=base+i;unlock='login'if i==len(b['offers'])else'pass'if i==len(b['offers'])+1 else None
   used=int(s.get(unlock+'Unlocked',False))if unlock else s['offers'].get(s['gemDay']+':'+str(i),0)
-  out[str(ident)]={'id':ident,'name':('Mở khóa '+unlock)if unlock else b['name']+' · Gói vé '+str(i+1),'price':row['costGem'],'privateCostGem':row['costGem'],'show':'$1 Gem','gem':0,'gift':0,'dailyGem':0,'priceRate':1,'isNoUsePoint':True,'spBannerId':b['id'],'spOfferIndex':i,'privateLimit':row['limit'],'privateUsed':used,'needPoint':0,'point':False,'desc':'Đổi bằng Gem trong game, không xác nhận thanh toán tiền thật.'}
+  out[str(ident)]={'id':ident,'name':('Mở khóa '+unlock)if unlock else b['name']+(' · Mua tướng 'if any(entity(r['entityId'])['type']=='role'for r in row['rewards'])else' · Gói vé ')+str(i+1),'price':row['costGem'],'privateCostGem':row['costGem'],'show':'$1 Gem','gem':0,'gift':0,'dailyGem':0,'priceRate':1,'isNoUsePoint':True,'spBannerId':b['id'],'spOfferIndex':i,'privateLimit':row['limit'],'privateUsed':used,'needPoint':0,'point':False,'desc':'Đổi bằng Gem trong game, không xác nhận thanh toán tiền thật.'}
  return out
 
 def refresh(store,p):

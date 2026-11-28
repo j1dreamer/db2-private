@@ -1,5 +1,5 @@
 """Build trusted combat inputs and execute the recovered deterministic JS engine."""
-import asyncio,json,shutil,subprocess,weakref
+import asyncio,json,shutil,subprocess,weakref,os
 from pathlib import Path
 from .profile import table
 from .state import integer
@@ -58,6 +58,9 @@ def validate_records(records):
 def simulate(payload):
     from .node_runtime import resolve_node
     node=resolve_node()
+    if os.environ.get('DB2_BATTLE_PERSISTENT','1')=='1':
+        from .battle_runtime import simulate as reusable
+        return reusable(node,payload)
     try:
         result=subprocess.run([node,str(WORKER)],input=json.dumps(payload),text=True,capture_output=True,timeout=30 if payload.get('mode')in ('bestOfThree','series')else 15,check=True)
         return json.loads(result.stdout)

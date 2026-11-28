@@ -16992,10 +16992,10 @@
     "descriptionSource": "eng-client-vietnamese"
   },
   "724": {
-    "name": "Rương Chọn Hero IV",
-    "description": "Có thể chọn 1 phần thưởng",
-    "nameSource": "eng-client-vietnamese",
-    "descriptionSource": "eng-client-vietnamese"
+    "name": "Rương chọn SP · 60 mảnh",
+    "description": "Chọn 1 loại mảnh SP, nhận 60 mảnh mỗi rương. Danh sách theo client X7 Long Chi Đảo #17327.",
+    "nameSource": "new-vietnamese-translation",
+    "descriptionSource": "new-vietnamese-translation"
   },
   "725": {
     "name": "Rương Chọn Vật Liệu",

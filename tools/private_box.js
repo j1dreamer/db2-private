@@ -15,12 +15,42 @@
         var l=label(n,text,17,0,0,width-8,28);n.on(cc.Node.EventType.TOUCH_END,function(event){if(event&&event.stopPropagation)event.stopPropagation();cb();});return l;
     }
     function quantity(node,value) {
-        var target=node.getChildByName('item_item')||node;
+        var target=node.getChildByName('item_item')||node.getChildByName('role_item')||node;
         var original=target.getComponent('itemItem2')||target.getComponent('itemItem');
-        if(original&&original.setCountLabelActive_)original.setCountLabelActive_(false);
-        var n=node.getChildByName('DB2BoxQuantity');
-        if(!n){n=new cc.Node('DB2BoxQuantity');n.parent=node;n.zIndex=100;n.setPosition(0,-(node.height||100)/2+12);var g=n.addComponent(cc.Graphics);g.fillColor=cc.color(5,18,30,230);g.roundRect(-42,-12,84,24,4);g.fill();n._label=label(n,'',16,0,0,78,22);}
+        var l=original&&original.countLabel;
+        if(l){
+            original.setCountLabelActive_&&original.setCountLabelActive_(true);
+            l.string='×'+value;l.font=null;l.useSystemFont=true;l.fontFamily='Arial';
+            l.fontSize=17;l.lineHeight=20;
+            return;
+        }
+        var n=target.getChildByName('DB2BoxQuantity');
+        if(!n){n=new cc.Node('DB2BoxQuantity');n.parent=target;n.zIndex=100;
+            n.setPosition((target.width||80)/2-24,-(target.height||80)/2+12);
+            n._label=label(n,'',17,0,0,48,24);
+            if(cc.LabelOutline){var outline=n.addComponent(cc.LabelOutline);outline.color=cc.color(0,0,0,255);outline.width=2;}
+        }
         n.active=true;n._label.string='×'+value;
+    }
+    function compact(view) {
+        ['roleItemNodeMap','itemItemMap'].forEach(function(map){Object.keys(view[map]||{}).forEach(function(k){
+            var node=view[map][k],target=node.getChildByName('item_item')||node.getChildByName('role_item');
+            if(!node.active||!target)return;
+            var nameNode=node.getChildByName('name_label'),l=nameNode&&nameNode.getComponent(cc.Label);
+            if(l){l.string=String(l.string||'').replace(/^Mảnh\s+/,'');l.fontSize=14;l.lineHeight=17;l.enableWrapText=true;
+                l.overflow=cc.Label.Overflow.SHRINK===undefined?cc.Label.Overflow.CLAMP:cc.Label.Overflow.SHRINK;
+                nameNode.setContentSize(node.width||100,42);nameNode.setPosition(target.x||0,(target.y||0)-(target.height||80)/2-23);}
+            var select=node.getChildByName('select_bt');
+            if(select){select.setPosition((target.x||0)+(target.width||80)/2-12,(target.y||0)+(target.height||80)/2-12);
+                var bg=cc.Sprite&&select.getComponent(cc.Sprite);if(bg)bg.enabled=false;}
+            if(node.setContentSize)node.setContentSize(node.width||100,142);
+        });});
+        if(view.itemItemsLayout&&cc.Layout){var layout=view.itemItemsLayout.getComponent(cc.Layout);if(layout){layout.spacingY=8;if(layout.cellSize)layout.cellSize.height=142;layout.updateLayout&&layout.updateLayout();}}
+        if(view.yesBt&&view.useCountNode&&view.yesBt.setPosition){
+            var pos=view.useCountNode.position;
+            if(view.useCountNode.convertToWorldSpaceAR&&view.yesBt.parent&&view.yesBt.parent.convertToNodeSpaceAR)pos=view.yesBt.parent.convertToNodeSpaceAR(view.useCountNode.convertToWorldSpaceAR(cc.v2(0,0)));
+            if(pos)view.yesBt.setPosition(pos);
+        }
     }
     function rowQuantities(view,multiplier) {
         ['roleItemNodeMap','itemItemMap'].forEach(function(map){var nodes=view[map]||{};Object.keys(nodes).forEach(function(key){var node=nodes[key];if(node.active&&node.data){var count=node.data.privateRewardCount;if(count===undefined)count=node.data.count;if(count!==undefined)quantity(node,Number(count)*multiplier);}});});
@@ -35,7 +65,7 @@
     }
     function tools(view,closeAction) {
         var old=view.node.getChildByName('DB2BoxTools');if(old){old.active=false;if(old.removeFromParent)old.removeFromParent();else old.parent=null;old.destroy();}var root=new cc.Node('DB2BoxTools');root.parent=view.node;root.zIndex=30000;
-        var size=dimensions(view);button(root,'×',size.w/2-33,size.h/2-33,42,closeAction);return {root:root,size:size};
+        var size=dimensions(view);if(!view.onClose_)button(root,'×',size.w/2-33,size.h/2-33,42,closeAction);return {root:root,size:size};
     }
     function description(extra,original) {
         extra=extra||{};
@@ -56,10 +86,9 @@
             view._db2BoxInfo=null;view._db2BoxOpen=null;
             if(view.canSelect){
                 // Keep the original ENG selection, quantity buttons and confirm action.
-                view._db2BoxInfo=label(ui.root,'',16,0,ui.size.h/2-70,Math.min(680,ui.size.w-100),28);
-                if(view.useCountNode)view.useCountNode.active=true;
+                if(view.useCountNode)view.useCountNode.active=false;
                 if(view.yesBt)view.yesBt.active=true;
-                count(view,data.useCount||1);
+                count(view,1);compact(view);
             } else {
                 if(view.yesBt)view.yesBt.active=true;
                 if(box){
@@ -71,7 +100,7 @@
                         if(box.isExchange)base.addExchangeBoxPanel(idx);else base.addSelectRewardPanel(idx);
                     });
                 }
-                rowQuantities(view,1);
+                rowQuantities(view,1);compact(view);
             }
         },
         refresh:function(view) {
@@ -85,8 +114,8 @@
         attachExchange:function(view){
             var ui=tools(view,function(){view.onClose_();}),size=ui.size,selected=0,total=0;
             (view.data.exchangeItems||[]).forEach(function(row,index){var n=view.rewardIdxCountMap[index]||0;selected+=n;total+=n*(row.privateRewardCount||1);});
-            var root=ui.root;label(root,'Đã chọn '+selected+'/'+view.data.canUseCount+' lượt · Tổng nhận '+total,18,0,-size.h/2+82);
-            Object.keys(view.exchangeItemMap||{}).forEach(function(key){var node=view.exchangeItemMap[key],row=node.data;if(node.active&&row)node.getChildByName('count_label').getComponent(cc.Label).string='Chọn '+row.count+' · Nhận '+row.count*(row.privateRewardCount||1);});
+            var root=ui.root;
+            Object.keys(view.exchangeItemMap||{}).forEach(function(key){var node=view.exchangeItemMap[key],row=node.data;if(node.active&&row){quantity(node,row.privateRewardCount||1);node.getChildByName('count_label').getComponent(cc.Label).string=String(row.count);}});
         },
         setCount:count
     };

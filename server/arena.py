@@ -79,6 +79,8 @@ def choose(store,account,args):
         other,rank=participant(store,defender);defense=raw_team(other);attack={'playerId':p['id'],'playerName':p['name'],'playerLevel':p['level'],'playerPhotoInfo':p['photoInfo'],'roles':[copy.deepcopy(p['team']['roles'][key])for key in indices],'ships':[copy.deepcopy(p['bag']['items'][str(key)])for key in ships]}
         p['arena']['remainingChallengeTimes']-=1;seed=secrets.randbelow(2**31-1)+1;run={'defenderId':defender,'indices':indices,'shipIndices':ships,'attackTeam':attack,'defenseTeam':defense,'seed':seed}
         store.db.execute('INSERT INTO pvp_runs VALUES(?,?,?,?)ON CONFLICT(player,mode)DO UPDATE SET data=excluded.data,expires=excluded.expires',(p['id'],'arena',json.dumps(run),int(time.time())+900));store.save(p);store.audit('arena_choose',{'player':p['id'],'defender':defender})
+        from .battle_prefetch import begin as prefetch
+        prefetch(store,p['id'],{'mode':'pvp','team':combat_raw(attack),'defender':combat_raw(defense),'seed':seed})
         return delta(before,p,'logic.arenaHandler.choose',{'attackTeam':attack,'defenseTeam':defense,'seed':seed})
 
 async def challenge(store,account,args):
@@ -90,7 +92,8 @@ async def challenge(store,account,args):
     if args.get('defenderId')!=run['defenderId']or indices!=run['indices']or list(map(str,args.get('attackShipIndexs',[])))!=list(map(str,run['shipIndices']))or seed!=run['seed']or type(args.get('isWin'))is not bool:raise ValueError('Thông tin trận đấu không khớp')
     background=integer(args.get('bgImgId'),'Hình nền',1,100000)
     if background not in constants('battle.ARENA_BACKGROUND_IMG_IDS'):raise ValueError('Hình nền trận đấu không hợp lệ')
-    result=await simulate_async({'mode':'pvp','team':combat_raw(run['attackTeam']),'defender':combat_raw(run['defenseTeam']),'seed':seed})
+    from .battle_prefetch import outcome
+    result=await outcome(store,p['id'],{'mode':'pvp','team':combat_raw(run['attackTeam']),'defender':combat_raw(run['defenseTeam']),'seed':seed})
     if result['isWin']!=args['isWin']:raise ValueError('Kết quả không khớp engine chiến đấu')
     with store.transaction():
         check=store.db.execute('SELECT data FROM pvp_runs WHERE player=? AND mode=?',(p['id'],'arena')).fetchone()

@@ -196,7 +196,7 @@ class Admin:
    view=[{**r,'item':item_view(entities()[r['entityId']]),'probability':r['weight']/total}for r in custom]
    source=[r for r in rows('drop')if r['classId']==pool]
    result.append({'id':pool,'name':name,'custom':bool(custom),'entries':view,'sourceRows':source,'totalWeight':total})
-  return {'pools':result,'wheelPrizes':[{'entityId':k,'count':n,'weight':w,'item':item_view(entities()[k])}for k,n,w in liveops.prizes(self.store)]}
+  return {'gachaSource':{'source':'longzhidao-client','gameId':17327,'matchesEngDropTable':True,'onlineRatesVerified':False},'pools':result,'wheelPrizes':[{'entityId':k,'count':n,'weight':w,'item':item_view(entities()[k])}for k,n,w in liveops.prizes(self.store)]}
  async def post(self,req):
   self.auth(req)
   try:

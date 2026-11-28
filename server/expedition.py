@@ -85,6 +85,8 @@ def begin(store,account,args):
             if run['day']==p['privateDay']and run['version']==data['version']and run['indices']==indices and run['ships']==ships:return delta(before,p,BEGIN_ROUTE,{'seed':run['seed'],'team1':run['team'],'team2':run['defender']})
         run={'day':p['privateDay'],'version':data['version'],'floor':floor,'indices':indices,'ships':ships,'team':team,'defender':defense,'seed':data['seed'],'isSix':six}
         store.db.execute('INSERT INTO pvp_runs VALUES(?,?,?,?)ON CONFLICT(player,mode)DO UPDATE SET data=excluded.data,expires=excluded.expires',(p['id'],slot,json.dumps(run),int(time.time())+900));store.save(p)
+        from .battle_prefetch import begin as prefetch
+        prefetch(store,p['id'],{'mode':'expedition','team':team,'defender':defense,'seed':run['seed'],'auto':True})
         return delta(before,p,BEGIN_ROUTE,{'seed':run['seed'],'team1':team,'team2':defense})
 
 def build_defender(raw):
@@ -99,7 +101,9 @@ async def challenge(store,account,six,args):
     run=json.loads(row['data']);data=state_for(p,six)
     if run['day']!=p['privateDay']or run['version']!=data['version']or type(args.get('seed'))is not int or args['seed']!=run['seed']or type(args.get('isWin'))is not bool:raise ValueError('Trận viễn chinh không khớp')
     first=args.get('manualRecordMap',{});validate_records(first);integer(args.get('tickNumber'),'Tick',1,10000)
-    out=await simulate_async({'mode':'expedition','team':run['team'],'defender':run['defender'],'seed':run['seed'],'manualRecordMap':first})
+    check_started=time.monotonic()
+    from .battle_prefetch import outcome
+    out=await outcome(store,p['id'],{'mode':'expedition','team':run['team'],'defender':run['defender'],'seed':run['seed'],'manualRecordMap':first})
     a_hp,a_mp=hpmp(out['attacker']);d_hp,d_mp=hpmp(out['defender'])
     if out['isWin']!=args['isWin']or out['tickNumber']!=args['tickNumber']or any(args.get(k)!=v for k,v in (('selfHpMap',a_hp),('selfMpMap',a_mp),('challengerHpMap',d_hp),('challengerMpMap',d_mp))):raise ValueError('HP/MP hoặc kết quả không khớp engine server')
     with store.transaction():
@@ -111,7 +115,7 @@ async def challenge(store,account,six,args):
         for role in raw['roles']:
             idx=str(role['idx']);role['attr']['maxHp']=role['attr'].get('maxHp',role['attr']['hp']);role['attr']['hp']=d_hp.get(idx,0);role['mp']=d_mp.get(idx,0)
         if out['isWin']:state[key(six,'status')]=2
-        data['seed']=secrets.randbelow(2**31-1)+1;data['version']+=1;store.db.execute('DELETE FROM pvp_runs WHERE player=?AND mode=?',(p['id'],slot));store.save(p);store.audit('expedition_challenge',{'player':p['id'],'six':six,'floor':run['floor']+1,'isWin':out['isWin']})
+        data['seed']=secrets.randbelow(2**31-1)+1;data['version']+=1;store.db.execute('DELETE FROM pvp_runs WHERE player=?AND mode=?',(p['id'],slot));store.save(p);store.audit('expedition_challenge',{'player':p['id'],'six':six,'floor':run['floor']+1,'isWin':out['isWin'],'verificationMs':round((time.monotonic()-check_started)*1000)})
         return delta(before,p,'logic.'+mode(six)+'Handler.challenge',{})
 
 async def handle(store,account,route,args):

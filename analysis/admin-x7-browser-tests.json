@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "flows": [
+    "mobile-spending-preset-save",
+    "direct-hero-offer-save",
+    "catalog-navigation",
+    "builtin-event-navigation"
+  ],
+  "errors": [],
+  "dataset": "isolated temporary SQLite, never the running user database"
+}

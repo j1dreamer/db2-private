@@ -91,6 +91,7 @@ def patch_client(text,source,server):
     settings+='\n'+(Path(__file__).parent/'private_gm.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_box.js').read_text()
     settings+='\n'+(Path(__file__).parent/'private_time_peak.js').read_text()
+    settings+='\n'+(Path(__file__).parent/'private_expedition.js').read_text()
     settings+='\nwindow.DB2NativeCompat=function(){'+(Path(__file__).resolve().parents[1]/'server/native_compat.js').read_text()+'};\n'+(Path(__file__).parent/'private_server_config.js').read_text()
     settings+='\nwindow.DB2_PRIVATE_VI='+json.dumps(json.loads((Path(__file__).resolve().parents[1]/'tables/localization/vi.merged.json').read_text()),ensure_ascii=False,separators=(',',':'))+';\n'
     settings+=(Path(__file__).parent/'private_locale.js').read_text()

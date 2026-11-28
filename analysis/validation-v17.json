@@ -1,0 +1,25 @@
+{
+  "fullRegression": {
+    "tests": 373,
+    "initialFailures": 1,
+    "initialFailure": "X7 shop has inverted count range in two rows; normalized without changing source provenance"
+  },
+  "affectedAfterFix": {
+    "tests": 47,
+    "passed": true
+  },
+  "adminMobileBrowser": {
+    "passed": true,
+    "report": "analysis/admin-x7-browser-tests.json"
+  },
+  "packagedClients": {
+    "build": 17,
+    "bothCommonUIEqualsCurrentSource": true,
+    "nativeLoginBoundariesPassed": true
+  },
+  "nativeIphoneTested": false,
+  "downloadTransport": {
+    "nestedThreeStageTests": 5,
+    "passed": true
+  }
+}

@@ -4,6 +4,7 @@ function later(fn,ms){const t={fn,due:now+ms};tasks.push(t);return t;}function c
 class Node{
  constructor(name){this.name=name||'';this.children=[];this.events={};this.components=[];this.x=0;this.y=0;this.scale=1;this.active=true;}
  set parent(p){this._parent=p;p.children.push(this);}get parent(){return this._parent;}
+ setAnchorPoint(x,y){this.anchorX=x;this.anchorY=y;}
  setContentSize(w,h){this.width=w;this.height=h;}setPosition(x,y){if(typeof x==='object'){this.x=x.x;this.y=x.y;}else{this.x=x;this.y=y;}}
  getChildByName(name){return this.children.find(x=>x.name===name&&!x.dead);}addComponent(Type){const c=new Type();c.node=this;this.components.push(c);return c;}
  on(event,fn){this.events[event]=fn;}destroy(){this.dead=true;if(this.parent)this.parent.children=this.parent.children.filter(x=>x!==this);}
@@ -12,7 +13,7 @@ class Node{
 }
 Node.EventType={TOUCH_START:'start',TOUCH_MOVE:'move',TOUCH_END:'end',TOUCH_CANCEL:'cancel'};
 class Graphics{constructor(){this.commands=[];}roundRect(...v){this.commands.push({shape:'roundRect',args:v,color:this.fillColor});}circle(...v){this.commands.push({shape:'circle',args:v,color:this.fillColor});}rect(...v){this.commands.push({shape:'rect',args:v,color:this.fillColor});}fill(){}}
-class Label{};Label.Overflow={CLAMP:1,SHRINK:2};class EditBox{};EditBox.InputMode={ANY:0};EditBox.InputFlag={PASSWORD:0};
+class Label{};Label.Overflow={CLAMP:1,SHRINK:2};class EditBox{set textLabel(v){this._label=v;v.node.setAnchorPoint(0,1);}get textLabel(){return this._label;}};EditBox.InputMode={ANY:0,SINGLE_LINE:6};EditBox.InputFlag={PASSWORD:0};
 class Touch{constructor(x,y,id){this.p={x,y};this.id=id;}getLocation(){return this.p;}getID(){return this.id;}_setPoint(p){this.p=p;}_setPrevPoint(){}}
 class ET{constructor(touches){this.touches=touches;}};Object.assign(ET,{BEGAN:0,MOVED:1,ENDED:2,CANCELED:3});
 const canvas=new Node('Canvas');canvas.width=1280;canvas.height=590;const handlers={};const scheduler={setTimeScale(v){scale=v;},getTimeScale(){return scale;}};
@@ -22,13 +23,14 @@ const modules={baseView:{removeLoading(){},addHintPanel(m){visibleHints.push(m);
 const ctx=vm.createContext({window:{DB2_PRIVATE_DEFAULT_SERVER:'http://db2-server.invalid:20003',__require:n=>modules[n]},cc,Date:{now:()=>now},isFinite,setTimeout:later,clearTimeout:clear,console,XMLHttpRequest:class{}});
 for(const file of ['private_ui','private_connection','private_settings','private_runtime','private_auto']){vm.runInContext(supplied?supplied[file]:fs.readFileSync(root+'tools/'+file+'.js','utf8'),ctx,{filename:file});}
 const runtime=ctx.window.DB2PrivateRuntime,auto=ctx.window.DB2PrivateAuto;
-function snapshot(name){if(!process.env.DB2_UI_PREVIEW)return;function tree(n){return {name:n.name,x:n.x,y:n.y,width:n.width,height:n.height,scale:n.scale,active:n.active,color:n.color,opacity:n.opacity,components:n.components.map(c=>c instanceof Graphics?{kind:'graphics',commands:c.commands}:c instanceof Label?{kind:'label',text:c.string,fontSize:c.fontSize,width:n.width,height:n.height}:c instanceof EditBox?{kind:'input',value:c.string}:{}),children:n.children.map(tree)};}fs.writeFileSync(process.env.DB2_UI_PREVIEW+'/'+name+'.json',JSON.stringify(tree(canvas)));}
+function snapshot(name){if(!process.env.DB2_UI_PREVIEW)return;function tree(n){return {name:n.name,x:n.x,y:n.y,width:n.width,height:n.height,anchorX:n.anchorX,anchorY:n.anchorY,scale:n.scale,active:n.active,color:n.color,opacity:n.opacity,components:n.components.map(c=>c instanceof Graphics?{kind:'graphics',commands:c.commands}:c instanceof Label?{kind:'label',text:c.string,fontSize:c.fontSize,width:n.width,height:n.height}:c instanceof EditBox?{kind:'input',value:c.string}:{}),children:n.children.map(tree)};}fs.writeFileSync(process.env.DB2_UI_PREVIEW+'/'+name+'.json',JSON.stringify(tree(canvas)));}
 
 function scene(){(handlers.scene||[]).forEach(fn=>fn());}function before(){(handlers.before||[]).forEach(fn=>fn());}scene();ctx.window.DB2PrivateSettings();
 function labels(n,out=[]){n.components.forEach(c=>{if(c instanceof Label)out.push(c);});n.children.forEach(x=>labels(x,out));return out;}
 function button(title){const l=labels(canvas).find(x=>x.string===title);assert(l,'button '+title);return l.node.parent;}
 const ev=(x,y)=>({getLocation:()=>({x,y}),stopPropagation(){}});
-const serverCard=canvas.getChildByName('DB2PrivateServerPanel').getChildByName('Card');assert.equal(serverCard.width,520);button('Đóng').events.end();
+const serverCard=canvas.getChildByName('DB2PrivateServerPanel').getChildByName('Card');assert.equal(serverCard.width,520);const field=serverCard.children.flatMap(n=>n.components).find(c=>c instanceof EditBox);assert.equal(field.inputMode,6);assert.equal(field.textLabel.node.anchorX,0);assert.equal(field.textLabel.node.x,-228);assert.equal(field.textLabel.node.y,18);assert.equal(field.textLabel.horizontalAlign,0);snapshot('server-panel');button('Đóng').events.end();
+auto.openQuick();const quick=canvas.getChildByName('DB2PrivateAutoQuick');assert(quick);assert.equal(quick.width,288);assert(!canvas.getChildByName('DB2PrivateControls'));snapshot('auto-quick');button('Đa điểm').events.end();assert.equal(auto.getDraft().cycles,0);auto.deletePlan(auto.getDraft().id);
 const speed=canvas.getChildByName('DB2PrivateSpeed');assert.equal(speed.width,46);speed.events.start(ev(0,0));advance(1999);assert(!canvas.getChildByName('DB2PrivateControls'));advance(1);speed.events.end(ev(0,0));assert(labels(canvas).some(l=>l.string==='Tốc độ game'));button('×').events.end();
 auto.createPlan('Farm','multi');assert.equal(auto.getDraft().points.length,1);auto.addPoint();auto.updatePoint(0,{x:-.2,y:0,delay:100,hold:40});auto.updatePoint(1,{x:.2,y:0,delay:200,hold:60});
 let marker=canvas.getChildByName('DB2PrivateAutoPoints').getChildByName('Point2');marker.events.start(ev(256,0));marker.events.move(ev(320,40));marker.events.end(ev(320,40));assert.equal(auto.getDraft().points[1].x,.25);assert(auto.getState().dirty);
@@ -46,4 +48,10 @@ auto.loadPlan(farm);auto.updatePoint(0,{delay:700});auto.selectWithGuard(record)
 auto.createPlan('Untitled','single');auto.requestClose();button('Quay lại').events.end();assert.equal(auto.getDraft().name,'Untitled');assert(auto.getState().dirty);auto.savePlan('Single');assert.equal(auto.listPlans().length,3);auto.deletePlan(auto.getDraft().id);assert.equal(auto.listPlans().length,2);
 for(const n of ['100001','100002','100003']){const x=new Node(n);x.parent=canvas;}auto.loadPlan(farm);auto.playCurrent();ctx.window.DB2PrivateConnection.recover('Mạng mất kết nối, hãy nhấp thử lại');assert.equal(disconnects,1);assert.equal(socket.queue.length,0);assert(!auto.isRunning());assert(!canvas.getChildByName('100001'));assert.equal(pops,1);assert(!canvas.getChildByName('100003').active);
 assert.throws(()=>auto.updatePoint(0,{hold:0}));assert.throws(()=>auto.start('single',[{x:2,y:0}],100,1));
+// Camera scaling/translation must round-trip real screen touches and replay.
+cc.Camera={findCamera:()=>({getWorldToScreenPoint:p=>({x:p.x*2+17,y:p.y*2+23}),getScreenToWorldPoint:p=>({x:(p.x-17)/2,y:(p.y-23)/2})})};
+const local=ctx.window.DB2PrivateUI.point(canvas,{x:273,y:259});assert(Math.abs(local.x-128)<.001&&Math.abs(local.y-118)<.001);
+dispatches=[];auto.start('single',[{x:.1,y:.2}],100,1);advance(100);assert.deepEqual(dispatches[0].p,{x:273,y:259});advance(40);assert.equal(dispatches[1].kind,2);assert(!auto.isRunning());
+auto.start('single',[{x:0,y:0}],100,0);auto.minimize();assert(auto.isRunning());assert.equal(canvas.getChildByName('DB2PrivateAutoBar').width,64);advance(500);assert(auto.isRunning());auto.stop();
+sceneName='login';auto.openQuick();assert(!canvas.getChildByName('DB2PrivateAutoQuick'));assert(visibleHints.some(v=>v.includes('Vào game')));
 console.log(JSON.stringify({named_plan_library:true,separate_saved_and_draft_data:true,draggable_numbered_points:true,per_point_delay_and_hold:true,press_release_use_distinct_times:true,pause_resume_restarts_interrupted_gesture:true,explicit_record_start_save_and_load:true,record_swipe_replay:true,foreground_scene_transition_supported:true,background_pauses:true,discard_keeps_saved_plan:true,network_popup_removed_without_retry:true,long_hold_slider_preserved:true}));

@@ -16,7 +16,7 @@ class BoxQuantityTests(unittest.TestCase):
   p=self.store.player(1);before=set(p['bag']['items']);insert(p,kind,count,{'privateBoxConfig':config}if config else{});self.store.save(p)
   return int(next(iter(set(p['bag']['items'])-before)))
  def custom(self,desc):return {'kindName':'Rương chọn SP thử nghiệm','desc':'Thưởng thử theo cấu hình server','imgId':351,'color':7,'dropListDesc':desc,'selectCount':1}
- def open(self,index,count,choice=0):return handle(self.store,1,'logic.playerHandler.selectBoxReward',{'bagIndex':index,'itemCount':count,'rewardIdxs':[choice]})
+ def open(self,index,count,choice=0):return handle(self.store,1,'logic.playerHandler.selectBoxReward',{'bagIndex':index,'itemCount':count,'rewardIdxs':[choice],'clientContentRevision':16})
  def test_sp_soul_quantity_ten_per_box_and_owned_count_decrease(self):
   idx=self.give(351,4,self.custom('50570x10,50590x10'));r=self.open(idx,1);self.assertEqual(r['_temp']['entityCountMap'],{'50570':10});self.assertEqual(stack_count(self.store.player(1),50570),10);self.assertEqual(r['_temp']['boxOpenedCount'],1);self.assertEqual(r['_temp']['boxRemainingCount'],0);self.assertEqual(stack_count(self.store.player(1),351),3)
   before=copy.deepcopy(self.store.player(1))
@@ -40,7 +40,7 @@ class BoxQuantityTests(unittest.TestCase):
    r=handle(self.store,1,'logic.playerHandler.useItem',{'bagIndex':idx,'itemCount':1})
   self.assertEqual(r['_temp']['entityCountMap'],{'101':9000000})
  def test_shipped_role_box_trailing_comma_matches_client_parser(self):
-  self.assertTrue(entity(724)['extra']['dropListDesc'].endswith(','));idx=self.give(724,1);self.assertTrue(self.open(idx,1)['_temp']['entityCountMap']);self.assertTrue(description('105504_star_3x1, '))
+  self.assertEqual(len(description(entity(724)['extra']['dropListDesc'])),20);idx=self.give(724,1);self.assertEqual(self.open(idx,1)['_temp']['entityCountMap'],{'50550':60});self.assertTrue(description('105504_star_3x1, '))
  def test_different_configurable_boxes_do_not_merge_rewards(self):
   first=self.give(351,2,self.custom('50570x10'));second=self.give(351,3,self.custom('50590x60'));self.assertNotEqual(first,second);self.open(first,1);self.open(second,1);p=self.store.player(1);self.assertEqual(stack_count(p,50570),10);self.assertEqual(stack_count(p,50590),60)
  def test_actual_client_preview_retains_role_and_item_reward_counts(self):

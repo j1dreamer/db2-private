@@ -77,3 +77,9 @@ class SPEventTests(unittest.TestCase):
   commerce.handle(self.s,1,'logic.playerHandler.buyGemGoods',{'id':901,'costGem':175});claim_events(self.s,1,['buyCard7day'],[3])
   with self.assertRaises(ValueError):claim_events(self.s,1,['buyCard7day'],[3])
   self.assertEqual(self.s.player(1)['vip']['topUpMoney'],0)
+
+ def test_direct_hero_offer_is_separate_from_draw_and_cannot_repeat(self):
+  role=self.b['roleId'];self.b['offers'].append({'costGem':3000,'limit':1,'rewards':[{'entityId':role,'count':1,'extra':{'star':3}}]});self.save();p=self.s.player(1)
+  offer=next(v for v in p['extra']['goodsList'].values()if v.get('spOfferIndex')==1);self.assertIn('Mua tướng',offer['name']);before=len(p['team']['roles']);luck=sp_events.state(p,self.b)['luck']
+  commerce.handle(self.s,1,'logic.playerHandler.buyGemGoods',{'id':offer['id'],'costGem':3000});p=self.s.player(1);self.assertEqual(len(p['team']['roles']),before+1);self.assertEqual(p['gem'],97000);self.assertEqual(sp_events.state(p,self.b)['luck'],luck)
+  with self.assertRaises(ValueError):commerce.handle(self.s,1,'logic.playerHandler.buyGemGoods',{'id':offer['id'],'costGem':3000})

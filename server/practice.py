@@ -90,14 +90,19 @@ def choose(store,p,mode,args):
     if mode=='practice'and (set(indices)&set(map(str,p['practice']['usedTeamIndexs']))or set(ships)&set(map(str,p['practice']['usedShipIndexs']))):raise ValueError('Đội hình đã dùng cướp hôm nay')
     attack={**public(p),'roles':[copy.deepcopy(p['team']['roles'][idx])for idx in indices],'ships':[copy.deepcopy(p['bag']['items'][idx])for idx in ships]};run={'day':p['privateDay'],'target':target,'ctime':ctime,'indices':indices,'ships':ships,'attack':attack,'defense':view(other),'seed':secrets.randbelow(2**31-1)+1};private[key]+=1
     if mode=='practice':p['practice']['usedTeamIndexs']+=list(map(int,indices));p['practice']['usedShipIndexs']+=list(map(int,ships))
-    store.db.execute('INSERT INTO pvp_runs VALUES(?,?,?,?)ON CONFLICT(player,mode)DO UPDATE SET data=excluded.data,expires=excluded.expires',(p['id'],slot,json.dumps(run),int(time.time())+900));refresh(store,p);return run
+    store.db.execute('INSERT INTO pvp_runs VALUES(?,?,?,?)ON CONFLICT(player,mode)DO UPDATE SET data=excluded.data,expires=excluded.expires',(p['id'],slot,json.dumps(run),int(time.time())+900));refresh(store,p)
+    from .battle_prefetch import begin as prefetch
+    prefetch(store,p['id'],{'mode':'practice','team':combat_raw(attack),'defender':combat_raw(run['defense']),'seed':run['seed']})
+    return run
 
 async def challenge(store,account,mode,args):
     p=store.player(account);admit(p,mode);slot='practice:'+mode;row=store.db.execute('SELECT *FROM pvp_runs WHERE player=?AND mode=?',(p['id'],slot)).fetchone()
     if not row or row['expires']<time.time():raise ValueError('Không có lượt cướp đang chờ')
     run=json.loads(row['data']);ships=args.get('attackShipIndexs',[])
     if not isinstance(ships,list)or validate_team(p,args.get('attackTeamIndexs'))!=run['indices']or list(map(str,ships))!=run['ships']or args.get('defenderId')!=run['target']or args.get('ctime')!=run['ctime']or type(args.get('seed'))is not int or args['seed']!=run['seed']or type(args.get('isWin'))is not bool or p['privateDay']!=run['day']:raise ValueError('Trận không khớp lượt cướp')
-    find(store,mode,run['target'],run['ctime']);out=await simulate_async({'mode':'practice','team':combat_raw(run['attack']),'defender':combat_raw(run['defense']),'seed':run['seed']})
+    find(store,mode,run['target'],run['ctime'])
+    from .battle_prefetch import outcome
+    out=await outcome(store,p['id'],{'mode':'practice','team':combat_raw(run['attack']),'defender':combat_raw(run['defense']),'seed':run['seed']})
     if out['isWin']!=args['isWin']:raise ValueError('Kết quả đặc huấn không khớp engine')
     with store.transaction():
         current=store.db.execute('SELECT *FROM pvp_runs WHERE player=?AND mode=?',(p['id'],slot)).fetchone()

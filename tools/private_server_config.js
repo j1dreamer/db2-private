@@ -11,11 +11,27 @@
                 C.EQUIPMENTS.CONSTS.CAPSULE_ITEM_TYPES=[1,2,3,4,5].map(function(i){return 'capsuleItem_'+i;});
             }
             E.isSimpleAwake=false;
+            if(window.DB2PrivateExpeditionBonus)window.DB2PrivateExpeditionBonus.apply(v.expeditionBonuses);
             var boxes=v.chapterBoxes||{};
             Object.keys(boxes).forEach(function(id){
                 if(!/^\d+$/.test(id)||!D.bmap||!D.bmap.data||!D.bmap.data[id])return;
                 ['box2','box3'].forEach(function(k){var value=boxes[id][k];if(typeof value==='string'&&value.length<=4096)D.bmap.data[id][k]=value;});
             });
+        }
+        var socket=R('socket');
+        if(!socket.__db2BoxContentGuard&&typeof socket.request==='function'){
+            var request=socket.request;
+            socket.request=function(route,args){
+                if(/\.selectBoxReward2?$/.test(route)){
+                    var main=R('serverMain'),item=main.player&&main.player.bag.getItemByIdx(args.bagIndex);
+                    if(item&&item.kindId===724&&(!latest||latest.contentRevision!==16)){
+                        var base=R('baseView');base.removeLoading();base.addHintPanel('Cập nhật server v16 trước khi mở rương SP X7.');return;
+                    }
+                    args.clientContentRevision=16;
+                }
+                return request.apply(this,arguments);
+            };
+            socket.__db2BoxContentGuard=true;
         }
         C.PLAYER.FUNS.isRobot=function(id){return Number(id)<=0;};
         if(window.DB2NativeCompat)window.DB2NativeCompat();

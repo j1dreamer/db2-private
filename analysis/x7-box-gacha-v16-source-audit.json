@@ -1,0 +1,156 @@
+{
+  "source": "X7 China 龙之岛-1W免费版 17327",
+  "boxes": {
+    "724": {
+      "before": {
+        "kindId": 724,
+        "kindName": "战士自选宝箱Ⅳ",
+        "desc": "可选择一种奖励领取",
+        "type": "box",
+        "price": 1000,
+        "imgId": 365,
+        "maxNum": -1,
+        "color": 7,
+        "extra": {
+          "dropListDesc": "105412_star_3x1,105012_star_3x1,104012_star_3x1,104112_star_3x1,104512_star_3x1,104612_star_3x1,104712_star_3x1,104812_star_3x1,104912_star_3x1,105012_star_3x1,105112_star_3x1,105312_star_3x1,106312_star_3x1,106412_star_3x1,106512_star_3x1,106612_star_3x1,106712_star_3x1,106812_star_3x1,106912_star_3x1,107012_star_3x1,107112_star_3x1,107212_star_3x1,107312_star_3x1,",
+          "selectCount": 1
+        }
+      },
+      "after": {
+        "kindId": 724,
+        "kindName": "SP自选宝箱",
+        "desc": "可选择一种奖励领取",
+        "type": "box",
+        "price": 1000,
+        "imgId": 365,
+        "maxNum": -1,
+        "color": 7,
+        "extra": {
+          "dropListDesc": "50550x60,50560x60,50570x60,50580x60,50600x60,50610x60,50620x60,50760x60,50770x60,50780x60,50790x60,50800x60,50810x60,50820x60,50830x60,50840x60,50850x60,50860x60,50870x60,50880x60",
+          "selectCount": 1
+        }
+      },
+      "source": "longzhidao-client",
+      "x7Entry": "assets/assets/resources/native/84/848f88c5-70fc-49ea-868d-02fbe978822f.bin"
+    }
+  },
+  "gacha": {
+    "source": "ENG and X7 client drop tables identical",
+    "firstAndRegularPools": [
+      101,
+      102,
+      201,
+      202,
+      203,
+      204
+    ],
+    "onlineX7ServerRatesVerified": false,
+    "adminCustomPoolsPreserved": true
+  },
+  "tables": {
+    "soul": {
+      "identicalToEng": true,
+      "rows": 88,
+      "x7Entry": "assets/assets/resources/native/14/14e99198-b3ba-4050-a7a4-8872f2ef8144.bin",
+      "x7BodySha256": "95d6dd0bd1ca0764622e23b2dcd110da330493b82bc3c976ae13526599378475"
+    },
+    "entity": {
+      "identicalToEng": true,
+      "rows": 2818,
+      "x7Entry": "assets/assets/resources/native/2c/2cf6e170-9b63-46ba-b21a-91d57377c522.bin",
+      "x7BodySha256": "c029ec518a52977e6f37213231cbe07035a3aa8801accee58cd227cf0fb84758"
+    },
+    "drop": {
+      "identicalToEng": true,
+      "rows": 449,
+      "x7Entry": "assets/assets/resources/native/cb/cb258631-20d9-411f-b715-e6a60abc5c6f.bin",
+      "x7BodySha256": "4cd0c2b362aaf27af99e7187eb9c9cd69f71b02971cb9dad271bd0d2cf0e3fde"
+    },
+    "role": {
+      "identicalToEng": true,
+      "rows": 1760,
+      "x7Entry": "assets/assets/resources/native/d1/d1998cb3-47dc-43b0-b64c-14b540d3a502.bin",
+      "x7BodySha256": "ede70645a0003e489fc41be2e46869b46955c1620c9977dd2946189e262ec310"
+    }
+  },
+  "importedRewards": {
+    "signIn": {
+      "source": "X7 game 17327",
+      "changedRows": 170,
+      "rows": 1236,
+      "contentSha256": "a80d3e7fe09c23fa8f34336f3f23b16001470da3b558627c928f86507e1ee819"
+    },
+    "task": {
+      "source": "X7 game 17327",
+      "changedRows": 235,
+      "rows": 512,
+      "contentSha256": "eb532486cc63f34c1c67582f6b92614fffbcb6c35cbfe335ebf3e1d97c1fcaac"
+    },
+    "arenaRewards": {
+      "source": "X7 game 17327",
+      "changedRows": 29,
+      "rows": 29,
+      "contentSha256": "72506a66ef940f7c03938bba9008a671522eac48d32b731b9e155b3930fc66c3"
+    },
+    "shop": {
+      "source": "X7 game 17327",
+      "changedRows": 2,
+      "rows": 295,
+      "contentSha256": "89f3157759355cd16217c9606c4c4ef6c7528d997502abdce8d6d65973c1e762",
+      "canonicalNormalization": [
+        {
+          "kindId": 140004,
+          "sourceMinCount": 10,
+          "sourceMaxCount": 1
+        },
+        {
+          "kindId": 140005,
+          "sourceMinCount": 5,
+          "sourceMaxCount": 1
+        }
+      ],
+      "sourceContentSha256": "80c2f0e22d0a306866985a618cce2dfdcc46b1673cd4a280749bfc0df67a86d1"
+    }
+  },
+  "sourceTables": [
+    "stone",
+    "vip",
+    "soul",
+    "arenaAchieveRewards",
+    "artifact",
+    "islandRewards",
+    "robot",
+    "entity",
+    "cost",
+    "math",
+    "timePeakSmap",
+    "experience",
+    "smap",
+    "ship",
+    "signIn",
+    "task",
+    "bmap",
+    "entityExt",
+    "mobS",
+    "buff",
+    "gm",
+    "arenaRewards",
+    "friendship",
+    "mobExt",
+    "fruit",
+    "timePeakBmap",
+    "shop",
+    "evolutionItem",
+    "fightSkill",
+    "fruitMapRewards",
+    "drop",
+    "role",
+    "plot",
+    "mob"
+  ],
+  "serverEventRules": {
+    "source": "private-server-implementation",
+    "onlineX7SchedulePricesAndRatesAvailable": false,
+    "reason": "No activity/event server configuration table is embedded in the 34 extracted client tables. Dynamic player activity.map and goodsList are supplied by the online server."
+  }
+}

@@ -120,19 +120,19 @@
       "compatibility_rows": []
     },
     "signIn": {
-      "source": "eng-client",
-      "archive_entry": "DB2-GD/assets/assets/resources/native/7e/7efa99ea-b3b2-428f-9e81-f1ad1287937d.bin",
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/7e/7efa99ea-b3b2-428f-9e81-f1ad1287937d.bin",
       "shipped_rows": 1236,
       "canonical_rows": 1236,
-      "shipped_content_sha256": "f74d930c4cbd8fb2add8e2947bebb7f678c1a050b81bca0f394046471f3e36a2",
+      "shipped_content_sha256": "a80d3e7fe09c23fa8f34336f3f23b16001470da3b558627c928f86507e1ee819",
       "compatibility_rows": []
     },
     "task": {
-      "source": "eng-client",
-      "archive_entry": "DB2-GD/assets/assets/resources/native/7f/7f2372b0-6397-4c15-826c-e89908c10370.bin",
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/7f/7f2372b0-6397-4c15-826c-e89908c10370.bin",
       "shipped_rows": 512,
       "canonical_rows": 512,
-      "shipped_content_sha256": "22e4fa6e64bfb270d9da6a3b066483120376c3b62d09840dde2ac481c92eac56",
+      "shipped_content_sha256": "eb532486cc63f34c1c67582f6b92614fffbcb6c35cbfe335ebf3e1d97c1fcaac",
       "compatibility_rows": []
     },
     "bmap": {
@@ -179,11 +179,11 @@
       "compatibility_rows": []
     },
     "arenaRewards": {
-      "source": "eng-client",
-      "archive_entry": "DB2-GD/assets/assets/resources/native/9d/9daf9d41-c703-486e-a645-0c59c5263e66.bin",
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/9d/9daf9d41-c703-486e-a645-0c59c5263e66.bin",
       "shipped_rows": 29,
       "canonical_rows": 29,
-      "shipped_content_sha256": "3dc19331b8bb8bd21385895da34875937c24a1f7e72e00694134a3c5ea7cc2d3",
+      "shipped_content_sha256": "72506a66ef940f7c03938bba9008a671522eac48d32b731b9e155b3930fc66c3",
       "compatibility_rows": []
     },
     "friendship": {
@@ -219,12 +219,13 @@
       "compatibility_rows": []
     },
     "shop": {
-      "source": "eng-client",
-      "archive_entry": "DB2-GD/assets/assets/resources/native/b0/b0619184-648b-461f-a763-c48dfb14af80.bin",
+      "source": "longzhidao-client",
+      "archive_entry": "assets/assets/resources/native/b0/b0619184-648b-461f-a763-c48dfb14af80.bin",
       "shipped_rows": 295,
       "canonical_rows": 295,
-      "shipped_content_sha256": "67766688d628abbde6254f5e1aef0c201822247526b02c6339f015e3f6ffb090",
-      "compatibility_rows": []
+      "shipped_content_sha256": "80c2f0e22d0a306866985a618cce2dfdcc46b1673cd4a280749bfc0df67a86d1",
+      "compatibility_rows": [],
+      "compatibility_normalization": "Swap minCount/maxCount when X7 rows 140004/140005 have an inverted range; original source hash retained."
     },
     "evolutionItem": {
       "source": "eng-client",
@@ -295,6 +296,11 @@
       "kindId": 379,
       "source": "original-ios-compatibility",
       "reason": "Retained iOS box definitions for existing bag IDs"
+    },
+    {
+      "kindId": 724,
+      "source": "longzhidao-client",
+      "reason": "User-selected X7 SP choice chest, 20 souls ×60; not the original ENG whole-hero IV box."
     }
   ],
   "retained_implementation": "ENG gameplay modules and resource shell; original iOS resource/language modules; explicitly authored private backend/GM patches",
